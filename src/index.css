@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paperstory-maroon: #A31E3B;
+  --color-paperstory-maroon-deep: #8C1B34;
+  --color-paperstory-rose: #C4506B;
+  --color-paperstory-cream: #FDF6F0;
+  --color-paperstory-blush: #F3D9DF;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Poppins", system-ui, sans-serif;
+}
+
+:root {
+  --paperstory-maroon: #A31E3B;
+  --paperstory-maroon-deep: #8C1B34;
+  --paperstory-rose: #C4506B;
+  --paperstory-cream: #FDF6F0;
+  --paperstory-blush: #F3D9DF;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--paperstory-cream);
+  color: #3a2a2e;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+}
+
+.gradient-hero {
+  background: linear-gradient(135deg, var(--paperstory-maroon-deep) 0%, var(--paperstory-rose) 55%, #e8b4c0 100%);
+}
+
+.gradient-section {
+  background: linear-gradient(135deg, var(--paperstory-maroon-deep) 0%, var(--paperstory-rose) 70%, var(--paperstory-cream) 100%);
+}
+
+.gradient-btn {
+  background: linear-gradient(135deg, var(--paperstory-maroon-deep), var(--paperstory-rose));
+  transition: box-shadow 0.3s ease, transform 0.2s ease, filter 0.3s ease;
+}
+
+.gradient-btn:hover {
+  box-shadow: 0 8px 24px rgba(163, 30, 59, 0.35);
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes float-flower {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) translateX(0) rotate(0deg);
+  }
+  20% {
+    opacity: 0.4;
+  }
+  80% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-80px) translateX(30px) rotate(15deg);
+  }
+}
+
+@keyframes loader-fade-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes gentle-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}

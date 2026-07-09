@@ -1,0 +1,85 @@
+export const products = [
+  {
+    id: 1,
+    name: 'Botanical Wedding Suite',
+    price: 'From PKR 12,500',
+    image: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&h=750&fit=crop',
+    category: 'Wedding',
+    enquireOnly: true,
+  },
+  {
+    id: 2,
+    name: 'Minimalist E-Invite',
+    price: 'PKR 3,500',
+    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=750&fit=crop',
+    category: 'E-Invite',
+    enquireOnly: true,
+  },
+  {
+    id: 3,
+    name: 'Luxury Thank You Cards',
+    price: 'PKR 4,200',
+    image: 'https://images.unsplash.com/photo-1586075010923-2dd457f5f5a0?w=600&h=750&fit=crop',
+    category: 'Cards & Favours',
+    enquireOnly: false,
+  },
+  {
+    id: 4,
+    name: 'Custom Gift Boxes',
+    price: 'From PKR 8,000',
+    image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&h=750&fit=crop',
+    category: 'Custom',
+    enquireOnly: true,
+  },
+  {
+    id: 5,
+    name: 'Floral Menu Cards',
+    price: 'PKR 2,800',
+    image: 'https://images.unsplash.com/photo-1522673606300-2744e24c2470?w=600&h=750&fit=crop',
+    category: 'Wedding',
+    enquireOnly: false,
+  },
+  {
+    id: 6,
+    name: 'Personalised Stationery Set',
+    price: 'PKR 6,500',
+    image: 'https://images.unsplash.com/photo-1452860606245-08befc3ff44b?w=600&h=750&fit=crop',
+    category: 'Gifting',
+    enquireOnly: false,
+  },
+  {
+    id: 7,
+    name: 'Digital RSVP Suite',
+    price: 'PKR 4,000',
+    image: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&h=750&fit=crop',
+    category: 'E-Invite',
+    enquireOnly: true,
+  },
+  {
+    id: 8,
+    name: 'Branded Packaging',
+    price: 'From PKR 15,000',
+    image: 'https://images.unsplash.com/photo-1607083206968-13611e3d76db?w=600&h=750&fit=crop',
+    category: 'Custom',
+    enquireOnly: true,
+  },
+]
+
+export const categories = [
+  { id: 'wedding', label: 'Wedding Invitations', icon: '💌' },
+  { id: 'einvites', label: 'E-Invites', icon: '✉️' },
+  { id: 'cards', label: 'Cards & Favours', icon: '🎀' },
+  { id: 'packaging', label: 'Custom Packaging', icon: '📦' },
+  { id: 'gifting', label: 'Gifting', icon: '🎁' },
+]
+
+export const galleryImages = [
+  'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1586075010923-2dd457f5f5a0?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1522673606300-2744e24c2470?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1452860606245-08befc3ff44b?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&h=400&fit=crop',
+  'https://images.unsplash.com/photo-1607083206968-13611e3d76db?w=400&h=400&fit=crop',
+]
