@@ -45,8 +45,16 @@ export const DELIVERY_ESTIMATE = {
 export const ORDER_CONSENT_TEXT =
   'I agree to receive order updates (confirmation, shipping, delivery) via WhatsApp and Email.'
 
+export const ORDER_CONSENT_SHORT =
+  'I agree to receive order updates via WhatsApp and Email.'
+
 export const MARKETING_CONSENT_TEXT =
   "I'd also like to receive occasional offers and new design updates via WhatsApp."
 
+export const MARKETING_CONSENT_SHORT = 'Send me occasional offers and design updates.'
+
 export const PRIVACY_NOTICE =
   'By placing an order, you consent to The Paper Story contacting you via WhatsApp and Email regarding this order. We will not use your number for marketing without separate consent. Your information is used only to process and deliver your order.'
+
+export const PRIVACY_NOTICE_SHORT =
+  'Your details are used only to process this order. No marketing without separate consent.'

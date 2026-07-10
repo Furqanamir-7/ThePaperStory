@@ -1069,13 +1069,54 @@ h1, h2, h3, h4 {
 .order-modal {
   position: relative;
   width: 100%;
-  max-width: 24rem;
-  max-height: 90vh;
-  overflow-y: auto;
-  border-radius: 1rem;
+  max-width: 22rem;
+  max-height: calc(100vh - 1.5rem);
+  overflow: hidden;
+  border-radius: 0.875rem;
   background: #fff;
-  padding: 1.25rem;
+  padding: 0.875rem 1rem 1rem;
   box-shadow: 0 20px 40px rgba(74, 40, 53, 0.18);
+  display: flex;
+  flex-direction: column;
+}
+
+.order-modal-header {
+  padding-right: 1.75rem;
+}
+
+.order-modal-header h2 {
+  font-size: 1.125rem;
+  line-height: 1.25;
+}
+
+.order-modal-header p {
+  margin: 0.15rem 0 0.5rem;
+  font-size: 0.7rem;
+  line-height: 1.35;
+}
+
+.order-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.order-modal-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem;
+}
+
+.order-modal-phone {
+  display: grid;
+  grid-template-columns: 4.75rem 1fr;
+  gap: 0.35rem;
+}
+
+.order-modal-submit {
+  min-height: 2.25rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
 }
 
 .order-modal-close {
@@ -1095,11 +1136,17 @@ h1, h2, h3, h4 {
 
 .order-modal-input {
   width: 100%;
-  border-radius: 0.625rem;
+  border-radius: 0.5rem;
   border: 1px solid var(--paperstory-blush);
   background: var(--paperstory-cream);
-  padding: 0.625rem 0.875rem;
-  font-size: 0.8125rem;
+  padding: 0.4rem 0.625rem;
+  font-size: 0.75rem;
+  line-height: 1.25;
+}
+
+.order-modal-input--textarea {
+  min-height: 2.5rem;
+  resize: none;
 }
 
 .order-modal-input:focus {
@@ -1110,15 +1157,16 @@ h1, h2, h3, h4 {
 .order-modal-check {
   display: flex;
   align-items: flex-start;
-  gap: 0.5rem;
-  font-size: 0.75rem;
-  line-height: 1.4;
+  gap: 0.4rem;
+  font-size: 0.65rem;
+  line-height: 1.3;
   color: rgba(74, 40, 53, 0.85);
 }
 
 .order-modal-check input {
-  margin-top: 0.2rem;
+  margin-top: 0.1rem;
   accent-color: var(--paperstory-maroon);
+  flex-shrink: 0;
 }
 
 .order-modal-check--optional {
@@ -1127,8 +1175,8 @@ h1, h2, h3, h4 {
 
 .order-modal-fineprint {
   margin: 0;
-  font-size: 0.72rem;
-  line-height: 1.5;
+  font-size: 0.62rem;
+  line-height: 1.35;
   color: rgba(74, 40, 53, 0.6);
 }
 

@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import {
   DEFAULT_COUNTRY,
-  MARKETING_CONSENT_TEXT,
-  ORDER_CONSENT_TEXT,
+  MARKETING_CONSENT_SHORT,
+  ORDER_CONSENT_SHORT,
   PAKISTAN_CITIES,
   PHONE_COUNTRY_CODES,
-  PRIVACY_NOTICE,
+  PRIVACY_NOTICE_SHORT,
   SHIPPING_COUNTRIES,
 } from '../data/checkout'
 import { submitInquiry } from '../utils/submitInquiry'
@@ -24,6 +24,51 @@ const emptyForm = {
   notes: '',
   consent: false,
   marketingConsent: false,
+}
+
+function CityField({ form, setForm, isPakistan }) {
+  if (!isPakistan) {
+    return (
+      <input
+        type="text"
+        required
+        placeholder="City"
+        value={form.city}
+        onChange={(e) => setForm({ ...form, city: e.target.value })}
+        className="order-modal-input"
+      />
+    )
+  }
+
+  if (form.city === 'Other') {
+    return (
+      <input
+        type="text"
+        required
+        placeholder="Your city"
+        value={form.cityOther}
+        onChange={(e) => setForm({ ...form, cityOther: e.target.value })}
+        className="order-modal-input"
+      />
+    )
+  }
+
+  return (
+    <select
+      required
+      value={form.city}
+      onChange={(e) => setForm({ ...form, city: e.target.value, cityOther: '' })}
+      className="order-modal-input"
+      aria-label="City"
+    >
+      <option value="">City</option>
+      {PAKISTAN_CITIES.map((city) => (
+        <option key={city} value={city}>
+          {city}
+        </option>
+      ))}
+    </select>
+  )
 }
 
 export default function InquiryModal({ product, onClose }) {
@@ -94,42 +139,51 @@ export default function InquiryModal({ product, onClose }) {
 
         {status === 'success' ? (
           <div className="order-modal-success">
-            <h2 id="inquiry-modal-title" className="heading-brand mb-2 text-xl font-semibold">
+            <h2 id="inquiry-modal-title" className="heading-brand mb-2 text-lg font-semibold">
               Inquiry received
             </h2>
             <p className="mb-2 text-sm leading-relaxed text-gray-600">
-              Hi {form.name}, thanks for reaching out about <strong>{product.name}</strong>.
-            </p>
-            <p className="mb-2 text-sm leading-relaxed text-gray-600">
-              Your inquiry reference is <strong>{inquiryNumber}</strong>.
+              Hi {form.name}, your inquiry <strong>{inquiryNumber}</strong> is confirmed.
             </p>
             <p className="text-sm leading-relaxed text-gray-600">
-              Our team will get back to you shortly with pricing and details. A confirmation email has been sent to{' '}
-              <strong>{form.email}</strong>.
+              We will email you at <strong>{form.email}</strong> with pricing and details soon.
             </p>
-            <button type="button" className="cute-btn-primary mt-5 w-full" onClick={onClose}>
+            <button type="button" className="cute-btn-primary order-modal-submit mt-4 w-full" onClick={onClose}>
               Done
             </button>
           </div>
         ) : (
           <>
-            <h2 id="inquiry-modal-title" className="heading-brand mb-1 text-xl font-semibold">
-              Request custom order
-            </h2>
-            <p className="mb-4 text-sm text-paperstory-ink/75">
-              {product.category} — {product.name} · Price on request
-            </p>
+            <div className="order-modal-header">
+              <h2 id="inquiry-modal-title" className="heading-brand font-semibold">
+                Request custom order
+              </h2>
+              <p className="text-paperstory-ink/75">
+                {product.category} — {product.name}
+              </p>
+            </div>
 
-            <form onSubmit={handleSubmit} className="space-y-3">
-              <input
-                type="text"
-                required
-                placeholder="Full name"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="order-modal-input"
-              />
-              <div className="grid grid-cols-[7.5rem_1fr] gap-3">
+            <form onSubmit={handleSubmit} className="order-modal-form">
+              <div className="order-modal-grid-2">
+                <input
+                  type="text"
+                  required
+                  placeholder="Full name"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  className="order-modal-input"
+                />
+                <input
+                  type="email"
+                  required
+                  placeholder="Email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  className="order-modal-input"
+                />
+              </div>
+
+              <div className="order-modal-phone">
                 <select
                   required
                   value={form.phoneCode}
@@ -152,92 +206,58 @@ export default function InquiryModal({ product, onClose }) {
                   className="order-modal-input"
                 />
               </div>
-              <input
-                type="email"
-                required
-                placeholder="Email address"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="order-modal-input"
-              />
-              <input
-                type="text"
-                required
-                placeholder="Address line 1"
-                value={form.address}
-                onChange={(e) => setForm({ ...form, address: e.target.value })}
-                className="order-modal-input"
-              />
-              <input
-                type="text"
-                placeholder="Address line 2 (optional)"
-                value={form.addressLine2}
-                onChange={(e) => setForm({ ...form, addressLine2: e.target.value })}
-                className="order-modal-input"
-              />
-              <select
-                required
-                value={form.country}
-                onChange={(e) =>
-                  setForm({ ...form, country: e.target.value, city: '', cityOther: '' })
-                }
-                className="order-modal-input"
-                aria-label="Country"
-              >
-                {SHIPPING_COUNTRIES.map((country) => (
-                  <option key={country} value={country}>
-                    {country}
-                  </option>
-                ))}
-              </select>
-              {isPakistan ? (
+
+              <div className="order-modal-grid-2">
+                <input
+                  type="text"
+                  required
+                  placeholder="Address"
+                  value={form.address}
+                  onChange={(e) => setForm({ ...form, address: e.target.value })}
+                  className="order-modal-input"
+                />
+                <input
+                  type="text"
+                  placeholder="Apt / landmark"
+                  value={form.addressLine2}
+                  onChange={(e) => setForm({ ...form, addressLine2: e.target.value })}
+                  className="order-modal-input"
+                />
+              </div>
+
+              <div className="order-modal-grid-2">
                 <select
                   required
-                  value={form.city}
-                  onChange={(e) => setForm({ ...form, city: e.target.value })}
+                  value={form.country}
+                  onChange={(e) =>
+                    setForm({ ...form, country: e.target.value, city: '', cityOther: '' })
+                  }
                   className="order-modal-input"
-                  aria-label="City"
+                  aria-label="Country"
                 >
-                  <option value="">Select city</option>
-                  {PAKISTAN_CITIES.map((city) => (
-                    <option key={city} value={city}>
-                      {city}
+                  {SHIPPING_COUNTRIES.map((country) => (
+                    <option key={country} value={country}>
+                      {country}
                     </option>
                   ))}
                 </select>
-              ) : (
-                <input
-                  type="text"
-                  required
-                  placeholder="City"
-                  value={form.city}
-                  onChange={(e) => setForm({ ...form, city: e.target.value })}
-                  className="order-modal-input"
-                />
-              )}
-              {isPakistan && form.city === 'Other' && (
-                <input
-                  type="text"
-                  required
-                  placeholder="Enter your city"
-                  value={form.cityOther}
-                  onChange={(e) => setForm({ ...form, cityOther: e.target.value })}
-                  className="order-modal-input"
-                />
-              )}
+                <CityField form={form} setForm={setForm} isPakistan={isPakistan} />
+              </div>
+
               <input
                 type="text"
-                placeholder="Postal / ZIP code"
+                placeholder="Postal / ZIP (optional)"
                 value={form.postalCode}
                 onChange={(e) => setForm({ ...form, postalCode: e.target.value })}
                 className="order-modal-input"
               />
+
               <textarea
-                rows={3}
-                placeholder="Tell us about your design, quantity, or event date"
+                rows={2}
+                placeholder="Design details, quantity, or event date"
                 value={form.notes}
                 onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                className="order-modal-input resize-none"
+                className="order-modal-input order-modal-input--textarea"
               />
 
               <label className="order-modal-check">
@@ -247,7 +267,7 @@ export default function InquiryModal({ product, onClose }) {
                   onChange={(e) => setForm({ ...form, consent: e.target.checked })}
                   required
                 />
-                <span>{ORDER_CONSENT_TEXT}</span>
+                <span>{ORDER_CONSENT_SHORT}</span>
               </label>
 
               <label className="order-modal-check order-modal-check--optional">
@@ -256,17 +276,17 @@ export default function InquiryModal({ product, onClose }) {
                   checked={form.marketingConsent}
                   onChange={(e) => setForm({ ...form, marketingConsent: e.target.checked })}
                 />
-                <span>{MARKETING_CONSENT_TEXT}</span>
+                <span>{MARKETING_CONSENT_SHORT}</span>
               </label>
 
-              <p className="order-modal-fineprint">{PRIVACY_NOTICE}</p>
+              <p className="order-modal-fineprint">{PRIVACY_NOTICE_SHORT}</p>
 
-              {error && <p className="text-sm text-red-700">{error}</p>}
+              {error && <p className="text-xs text-red-700">{error}</p>}
 
               <button
                 type="submit"
                 disabled={status === 'loading'}
-                className="cute-btn-primary w-full disabled:opacity-60"
+                className="cute-btn-primary order-modal-submit w-full disabled:opacity-60"
               >
                 {status === 'loading' ? 'Submitting…' : 'Submit inquiry'}
               </button>
