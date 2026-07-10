@@ -12,25 +12,27 @@ function AboutBody() {
         ref={ref}
         className={`mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 fade-in-up ${isVisible ? 'visible' : ''}`}
       >
-        <p className="mb-8 text-center text-lg leading-relaxed text-paperstory-ink/80 sm:text-xl">
-          At The Paper Story, we believe that every celebration begins with thoughtful details.
-        </p>
-
         <div className="space-y-6 text-base leading-relaxed text-paperstory-ink/75 sm:text-[1.05rem]">
           <p>
-            Founded by husband-and-wife duo Fatima and Huzaifa, The Paper Story was built on a shared
-            passion for creativity and craftsmanship. Fatima, a traditional artist and self-taught
-            graphic designer, creates each design with a focus on elegance, while Huzaifa brings every
-            piece to life through careful printing and production.
+            The Paper Story started before we got married, with a simple idea—to create stationery that
+            people would genuinely love to keep.
           </p>
           <p>
-            We&apos;re a small studio by choice, which means every order is personally designed,
-            produced, checked, and packaged by us. This hands-on approach allows us to maintain the
-            quality, attention to detail, and personal service that our customers value.
+            We&apos;re Fatima and Huzaifa, a husband-and-wife team behind the brand. Fatima, a
+            traditional artist and self-taught graphic designer, designs every piece, while Huzaifa
+            takes care of the printing and production to make sure each order is finished to the
+            highest standard.
           </p>
           <p>
-            Whether it&apos;s a wedding invitation, a keepsake, or custom stationery, every piece we
-            create is made with care and is designed to become part of your story.
+            We don&apos;t have a large team, and that&apos;s exactly how we like it. Every order is
+            designed, printed, checked, and packed by us. It takes more time, but it means we know
+            every piece that leaves our studio meets the quality we&apos;d be proud to put our name
+            on.
+          </p>
+          <p>
+            From wedding invitations to keepsakes and custom stationery, everything we create is made
+            with care and attention to detail. We&apos;re grateful to be part of your celebrations and
+            hope our work becomes a small but meaningful part of your story.
           </p>
         </div>
 
@@ -41,8 +43,7 @@ function AboutBody() {
             </p>
             <h3 className="mb-2 font-serif text-2xl font-semibold text-paperstory-maroon">Fatima</h3>
             <p className="text-sm leading-relaxed text-paperstory-ink/70">
-              Traditional artist &amp; self-taught graphic designer — creating each piece with elegance
-              and emotion.
+              Traditional artist &amp; self-taught graphic designer — designing every piece with care.
             </p>
           </div>
           <div className="rounded-2xl bg-paperstory-wash px-6 py-7 text-center">
@@ -51,7 +52,7 @@ function AboutBody() {
             </p>
             <h3 className="mb-2 font-serif text-2xl font-semibold text-paperstory-maroon">Huzaifa</h3>
             <p className="text-sm leading-relaxed text-paperstory-ink/70">
-              Bringing every design to life through careful printing, finishing, and packaging.
+              Printing and production — finishing every order to the highest standard.
             </p>
           </div>
         </div>
@@ -64,8 +65,8 @@ export default function AboutPage() {
   return (
     <>
       <PageHeader
-        title="About The Paper Story"
-        subtitle="Every celebration begins with thoughtful details."
+        title="Our Story"
+        subtitle="Stationery people would genuinely love to keep."
         breadcrumb="Home / About"
       />
       <AboutBody />
