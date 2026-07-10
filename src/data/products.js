@@ -45,17 +45,17 @@ export const shopCategories = [
   {
     id: 'nikkahnama',
     slug: 'nikkahnama',
-    label: 'Nikkahnama / Nikkah Certificate',
-    shortLabel: 'Nikkahnama',
+    label: 'Nikkah Certificates',
+    shortLabel: 'Nikkah Certificates',
     description: 'Hand-painted and printed nikkah certificates — pricing on request only.',
     image: IMG.nikkah,
     showPrice: false,
     paymentType: 'advance',
     whatsappMode: 'price',
     subcategories: [
-      { slug: 'hand-painted', label: 'Hand Painted', whatsappPrefix: 'Nikkahnama (Hand Painted)' },
-      { slug: 'printed-without-frame', label: 'Printed — Without Frame', whatsappPrefix: 'Nikkahnama (Printed - Without Frame)' },
-      { slug: 'printed-with-frame', label: 'Printed — With Frame', whatsappPrefix: 'Nikkahnama (Printed - With Frame)' },
+      { slug: 'hand-painted', label: 'Hand Painted', whatsappPrefix: 'Nikkah Certificates (Hand Painted)' },
+      { slug: 'printed-without-frame', label: 'Printed — Without Frame', whatsappPrefix: 'Nikkah Certificates (Printed - Without Frame)' },
+      { slug: 'printed-with-frame', label: 'Printed — With Frame', whatsappPrefix: 'Nikkah Certificates (Printed - With Frame)' },
     ],
   },
   {

@@ -55,7 +55,7 @@ export default function ShopCategoryPage() {
         />
         <div className="pt-6 text-center">
           <Link to="/shop" className="text-sm font-medium text-paperstory-maroon hover:underline">
-            ← View all categories
+            ← View all products
           </Link>
         </div>
       </section>

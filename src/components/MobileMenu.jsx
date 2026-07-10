@@ -97,7 +97,7 @@ export default function MobileMenu({ open, onClose }) {
                 ))}
               </ul>
 
-              <p className="mobile-menu-section-label">Categories</p>
+              <p className="mobile-menu-section-label">Products</p>
               <ul className="mobile-menu-list">
                 {shopCategories.map((cat) => (
                   <li key={cat.id}>

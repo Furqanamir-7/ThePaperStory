@@ -15,7 +15,7 @@ const testimonials = [
     name: 'Fatima R.',
   },
   {
-    quote: 'The nikkahnama was hand-painted to perfection. A keepsake we will treasure forever.',
+    quote: 'The Nikkah Certificate was hand-painted to perfection. A keepsake we will treasure forever.',
     name: 'Hina & Bilal',
   },
   {

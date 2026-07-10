@@ -12,7 +12,7 @@ export default function ShopPage() {
       <PageHeader
         compact
         title="Shop"
-        subtitle="Wedding invitations, e-invites, nikkahnama, favours, packaging, stationery, and more."
+        subtitle="Luxury Stationery Designed for Every Celebration."
         breadcrumb="Home / Shop"
       />
       <section className="bg-paperstory-cream pb-10">
@@ -21,7 +21,7 @@ export default function ShopPage() {
         </div>
         <div ref={ref} className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 fade-in-up ${isVisible ? 'visible' : ''}`}>
           <h2 className="heading-brand mb-6 mt-6 text-center text-3xl font-semibold sm:text-4xl">
-            Browse by Category
+            Browse by Product
           </h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {shopCategories.map((cat) => (
