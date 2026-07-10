@@ -79,14 +79,13 @@ export const shopCategories = [
     slug: 'packaging',
     label: 'Packaging Material / Items',
     shortLabel: 'Packaging',
-    description: 'Business cards, stickers, and branded packaging.',
+    description: 'Business stickers for branding and packaging.',
     image: IMG.packaging,
     showPrice: false,
     paymentType: 'advance',
     whatsappMode: 'price',
     subcategories: [
-      { slug: 'business-cards', label: 'Business Cards', whatsappPrefix: 'Packaging (Business Cards)' },
-      { slug: 'circle-stickers', label: 'Circle Cut Business Stickers', whatsappPrefix: 'Packaging (Circle Stickers)' },
+      { slug: 'business-stickers', label: 'Business Stickers', whatsappPrefix: 'Packaging (Business Stickers)' },
     ],
   },
   {
