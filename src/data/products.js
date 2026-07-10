@@ -1,85 +1,275 @@
-export const products = [
+const IMG = {
+  wedding: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&h=600&fit=crop',
+  digital: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=600&fit=crop',
+  nikkah: 'https://images.unsplash.com/photo-1522673606300-2744e24c2470?w=800&h=600&fit=crop',
+  favours: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=800&h=600&fit=crop',
+  packaging: 'https://images.unsplash.com/photo-1586075010923-2dd457f5f5a0?w=800&h=600&fit=crop',
+  stationary: 'https://images.unsplash.com/photo-1456320508967-f6a0e8d8a2f9?w=800&h=600&fit=crop',
+  boxes: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=600&fit=crop',
+  pamphlet: 'https://images.unsplash.com/photo-1565680018434-b513d5e261b9?w=800&h=600&fit=crop',
+  vinyl: 'https://images.unsplash.com/photo-1608589215137-8ad787a33c4c?w=800&h=600&fit=crop',
+  greeting: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=800&h=600&fit=crop',
+  eidi: 'https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=800&h=600&fit=crop',
+}
+
+export const INSTAGRAM_URL = 'https://www.instagram.com/thepaperstory.co/'
+
+export const shopCategories = [
   {
-    id: 1,
-    name: 'Botanical Wedding Suite',
-    price: 'From PKR 12,500',
-    image: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&h=750&fit=crop',
-    category: 'Wedding',
-    enquireOnly: true,
+    id: 'wedding-invitations',
+    slug: 'wedding-invitations',
+    label: 'Wedding Invitations',
+    shortLabel: 'Wedding',
+    description: 'Elegant wedding invitation designs — enquire for pricing.',
+    image: IMG.wedding,
+    showPrice: false,
+    paymentType: 'advance',
+    whatsappMode: 'price',
+    subcategories: null,
   },
   {
-    id: 2,
-    name: 'Minimalist E-Invite',
-    price: 'PKR 3,500',
-    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=750&fit=crop',
-    category: 'E-Invite',
-    enquireOnly: true,
+    id: 'digital-e-invitations',
+    slug: 'digital-e-invitations',
+    label: 'Digital E-Invitations',
+    shortLabel: 'E-Invites',
+    description: 'Static and animated digital invitations for your special day.',
+    image: IMG.digital,
+    showPrice: false,
+    paymentType: 'advance',
+    whatsappMode: 'price',
+    subcategories: [
+      { slug: 'static', label: 'Static Invites', whatsappPrefix: 'Digital E-Invitation (Static)' },
+      { slug: 'animated', label: 'Animated Invites', whatsappPrefix: 'Digital E-Invitation (Animated)' },
+    ],
   },
   {
-    id: 3,
-    name: 'Luxury Thank You Cards',
-    price: 'PKR 4,200',
-    image: 'https://images.unsplash.com/photo-1586075010923-2dd457f5f5a0?w=600&h=750&fit=crop',
-    category: 'Cards & Favours',
-    enquireOnly: false,
+    id: 'nikkahnama',
+    slug: 'nikkahnama',
+    label: 'Nikkahnama / Nikkah Certificate',
+    shortLabel: 'Nikkahnama',
+    description: 'Hand-painted and printed nikkah certificates — pricing on request only.',
+    image: IMG.nikkah,
+    showPrice: false,
+    paymentType: 'advance',
+    whatsappMode: 'price',
+    subcategories: [
+      { slug: 'hand-painted', label: 'Hand Painted', whatsappPrefix: 'Nikkahnama (Hand Painted)' },
+      { slug: 'printed-without-frame', label: 'Printed — Without Frame', whatsappPrefix: 'Nikkahnama (Printed - Without Frame)' },
+      { slug: 'printed-with-frame', label: 'Printed — With Frame', whatsappPrefix: 'Nikkahnama (Printed - With Frame)' },
+    ],
   },
   {
-    id: 4,
-    name: 'Custom Gift Boxes',
-    price: 'From PKR 8,000',
-    image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&h=750&fit=crop',
-    category: 'Custom',
-    enquireOnly: true,
+    id: 'favours',
+    slug: 'favours',
+    label: 'Favours',
+    shortLabel: 'Favours',
+    description: 'Potli, box, and tin favours for weddings and events.',
+    image: IMG.favours,
+    showPrice: false,
+    paymentType: 'advance',
+    whatsappMode: 'price',
+    subcategories: [
+      { slug: 'potli', label: 'Potli', whatsappPrefix: 'Favours (Potli)' },
+      { slug: 'box-favours', label: 'Box Favours', whatsappPrefix: 'Favours (Box)' },
+      { slug: 'tin-favours', label: 'Tin Favours', whatsappPrefix: 'Favours (Tin)' },
+    ],
   },
   {
-    id: 5,
-    name: 'Floral Menu Cards',
-    price: 'PKR 2,800',
-    image: 'https://images.unsplash.com/photo-1522673606300-2744e24c2470?w=600&h=750&fit=crop',
-    category: 'Wedding',
-    enquireOnly: false,
+    id: 'packaging',
+    slug: 'packaging',
+    label: 'Packaging Material / Items',
+    shortLabel: 'Packaging',
+    description: 'Business cards, stickers, and branded packaging.',
+    image: IMG.packaging,
+    showPrice: false,
+    paymentType: 'advance',
+    whatsappMode: 'price',
+    subcategories: [
+      { slug: 'business-cards', label: 'Business Cards', whatsappPrefix: 'Packaging (Business Cards)' },
+      { slug: 'circle-stickers', label: 'Circle Cut Business Stickers', whatsappPrefix: 'Packaging (Circle Stickers)' },
+    ],
   },
   {
-    id: 6,
-    name: 'Personalised Stationery Set',
-    price: 'PKR 6,500',
-    image: 'https://images.unsplash.com/photo-1452860606245-08befc3ff44b?w=600&h=750&fit=crop',
-    category: 'Gifting',
-    enquireOnly: false,
+    id: 'stationary-items',
+    slug: 'stationary-items',
+    label: 'Stationary Items',
+    shortLabel: 'Stationary',
+    description: 'Diaries, pens, and everyday stationery — COD available in Pakistan.',
+    image: IMG.stationary,
+    showPrice: true,
+    paymentType: 'cod',
+    whatsappMode: 'more',
+    subcategories: [
+      { slug: 'diaries', label: 'Diaries', whatsappPrefix: 'Stationary (Diaries)' },
+      { slug: 'pens', label: 'Pens', whatsappPrefix: 'Stationary (Pens)' },
+    ],
   },
   {
-    id: 7,
-    name: 'Digital RSVP Suite',
-    price: 'PKR 4,000',
-    image: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&h=750&fit=crop',
-    category: 'E-Invite',
-    enquireOnly: true,
+    id: 'boxes',
+    slug: 'boxes',
+    label: 'Boxes',
+    shortLabel: 'Boxes',
+    description: 'Custom cake boxes and gift packaging.',
+    image: IMG.boxes,
+    showPrice: false,
+    paymentType: 'advance',
+    whatsappMode: 'price',
+    subcategories: [
+      { slug: 'cake-boxes', label: 'Cake Boxes', whatsappPrefix: 'Boxes (Cake Boxes)' },
+    ],
   },
   {
-    id: 8,
-    name: 'Branded Packaging',
-    price: 'From PKR 15,000',
-    image: 'https://images.unsplash.com/photo-1607083206968-13611e3d76db?w=600&h=750&fit=crop',
-    category: 'Custom',
-    enquireOnly: true,
+    id: 'pamphlets',
+    slug: 'pamphlets',
+    label: 'Pamphlets',
+    shortLabel: 'Pamphlets',
+    description: 'Printed pamphlets for events and promotions.',
+    image: IMG.pamphlet,
+    showPrice: false,
+    paymentType: 'advance',
+    whatsappMode: 'price',
+    subcategories: null,
+  },
+  {
+    id: 'vinyl-stickers',
+    slug: 'vinyl-stickers',
+    label: 'Vinyl Stickers',
+    shortLabel: 'Vinyl',
+    description: 'Custom vinyl stickers — pricing varies by design complexity.',
+    image: IMG.vinyl,
+    showPrice: false,
+    paymentType: 'advance',
+    whatsappMode: 'price',
+    subcategories: null,
+  },
+  {
+    id: 'greeting-cards',
+    slug: 'greeting-cards',
+    label: 'Greeting Cards',
+    shortLabel: 'Greeting Cards',
+    description: 'Beautiful greeting card designs with listed prices.',
+    image: IMG.greeting,
+    showPrice: true,
+    paymentType: 'advance',
+    whatsappMode: 'more',
+    subcategories: null,
+  },
+  {
+    id: 'eidi-envelopes',
+    slug: 'eidi-envelopes',
+    label: 'Money / Eidi Envelopes',
+    shortLabel: 'Eidi Envelopes',
+    description: 'Festive eidi envelope designs with listed prices.',
+    image: IMG.eidi,
+    showPrice: true,
+    paymentType: 'advance',
+    whatsappMode: 'more',
+    subcategories: null,
   },
 ]
 
-export const categories = [
-  { id: 'wedding', label: 'Wedding Invitations', icon: '💌' },
-  { id: 'einvites', label: 'E-Invites', icon: '✉️' },
-  { id: 'cards', label: 'Cards & Favours', icon: '🎀' },
-  { id: 'packaging', label: 'Custom Packaging', icon: '📦' },
-  { id: 'gifting', label: 'Gifting', icon: '🎁' },
-]
+let productId = 1
 
-export const galleryImages = [
-  'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&h=400&fit=crop',
-  'https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop',
-  'https://images.unsplash.com/photo-1586075010923-2dd457f5f5a0?w=400&h=400&fit=crop',
-  'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=400&h=400&fit=crop',
-  'https://images.unsplash.com/photo-1522673606300-2744e24c2470?w=400&h=400&fit=crop',
-  'https://images.unsplash.com/photo-1452860606245-08befc3ff44b?w=400&h=400&fit=crop',
-  'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&h=400&fit=crop',
-  'https://images.unsplash.com/photo-1607083206968-13611e3d76db?w=400&h=400&fit=crop',
-]
+function addDesigns({ categorySlug, subcategorySlug, whatsappLabel, image, count = 4, showPrice, priceBase, paymentType, whatsappMode, categoryLabel }) {
+  return Array.from({ length: count }, (_, i) => {
+    const designNum = i + 1
+    return {
+      id: productId++,
+      name: `Design ${designNum}`,
+      category: categoryLabel,
+      categorySlug,
+      subcategorySlug: subcategorySlug || null,
+      image,
+      showPrice: showPrice ?? false,
+      price: showPrice ? `PKR ${priceBase + designNum * 350}` : null,
+      paymentType,
+      whatsappMode,
+      whatsappLabel,
+    }
+  })
+}
+
+function buildAllProducts() {
+  const all = []
+
+  for (const cat of shopCategories) {
+    if (cat.subcategories?.length) {
+      for (const sub of cat.subcategories) {
+        all.push(
+          ...addDesigns({
+            categorySlug: cat.slug,
+            subcategorySlug: sub.slug,
+            whatsappLabel: sub.whatsappPrefix,
+            image: cat.image,
+            showPrice: cat.showPrice,
+            priceBase: cat.slug === 'stationary-items' ? 800 : 1200,
+            paymentType: cat.paymentType,
+            whatsappMode: cat.whatsappMode,
+            categoryLabel: cat.label,
+          })
+        )
+      }
+    } else {
+      const prefixMap = {
+        'wedding-invitations': 'Wedding Invitation',
+        pamphlets: 'Pamphlet',
+        'vinyl-stickers': 'Vinyl Sticker',
+        'greeting-cards': 'Greeting Card',
+        'eidi-envelopes': 'Eidi Envelope',
+      }
+      all.push(
+        ...addDesigns({
+          categorySlug: cat.slug,
+          whatsappLabel: prefixMap[cat.slug] || cat.label,
+          image: cat.image,
+          showPrice: cat.showPrice,
+          priceBase: cat.showPrice ? 1500 : 0,
+          paymentType: cat.paymentType,
+          whatsappMode: cat.whatsappMode,
+          categoryLabel: cat.label,
+        })
+      )
+    }
+  }
+
+  return all
+}
+
+export const products = buildAllProducts()
+export const categories = shopCategories
+
+export function getFeaturedProducts() {
+  const picks = [
+    { categorySlug: 'wedding-invitations', design: 1 },
+    { categorySlug: 'digital-e-invitations', subcategorySlug: 'animated', design: 2 },
+    { categorySlug: 'nikkahnama', subcategorySlug: 'hand-painted', design: 1 },
+    { categorySlug: 'greeting-cards', design: 1 },
+  ]
+
+  return picks
+    .map(({ categorySlug, subcategorySlug, design }) =>
+      products.find(
+        (product) =>
+          product.categorySlug === categorySlug &&
+          product.subcategorySlug === (subcategorySlug ?? null) &&
+          product.name === `Design ${design}`
+      )
+    )
+    .filter(Boolean)
+}
+
+export function getCategoryBySlug(slug) {
+  return shopCategories.find((c) => c.slug === slug)
+}
+
+export function getSubcategory(category, subSlug) {
+  return category?.subcategories?.find((s) => s.slug === subSlug) ?? null
+}
+
+export function getProductsByCategory(categorySlug, subcategorySlug = null) {
+  return products.filter((p) => {
+    if (p.categorySlug !== categorySlug) return false
+    if (subcategorySlug) return p.subcategorySlug === subcategorySlug
+    return true
+  })
+}

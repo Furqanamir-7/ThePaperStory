@@ -1,32 +1,64 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Loader from './components/Loader'
 import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import CategoryStrip from './components/CategoryStrip'
-import ProductGrid from './components/ProductGrid'
-import BrandStory from './components/BrandStory'
-import Testimonials from './components/Testimonials'
-import Newsletter from './components/Newsletter'
 import Footer from './components/Footer'
 import WhatsAppButton from './components/WhatsAppButton'
+import ScrollToTop from './components/ScrollToTop'
+import HomePage from './pages/HomePage'
+import AboutPage from './pages/AboutPage'
+import ShopPage from './pages/ShopPage'
+import ShopCategoryPage from './pages/ShopCategoryPage'
+import ContactPage from './pages/ContactPage'
 
-export default function App() {
-  const [loading, setLoading] = useState(true)
+function AppContent() {
+  const location = useLocation()
+  const [loaderMode, setLoaderMode] = useState('initial')
+  const prevPath = useRef(null)
+
+  useEffect(() => {
+    if (prevPath.current === null) {
+      prevPath.current = location.pathname
+      return
+    }
+    if (prevPath.current !== location.pathname) {
+      prevPath.current = location.pathname
+      setLoaderMode('route')
+    }
+  }, [location.pathname])
+
+  const showLoader = loaderMode !== null
 
   return (
     <>
-      {loading && <Loader onComplete={() => setLoading(false)} />}
+      {showLoader && (
+        <Loader
+          quick={loaderMode === 'route'}
+          onComplete={() => setLoaderMode(null)}
+        />
+      )}
       <Navbar />
       <main>
-        <Hero />
-        <CategoryStrip />
-        <ProductGrid />
-        <BrandStory />
-        <Testimonials />
-        <Newsletter />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/shop" element={<ShopPage />} />
+          <Route path="/shop/:category/:subcategory" element={<ShopCategoryPage />} />
+          <Route path="/shop/:category" element={<ShopCategoryPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+        </Routes>
       </main>
       <Footer />
       <WhatsAppButton />
     </>
+  )
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <ScrollToTop />
+      <AppContent />
+    </BrowserRouter>
   )
 }

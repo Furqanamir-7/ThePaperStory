@@ -17,7 +17,7 @@ export default function Newsletter() {
         ref={ref}
         className={`mx-auto max-w-2xl px-4 text-center sm:px-6 fade-in-up ${isVisible ? 'visible' : ''}`}
       >
-        <h2 className="mb-3 font-serif text-3xl font-semibold text-white sm:text-4xl">
+        <h2 className="heading-light mb-3 text-3xl font-semibold sm:text-4xl">
           Join Our Story
         </h2>
         <p className="mb-8 text-sm text-white/90 sm:text-base">

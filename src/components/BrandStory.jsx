@@ -32,11 +32,11 @@ const features = [
   },
 ]
 
-export default function BrandStory() {
+export default function BrandStory({ showHeader = true }) {
   const [ref, isVisible] = useInView()
 
   return (
-    <section id="about" className="relative overflow-hidden bg-paperstory-cream py-16 sm:py-24">
+    <section className="relative overflow-hidden section-wash py-16 sm:py-24">
       <FloralAccent className="top-10 right-10 text-paperstory-maroon" opacity={0.08} />
 
       <div
@@ -54,12 +54,12 @@ export default function BrandStory() {
         </div>
 
         <div>
-          <p className="mb-3 text-sm font-medium tracking-[0.15em] text-paperstory-rose uppercase">
-            Why The Paper Story
-          </p>
-          <h2 className="mb-6 font-serif text-3xl font-semibold text-paperstory-maroon sm:text-4xl">
-            Where Every Detail Tells Your Story
-          </h2>
+          {showHeader && (
+            <>
+              <p className="mb-3 text-sm font-medium tracking-[0.15em] text-paperstory-berry uppercase">Why The Paper Story</p>
+              <h2 className="mb-6 font-serif text-3xl font-semibold text-paperstory-maroon sm:text-4xl">Where Every Detail Tells Your Story</h2>
+            </>
+          )}
           <p className="mb-8 leading-relaxed text-gray-600">
             Born from a love of beautiful paper and meaningful moments, The Paper Story creates
             premium stationery and gifting that feels as special as the occasions they celebrate.
