@@ -1255,3 +1255,17 @@ h1, h2, h3, h4 {
   }
 }
 
+/* ── Home Our Story — section outline ── */
+.home-story-outline {
+  text-align: center;
+  padding: 2.5rem 1.75rem;
+  border: 1px solid rgba(163, 30, 59, 0.3);
+  background: transparent;
+}
+
+@media (min-width: 640px) {
+  .home-story-outline {
+    padding: 3rem 3.5rem;
+  }
+}
+
