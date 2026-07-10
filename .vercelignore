@@ -1,0 +1,10 @@
+deploy*.log
+vercel-*.log
+deploy.ps1
+deploy-result.log
+_agent-deploy.log
+PAPER STORY TEMP LOGO*
+node_modules
+dist
+.env
+.env.*
