@@ -1220,7 +1220,7 @@ h1, h2, h3, h4 {
 /* ── Home Our Story boxes ── */
 .home-story-box {
   padding: 1.5rem 1.35rem;
-  border: 1.5px solid rgba(163, 30, 59, 0.24);
+  border: 1.5px solid var(--paperstory-maroon);
   border-radius: 1rem;
   background: #fff;
   text-align: center;
