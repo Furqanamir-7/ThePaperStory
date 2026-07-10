@@ -1,6 +1,6 @@
 import { execSync } from 'node:child_process'
 
-const trackedPaths = ['index.html', 'vercel.json', 'public/']
+const trackedPaths = ['index.html', 'vercel.json', 'public/', 'api/', 'src/']
 
 function git(command) {
   return execSync(`git ${command}`, { encoding: 'utf8' }).trim()
