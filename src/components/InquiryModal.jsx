@@ -94,7 +94,7 @@ export default function InquiryModal({ product, onClose }) {
 
         {status === 'success' ? (
           <div className="order-modal-success">
-            <h2 id="inquiry-modal-title" className="heading-brand mb-3 text-2xl font-semibold">
+            <h2 id="inquiry-modal-title" className="heading-brand mb-2 text-xl font-semibold">
               Inquiry received
             </h2>
             <p className="mb-2 text-sm leading-relaxed text-gray-600">
@@ -107,20 +107,20 @@ export default function InquiryModal({ product, onClose }) {
               Our team will get back to you shortly with pricing and details. A confirmation email has been sent to{' '}
               <strong>{form.email}</strong>.
             </p>
-            <button type="button" className="cute-btn-primary mt-6 w-full" onClick={onClose}>
+            <button type="button" className="cute-btn-primary mt-5 w-full" onClick={onClose}>
               Done
             </button>
           </div>
         ) : (
           <>
-            <h2 id="inquiry-modal-title" className="heading-brand mb-1 text-2xl font-semibold">
+            <h2 id="inquiry-modal-title" className="heading-brand mb-1 text-xl font-semibold">
               Request custom order
             </h2>
-            <p className="mb-5 text-sm text-paperstory-ink/75">
+            <p className="mb-4 text-sm text-paperstory-ink/75">
               {product.category} — {product.name} · Price on request
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3">
               <input
                 type="text"
                 required

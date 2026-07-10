@@ -103,7 +103,7 @@ export default function OrderModal({ product, onClose }) {
 
         {status === 'success' ? (
           <div className="order-modal-success">
-            <h2 id="order-modal-title" className="heading-brand mb-3 text-2xl font-semibold">
+            <h2 id="order-modal-title" className="heading-brand mb-2 text-xl font-semibold">
               Thank you — order confirmed
             </h2>
             <p className="mb-2 text-sm leading-relaxed text-gray-600">
@@ -117,21 +117,21 @@ export default function OrderModal({ product, onClose }) {
                 ? 'We will contact you shortly to confirm delivery. Cash on delivery applies for stationery within Pakistan.'
                 : 'We will contact you shortly with payment and delivery details.'}
             </p>
-            <button type="button" className="cute-btn-primary mt-6 w-full" onClick={onClose}>
+            <button type="button" className="cute-btn-primary mt-5 w-full" onClick={onClose}>
               Done
             </button>
           </div>
         ) : (
           <>
-            <h2 id="order-modal-title" className="heading-brand mb-1 text-2xl font-semibold">
+            <h2 id="order-modal-title" className="heading-brand mb-1 text-xl font-semibold">
               Place order
             </h2>
-            <p className="mb-5 text-sm text-paperstory-ink/75">
+            <p className="mb-4 text-sm text-paperstory-ink/75">
               {product.category} — {product.name} · {totalLabel}
               {isCod ? ' · COD (Pakistan)' : ' · Advance payment'}
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3">
               <input
                 type="text"
                 required
