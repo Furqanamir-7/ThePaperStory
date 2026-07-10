@@ -18,7 +18,7 @@ function AboutBody() {
               src="/IMG_E2315.JPG.jpeg"
               alt="Fatima and Huzaifa — The Paper Story"
               loading="lazy"
-              className="aspect-[4/5] w-full object-cover"
+              className="aspect-[4/5] max-h-[70vh] w-full object-cover sm:max-h-none"
             />
           </div>
 

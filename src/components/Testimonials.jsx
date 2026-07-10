@@ -28,12 +28,31 @@ const testimonials = [
   },
 ]
 
-const VISIBLE = 3
+function useVisibleCount() {
+  const [visible, setVisible] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(min-width: 1024px)').matches ? 3 : 1
+  )
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)')
+    const update = () => setVisible(mq.matches ? 3 : 1)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
+
+  return visible
+}
 
 export default function Testimonials() {
   const [ref, isVisible] = useInView()
+  const visibleCount = useVisibleCount()
   const [page, setPage] = useState(0)
-  const pageCount = Math.ceil(testimonials.length / VISIBLE)
+  const pageCount = Math.ceil(testimonials.length / visibleCount)
+
+  useEffect(() => {
+    setPage(0)
+  }, [visibleCount])
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -58,7 +77,7 @@ export default function Testimonials() {
             Loved by Our Clients
           </h2>
           <p className="text-sm text-gray-600 sm:text-base">
-            A glimpse into the moments we've helped make unforgettable.
+            A glimpse into the moments we&apos;ve helped make unforgettable.
           </p>
         </div>
 
@@ -78,12 +97,15 @@ export default function Testimonials() {
               style={{ transform: `translateX(-${page * 100}%)` }}
             >
               {Array.from({ length: pageCount }, (_, pageIndex) => (
-                <div key={pageIndex} className="testimonial-slider-page">
+                <div
+                  key={pageIndex}
+                  className={`testimonial-slider-page${visibleCount === 1 ? ' testimonial-slider-page--single' : ''}`}
+                >
                   {testimonials
-                    .slice(pageIndex * VISIBLE, pageIndex * VISIBLE + VISIBLE)
+                    .slice(pageIndex * visibleCount, pageIndex * visibleCount + visibleCount)
                     .map((t) => (
                       <blockquote key={t.name} className="testimonial-card">
-                        <p className="testimonial-quote">"{t.quote}"</p>
+                        <p className="testimonial-quote">&ldquo;{t.quote}&rdquo;</p>
                         <footer className="testimonial-name">— {t.name}</footer>
                       </blockquote>
                     ))}

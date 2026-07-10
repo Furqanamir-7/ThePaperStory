@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   DEFAULT_COUNTRY,
   MARKETING_CONSENT_SHORT,
@@ -76,6 +76,13 @@ export default function InquiryModal({ product, onClose }) {
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState('')
   const [inquiryNumber, setInquiryNumber] = useState('')
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [])
 
   if (!product) return null
 

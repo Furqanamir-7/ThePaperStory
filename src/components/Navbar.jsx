@@ -31,15 +31,15 @@ export default function Navbar() {
   return (
     <>
       <header className="fixed top-0 right-0 left-0 z-50 bg-paperstory-maroon shadow-md">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 sm:py-5 lg:px-8">
-          <Link to="/" className="flex shrink-0 items-center gap-3 sm:gap-4">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-5 lg:px-8">
+          <Link to="/" className="flex min-w-0 items-center gap-2 sm:gap-4">
             <img
               src="/logo.png"
               alt=""
               aria-hidden="true"
-              className="h-12 w-12 rounded-full sm:h-14 sm:w-14"
+              className="h-10 w-10 shrink-0 rounded-full sm:h-14 sm:w-14"
             />
-            <BrandWordmark size="nav" variant="light" />
+            <BrandWordmark size="nav" variant="light" className="min-w-0 truncate" />
           </Link>
 
           <ul className="hidden items-center gap-7 lg:flex xl:gap-9">

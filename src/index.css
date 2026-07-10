@@ -31,7 +31,7 @@
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   margin: 0;
@@ -39,6 +39,7 @@ body {
   background-color: var(--paperstory-cream);
   color: #4A2835;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4 {
@@ -359,7 +360,7 @@ h1, h2, h3, h4 {
   justify-content: center;
   background: linear-gradient(180deg, #FAF6F0 0%, #FAF2F4 100%);
   cursor: grab;
-  touch-action: none;
+  touch-action: pan-y;
   perspective: 900px;
 }
 
@@ -426,6 +427,12 @@ h1, h2, h3, h4 {
   gap: 1.5rem;
 }
 
+.testimonial-slider-page--single {
+  grid-template-columns: 1fr;
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
 .testimonial-card {
   border-radius: 1.25rem;
   background: var(--paperstory-wash);
@@ -488,16 +495,22 @@ h1, h2, h3, h4 {
 }
 
 @media (max-width: 1023px) {
+  .testimonial-slider {
+    gap: 0.35rem;
+  }
+
   .testimonial-slider-btn {
-    display: none;
+    width: 2.25rem;
+    height: 2.25rem;
+    font-size: 1.25rem;
   }
 
   .testimonial-card {
-    padding: 1rem;
+    padding: 1.25rem;
   }
 
   .testimonial-quote {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
   }
 }
 
@@ -749,6 +762,29 @@ h1, h2, h3, h4 {
 @keyframes pills-marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
+}
+
+@media (max-width: 1023px) {
+  .pills-bar-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .pills-bar-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pills-bar-scroll--marquee .pills-bar-marquee-track {
+    animation: none;
+    width: max-content;
+    padding: 0 1rem;
+  }
+
+  .pills-bar-scroll--marquee .pills-bar-marquee-track > [aria-hidden="true"] {
+    display: none;
+  }
 }
 
 .pills-bar-fade {
@@ -1059,25 +1095,40 @@ h1, h2, h3, h4 {
   inset: 0;
   z-index: 60;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  padding: 1rem;
+  padding: 0;
   background: rgba(74, 40, 53, 0.45);
   backdrop-filter: blur(4px);
+}
+
+@media (min-width: 480px) {
+  .order-modal-backdrop {
+    align-items: center;
+    padding: 1rem;
+  }
 }
 
 .order-modal {
   position: relative;
   width: 100%;
   max-width: 22rem;
-  max-height: calc(100vh - 1.5rem);
-  overflow: hidden;
-  border-radius: 0.875rem;
+  max-height: min(92dvh, calc(100vh - 1rem));
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 0.875rem 0.875rem 0 0;
   background: #fff;
   padding: 0.875rem 1rem 1rem;
   box-shadow: 0 20px 40px rgba(74, 40, 53, 0.18);
   display: flex;
   flex-direction: column;
+}
+
+@media (min-width: 480px) {
+  .order-modal {
+    border-radius: 0.875rem;
+  }
 }
 
 .order-modal-header {
@@ -1105,6 +1156,12 @@ h1, h2, h3, h4 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.35rem;
+}
+
+@media (max-width: 420px) {
+  .order-modal-grid-2 {
+    grid-template-columns: 1fr;
+  }
 }
 
 .order-modal-phone {
@@ -1183,8 +1240,8 @@ h1, h2, h3, h4 {
 /* ── WhatsApp FAB ── */
 .whatsapp-fab {
   position: fixed;
-  right: 1.25rem;
-  bottom: 1.25rem;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, calc(1rem + env(safe-area-inset-bottom)));
   z-index: 50;
   display: flex;
   align-items: center;
@@ -1261,6 +1318,12 @@ h1, h2, h3, h4 {
   padding: 2.5rem 1.75rem;
   border: 1px solid rgba(163, 30, 59, 0.3);
   background: transparent;
+}
+
+@media (max-width: 420px) {
+  .home-story-outline {
+    padding: 1.5rem 1rem;
+  }
 }
 
 @media (min-width: 640px) {

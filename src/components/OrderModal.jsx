@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   DEFAULT_COUNTRY,
   DELIVERY_ESTIMATE,
@@ -78,6 +78,13 @@ export default function OrderModal({ product, onClose }) {
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState('')
   const [orderNumber, setOrderNumber] = useState('')
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [])
 
   if (!product) return null
 

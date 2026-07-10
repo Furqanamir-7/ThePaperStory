@@ -16,7 +16,7 @@ export default function PageHeader({ title, subtitle, breadcrumb, compact = fals
             {breadcrumb}
           </p>
         )}
-        <h1 className={`heading-light font-semibold ${compact ? 'mb-2 text-3xl sm:text-4xl' : 'mb-4 text-4xl sm:text-5xl'}`}>
+        <h1 className={`heading-light font-semibold ${compact ? 'mb-2 text-2xl sm:text-4xl' : 'mb-4 text-3xl sm:text-5xl'}`}>
           {title}
         </h1>
         {subtitle && (
