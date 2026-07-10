@@ -67,13 +67,13 @@ export default function Testimonials() {
   }
 
   return (
-    <section className="bg-paperstory-cream py-16 sm:py-20">
+    <section className="bg-paperstory-cream py-8 sm:py-16">
       <div
         ref={ref}
         className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 fade-in-up ${isVisible ? 'visible' : ''}`}
       >
-        <div className="mb-10 text-center">
-          <h2 className="heading-brand mb-3 text-3xl font-semibold sm:text-4xl">
+        <div className="mb-6 text-center sm:mb-10">
+          <h2 className="heading-brand mb-2 text-2xl font-semibold sm:mb-3 sm:text-4xl">
             Loved by Our Clients
           </h2>
           <p className="text-sm text-gray-600 sm:text-base">

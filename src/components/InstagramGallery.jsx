@@ -32,16 +32,16 @@ export default function InstagramGallery() {
   const [ref, isVisible] = useInView()
 
   return (
-    <section className="section-wash py-16 sm:py-20">
+    <section className="section-wash py-8 sm:py-16">
       <div
         ref={ref}
         className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 fade-in-up ${isVisible ? 'visible' : ''}`}
       >
-        <div className="mb-10 text-center sm:mb-12">
-          <p className="mb-3 text-xs font-semibold tracking-[0.22em] text-paperstory-maroon/65 uppercase">
+        <div className="mb-6 text-center sm:mb-12">
+          <p className="mb-2 text-xs font-semibold tracking-[0.22em] text-paperstory-maroon/65 uppercase sm:mb-3">
             @thepaperstory.co
           </p>
-          <h2 className="heading-brand mb-3 text-3xl font-semibold sm:text-4xl">Instagram Gallery</h2>
+          <h2 className="heading-brand mb-2 text-2xl font-semibold sm:mb-3 sm:text-4xl">Instagram Gallery</h2>
           <p className="mx-auto max-w-xl text-sm text-paperstory-ink/75 sm:text-base">
             A peek into recent designs, packaging, and celebration moments.
           </p>
@@ -82,7 +82,7 @@ export default function InstagramGallery() {
           ))}
         </div>
 
-        <div className="mt-10 text-center">
+        <div className="mt-6 text-center sm:mt-10">
           <a
             href={INSTAGRAM_URL}
             target="_blank"

@@ -12,12 +12,12 @@ export default function Newsletter() {
   }
 
   return (
-    <section className="gradient-section py-16 sm:py-20">
+    <section className="gradient-section py-10 sm:py-16">
       <div
         ref={ref}
         className={`mx-auto max-w-2xl px-4 text-center sm:px-6 fade-in-up ${isVisible ? 'visible' : ''}`}
       >
-        <h2 className="heading-light mb-3 text-3xl font-semibold sm:text-4xl">
+        <h2 className="heading-light mb-3 text-2xl font-semibold sm:text-4xl">
           Join Our Story
         </h2>
         <p className="mb-8 text-sm text-white/90 sm:text-base">

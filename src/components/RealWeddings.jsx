@@ -27,16 +27,16 @@ export default function RealWeddings() {
   const [ref, isVisible] = useInView()
 
   return (
-    <section className="bg-paperstory-cream py-16 sm:py-20">
+    <section className="bg-paperstory-cream py-8 sm:py-16">
       <div
         ref={ref}
         className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 fade-in-up ${isVisible ? 'visible' : ''}`}
       >
-        <div className="mb-10 text-center sm:mb-12">
-          <p className="mb-3 text-xs font-semibold tracking-[0.22em] text-paperstory-maroon/65 uppercase">
+        <div className="mb-6 text-center sm:mb-12">
+          <p className="mb-2 text-xs font-semibold tracking-[0.22em] text-paperstory-maroon/65 uppercase sm:mb-3">
             Real moments
           </p>
-          <h2 className="heading-brand mb-3 text-3xl font-semibold sm:text-4xl">Real Weddings</h2>
+          <h2 className="heading-brand mb-2 text-2xl font-semibold sm:mb-3 sm:text-4xl">Real Weddings</h2>
           <p className="mx-auto max-w-xl text-sm text-paperstory-ink/75 sm:text-base">
             Love stories brought to life through paper, print, and thoughtful detail.
           </p>

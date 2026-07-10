@@ -1,6 +1,6 @@
 const IMG = {
   wedding: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&h=600&fit=crop',
-  digital: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=600&fit=crop',
+  digital: '/e-invites/static-1.png',
   nikkah: 'https://images.unsplash.com/photo-1522673606300-2744e24c2470?w=800&h=600&fit=crop',
   favours: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=800&h=600&fit=crop',
   packaging: 'https://images.unsplash.com/photo-1586075010923-2dd457f5f5a0?w=800&h=600&fit=crop',
@@ -11,6 +11,19 @@ const IMG = {
   greeting: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=800&h=600&fit=crop',
   eidi: 'https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=800&h=600&fit=crop',
 }
+
+export const STATIC_E_INVITE_IMAGES = [
+  '/e-invites/static-1.png',
+  '/e-invites/static-2.png',
+  '/e-invites/static-3.png',
+  '/e-invites/static-4.png',
+  '/e-invites/static-5.jpg',
+  '/e-invites/static-6.jpg',
+  '/e-invites/static-7.jpg',
+  '/e-invites/static-8.jpg',
+  '/e-invites/static-9.jpg',
+  '/e-invites/static-10.jpg',
+]
 
 export const INSTAGRAM_URL = 'https://www.instagram.com/thepaperstory.co/'
 
@@ -169,8 +182,21 @@ export const shopCategories = [
 
 let productId = 1
 
-function addDesigns({ categorySlug, subcategorySlug, whatsappLabel, image, count = 4, showPrice, priceBase, paymentType, whatsappMode, categoryLabel }) {
-  return Array.from({ length: count }, (_, i) => {
+function addDesigns({
+  categorySlug,
+  subcategorySlug,
+  whatsappLabel,
+  image,
+  images,
+  count = 4,
+  showPrice,
+  priceBase,
+  paymentType,
+  whatsappMode,
+  categoryLabel,
+}) {
+  const total = images?.length || count
+  return Array.from({ length: total }, (_, i) => {
     const designNum = i + 1
     return {
       id: productId++,
@@ -178,7 +204,7 @@ function addDesigns({ categorySlug, subcategorySlug, whatsappLabel, image, count
       category: categoryLabel,
       categorySlug,
       subcategorySlug: subcategorySlug || null,
-      image,
+      image: images?.[i] || image,
       showPrice: showPrice ?? false,
       price: showPrice ? `PKR ${priceBase + designNum * 350}` : null,
       paymentType,
@@ -194,12 +220,15 @@ function buildAllProducts() {
   for (const cat of shopCategories) {
     if (cat.subcategories?.length) {
       for (const sub of cat.subcategories) {
+        const isStaticEInvite = cat.slug === 'digital-e-invitations' && sub.slug === 'static'
         all.push(
           ...addDesigns({
             categorySlug: cat.slug,
             subcategorySlug: sub.slug,
             whatsappLabel: sub.whatsappPrefix,
             image: cat.image,
+            images: isStaticEInvite ? STATIC_E_INVITE_IMAGES : undefined,
+            count: isStaticEInvite ? STATIC_E_INVITE_IMAGES.length : 4,
             showPrice: cat.showPrice,
             priceBase: cat.slug === 'stationary-items' ? 800 : 1200,
             paymentType: cat.paymentType,
@@ -240,7 +269,7 @@ export const categories = shopCategories
 export function getFeaturedProducts() {
   const picks = [
     { categorySlug: 'wedding-invitations', design: 1 },
-    { categorySlug: 'digital-e-invitations', subcategorySlug: 'animated', design: 2 },
+    { categorySlug: 'digital-e-invitations', subcategorySlug: 'static', design: 1 },
     { categorySlug: 'nikkahnama', subcategorySlug: 'hand-painted', design: 1 },
     { categorySlug: 'greeting-cards', design: 1 },
   ]

@@ -63,12 +63,12 @@ export default function PaperStoryDifference() {
   const [ref, isVisible] = useInView()
 
   return (
-    <section className="section-wash py-16 sm:py-20">
+    <section className="section-wash py-8 sm:py-16">
       <div
         ref={ref}
         className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 fade-in-up ${isVisible ? 'visible' : ''}`}
       >
-        <h2 className="heading-brand mb-12 text-center text-3xl font-semibold sm:mb-14 sm:text-4xl">
+        <h2 className="heading-brand mb-6 text-center text-2xl font-semibold sm:mb-12 sm:text-4xl">
           The Paper Story Difference
         </h2>
 
@@ -101,7 +101,7 @@ export default function PaperStoryDifference() {
           ))}
         </div>
 
-        <div className="mt-12 text-center">
+        <div className="mt-8 text-center sm:mt-12">
           <Link to="/shop" className="text-sm font-semibold tracking-wide text-paperstory-maroon uppercase hover:underline">
             Explore the collection →
           </Link>
