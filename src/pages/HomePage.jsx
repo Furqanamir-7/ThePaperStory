@@ -1,7 +1,6 @@
 import Hero from '../components/Hero'
 import ProductGrid from '../components/ProductGrid'
 import PaperStoryDifference from '../components/PaperStoryDifference'
-import BrandStory from '../components/BrandStory'
 import RealWeddings from '../components/RealWeddings'
 import InstagramGallery from '../components/InstagramGallery'
 import Testimonials from '../components/Testimonials'
@@ -19,7 +18,6 @@ export default function HomePage() {
         showViewAll
       />
       <PaperStoryDifference />
-      <BrandStory eyebrow="Our Story" title="More than paper. Designed to hold emotions." />
       <ProductGrid
         id="best-sellers"
         title="Best Sellers"
