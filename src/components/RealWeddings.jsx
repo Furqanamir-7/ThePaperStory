@@ -12,7 +12,7 @@ const weddings = [
     detail: 'Nikkah Certificate suite',
   },
   {
-    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=1000&fit=crop',
+    image: '/e-invites/static-2.png',
     couple: 'Zainab & Ali',
     detail: 'Animated e-invite & stationery',
   },

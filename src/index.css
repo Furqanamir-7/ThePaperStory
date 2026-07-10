@@ -73,6 +73,16 @@ h1, h2, h3, h4 {
     var(--paperstory-pale) 65%,
     var(--paperstory-blush) 100%
   );
+  min-height: 0;
+}
+
+/* Never force a full-viewport empty cream hero on phones/tablets */
+@media (max-width: 1023px) {
+  .cute-hero,
+  .cute-hero > .relative.mx-auto {
+    min-height: 0 !important;
+    height: auto;
+  }
 }
 
 .hero-floral-bg,
@@ -353,7 +363,7 @@ h1, h2, h3, h4 {
   --tilt-x: 0deg;
   --tilt-y: 0deg;
   position: relative;
-  height: 200px;
+  height: 180px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -397,15 +407,21 @@ h1, h2, h3, h4 {
   pointer-events: none;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
+  .wedding-card-preview-stage {
+    height: 300px;
+  }
+}
+
+@media (min-width: 1024px) {
   .wedding-card-preview-stage {
     height: 360px;
   }
 }
 
-@media (max-width: 639px) {
+@media (max-width: 767px) {
   .wedding-card-window {
-    max-width: 280px;
+    max-width: 260px;
   }
 }
 
@@ -558,13 +574,23 @@ h1, h2, h3, h4 {
 
 /* ── Marquee ── */
 .marquee-ticker {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  position: relative;
+  right: auto;
+  bottom: auto;
+  left: auto;
   overflow: hidden;
   background: var(--paperstory-maroon-deep);
-  padding: 0.75rem 0;
+  padding: 0.55rem 0;
+}
+
+@media (min-width: 1024px) {
+  .marquee-ticker {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0.75rem 0;
+  }
 }
 
 .marquee-track {
@@ -675,6 +701,15 @@ h1, h2, h3, h4 {
 .fade-in-up.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Avoid invisible cream voids on mobile while tall sections await IntersectionObserver */
+@media (max-width: 767px) {
+  .fade-in-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 @keyframes float-flower {

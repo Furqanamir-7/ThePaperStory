@@ -9,12 +9,12 @@ const WHATSAPP_URL =
 
 export default function Hero() {
   return (
-    <section id="home" className="cute-hero relative overflow-hidden sm:min-h-screen">
+    <section id="home" className="cute-hero relative overflow-hidden lg:min-h-screen">
       <HeroFloralBg />
       <div className="pointer-events-none absolute -top-20 -left-20 h-64 w-64 rounded-full bg-paperstory-blush/60 blur-3xl" />
       <div className="pointer-events-none absolute top-1/3 -right-16 h-72 w-72 rounded-full bg-paperstory-berry/20 blur-3xl" />
 
-      <div className="relative mx-auto flex max-w-6xl flex-col justify-center px-4 pt-24 pb-12 sm:min-h-screen sm:px-6 sm:pt-32 sm:pb-28 lg:flex-row lg:items-center lg:gap-12 lg:px-8 lg:pb-28">
+      <div className="relative mx-auto flex max-w-6xl flex-col justify-center px-4 pt-24 pb-8 sm:px-6 sm:pt-28 sm:pb-12 lg:min-h-screen lg:flex-row lg:items-center lg:gap-12 lg:px-8 lg:pb-28 lg:pt-32">
         <div className="flex min-w-0 flex-1 flex-col items-center text-center lg:items-start lg:text-left">
           <p className="mb-3 text-[11px] font-semibold tracking-[0.35em] text-paperstory-maroon/70 uppercase sm:mb-4">
             Welcome to

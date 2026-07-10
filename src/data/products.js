@@ -220,15 +220,15 @@ function buildAllProducts() {
   for (const cat of shopCategories) {
     if (cat.subcategories?.length) {
       for (const sub of cat.subcategories) {
-        const isStaticEInvite = cat.slug === 'digital-e-invitations' && sub.slug === 'static'
+        const isEInvite = cat.slug === 'digital-e-invitations'
         all.push(
           ...addDesigns({
             categorySlug: cat.slug,
             subcategorySlug: sub.slug,
             whatsappLabel: sub.whatsappPrefix,
             image: cat.image,
-            images: isStaticEInvite ? STATIC_E_INVITE_IMAGES : undefined,
-            count: isStaticEInvite ? STATIC_E_INVITE_IMAGES.length : 4,
+            images: isEInvite ? STATIC_E_INVITE_IMAGES : undefined,
+            count: isEInvite ? STATIC_E_INVITE_IMAGES.length : 4,
             showPrice: cat.showPrice,
             priceBase: cat.slug === 'stationary-items' ? 800 : 1200,
             paymentType: cat.paymentType,
