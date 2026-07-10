@@ -8,6 +8,9 @@ export function useInView(options = {}) {
     const el = ref.current
     if (!el) return
 
+    // Prefer any intersection — tall mobile sections never reach a high threshold ratio.
+    const { threshold = 0, rootMargin = '80px 0px', ...rest } = options
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -15,7 +18,7 @@ export function useInView(options = {}) {
           observer.unobserve(el)
         }
       },
-      { threshold: 0.15, ...options }
+      { threshold, rootMargin, ...rest }
     )
 
     observer.observe(el)

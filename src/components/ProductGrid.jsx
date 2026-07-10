@@ -18,13 +18,13 @@ export default function ProductGrid({
   const isVisibleNow = showOnLoad || isVisible
 
   const spacing = compactTop
-    ? 'pt-4 pb-8 sm:pt-5 sm:pb-10'
-    : 'py-8 sm:py-16'
+    ? 'pt-4 pb-5 sm:pt-5 sm:pb-10'
+    : 'py-5 sm:py-16'
 
   return (
     <section id={id} className={`scroll-mt-24 bg-paperstory-cream ${spacing}`}>
       <div ref={ref} className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 fade-in-up ${isVisibleNow ? 'visible' : ''}`}>
-        <div className={`text-center ${compactTop ? 'mb-6 sm:mb-8' : 'mb-6 sm:mb-10'}`}>
+        <div className={`text-center ${compactTop ? 'mb-5 sm:mb-8' : 'mb-5 sm:mb-10'}`}>
           <h2 className="heading-brand mb-2 text-2xl font-semibold sm:mb-3 sm:text-4xl">{title}</h2>
           {subtitle && <p className="mx-auto max-w-xl text-sm text-paperstory-ink/75 sm:text-base">{subtitle}</p>}
         </div>

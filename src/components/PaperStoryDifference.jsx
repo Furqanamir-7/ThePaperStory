@@ -63,22 +63,22 @@ export default function PaperStoryDifference() {
   const [ref, isVisible] = useInView()
 
   return (
-    <section className="section-wash py-8 sm:py-16">
+    <section className="section-wash py-5 sm:py-16">
       <div
         ref={ref}
         className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 fade-in-up ${isVisible ? 'visible' : ''}`}
       >
-        <h2 className="heading-brand mb-6 text-center text-2xl font-semibold sm:mb-12 sm:text-4xl">
+        <h2 className="heading-brand mb-4 text-center text-2xl font-semibold sm:mb-12 sm:text-4xl">
           The Paper Story Difference
         </h2>
 
         <div className="difference-grid">
           {pillars.map((pillar) => (
             <div key={pillar.title} className="difference-item">
-              <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center text-paperstory-maroon">
-                <div className="h-14 w-14">{pillar.icon}</div>
+              <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center text-paperstory-maroon sm:mb-5 sm:h-16 sm:w-16">
+                <div className="h-12 w-12 sm:h-14 sm:w-14">{pillar.icon}</div>
               </div>
-              <h3 className="mb-3 font-serif text-xl font-semibold italic text-paperstory-ink">
+              <h3 className="mb-2 font-serif text-lg font-semibold italic text-paperstory-ink sm:mb-3 sm:text-xl">
                 {pillar.title}
               </h3>
               <p className="mx-auto max-w-[16rem] text-sm leading-relaxed text-paperstory-ink/70">
@@ -101,7 +101,7 @@ export default function PaperStoryDifference() {
           ))}
         </div>
 
-        <div className="mt-8 text-center sm:mt-12">
+        <div className="mt-5 text-center sm:mt-12">
           <Link to="/shop" className="text-sm font-semibold tracking-wide text-paperstory-maroon uppercase hover:underline">
             Explore the collection →
           </Link>

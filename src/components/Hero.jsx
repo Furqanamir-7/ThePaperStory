@@ -9,18 +9,18 @@ const WHATSAPP_URL =
 
 export default function Hero() {
   return (
-    <section id="home" className="cute-hero relative min-h-screen overflow-hidden">
+    <section id="home" className="cute-hero relative overflow-hidden sm:min-h-screen">
       <HeroFloralBg />
       <div className="pointer-events-none absolute -top-20 -left-20 h-64 w-64 rounded-full bg-paperstory-blush/60 blur-3xl" />
       <div className="pointer-events-none absolute top-1/3 -right-16 h-72 w-72 rounded-full bg-paperstory-berry/20 blur-3xl" />
 
-      <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-4 pt-28 pb-28 sm:px-6 sm:pt-32 sm:pb-28 lg:flex-row lg:items-center lg:gap-12 lg:px-8 lg:pb-28">
+      <div className="relative mx-auto flex max-w-6xl flex-col justify-center px-4 pt-24 pb-12 sm:min-h-screen sm:px-6 sm:pt-32 sm:pb-28 lg:flex-row lg:items-center lg:gap-12 lg:px-8 lg:pb-28">
         <div className="flex min-w-0 flex-1 flex-col items-center text-center lg:items-start lg:text-left">
-          <p className="mb-4 text-[11px] font-semibold tracking-[0.35em] text-paperstory-maroon/70 uppercase">
+          <p className="mb-3 text-[11px] font-semibold tracking-[0.35em] text-paperstory-maroon/70 uppercase sm:mb-4">
             Welcome to
           </p>
 
-          <div className="mb-6 flex max-w-full items-center gap-3 sm:gap-4">
+          <div className="mb-4 flex max-w-full items-center gap-3 sm:mb-6 sm:gap-4">
             <img
               src="/logo.png"
               alt=""
@@ -30,7 +30,7 @@ export default function Hero() {
             <BrandWordmark size="lg" variant="dark" className="min-w-0" />
           </div>
 
-          <p className="mb-6 max-w-md px-1 font-serif text-lg leading-relaxed text-paperstory-ink/90 italic sm:text-2xl">
+          <p className="mb-4 max-w-md px-1 font-serif text-lg leading-relaxed text-paperstory-ink/90 italic sm:mb-6 sm:text-2xl">
             More than paper. Designed to hold emotions.
           </p>
 
@@ -47,7 +47,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-1 items-center justify-center lg:mt-0">
+        <div className="mt-6 flex flex-1 items-center justify-center sm:mt-10 lg:mt-0">
           <PhoneMockup />
         </div>
       </div>
