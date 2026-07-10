@@ -72,9 +72,9 @@ export default function PaperStoryDifference() {
           The Paper Story Difference
         </h2>
 
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        <div className="difference-grid">
           {pillars.map((pillar) => (
-            <div key={pillar.title} className="text-center">
+            <div key={pillar.title} className="difference-item">
               <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center text-paperstory-maroon">
                 <div className="h-14 w-14">{pillar.icon}</div>
               </div>

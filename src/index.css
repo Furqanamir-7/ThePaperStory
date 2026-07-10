@@ -1217,12 +1217,41 @@ h1, h2, h3, h4 {
   70%, 100% { transform: scale(1.35); opacity: 0; }
 }
 
-/* ── Home Our Story boxes ── */
-.home-story-box {
-  padding: 1.5rem 1.35rem;
-  border: 1.5px solid var(--paperstory-maroon);
-  border-radius: 1rem;
-  background: #fff;
+/* ── Paper Story Difference — line outlines ── */
+.difference-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .difference-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .difference-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+}
+
+.difference-item {
   text-align: center;
+  padding: 1.5rem 1.25rem;
+  border: 1px solid rgba(163, 30, 59, 0.28);
+  background: transparent;
+}
+
+@media (min-width: 1024px) {
+  .difference-item {
+    border: none;
+    border-right: 1px solid rgba(163, 30, 59, 0.28);
+    padding: 0.5rem 1.5rem;
+  }
+
+  .difference-item:last-child {
+    border-right: none;
+  }
 }
 
