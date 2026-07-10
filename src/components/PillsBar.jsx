@@ -15,7 +15,20 @@ function PillLinks({ items, suffix = '', hidden = false }) {
   ))
 }
 
-export default function PillsBar({ items, ariaLabel = 'Filter' }) {
+export default function PillsBar({ items, ariaLabel = 'Filter', static: isStatic = false }) {
+  if (isStatic) {
+    return (
+      <nav aria-label={ariaLabel} className="pills-bar">
+        <p className="pills-bar-label">Quick filter</p>
+        <div className="pills-bar-track-wrap pills-bar-track-wrap--static">
+          <div className="pills-bar-scroll pills-bar-scroll--static">
+            <PillLinks items={items} />
+          </div>
+        </div>
+      </nav>
+    )
+  }
+
   return (
     <nav aria-label={ariaLabel} className="pills-bar">
       <p className="pills-bar-label">Quick filter</p>

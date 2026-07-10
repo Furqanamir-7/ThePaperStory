@@ -20,5 +20,5 @@ export default function SubcategoryPills({ category, activeSubSlug = null }) {
     })),
   ]
 
-  return <PillsBar items={items} ariaLabel="Filter by subcategory" />
+  return <PillsBar items={items} ariaLabel="Filter by subcategory" static />
 }
