@@ -1,6 +1,7 @@
 import Hero from '../components/Hero'
 import ProductGrid from '../components/ProductGrid'
 import PaperStoryDifference from '../components/PaperStoryDifference'
+import OurStoryHome from '../components/OurStoryHome'
 import RealWeddings from '../components/RealWeddings'
 import InstagramGallery from '../components/InstagramGallery'
 import Testimonials from '../components/Testimonials'
@@ -18,6 +19,7 @@ export default function HomePage() {
         showViewAll
       />
       <PaperStoryDifference />
+      <OurStoryHome />
       <ProductGrid
         id="best-sellers"
         title="Best Sellers"
