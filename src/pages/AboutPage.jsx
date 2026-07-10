@@ -12,24 +12,24 @@ function AboutBody() {
         ref={ref}
         className={`mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 fade-in-up ${isVisible ? 'visible' : ''}`}
       >
-        <div className="space-y-6 text-base leading-relaxed text-paperstory-ink/75 sm:text-[1.05rem]">
-          <p>
+        <div className="space-y-4">
+          <p className="about-story-box">
             The Paper Story started before we got married, with a simple idea—to create stationery that
             people would genuinely love to keep.
           </p>
-          <p>
+          <p className="about-story-box">
             We&apos;re Fatima and Huzaifa, a husband-and-wife team behind the brand. Fatima, a
             traditional artist and self-taught graphic designer, designs every piece, while Huzaifa
             takes care of the printing and production to make sure each order is finished to the
             highest standard.
           </p>
-          <p>
+          <p className="about-story-box">
             We don&apos;t have a large team, and that&apos;s exactly how we like it. Every order is
             designed, printed, checked, and packed by us. It takes more time, but it means we know
             every piece that leaves our studio meets the quality we&apos;d be proud to put our name
             on.
           </p>
-          <p>
+          <p className="about-story-box">
             From wedding invitations to keepsakes and custom stationery, everything we create is made
             with care and attention to detail. We&apos;re grateful to be part of your celebrations and
             hope our work becomes a small but meaningful part of your story.
@@ -37,7 +37,7 @@ function AboutBody() {
         </div>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2">
-          <div className="rounded-2xl bg-paperstory-wash px-6 py-7 text-center">
+          <div className="about-founder-box">
             <p className="mb-1 text-xs font-semibold tracking-[0.18em] text-paperstory-maroon/65 uppercase">
               Design
             </p>
@@ -46,7 +46,7 @@ function AboutBody() {
               Traditional artist &amp; self-taught graphic designer — designing every piece with care.
             </p>
           </div>
-          <div className="rounded-2xl bg-paperstory-wash px-6 py-7 text-center">
+          <div className="about-founder-box">
             <p className="mb-1 text-xs font-semibold tracking-[0.18em] text-paperstory-maroon/65 uppercase">
               Production
             </p>
