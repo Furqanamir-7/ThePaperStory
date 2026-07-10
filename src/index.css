@@ -353,7 +353,7 @@ h1, h2, h3, h4 {
   --tilt-x: 0deg;
   --tilt-y: 0deg;
   position: relative;
-  height: 240px;
+  height: 200px;
   overflow: hidden;
   display: flex;
   align-items: center;
