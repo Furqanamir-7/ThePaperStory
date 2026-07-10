@@ -32,7 +32,11 @@ const features = [
   },
 ]
 
-export default function BrandStory({ showHeader = true }) {
+export default function BrandStory({
+  showHeader = true,
+  eyebrow = 'Why The Paper Story',
+  title = 'Where Every Detail Tells Your Story',
+}) {
   const [ref, isVisible] = useInView()
 
   return (
@@ -56,8 +60,8 @@ export default function BrandStory({ showHeader = true }) {
         <div>
           {showHeader && (
             <>
-              <p className="mb-3 text-sm font-medium tracking-[0.15em] text-paperstory-berry uppercase">Why The Paper Story</p>
-              <h2 className="mb-6 font-serif text-3xl font-semibold text-paperstory-maroon sm:text-4xl">Where Every Detail Tells Your Story</h2>
+              <p className="mb-3 text-sm font-medium tracking-[0.15em] text-paperstory-berry uppercase">{eyebrow}</p>
+              <h2 className="mb-6 font-serif text-3xl font-semibold text-paperstory-maroon sm:text-4xl">{title}</h2>
             </>
           )}
           <p className="mb-8 leading-relaxed text-gray-600">

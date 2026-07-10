@@ -257,6 +257,30 @@ export function getFeaturedProducts() {
     .filter(Boolean)
 }
 
+export function getBestSellers() {
+  const picks = [
+    { categorySlug: 'greeting-cards', design: 1 },
+    { categorySlug: 'eidi-envelopes', design: 2 },
+    { categorySlug: 'wedding-invitations', design: 2 },
+    { categorySlug: 'favours', subcategorySlug: 'potli', design: 1 },
+    { categorySlug: 'digital-e-invitations', subcategorySlug: 'static', design: 1 },
+    { categorySlug: 'stationary-items', subcategorySlug: 'diaries', design: 1 },
+    { categorySlug: 'nikkahnama', subcategorySlug: 'printed-with-frame', design: 1 },
+    { categorySlug: 'packaging', subcategorySlug: 'business-stickers', design: 1 },
+  ]
+
+  return picks
+    .map(({ categorySlug, subcategorySlug, design }) =>
+      products.find(
+        (product) =>
+          product.categorySlug === categorySlug &&
+          product.subcategorySlug === (subcategorySlug ?? null) &&
+          product.name === `Design ${design}`
+      )
+    )
+    .filter(Boolean)
+}
+
 export function getCategoryBySlug(slug) {
   return shopCategories.find((c) => c.slug === slug)
 }

@@ -1,8 +1,12 @@
 import Hero from '../components/Hero'
 import ProductGrid from '../components/ProductGrid'
+import PaperStoryDifference from '../components/PaperStoryDifference'
+import BrandStory from '../components/BrandStory'
+import RealWeddings from '../components/RealWeddings'
+import InstagramGallery from '../components/InstagramGallery'
 import Testimonials from '../components/Testimonials'
 import Newsletter from '../components/Newsletter'
-import { getFeaturedProducts } from '../data/products'
+import { getBestSellers, getFeaturedProducts } from '../data/products'
 
 export default function HomePage() {
   return (
@@ -14,6 +18,17 @@ export default function HomePage() {
         items={getFeaturedProducts()}
         showViewAll
       />
+      <PaperStoryDifference />
+      <BrandStory eyebrow="Our Story" title="More than paper. Designed to hold emotions." />
+      <ProductGrid
+        id="best-sellers"
+        title="Best Sellers"
+        subtitle="The designs our clients love most — from invitations to everyday stationery."
+        items={getBestSellers()}
+        showViewAll
+      />
+      <RealWeddings />
+      <InstagramGallery />
       <Testimonials />
       <Newsletter />
     </>
