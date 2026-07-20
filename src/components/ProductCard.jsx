@@ -4,11 +4,90 @@ import { canPlaceOrder } from '../data/site'
 import OrderModal from './OrderModal'
 import InquiryModal from './InquiryModal'
 
+function isVideoSrc(src = '') {
+  return /\.(mp4|webm|ogg)(\?|$)/i.test(src)
+}
+
+function ProductMedia({ product }) {
+  const gallery = product.images?.length ? product.images : [product.image]
+  const [index, setIndex] = useState(0)
+  const current = gallery[index] || product.image
+  const mediaIsVideo = isVideoSrc(current)
+  const hasGallery = gallery.length > 1
+
+  const goTo = (next) => setIndex((next + gallery.length) % gallery.length)
+
+  return (
+    <div className="relative mb-4 aspect-[4/5] overflow-hidden rounded-xl bg-paperstory-blush/30">
+      {mediaIsVideo ? (
+        <video
+          key={current}
+          src={current}
+          className="h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label={product.name}
+        />
+      ) : (
+        <img
+          key={current}
+          src={current}
+          alt={product.name}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-400 ease-out group-hover:scale-105"
+        />
+      )}
+
+      {hasGallery && (
+        <>
+          <button
+            type="button"
+            className="absolute top-1/2 left-2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-lg text-paperstory-maroon shadow"
+            onClick={(e) => {
+              e.stopPropagation()
+              goTo(index - 1)
+            }}
+            aria-label="Previous image"
+          >
+            ‹
+          </button>
+          <button
+            type="button"
+            className="absolute top-1/2 right-2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-lg text-paperstory-maroon shadow"
+            onClick={(e) => {
+              e.stopPropagation()
+              goTo(index + 1)
+            }}
+            aria-label="Next image"
+          >
+            ›
+          </button>
+          <div className="absolute bottom-2 left-1/2 z-10 flex -translate-x-1/2 gap-1.5">
+            {gallery.map((src, i) => (
+              <button
+                key={src}
+                type="button"
+                className={`h-1.5 rounded-full ${i === index ? 'w-4 bg-white' : 'w-1.5 bg-white/55'}`}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setIndex(i)
+                }}
+                aria-label={`Image ${i + 1}`}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
 export default function ProductCard({ product }) {
-  const [tapped, setTapped] = useState(false)
   const [orderOpen, setOrderOpen] = useState(false)
   const [inquiryOpen, setInquiryOpen] = useState(false)
-  const showOverlay = tapped
   const whatsappUrl = buildWhatsAppUrl(buildProductWhatsAppMessage(product))
   const showPrice = product.showPrice && product.price
   const isCod = product.paymentType === 'cod'
@@ -17,27 +96,7 @@ export default function ProductCard({ product }) {
   return (
     <>
       <article className="cute-card group flex flex-col overflow-hidden p-3">
-        <div
-          className="relative mb-4 aspect-[4/5] overflow-hidden rounded-xl bg-paperstory-blush/30"
-          onClick={() => setTapped(!tapped)}
-          onKeyDown={(e) => e.key === 'Enter' && setTapped(!tapped)}
-          role="button"
-          tabIndex={0}
-        >
-          <img
-            src={product.image}
-            alt={product.name}
-            loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-400 ease-out group-hover:scale-110"
-          />
-          <div
-            className={`absolute inset-0 flex items-end bg-gradient-to-t from-black/50 to-transparent p-4 transition-opacity duration-300 ${
-              showOverlay ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-            }`}
-          >
-            <span className="text-sm font-medium text-white">View Details</span>
-          </div>
-        </div>
+        <ProductMedia product={product} />
 
         <span className="mb-2 inline-block w-fit rounded-full bg-paperstory-blush px-3 py-1 text-xs font-medium text-paperstory-maroon">
           {product.category}
@@ -53,11 +112,11 @@ export default function ProductCard({ product }) {
           <p className="mb-2 text-xs font-medium text-paperstory-ink/65">Price on request</p>
         )}
 
-        {showPrice && (
-          <p className="mb-4 text-xs font-medium text-paperstory-ink/70">
-            {isCod ? 'COD available (Pakistan)' : 'Advance payment'}
-          </p>
-        )}
+        <p className="mb-4 text-xs font-medium text-paperstory-ink/70">
+          {isCod
+            ? 'COD available within Pakistan'
+            : 'Advance payment required'}
+        </p>
 
         <div className={`mt-auto flex flex-col gap-2 ${!showPrice ? 'mt-4' : ''}`}>
           {orderable && (
