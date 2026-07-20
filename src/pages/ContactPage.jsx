@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import PageHeader from '../components/PageHeader'
+import Seo from '../components/Seo'
 import { useInView } from '../hooks/useInView'
 
 import { INSTAGRAM_URL } from '../data/products'
 import { STORE_EMAIL } from '../data/site'
+import { PAGE_SEO } from '../utils/seo'
 
 const WHATSAPP_URL = 'https://wa.me/923144392928?text=Hi!%20I%27d%20like%20to%20get%20in%20touch%20about%20The%20Paper%20Story.'
 
@@ -14,6 +16,11 @@ export default function ContactPage() {
 
   return (
     <>
+      <Seo
+        title={PAGE_SEO.contact.title}
+        description={PAGE_SEO.contact.description}
+        path="/contact"
+      />
       <PageHeader title="Contact Us" subtitle="Reach out for orders, custom quotes, or any questions." breadcrumb="Home / Contact" />
       <section className="bg-paperstory-cream py-16 sm:py-20">
         <div ref={ref} className={`mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8 fade-in-up ${isVisible ? 'visible' : ''}`}>

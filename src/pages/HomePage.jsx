@@ -6,11 +6,19 @@ import RealWeddings from '../components/RealWeddings'
 import InstagramGallery from '../components/InstagramGallery'
 import Testimonials from '../components/Testimonials'
 import Newsletter from '../components/Newsletter'
+import Seo from '../components/Seo'
 import { getBestSellers, getFeaturedProducts } from '../data/products'
+import { buildOrganizationSchema, PAGE_SEO } from '../utils/seo'
 
 export default function HomePage() {
   return (
     <>
+      <Seo
+        title={PAGE_SEO.home.title}
+        description={PAGE_SEO.home.description}
+        path="/"
+        jsonLd={buildOrganizationSchema()}
+      />
       <Hero />
       <ProductGrid
         title="Featured Collection"

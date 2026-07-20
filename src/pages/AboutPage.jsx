@@ -1,7 +1,9 @@
 import PageHeader from '../components/PageHeader'
 import Testimonials from '../components/Testimonials'
 import Newsletter from '../components/Newsletter'
+import Seo from '../components/Seo'
 import { useInView } from '../hooks/useInView'
+import { PAGE_SEO } from '../utils/seo'
 
 function AboutBody() {
   const [ref, isVisible] = useInView()
@@ -77,6 +79,11 @@ function AboutBody() {
 export default function AboutPage() {
   return (
     <>
+      <Seo
+        title={PAGE_SEO.about.title}
+        description={PAGE_SEO.about.description}
+        path="/about"
+      />
       <PageHeader
         title="Our Story"
         subtitle="Stationery people would genuinely love to keep."

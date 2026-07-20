@@ -1,14 +1,21 @@
 import PageHeader from '../components/PageHeader'
 import CategoryFilterPills from '../components/CategoryFilterPills'
 import CategoryCard from '../components/CategoryCard'
+import Seo from '../components/Seo'
 import { shopCategories } from '../data/products'
 import { useInView } from '../hooks/useInView'
+import { PAGE_SEO } from '../utils/seo'
 
 export default function ShopPage() {
   const [ref, isVisible] = useInView()
 
   return (
     <>
+      <Seo
+        title={PAGE_SEO.shop.title}
+        description={PAGE_SEO.shop.description}
+        path="/shop"
+      />
       <PageHeader
         compact
         title="Shop"

@@ -3,7 +3,14 @@ import PageHeader from '../components/PageHeader'
 import ProductGrid from '../components/ProductGrid'
 import CategoryFilterPills from '../components/CategoryFilterPills'
 import SubcategoryPills from '../components/SubcategoryPills'
+import Seo from '../components/Seo'
 import { getCategoryBySlug, getProductsByCategory, getSubcategory } from '../data/products'
+import {
+  buildBreadcrumbSchema,
+  buildItemListSchema,
+  categorySeo,
+  shopPath,
+} from '../utils/seo'
 
 export default function ShopCategoryPage() {
   const { category, subcategory } = useParams()
@@ -37,9 +44,36 @@ export default function ShopCategoryPage() {
   const breadcrumb = sub
     ? `Home / Shop / ${cat.shortLabel} / ${sub.label}`
     : `Home / Shop / ${cat.shortLabel}`
+  const pagePath = shopPath(category, subcategory || null)
+  const seo = categorySeo(cat, sub)
+  const breadcrumbItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Shop', path: '/shop' },
+    { name: cat.shortLabel, path: `/shop/${category}` },
+  ]
+
+  if (sub) {
+    breadcrumbItems.push({
+      name: sub.label,
+      path: pagePath,
+    })
+  }
+
+  const structuredData = [
+    buildBreadcrumbSchema(breadcrumbItems),
+    ...(categoryProducts.length
+      ? [buildItemListSchema(categoryProducts, pagePath, title)]
+      : []),
+  ]
 
   return (
     <>
+      <Seo
+        title={seo.title}
+        description={seo.description}
+        path={pagePath}
+        jsonLd={structuredData}
+      />
       <PageHeader compact title={title} subtitle={cat.description} breadcrumb={breadcrumb} />
       <section className="bg-paperstory-cream pb-8">
         <div className="mx-auto max-w-7xl space-y-4 px-4 pt-4 sm:px-6 lg:px-8">

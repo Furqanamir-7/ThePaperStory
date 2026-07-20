@@ -266,6 +266,20 @@ function buildAllProducts() {
 export const products = buildAllProducts()
 export const categories = shopCategories
 
+export function getAllSitemapPaths() {
+  const paths = new Set(['/', '/about', '/contact', '/shop'])
+
+  for (const cat of shopCategories) {
+    paths.add(`/shop/${cat.slug}`)
+
+    for (const sub of cat.subcategories || []) {
+      paths.add(`/shop/${cat.slug}/${sub.slug}`)
+    }
+  }
+
+  return [...paths]
+}
+
 export function getFeaturedProducts() {
   const picks = [
     { categorySlug: 'wedding-invitations', design: 1 },
