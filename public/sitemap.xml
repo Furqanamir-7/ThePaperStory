@@ -31,17 +31,47 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.thepaperstory.store/shop/digital-e-invitations</loc>
+    <loc>https://www.thepaperstory.store/shop/digital-invitations</loc>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://www.thepaperstory.store/shop/digital-e-invitations/animated</loc>
+    <loc>https://www.thepaperstory.store/shop/digital-invitations/animated-invitation</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.thepaperstory.store/shop/digital-e-invitations/static</loc>
+    <loc>https://www.thepaperstory.store/shop/digital-invitations/animated-invitation/baby-announcement</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.thepaperstory.store/shop/digital-invitations/animated-invitation/birthday</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.thepaperstory.store/shop/digital-invitations/animated-invitation/wedding</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.thepaperstory.store/shop/digital-invitations/image-invitation</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.thepaperstory.store/shop/digital-invitations/image-invitation/baby-announcement</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.thepaperstory.store/shop/digital-invitations/image-invitation/wedding</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.thepaperstory.store/shop/digital-invitations/website-invitation</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
