@@ -1390,3 +1390,29 @@ h1, h2, h3, h4 {
   }
 }
 
+/* ── Website invitation preview (phone-screen size) ── */
+.website-invite-preview-link {
+  width: min(390px, 100%);
+  max-height: calc(100svh - 17rem);
+}
+
+.website-invite-preview-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: calc(100svh - 17rem);
+  object-fit: contain;
+  object-position: top center;
+  background: var(--paperstory-cream);
+}
+
+@media (max-width: 639px) {
+  .website-invite-preview-link {
+    max-height: calc(100svh - 15rem);
+  }
+
+  .website-invite-preview-img {
+    max-height: calc(100svh - 15rem);
+  }
+}
+
