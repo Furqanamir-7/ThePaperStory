@@ -1390,29 +1390,50 @@ h1, h2, h3, h4 {
   }
 }
 
-/* ── Website invitation preview (full-page display) ── */
+/* ── Website invitation preview (full-area display) ── */
+.website-invite-section {
+  display: flex;
+  flex-direction: column;
+}
+
 .website-invite-preview {
-  min-height: calc(100svh - 14rem);
-  justify-content: center;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  min-height: calc(100svh - 13.5rem);
+  padding: 0.5rem 0 0;
+}
+
+.website-invite-preview-caption {
+  flex-shrink: 0;
+  margin: 0 0 0.5rem;
+  padding: 0 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: rgba(74, 40, 53, 0.72);
 }
 
 .website-invite-preview-link {
-  width: min(100%, 520px);
-  max-height: calc(100svh - 14rem);
-  border-radius: 0;
-  border: none;
-  box-shadow: none;
-  background: transparent;
+  display: block;
+  flex: 1;
+  width: 100%;
+  min-height: calc(100svh - 15.5rem);
+  overflow: hidden;
+  transition: opacity 0.2s ease;
+}
+
+.website-invite-preview-link:hover {
+  opacity: 0.96;
 }
 
 .website-invite-preview-img {
   display: block;
   width: 100%;
-  height: auto;
-  max-height: calc(100svh - 14rem);
-  object-fit: contain;
+  height: 100%;
+  min-height: calc(100svh - 15.5rem);
+  object-fit: cover;
   object-position: center center;
-  background: transparent;
 }
 
 @media (max-width: 639px) {
@@ -1420,12 +1441,8 @@ h1, h2, h3, h4 {
     min-height: calc(100svh - 12rem);
   }
 
-  .website-invite-preview-link {
-    max-height: calc(100svh - 12rem);
-  }
-
   .website-invite-preview-img {
-    max-height: calc(100svh - 12rem);
+    min-height: calc(100svh - 14rem);
   }
 }
 

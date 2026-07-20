@@ -142,7 +142,7 @@ export default function ShopCategoryPage() {
         subtitleItalic={Boolean(sub?.tagline)}
         breadcrumb={breadcrumb}
       />
-      <section className={`bg-paperstory-cream ${isWebsiteInvitation ? 'pb-4' : 'pb-8'}`}>
+      <section className={`bg-paperstory-cream ${isWebsiteInvitation ? 'website-invite-section pb-2' : 'pb-8'}`}>
         <div className="mx-auto max-w-7xl space-y-4 px-4 pt-4 sm:px-6 lg:px-8">
           <CategoryFilterPills activeSlug={normalizedCategory} />
           <SubcategoryPills category={cat} activeSubSlug={normalizedSub} />
