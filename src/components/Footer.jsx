@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { shopCategories, INSTAGRAM_URL } from '../data/products'
-import { STORE_EMAIL } from '../data/site'
+import { STORE_EMAIL, SITE_TAGLINE } from '../data/site'
 import BrandWordmark from './BrandWordmark'
 
 export default function Footer() {
@@ -14,7 +14,7 @@ export default function Footer() {
               <BrandWordmark size="md" variant="light" />
             </div>
             <p className="mb-4 max-w-xs text-sm text-paperstory-cream/85">
-              Premium stationery and gifting for life's most beautiful moments.
+              {SITE_TAGLINE}
             </p>
             <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm text-paperstory-cream">
               Worldwide Delivery 🌍
@@ -61,7 +61,7 @@ export default function Footer() {
               </li>
             </ul>
             <p className="mt-4 text-xs leading-relaxed text-paperstory-cream/70">
-              Stationery: COD in Pakistan. All other items: advance payment (local &amp; international).
+              Cash on Delivery (COD) is available on selected products within Pakistan, such as stationery items and cake boxes. Advance payment is required for all other products and international orders.
             </p>
           </div>
         </div>

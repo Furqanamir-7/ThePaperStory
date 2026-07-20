@@ -10,7 +10,7 @@ export default function OurStoryHome() {
         ref={ref}
         className={`mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 fade-in-up ${isVisible ? 'visible' : ''}`}
       >
-        <div className="home-story-outline">
+        <div className="text-center">
           <p className="mb-2 text-xs font-semibold tracking-[0.22em] text-paperstory-maroon/70 uppercase sm:mb-3">
             Our Story
           </p>

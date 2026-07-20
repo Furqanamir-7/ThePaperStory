@@ -12,7 +12,7 @@ const weddings = [
     detail: 'Nikkah Certificate suite',
   },
   {
-    image: '/e-invites/static-2.png',
+    image: '/e-invites/wedding-static-02.png',
     couple: 'Zainab & Ali',
     detail: 'Animated e-invite & stationery',
   },

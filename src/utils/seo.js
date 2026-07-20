@@ -122,8 +122,12 @@ export const PAGE_SEO = {
   },
 }
 
-export function categorySeo(cat, sub = null) {
-  const title = sub ? `${sub.label} | The Paper Story` : `${cat.label} | The Paper Story`
+export function categorySeo(cat, sub = null, occasion = null) {
+  const title = occasion
+    ? `${sub.label} — ${occasion.label} | The Paper Story`
+    : sub
+      ? `${sub.label} | The Paper Story`
+      : `${cat.label} | The Paper Story`
 
   const description =
     sub?.tagline ||
@@ -133,8 +137,9 @@ export function categorySeo(cat, sub = null) {
   return { title, description }
 }
 
-export function shopPath(categorySlug, subcategorySlug = null) {
+export function shopPath(categorySlug, subcategorySlug = null, typeSlug = null) {
   let path = `/shop/${categorySlug}`
   if (subcategorySlug) path += `/${subcategorySlug}`
+  if (typeSlug) path += `/${typeSlug}`
   return path
 }

@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom'
 import BrandWordmark from './BrandWordmark'
 import MarqueeTicker from './MarqueeTicker'
-import PhoneMockup from './PhoneMockup'
-import HeroFloralBg from './HeroFloralBg'
+import { SITE_TAGLINE } from '../data/site'
 
 const WHATSAPP_URL =
   'https://wa.me/923144392928?text=Hi!%20I%27d%20like%20to%20know%20more%20about%20The%20Paper%20Story.'
@@ -10,7 +9,6 @@ const WHATSAPP_URL =
 export default function Hero() {
   return (
     <section id="home" className="cute-hero relative overflow-hidden lg:min-h-screen">
-      <HeroFloralBg />
       <div className="pointer-events-none absolute -top-20 -left-20 h-64 w-64 rounded-full bg-paperstory-blush/60 blur-3xl" />
       <div className="pointer-events-none absolute top-1/3 -right-16 h-72 w-72 rounded-full bg-paperstory-berry/20 blur-3xl" />
 
@@ -30,9 +28,9 @@ export default function Hero() {
             <BrandWordmark size="lg" variant="dark" className="min-w-0" />
           </div>
 
-          <p className="mb-4 max-w-md px-1 font-serif text-lg leading-relaxed text-paperstory-ink/90 italic sm:mb-6 sm:text-2xl">
-            More than paper. Designed to hold emotions.
-          </p>
+        <p className="mb-4 max-w-md px-1 font-serif text-lg leading-relaxed text-paperstory-ink/90 italic sm:mb-6 sm:text-2xl">
+          {SITE_TAGLINE}
+        </p>
 
           <div className="flex w-full justify-center lg:justify-start">
             <div className="flex w-full max-w-lg flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
@@ -47,9 +45,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="mt-6 flex flex-1 items-center justify-center sm:mt-10 lg:mt-0">
-          <PhoneMockup />
-        </div>
+        <div className="mt-6 hidden flex-1 sm:mt-10 lg:mt-0 lg:block" aria-hidden="true" />
       </div>
 
       <MarqueeTicker />

@@ -1,70 +1,54 @@
-import { useEffect, useState } from 'react'
 import { useInView } from '../hooks/useInView'
 
-const testimonials = [
-  {
-    quote: 'Our wedding invitations were absolutely stunning. Every guest commented on how beautiful they were!',
-    name: 'Ayesha & Omar',
-  },
-  {
-    quote: 'The custom packaging elevated our brand gifting to a whole new level. Truly premium quality.',
-    name: 'Sana K.',
-  },
-  {
-    quote: 'Quick responses on WhatsApp and flawless e-invites. Made our planning so much easier.',
-    name: 'Fatima R.',
-  },
-  {
-    quote: 'The Nikkah Certificate was hand-painted to perfection. A keepsake we will treasure forever.',
-    name: 'Hina & Bilal',
-  },
-  {
-    quote: 'Our favours looked so elegant — guests kept asking where we got them from!',
-    name: 'Zainab M.',
-  },
-  {
-    quote: 'Beautiful stationery, thoughtful details, and delivery right on time. Highly recommend.',
-    name: 'Maryam A.',
-  },
-]
+const REVIEW_IMAGES = Array.from({ length: 12 }, (_, i) => `/reviews/review-${i + 1}.jpeg`)
 
-function useVisibleCount() {
-  const [visible, setVisible] = useState(() =>
-    typeof window !== 'undefined' && window.matchMedia('(min-width: 1024px)').matches ? 3 : 1
+function ReviewCard({ src, index }) {
+  return (
+    <figure className="review-slide-card">
+      <img
+        src={src}
+        alt={`Client review ${index + 1}`}
+        loading="lazy"
+        className="review-slide-img"
+      />
+    </figure>
   )
+}
 
-  useEffect(() => {
-    const mq = window.matchMedia('(min-width: 1024px)')
-    const update = () => setVisible(mq.matches ? 3 : 1)
-    update()
-    mq.addEventListener('change', update)
-    return () => mq.removeEventListener('change', update)
-  }, [])
+function ReviewMarqueeColumn({ images, reverse = false }) {
+  const loop = [...images, ...images]
+  return (
+    <div className={`review-marquee${reverse ? ' review-marquee--reverse' : ''}`}>
+      <div className="review-marquee-track">
+        {loop.map((src, i) => (
+          <ReviewCard key={`${src}-${i}`} src={src} index={i % images.length} />
+        ))}
+      </div>
+    </div>
+  )
+}
 
-  return visible
+function ReviewMarqueeRow({ images }) {
+  const loop = [...images, ...images]
+  return (
+    <div className="review-marquee review-marquee--row">
+      <div className="review-marquee-track">
+        {loop.map((src, i) => (
+          <ReviewCard key={`${src}-${i}`} src={src} index={i % images.length} />
+        ))}
+      </div>
+    </div>
+  )
 }
 
 export default function Testimonials() {
   const [ref, isVisible] = useInView()
-  const visibleCount = useVisibleCount()
-  const [page, setPage] = useState(0)
-  const pageCount = Math.ceil(testimonials.length / visibleCount)
-
-  useEffect(() => {
-    setPage(0)
-  }, [visibleCount])
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setPage((current) => (current + 1) % pageCount)
-    }, 6000)
-
-    return () => window.clearInterval(timer)
-  }, [pageCount])
-
-  const goTo = (next) => {
-    setPage((next + pageCount) % pageCount)
-  }
+  const cols = [
+    REVIEW_IMAGES.slice(0, 3),
+    REVIEW_IMAGES.slice(3, 6),
+    REVIEW_IMAGES.slice(6, 9),
+    REVIEW_IMAGES.slice(9, 12),
+  ]
 
   return (
     <section className="bg-paperstory-cream py-5 sm:py-16">
@@ -77,62 +61,17 @@ export default function Testimonials() {
             Loved by Our Clients
           </h2>
           <p className="text-sm text-gray-600 sm:text-base">
-            A glimpse into the moments we&apos;ve helped make unforgettable.
+            Real reviews from clients who trusted us with their celebrations.
           </p>
         </div>
 
-        <div className="testimonial-slider">
-          <button
-            type="button"
-            className="testimonial-slider-btn"
-            onClick={() => goTo(page - 1)}
-            aria-label="Previous reviews"
-          >
-            ‹
-          </button>
-
-          <div className="testimonial-slider-viewport">
-            <div
-              className="testimonial-slider-track"
-              style={{ transform: `translateX(-${page * 100}%)` }}
-            >
-              {Array.from({ length: pageCount }, (_, pageIndex) => (
-                <div
-                  key={pageIndex}
-                  className={`testimonial-slider-page${visibleCount === 1 ? ' testimonial-slider-page--single' : ''}`}
-                >
-                  {testimonials
-                    .slice(pageIndex * visibleCount, pageIndex * visibleCount + visibleCount)
-                    .map((t) => (
-                      <blockquote key={t.name} className="testimonial-card">
-                        <p className="testimonial-quote">&ldquo;{t.quote}&rdquo;</p>
-                        <footer className="testimonial-name">— {t.name}</footer>
-                      </blockquote>
-                    ))}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <button
-            type="button"
-            className="testimonial-slider-btn"
-            onClick={() => goTo(page + 1)}
-            aria-label="Next reviews"
-          >
-            ›
-          </button>
+        <div className="review-slider-mobile lg:hidden">
+          <ReviewMarqueeRow images={REVIEW_IMAGES} />
         </div>
 
-        <div className="testimonial-slider-dots">
-          {Array.from({ length: pageCount }, (_, index) => (
-            <button
-              key={index}
-              type="button"
-              className={`testimonial-slider-dot${index === page ? ' testimonial-slider-dot--active' : ''}`}
-              onClick={() => setPage(index)}
-              aria-label={`Go to review set ${index + 1}`}
-            />
+        <div className="review-slider-desktop hidden lg:grid">
+          {cols.map((images, i) => (
+            <ReviewMarqueeColumn key={i} images={images} reverse={i % 2 === 1} />
           ))}
         </div>
       </div>

@@ -14,9 +14,7 @@ function upsertMeta(selector, attributes) {
 }
 
 function upsertLink(rel, href, extra = {}) {
-  let element = document.head.querySelector(
-    `link[rel="${rel}"]${extra.hreflang ? `[hreflang="${extra.hreflang}"]` : ''}`
-  )
+  let element = document.head.querySelector(`link[rel="${rel}"]${extra.hreflang ? `[hreflang="${extra.hreflang}"]` : ''}`)
   if (!element) {
     element = document.createElement('link')
     element.setAttribute('rel', rel)

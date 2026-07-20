@@ -6,6 +6,7 @@ import ProductCard from './ProductCard'
 export default function ProductGrid({
   title = 'Featured Collection',
   subtitle = "Curated stationery and gifting pieces, crafted with care for life's most beautiful moments.",
+  subtitleItalic = false,
   items,
   limit,
   showViewAll = false,
@@ -26,7 +27,15 @@ export default function ProductGrid({
       <div ref={ref} className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 fade-in-up ${isVisibleNow ? 'visible' : ''}`}>
         <div className={`text-center ${compactTop ? 'mb-5 sm:mb-8' : 'mb-5 sm:mb-10'}`}>
           <h2 className="heading-brand mb-2 text-2xl font-semibold sm:mb-3 sm:text-4xl">{title}</h2>
-          {subtitle && <p className="mx-auto max-w-xl text-sm text-paperstory-ink/75 sm:text-base">{subtitle}</p>}
+          {subtitle && (
+            <p
+              className={`mx-auto max-w-xl text-sm text-paperstory-ink/75 sm:text-base ${
+                subtitleItalic ? 'font-serif italic' : ''
+              }`}
+            >
+              {subtitle}
+            </p>
+          )}
         </div>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3 xl:grid-cols-4">
           {displayProducts.map((product) => (

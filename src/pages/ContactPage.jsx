@@ -44,7 +44,7 @@ export default function ContactPage() {
               <div className="rounded-2xl bg-white p-6 shadow-sm">
                 <h3 className="mb-2 font-serif text-lg font-semibold">Payments</h3>
                 <p className="text-sm leading-relaxed text-gray-600">
-                  Stationery items: COD available in Pakistan. All other products require advance payment for local and international orders.
+                  Cash on Delivery (COD) is available on selected products within Pakistan, such as stationery items and cake boxes. Advance payment is required for all other products and international orders.
                 </p>
               </div>
             </div>

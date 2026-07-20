@@ -13,9 +13,7 @@ const priorityForPath = (path) => {
   return '0.8'
 }
 
-const paths = getAllSitemapPaths()
-
-const urls = paths
+const urls = getAllSitemapPaths()
   .sort((a, b) => a.localeCompare(b))
   .map(
     (path) => `  <url>
@@ -34,4 +32,4 @@ ${urls}
 
 const outputPath = resolve(__dirname, '../public/sitemap.xml')
 writeFileSync(outputPath, xml, 'utf8')
-console.log(`Generated sitemap with ${paths.length} URLs → public/sitemap.xml`)
+console.log(`Generated sitemap with ${getAllSitemapPaths().length} URLs → public/sitemap.xml`)
