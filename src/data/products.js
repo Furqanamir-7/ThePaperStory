@@ -232,7 +232,6 @@ const DIGITAL_TYPE_IMAGES = {
       '/e-invites/animated-wedding-06.mp4',
       '/e-invites/animated-wedding-07.mp4',
       '/e-invites/animated-wedding-08.mp4',
-      '/e-invites/animated-wedding-09.mp4',
     ],
     'baby-announcement': ['/e-invites/animated-baby-01.mp4'],
     birthday: ['/e-invites/animated-birthday-01.mp4'],
@@ -501,6 +500,22 @@ const GET_CUSTOMISED_ANIMATED = {
   whatsappLabel: 'Digital Invitation — Get Customised (Animated)',
 }
 
+const WEBSITE_WEDDING_INVITE = {
+  id: 'website-wedding-invite',
+  name: 'Website Invitation',
+  category: 'Digital Invitations',
+  categorySlug: 'digital-invitations',
+  subcategorySlug: 'image-invitation',
+  typeSlug: 'wedding',
+  image: '/e-invites/website/website-invitation.png',
+  externalUrl: 'https://wedding-invite-sand-eight.vercel.app/',
+  showPrice: false,
+  price: null,
+  paymentType: 'advance',
+  whatsappMode: 'price',
+  whatsappLabel: 'Digital Invitation — Website (Wedding)',
+}
+
 const CATEGORY_ALIASES = {
   'digital-e-invitations': 'digital-invitations',
 }
@@ -592,13 +607,16 @@ export function getProductsByCategory(categorySlug, subcategorySlug = null, type
   if (normalizedCategory !== 'digital-invitations') return list
 
   if (normalizedSub === 'image-invitation') {
-    return [...list, GET_CUSTOMISED_IMAGE]
+    if (typeSlug === 'wedding' || !typeSlug) {
+      return [...list, WEBSITE_WEDDING_INVITE]
+    }
+    return list
   }
   if (normalizedSub === 'animated-invitation') {
-    return [...list, GET_CUSTOMISED_ANIMATED]
+    return list
   }
   if (!normalizedSub) {
-    return [...list, GET_CUSTOMISED_IMAGE, GET_CUSTOMISED_ANIMATED]
+    return [...list, WEBSITE_WEDDING_INVITE]
   }
 
   return list

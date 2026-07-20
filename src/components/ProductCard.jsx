@@ -14,31 +14,46 @@ function ProductMedia({ product }) {
   const current = gallery[index] || product.image
   const mediaIsVideo = isVideoSrc(current)
   const hasGallery = gallery.length > 1
+  const externalUrl = product.externalUrl
 
   const goTo = (next) => setIndex((next + gallery.length) % gallery.length)
 
+  const media = mediaIsVideo ? (
+    <video
+      key={current}
+      src={current}
+      className="h-full w-full object-cover"
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      aria-label={product.name}
+    />
+  ) : (
+    <img
+      key={current}
+      src={current}
+      alt={product.name}
+      loading="lazy"
+      className="h-full w-full object-cover transition-transform duration-400 ease-out group-hover:scale-105"
+    />
+  )
+
   return (
     <div className="relative mb-4 aspect-[4/5] overflow-hidden rounded-xl bg-paperstory-blush/30">
-      {mediaIsVideo ? (
-        <video
-          key={current}
-          src={current}
-          className="h-full w-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-label={product.name}
-        />
+      {externalUrl ? (
+        <a
+          href={externalUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block h-full w-full"
+          aria-label={`Open ${product.name} preview`}
+        >
+          {media}
+        </a>
       ) : (
-        <img
-          key={current}
-          src={current}
-          alt={product.name}
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-400 ease-out group-hover:scale-105"
-        />
+        media
       )}
 
       {hasGallery && (
