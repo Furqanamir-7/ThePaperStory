@@ -730,7 +730,7 @@ h1, h2, h3, h4 {
 
 /* ── Loader screen ── */
 .loader-screen {
-  background: linear-gradient(160deg, #FAF6F0 0%, #FAF2F4 45%, #F5E0E6 100%);
+  background: #a62341;
 }
 
 .loader-logo-wrap {
@@ -1390,29 +1390,42 @@ h1, h2, h3, h4 {
   }
 }
 
-/* ── Website invitation preview (phone-screen size) ── */
+/* ── Website invitation preview (full-page display) ── */
+.website-invite-preview {
+  min-height: calc(100svh - 14rem);
+  justify-content: center;
+}
+
 .website-invite-preview-link {
-  width: min(390px, 100%);
-  max-height: calc(100svh - 17rem);
+  width: min(100%, 520px);
+  max-height: calc(100svh - 14rem);
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  background: transparent;
 }
 
 .website-invite-preview-img {
   display: block;
   width: 100%;
   height: auto;
-  max-height: calc(100svh - 17rem);
+  max-height: calc(100svh - 14rem);
   object-fit: contain;
-  object-position: top center;
-  background: var(--paperstory-cream);
+  object-position: center center;
+  background: transparent;
 }
 
 @media (max-width: 639px) {
+  .website-invite-preview {
+    min-height: calc(100svh - 12rem);
+  }
+
   .website-invite-preview-link {
-    max-height: calc(100svh - 15rem);
+    max-height: calc(100svh - 12rem);
   }
 
   .website-invite-preview-img {
-    max-height: calc(100svh - 15rem);
+    max-height: calc(100svh - 12rem);
   }
 }
 
