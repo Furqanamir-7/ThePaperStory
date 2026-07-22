@@ -205,9 +205,9 @@ export const shopCategories = [
   {
     id: 'eidi-envelopes',
     slug: 'eidi-envelopes',
-    label: 'Money / Eidi Envelopes',
-    shortLabel: 'Eidi Envelopes',
-    description: 'Festive money and eidi envelope designs — pricing on request.',
+    label: 'Eidi and Money Envelopes',
+    shortLabel: 'Eidi & Money Envelopes',
+    description: 'Festive eidi and money envelope designs — pricing on request.',
     image: '/eidi/friends-theme/01.jpg',
     showPrice: false,
     paymentType: 'advance',
@@ -335,7 +335,7 @@ const FAVOURS_GALLERY = {
   ],
 }
 
-/** Money / Eidi envelopes */
+/** Eidi and Money envelopes */
 const EIDI_GALLERY = [
   {
     name: 'F.R.I.E.N.D.S Theme',

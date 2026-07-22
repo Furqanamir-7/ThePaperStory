@@ -1,5 +1,3 @@
-import FloralAccent from './FloralAccent'
-
 export default function PageHeader({ title, subtitle, breadcrumb, compact = false }) {
   return (
     <section
@@ -7,9 +5,6 @@ export default function PageHeader({ title, subtitle, breadcrumb, compact = fals
         compact ? 'pt-28 pb-5 sm:pt-32 sm:pb-6' : 'pt-32 pb-16 sm:pt-36 sm:pb-20'
       }`}
     >
-      <FloralAccent className="top-20 right-10 text-white" opacity={0.1} />
-      <FloralAccent className="bottom-8 left-8 text-white" opacity={0.08} />
-
       <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
         {breadcrumb && (
           <p className={`font-medium tracking-wide text-white/75 ${compact ? 'mb-2 text-xs' : 'mb-4 text-sm'}`}>
