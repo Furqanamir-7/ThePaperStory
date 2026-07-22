@@ -996,14 +996,18 @@ export function getFeaturedProducts() {
 
 export function getBestSellers() {
   const picks = [
-    { categorySlug: 'greeting-cards', design: 1 },
-    { categorySlug: 'eidi-envelopes', name: 'F.R.I.E.N.D.S Theme' },
-    { categorySlug: 'wedding-invitations', design: 2 },
-    { categorySlug: 'favours', subcategorySlug: 'box-favours', name: 'Baby Announcement Box' },
+    { categorySlug: 'wedding-invitations', design: 1 },
+    { categorySlug: 'wedding-invitations', design: 8 },
     { categorySlug: 'digital-invitations', subcategorySlug: 'image-invitation', typeSlug: 'wedding', design: 1 },
-    { categorySlug: 'stationary-items', subcategorySlug: 'diaries', design: 1 },
+    { categorySlug: 'nikkahnama', subcategorySlug: 'hand-painted', design: 1 },
     { categorySlug: 'nikkahnama', subcategorySlug: 'printed', design: 1 },
+    { categorySlug: 'favours', subcategorySlug: 'box-favours', name: 'Baby Announcement Box' },
+    { categorySlug: 'favours', subcategorySlug: 'box-favours', name: 'Sweet Box with Gift Bags' },
+    { categorySlug: 'favours', subcategorySlug: 'tin-favours', design: 1 },
     { categorySlug: 'packaging', subcategorySlug: 'business-stickers', design: 1 },
+    { categorySlug: 'packaging', subcategorySlug: 'business-stickers', design: 2 },
+    { categorySlug: 'vinyl-stickers', design: 1 },
+    { categorySlug: 'eidi-envelopes', name: 'F.R.I.E.N.D.S Theme' },
   ]
 
   return picks

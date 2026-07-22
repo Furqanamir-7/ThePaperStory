@@ -3,7 +3,6 @@ import ProductGrid from '../components/ProductGrid'
 import PaperStoryDifference from '../components/PaperStoryDifference'
 import OurStoryHome from '../components/OurStoryHome'
 import RealWeddings from '../components/RealWeddings'
-import InstagramGallery from '../components/InstagramGallery'
 import Testimonials from '../components/Testimonials'
 import Newsletter from '../components/Newsletter'
 import Seo from '../components/Seo'
@@ -31,12 +30,11 @@ export default function HomePage() {
       <ProductGrid
         id="best-sellers"
         title="Best Sellers"
-        subtitle="The designs our clients love most — from invitations to everyday stationery."
+        subtitle="The designs our clients love most — from wedding invites to favours and packaging."
         items={getBestSellers()}
         showViewAll
       />
       <RealWeddings />
-      <InstagramGallery />
       <Testimonials />
       <Newsletter />
     </>
