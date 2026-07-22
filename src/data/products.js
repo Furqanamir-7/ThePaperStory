@@ -111,8 +111,8 @@ export const shopCategories = [
     slug: 'favours',
     label: 'Favours',
     shortLabel: 'Favours',
-    description: 'Potli, box, and tin favours for weddings and events.',
-    image: IMG.favours,
+    description: 'Potli, box, tin, and cake-topper favours for weddings and events.',
+    image: '/favours/baby-announcement-box/01.jpg',
     showPrice: false,
     paymentType: 'advance',
     whatsappMode: 'price',
@@ -120,6 +120,7 @@ export const shopCategories = [
       { slug: 'potli', label: 'Potli', whatsappPrefix: 'Favours (Potli)' },
       { slug: 'box-favours', label: 'Box Favours', whatsappPrefix: 'Favours (Box)' },
       { slug: 'tin-favours', label: 'Tin Favours', whatsappPrefix: 'Favours (Tin)' },
+      { slug: 'cake-toppers', label: 'Cake Toppers', whatsappPrefix: 'Favours (Cake Toppers)' },
     ],
   },
   {
@@ -128,7 +129,7 @@ export const shopCategories = [
     label: 'Packaging Material / Items',
     shortLabel: 'Packaging',
     description: 'Business stickers for branding and packaging.',
-    image: IMG.packaging,
+    image: '/packaging/business-1/01.jpg',
     showPrice: false,
     paymentType: 'advance',
     whatsappMode: 'price',
@@ -206,11 +207,11 @@ export const shopCategories = [
     slug: 'eidi-envelopes',
     label: 'Money / Eidi Envelopes',
     shortLabel: 'Eidi Envelopes',
-    description: 'Festive eidi envelope designs with listed prices.',
-    image: IMG.eidi,
-    showPrice: true,
+    description: 'Festive money and eidi envelope designs — pricing on request.',
+    image: '/eidi/friends-theme/01.jpg',
+    showPrice: false,
     paymentType: 'advance',
-    whatsappMode: 'more',
+    whatsappMode: 'price',
     subcategories: null,
   },
 ]
@@ -242,7 +243,109 @@ const VINYL_IMAGES = [
   '/vinyl/vinyl-1.jpeg',
   '/vinyl/vinyl-2.jpeg',
   '/vinyl/vinyl-3.jpeg',
-  '/vinyl/vinyl-4.png',
+  '/vinyl/vinyl-4.jpeg',
+]
+
+/** Packaging — numbered folders → product-card sliders */
+const PACKAGING_GALLERY = {
+  'business-stickers': [
+    {
+      name: 'Design 1',
+      images: [
+        '/packaging/business-1/01.jpg',
+        '/packaging/business-1/02.jpg',
+        '/packaging/business-1/03.jpg',
+      ],
+    },
+    {
+      name: 'Design 2',
+      images: [
+        '/packaging/business-2/01.jpg',
+        '/packaging/business-2/02.jpg',
+        '/packaging/business-2/03.jpg',
+        '/packaging/business-2/04.jpg',
+        '/packaging/business-2/05.jpg',
+        '/packaging/business-2/01.mp4',
+      ],
+    },
+  ],
+}
+
+/** Favours — keyed by subcategory; potli has no Desktop assets yet */
+const FAVOURS_GALLERY = {
+  potli: [],
+  'box-favours': [
+    {
+      name: 'Baby Announcement Box',
+      images: [
+        '/favours/baby-announcement-box/01.jpg',
+        '/favours/baby-announcement-box/02.jpg',
+        '/favours/baby-announcement-box/03.jpg',
+        '/favours/baby-announcement-box/04.jpg',
+        '/favours/baby-announcement-box/05.jpg',
+        '/favours/baby-announcement-box/06.jpg',
+        '/favours/baby-announcement-box/07.jpg',
+        '/favours/baby-announcement-box/08.jpg',
+      ],
+    },
+    {
+      name: 'Sweet Box with Gift Bags',
+      images: [
+        '/favours/sweet-box-1/01.jpg',
+        '/favours/sweet-box-1/02.jpg',
+        '/favours/sweet-box-1/03.jpg',
+        '/favours/sweet-box-1/04.jpg',
+        '/favours/sweet-box-1/05.jpg',
+        '/favours/sweet-box-1/06.jpg',
+        '/favours/sweet-box-1/07.jpg',
+        '/favours/sweet-box-1/08.jpg',
+        '/favours/sweet-box-1/09.jpg',
+        '/favours/sweet-box-1/10.jpg',
+      ],
+    },
+  ],
+  'tin-favours': [
+    {
+      name: 'Design 1',
+      images: [
+        '/favours/golden-tin-1/01.jpg',
+        '/favours/golden-tin-1/02.jpg',
+        '/favours/golden-tin-1/03.jpg',
+        '/favours/golden-tin-1/01.mp4',
+      ],
+    },
+    {
+      name: 'Design 2',
+      images: [
+        '/favours/golden-tin-2/01.jpg',
+        '/favours/golden-tin-2/02.jpg',
+        '/favours/golden-tin-2/01.mp4',
+      ],
+    },
+  ],
+  'cake-toppers': [
+    {
+      name: 'Design 1',
+      images: [
+        '/favours/cake-toppers-1/01.jpg',
+        '/favours/cake-toppers-1/02.jpg',
+        '/favours/cake-toppers-1/03.jpg',
+      ],
+    },
+  ],
+}
+
+/** Money / Eidi envelopes */
+const EIDI_GALLERY = [
+  {
+    name: 'F.R.I.E.N.D.S Theme',
+    images: [
+      '/eidi/friends-theme/01.jpg',
+      '/eidi/friends-theme/01.mp4',
+      '/eidi/friends-theme/02.mp4',
+      '/eidi/friends-theme/03.mp4',
+    ],
+  },
 ]
 
 /** Each numbered folder becomes one product card with a gallery slider */
@@ -251,9 +354,24 @@ const NIKKAH_GALLERY_PRODUCTS = {
     {
       name: 'Design 1',
       images: [
-        '/nikkah/hand-painted-1/01.jpeg',
-        '/nikkah/hand-painted-1/02.jpeg',
-        '/nikkah/hand-painted-1/03.jpeg',
+        '/nikkah/hand-painted-1/01.jpg',
+        '/nikkah/hand-painted-1/02.jpg',
+        '/nikkah/hand-painted-1/03.jpg',
+        '/nikkah/hand-painted-1/04.jpg',
+        '/nikkah/hand-painted-1/05.jpg',
+        '/nikkah/hand-painted-1/06.jpg',
+        '/nikkah/hand-painted-1/07.jpg',
+        '/nikkah/hand-painted-1/08.jpg',
+        '/nikkah/hand-painted-1/09.jpg',
+        '/nikkah/hand-painted-1/10.jpg',
+        '/nikkah/hand-painted-1/11.jpg',
+        '/nikkah/hand-painted-1/12.jpg',
+        '/nikkah/hand-painted-1/13.jpg',
+        '/nikkah/hand-painted-1/14.jpg',
+        '/nikkah/hand-painted-1/01.mp4',
+        '/nikkah/hand-painted-1/02.mp4',
+        '/nikkah/hand-painted-1/03.mp4',
+        '/nikkah/hand-painted-1/04.mp4',
       ],
     },
   ],
@@ -261,9 +379,12 @@ const NIKKAH_GALLERY_PRODUCTS = {
     {
       name: 'Design 1',
       images: [
-        '/nikkah/printed-1/01.jpeg',
-        '/nikkah/printed-1/02.jpeg',
-        '/nikkah/printed-1/03.jpeg',
+        '/nikkah/printed-1/01.jpg',
+        '/nikkah/printed-1/02.jpg',
+        '/nikkah/printed-1/03.jpg',
+        '/nikkah/printed-1/04.jpg',
+        '/nikkah/printed-1/05.jpg',
+        '/nikkah/printed-1/01.mp4',
       ],
     },
   ],
@@ -271,18 +392,26 @@ const NIKKAH_GALLERY_PRODUCTS = {
     {
       name: 'Design 1',
       images: [
-        '/nikkah/printed-2/01.jpeg',
-        '/nikkah/printed-2/02.jpeg',
-        '/nikkah/printed-2/03.jpeg',
+        '/nikkah/printed-2/01.jpg',
+        '/nikkah/printed-2/02.jpg',
+        '/nikkah/printed-2/03.jpg',
       ],
     },
     {
       name: 'Design 2',
-      images: ['/nikkah/printed-fatima-post.jpg'],
+      images: ['/nikkah/printed-3/01.mp4'],
     },
     {
       name: 'Design 3',
-      images: ['/nikkah/printed-mockup-2.png'],
+      images: ['/nikkah/printed-4/01.jpg'],
+    },
+    {
+      name: 'Design 4',
+      images: [
+        '/nikkah/printed-5/01.jpg',
+        '/nikkah/printed-5/02.jpg',
+        '/nikkah/printed-5/01.mp4',
+      ],
     },
   ],
 }
@@ -372,6 +501,48 @@ function buildAllProducts() {
           continue
         }
 
+        if (cat.slug === 'packaging' && PACKAGING_GALLERY[sub.slug]) {
+          for (const design of PACKAGING_GALLERY[sub.slug]) {
+            all.push(
+              ...addDesigns({
+                categorySlug: cat.slug,
+                subcategorySlug: sub.slug,
+                whatsappLabel: sub.whatsappPrefix,
+                galleryImages: design.images,
+                name: design.name,
+                showPrice: cat.showPrice,
+                priceBase: 1200,
+                paymentType: cat.paymentType,
+                whatsappMode: cat.whatsappMode,
+                categoryLabel: cat.label,
+              })
+            )
+          }
+          continue
+        }
+
+        if (cat.slug === 'favours' && Object.prototype.hasOwnProperty.call(FAVOURS_GALLERY, sub.slug)) {
+          const designs = FAVOURS_GALLERY[sub.slug]
+          if (!designs.length) continue
+          for (const design of designs) {
+            all.push(
+              ...addDesigns({
+                categorySlug: cat.slug,
+                subcategorySlug: sub.slug,
+                whatsappLabel: sub.whatsappPrefix,
+                galleryImages: design.images,
+                name: design.name,
+                showPrice: cat.showPrice,
+                priceBase: 1200,
+                paymentType: cat.paymentType,
+                whatsappMode: cat.whatsappMode,
+                categoryLabel: cat.label,
+              })
+            )
+          }
+          continue
+        }
+
         if (sub.types?.length) {
           for (const type of sub.types) {
             const typeImages = DIGITAL_TYPE_IMAGES[sub.slug]?.[type.slug]
@@ -424,12 +595,27 @@ function buildAllProducts() {
           categoryLabel: cat.label,
         })
       )
+    } else if (cat.slug === 'eidi-envelopes') {
+      for (const design of EIDI_GALLERY) {
+        all.push(
+          ...addDesigns({
+            categorySlug: cat.slug,
+            whatsappLabel: 'Eidi Envelope',
+            galleryImages: design.images,
+            name: design.name,
+            showPrice: cat.showPrice,
+            priceBase: 1500,
+            paymentType: cat.paymentType,
+            whatsappMode: cat.whatsappMode,
+            categoryLabel: cat.label,
+          })
+        )
+      }
     } else {
       const prefixMap = {
         'wedding-invitations': 'Wedding Invitation',
         pamphlets: 'Pamphlet',
         'greeting-cards': 'Greeting Card',
-        'eidi-envelopes': 'Eidi Envelope',
       }
       all.push(
         ...addDesigns({
@@ -549,9 +735,9 @@ export function getFeaturedProducts() {
 export function getBestSellers() {
   const picks = [
     { categorySlug: 'greeting-cards', design: 1 },
-    { categorySlug: 'eidi-envelopes', design: 2 },
+    { categorySlug: 'eidi-envelopes', name: 'F.R.I.E.N.D.S Theme' },
     { categorySlug: 'wedding-invitations', design: 2 },
-    { categorySlug: 'favours', subcategorySlug: 'potli', design: 1 },
+    { categorySlug: 'favours', subcategorySlug: 'box-favours', name: 'Baby Announcement Box' },
     { categorySlug: 'digital-invitations', subcategorySlug: 'image-invitation', typeSlug: 'wedding', design: 1 },
     { categorySlug: 'stationary-items', subcategorySlug: 'diaries', design: 1 },
     { categorySlug: 'nikkahnama', subcategorySlug: 'printed-with-frame', design: 1 },
@@ -559,13 +745,13 @@ export function getBestSellers() {
   ]
 
   return picks
-    .map(({ categorySlug, subcategorySlug, typeSlug, design }) =>
+    .map(({ categorySlug, subcategorySlug, typeSlug, design, name }) =>
       products.find(
         (product) =>
           product.categorySlug === categorySlug &&
           product.subcategorySlug === (subcategorySlug ?? null) &&
           (typeSlug == null || product.typeSlug === typeSlug) &&
-          product.name === `Design ${design}`
+          product.name === (name || `Design ${design}`)
       )
     )
     .filter(Boolean)
