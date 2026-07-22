@@ -916,34 +916,34 @@ export function getAllSitemapPaths() {
   return [...paths]
 }
 
-const GET_CUSTOMISED_IMAGE = {
-  id: 'get-customised-image',
+const GET_CUSTOMISED_WEDDING = {
+  id: 'get-customised-wedding',
+  name: 'Get Customised',
+  category: 'Wedding Invitations',
+  categorySlug: 'wedding-invitations',
+  subcategorySlug: null,
+  typeSlug: null,
+  image: '/wedding-invites/get-customised.mp4',
+  showPrice: false,
+  price: null,
+  paymentType: 'advance',
+  whatsappMode: 'price',
+  whatsappLabel: 'Wedding Invitation — Get Customised',
+}
+
+const GET_CUSTOMISED_DIGITAL = {
+  id: 'get-customised-digital',
   name: 'Get Customised',
   category: 'Digital Invitations',
   categorySlug: 'digital-invitations',
-  subcategorySlug: 'image-invitation',
+  subcategorySlug: null,
   typeSlug: null,
   image: '/e-invites/get-customised.png',
   showPrice: false,
   price: null,
   paymentType: 'advance',
   whatsappMode: 'price',
-  whatsappLabel: 'Digital Invitation — Get Customised (Image)',
-}
-
-const GET_CUSTOMISED_ANIMATED = {
-  id: 'get-customised-animated',
-  name: 'Get Customised',
-  category: 'Digital Invitations',
-  categorySlug: 'digital-invitations',
-  subcategorySlug: 'animated-invitation',
-  typeSlug: null,
-  image: '/e-invites/get-customised.mp4',
-  showPrice: false,
-  price: null,
-  paymentType: 'advance',
-  whatsappMode: 'price',
-  whatsappLabel: 'Digital Invitation — Get Customised (Animated)',
+  whatsappLabel: 'Digital Invitation — Get Customised',
 }
 
 const WEBSITE_WEDDING_INVITE = {
@@ -1052,19 +1052,23 @@ export function getProductsByCategory(categorySlug, subcategorySlug = null, type
     return true
   })
 
+  if (normalizedCategory === 'wedding-invitations' && !normalizedSub) {
+    return [GET_CUSTOMISED_WEDDING, ...list]
+  }
+
   if (normalizedCategory !== 'digital-invitations') return list
 
   if (normalizedSub === 'image-invitation') {
     if (typeSlug === 'wedding' || !typeSlug) {
-      return [...list, WEBSITE_WEDDING_INVITE]
+      return [GET_CUSTOMISED_DIGITAL, ...list, WEBSITE_WEDDING_INVITE]
     }
-    return list
+    return [GET_CUSTOMISED_DIGITAL, ...list]
   }
   if (normalizedSub === 'animated-invitation') {
-    return list
+    return [GET_CUSTOMISED_DIGITAL, ...list]
   }
   if (!normalizedSub) {
-    return [...list, WEBSITE_WEDDING_INVITE]
+    return [GET_CUSTOMISED_DIGITAL, ...list, WEBSITE_WEDDING_INVITE]
   }
 
   return list
