@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
-const DRAG_THRESHOLD_PX = 6
+const DRAG_THRESHOLD_PX = 10
 const RESUME_DELAY_MS = 1500
 const MARQUEE_DURATION_SEC = 38
 
-function PillLinks({ items, suffix = '', hidden = false, suppressNavRef }) {
+function PillLinks({ items, suffix = '', hidden = false, blockClickRef }) {
   return items.map((item) => (
     <Link
       key={`${item.key}${suffix}`}
@@ -15,11 +15,12 @@ function PillLinks({ items, suffix = '', hidden = false, suppressNavRef }) {
       aria-hidden={hidden || undefined}
       tabIndex={hidden ? -1 : undefined}
       draggable={false}
+      data-pill-to={item.to}
       onClick={(event) => {
-        if (suppressNavRef?.current) {
+        // Block native click after we already navigated on pointerup, or after a drag
+        if (blockClickRef?.current) {
           event.preventDefault()
           event.stopPropagation()
-          suppressNavRef.current = false
         }
       }}
     >
@@ -29,19 +30,22 @@ function PillLinks({ items, suffix = '', hidden = false, suppressNavRef }) {
 }
 
 export default function PillsBar({ items, ariaLabel = 'Filter', static: isStatic = false }) {
+  const navigate = useNavigate()
   const viewportRef = useRef(null)
   const trackRef = useRef(null)
   const offsetRef = useRef(0)
   const halfWidthRef = useRef(0)
   const pausedRef = useRef(false)
-  const draggingRef = useRef(false)
   const pointerIdRef = useRef(null)
   const startXRef = useRef(0)
   const startOffsetRef = useRef(0)
-  const suppressNavRef = useRef(false)
+  const didDragRef = useRef(false)
+  const activeRef = useRef(false)
+  const blockClickRef = useRef(false)
   const resumeTimerRef = useRef(null)
   const rafRef = useRef(null)
   const lastTsRef = useRef(0)
+  const tapToRef = useRef(null)
 
   const applyTransform = useCallback(() => {
     const track = trackRef.current
@@ -78,11 +82,6 @@ export default function PillsBar({ items, ariaLabel = 'Filter', static: isStatic
       lastTsRef.current = 0
       resumeTimerRef.current = null
     }, RESUME_DELAY_MS)
-  }, [clearResumeTimer])
-
-  const pauseInteraction = useCallback(() => {
-    pausedRef.current = true
-    clearResumeTimer()
   }, [clearResumeTimer])
 
   useEffect(() => {
@@ -126,30 +125,39 @@ export default function PillsBar({ items, ariaLabel = 'Filter', static: isStatic
   const onPointerDown = (event) => {
     if (event.button != null && event.button !== 0) return
 
-    pauseInteraction()
-    draggingRef.current = true
-    suppressNavRef.current = false
+    const link = event.target.closest?.('[data-pill-to]')
+    tapToRef.current = link?.getAttribute('data-pill-to') || null
+
+    pausedRef.current = true
+    clearResumeTimer()
+    activeRef.current = true
+    didDragRef.current = false
+    blockClickRef.current = false
     pointerIdRef.current = event.pointerId
     startXRef.current = event.clientX
     startOffsetRef.current = offsetRef.current
-
-    const viewport = viewportRef.current
-    if (viewport?.setPointerCapture) {
-      try {
-        viewport.setPointerCapture(event.pointerId)
-      } catch {
-        /* ignore */
-      }
-    }
   }
 
   const onPointerMove = (event) => {
-    if (!draggingRef.current || pointerIdRef.current !== event.pointerId) return
+    if (!activeRef.current || pointerIdRef.current !== event.pointerId) return
 
     const deltaX = event.clientX - startXRef.current
-    if (Math.abs(deltaX) > DRAG_THRESHOLD_PX) {
-      suppressNavRef.current = true
+
+    if (!didDragRef.current && Math.abs(deltaX) > DRAG_THRESHOLD_PX) {
+      didDragRef.current = true
+      blockClickRef.current = true
+      tapToRef.current = null
+      const viewport = viewportRef.current
+      if (viewport?.setPointerCapture) {
+        try {
+          viewport.setPointerCapture(event.pointerId)
+        } catch {
+          /* ignore */
+        }
+      }
     }
+
+    if (!didDragRef.current) return
 
     offsetRef.current = startOffsetRef.current + deltaX
     wrapOffset()
@@ -157,11 +165,16 @@ export default function PillsBar({ items, ariaLabel = 'Filter', static: isStatic
   }
 
   const endDrag = (event) => {
-    if (!draggingRef.current) return
+    if (!activeRef.current) return
     if (event?.pointerId != null && pointerIdRef.current !== event.pointerId) return
 
-    draggingRef.current = false
+    const wasDrag = didDragRef.current
+    const to = tapToRef.current
+
+    activeRef.current = false
+    didDragRef.current = false
     pointerIdRef.current = null
+    tapToRef.current = null
 
     const viewport = viewportRef.current
     if (event?.pointerId != null && viewport?.releasePointerCapture) {
@@ -176,10 +189,13 @@ export default function PillsBar({ items, ariaLabel = 'Filter', static: isStatic
 
     scheduleResume()
 
-    if (suppressNavRef.current) {
+    if (!wasDrag && to) {
+      // Navigate on tap so touch works even when the browser swallows the click
+      blockClickRef.current = true
       window.setTimeout(() => {
-        suppressNavRef.current = false
-      }, 50)
+        blockClickRef.current = false
+      }, 300)
+      navigate(to)
     }
   }
 
@@ -210,8 +226,8 @@ export default function PillsBar({ items, ariaLabel = 'Filter', static: isStatic
           onPointerCancel={endDrag}
         >
           <div ref={trackRef} className="pills-bar-marquee-track">
-            <PillLinks items={items} suppressNavRef={suppressNavRef} />
-            <PillLinks items={items} suffix="-dup" hidden suppressNavRef={suppressNavRef} />
+            <PillLinks items={items} blockClickRef={blockClickRef} />
+            <PillLinks items={items} suffix="-dup" hidden blockClickRef={blockClickRef} />
           </div>
         </div>
         <div className="pills-bar-fade pills-bar-fade--right" aria-hidden="true" />

@@ -804,7 +804,7 @@ h1, h2, h3, h4 {
 
 .pills-bar-scroll--marquee {
   cursor: grab;
-  touch-action: pan-y;
+  touch-action: manipulation;
   user-select: none;
   -webkit-user-select: none;
 }
