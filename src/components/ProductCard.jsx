@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { buildProductWhatsAppMessage, buildWhatsAppUrl } from '../utils/whatsapp'
 import { canPlaceOrder } from '../data/site'
 import OrderModal from './OrderModal'
 import InquiryModal from './InquiryModal'
+
+const SWIPE_THRESHOLD_PX = 40
 
 function isVideoSrc(src = '') {
   return /\.(mp4|webm|ogg)(\?|$)/i.test(src)
@@ -16,13 +18,62 @@ function ProductMedia({ product }) {
   const hasGallery = gallery.length > 1
   const externalUrl = product.externalUrl
 
+  const pointerIdRef = useRef(null)
+  const startXRef = useRef(0)
+  const startYRef = useRef(0)
+  const swipingRef = useRef(false)
+  const lockedAxisRef = useRef(null)
+
   const goTo = (next) => setIndex((next + gallery.length) % gallery.length)
+
+  const onPointerDown = (event) => {
+    if (!hasGallery) return
+    if (event.button != null && event.button !== 0) return
+    if (event.target.closest?.('button')) return
+
+    pointerIdRef.current = event.pointerId
+    startXRef.current = event.clientX
+    startYRef.current = event.clientY
+    swipingRef.current = false
+    lockedAxisRef.current = null
+  }
+
+  const onPointerMove = (event) => {
+    if (!hasGallery || pointerIdRef.current !== event.pointerId) return
+
+    const dx = event.clientX - startXRef.current
+    const dy = event.clientY - startYRef.current
+
+    if (!lockedAxisRef.current) {
+      if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return
+      lockedAxisRef.current = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'
+    }
+
+    if (lockedAxisRef.current === 'x') {
+      swipingRef.current = true
+      event.preventDefault()
+    }
+  }
+
+  const onPointerUp = (event) => {
+    if (!hasGallery || pointerIdRef.current !== event.pointerId) return
+
+    const dx = event.clientX - startXRef.current
+    const didSwipe = lockedAxisRef.current === 'x' && Math.abs(dx) >= SWIPE_THRESHOLD_PX
+
+    pointerIdRef.current = null
+    lockedAxisRef.current = null
+
+    if (didSwipe) {
+      goTo(dx < 0 ? index + 1 : index - 1)
+    }
+  }
 
   const media = mediaIsVideo ? (
     <video
       key={current}
       src={current}
-      className="h-full w-full object-cover"
+      className="pointer-events-none h-full w-full object-cover"
       autoPlay
       muted
       loop
@@ -36,12 +87,20 @@ function ProductMedia({ product }) {
       src={current}
       alt={product.name}
       loading="lazy"
-      className="h-full w-full object-cover transition-transform duration-400 ease-out group-hover:scale-105"
+      draggable={false}
+      className="pointer-events-none h-full w-full object-cover transition-transform duration-400 ease-out group-hover:scale-105"
     />
   )
 
   return (
-    <div className="relative mb-4 aspect-[4/5] overflow-hidden rounded-xl bg-paperstory-blush/30">
+    <div
+      className={`relative mb-4 aspect-[4/5] overflow-hidden rounded-xl bg-paperstory-blush/30${hasGallery ? ' touch-pan-y' : ''}`}
+      style={hasGallery ? { touchAction: 'pan-y' } : undefined}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onPointerCancel={onPointerUp}
+    >
       {externalUrl ? (
         <a
           href={externalUrl}
@@ -49,6 +108,12 @@ function ProductMedia({ product }) {
           rel="noopener noreferrer"
           className="block h-full w-full"
           aria-label={`Open ${product.name} preview`}
+          onClick={(event) => {
+            if (swipingRef.current) {
+              event.preventDefault()
+              swipingRef.current = false
+            }
+          }}
         >
           {media}
         </a>
