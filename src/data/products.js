@@ -102,8 +102,7 @@ export const shopCategories = [
     whatsappMode: 'price',
     subcategories: [
       { slug: 'hand-painted', label: 'Hand Painted', whatsappPrefix: 'Nikkah Certificates (Hand Painted)' },
-      { slug: 'printed-without-frame', label: 'Printed — Without Frame', whatsappPrefix: 'Nikkah Certificates (Printed - Without Frame)' },
-      { slug: 'printed-with-frame', label: 'Printed — With Frame', whatsappPrefix: 'Nikkah Certificates (Printed - With Frame)' },
+      { slug: 'printed', label: 'Printed', whatsappPrefix: 'Nikkah Certificates (Printed)' },
     ],
   },
   {
@@ -375,7 +374,7 @@ const NIKKAH_GALLERY_PRODUCTS = {
       ],
     },
   ],
-  'printed-without-frame': [
+  printed: [
     {
       name: 'Design 1',
       images: [
@@ -387,10 +386,8 @@ const NIKKAH_GALLERY_PRODUCTS = {
         '/nikkah/printed-1/01.mp4',
       ],
     },
-  ],
-  'printed-with-frame': [
     {
-      name: 'Design 1',
+      name: 'Design 2',
       images: [
         '/nikkah/printed-2/01.jpg',
         '/nikkah/printed-2/02.jpg',
@@ -398,15 +395,15 @@ const NIKKAH_GALLERY_PRODUCTS = {
       ],
     },
     {
-      name: 'Design 2',
+      name: 'Design 3',
       images: ['/nikkah/printed-3/01.mp4'],
     },
     {
-      name: 'Design 3',
+      name: 'Design 4',
       images: ['/nikkah/printed-4/01.jpg'],
     },
     {
-      name: 'Design 4',
+      name: 'Design 5',
       images: [
         '/nikkah/printed-5/01.jpg',
         '/nikkah/printed-5/02.jpg',
@@ -709,6 +706,8 @@ const CATEGORY_ALIASES = {
 const SUBCATEGORY_ALIASES = {
   static: 'image-invitation',
   animated: 'animated-invitation',
+  'printed-without-frame': 'printed',
+  'printed-with-frame': 'printed',
 }
 
 export function getFeaturedProducts() {
@@ -740,7 +739,7 @@ export function getBestSellers() {
     { categorySlug: 'favours', subcategorySlug: 'box-favours', name: 'Baby Announcement Box' },
     { categorySlug: 'digital-invitations', subcategorySlug: 'image-invitation', typeSlug: 'wedding', design: 1 },
     { categorySlug: 'stationary-items', subcategorySlug: 'diaries', design: 1 },
-    { categorySlug: 'nikkahnama', subcategorySlug: 'printed-with-frame', design: 1 },
+    { categorySlug: 'nikkahnama', subcategorySlug: 'printed', design: 1 },
     { categorySlug: 'packaging', subcategorySlug: 'business-stickers', design: 1 },
   ]
 

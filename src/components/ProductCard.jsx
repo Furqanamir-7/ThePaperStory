@@ -3,6 +3,7 @@ import { buildProductWhatsAppMessage, buildWhatsAppUrl } from '../utils/whatsapp
 import { canPlaceOrder } from '../data/site'
 import OrderModal from './OrderModal'
 import InquiryModal from './InquiryModal'
+import ImageLightbox from './ImageLightbox'
 
 const SWIPE_THRESHOLD_PX = 40
 
@@ -10,7 +11,7 @@ function isVideoSrc(src = '') {
   return /\.(mp4|webm|ogg)(\?|$)/i.test(src)
 }
 
-function ProductMedia({ product }) {
+function ProductMedia({ product, onOpenLightbox }) {
   const gallery = product.images?.length ? product.images : [product.image]
   const [index, setIndex] = useState(0)
   const current = gallery[index] || product.image
@@ -27,7 +28,6 @@ function ProductMedia({ product }) {
   const goTo = (next) => setIndex((next + gallery.length) % gallery.length)
 
   const onPointerDown = (event) => {
-    if (!hasGallery) return
     if (event.button != null && event.button !== 0) return
     if (event.target.closest?.('button')) return
 
@@ -39,7 +39,7 @@ function ProductMedia({ product }) {
   }
 
   const onPointerMove = (event) => {
-    if (!hasGallery || pointerIdRef.current !== event.pointerId) return
+    if (pointerIdRef.current !== event.pointerId) return
 
     const dx = event.clientX - startXRef.current
     const dy = event.clientY - startYRef.current
@@ -49,24 +49,43 @@ function ProductMedia({ product }) {
       lockedAxisRef.current = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'
     }
 
-    if (lockedAxisRef.current === 'x') {
+    if (lockedAxisRef.current === 'x' && hasGallery) {
       swipingRef.current = true
       event.preventDefault()
     }
   }
 
   const onPointerUp = (event) => {
-    if (!hasGallery || pointerIdRef.current !== event.pointerId) return
+    if (pointerIdRef.current !== event.pointerId) return
 
     const dx = event.clientX - startXRef.current
-    const didSwipe = lockedAxisRef.current === 'x' && Math.abs(dx) >= SWIPE_THRESHOLD_PX
+    const didSwipe =
+      hasGallery &&
+      lockedAxisRef.current === 'x' &&
+      Math.abs(dx) >= SWIPE_THRESHOLD_PX
 
     pointerIdRef.current = null
     lockedAxisRef.current = null
 
     if (didSwipe) {
       goTo(dx < 0 ? index + 1 : index - 1)
+      swipingRef.current = false
+      return
     }
+
+    if (swipingRef.current) {
+      swipingRef.current = false
+      return
+    }
+
+    if (event.target.closest?.('button')) return
+
+    if (externalUrl) {
+      window.open(externalUrl, '_blank', 'noopener,noreferrer')
+      return
+    }
+
+    onOpenLightbox?.(index)
   }
 
   const media = mediaIsVideo ? (
@@ -94,32 +113,27 @@ function ProductMedia({ product }) {
 
   return (
     <div
-      className={`relative mb-4 aspect-[4/5] overflow-hidden rounded-xl bg-paperstory-blush/30${hasGallery ? ' touch-pan-y' : ''}`}
+      className={`relative mb-4 aspect-[4/5] cursor-zoom-in overflow-hidden rounded-xl bg-paperstory-blush/30${hasGallery ? ' touch-pan-y' : ''}`}
       style={hasGallery ? { touchAction: 'pan-y' } : undefined}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
+      role="button"
+      tabIndex={0}
+      aria-label={`View ${product.name} larger`}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault()
+          if (externalUrl) {
+            window.open(externalUrl, '_blank', 'noopener,noreferrer')
+          } else {
+            onOpenLightbox?.(index)
+          }
+        }
+      }}
     >
-      {externalUrl ? (
-        <a
-          href={externalUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block h-full w-full"
-          aria-label={`Open ${product.name} preview`}
-          onClick={(event) => {
-            if (swipingRef.current) {
-              event.preventDefault()
-              swipingRef.current = false
-            }
-          }}
-        >
-          {media}
-        </a>
-      ) : (
-        media
-      )}
+      {media}
 
       {hasGallery && (
         <>
@@ -168,15 +182,24 @@ function ProductMedia({ product }) {
 export default function ProductCard({ product }) {
   const [orderOpen, setOrderOpen] = useState(false)
   const [inquiryOpen, setInquiryOpen] = useState(false)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [lightboxIndex, setLightboxIndex] = useState(0)
   const whatsappUrl = buildWhatsAppUrl(buildProductWhatsAppMessage(product))
   const showPrice = product.showPrice && product.price
   const isCod = product.paymentType === 'cod'
   const orderable = canPlaceOrder(product)
+  const gallery = product.images?.length ? product.images : [product.image]
 
   return (
     <>
       <article className="cute-card group flex flex-col overflow-hidden p-3">
-        <ProductMedia product={product} />
+        <ProductMedia
+          product={product}
+          onOpenLightbox={(startIndex) => {
+            setLightboxIndex(startIndex)
+            setLightboxOpen(true)
+          }}
+        />
 
         <span className="mb-2 inline-block w-fit rounded-full bg-paperstory-blush px-3 py-1 text-xs font-medium text-paperstory-maroon">
           {product.category}
@@ -232,6 +255,14 @@ export default function ProductCard({ product }) {
 
       {orderOpen && <OrderModal product={product} onClose={() => setOrderOpen(false)} />}
       {inquiryOpen && <InquiryModal product={product} onClose={() => setInquiryOpen(false)} />}
+      {lightboxOpen && (
+        <ImageLightbox
+          sources={gallery}
+          startIndex={lightboxIndex}
+          title={product.name}
+          onClose={() => setLightboxOpen(false)}
+        />
+      )}
     </>
   )
 }

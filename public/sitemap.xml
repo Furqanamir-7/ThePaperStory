@@ -121,12 +121,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.thepaperstory.store/shop/nikkahnama/printed-with-frame</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.thepaperstory.store/shop/nikkahnama/printed-without-frame</loc>
+    <loc>https://www.thepaperstory.store/shop/nikkahnama/printed</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
