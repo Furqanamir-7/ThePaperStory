@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import {
   DEFAULT_COUNTRY,
   MARKETING_CONSENT_SHORT,
@@ -131,7 +132,7 @@ export default function InquiryModal({ product, onClose }) {
     }
   }
 
-  return (
+  return createPortal(
     <div className="order-modal-backdrop" onClick={onClose} role="presentation">
       <div
         className="order-modal"
@@ -301,6 +302,7 @@ export default function InquiryModal({ product, onClose }) {
           </>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
