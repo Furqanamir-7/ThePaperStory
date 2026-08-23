@@ -8,3 +8,7 @@ export const STORE_WHATSAPP = '923144392928'
 export function canPlaceOrder(product) {
   return Boolean(product?.showPrice && product?.price)
 }
+
+export function canAddToCart(product) {
+  return Boolean(product?.orderOnline)
+}

@@ -79,7 +79,13 @@ export default async function handler(req, res) {
   }
 
   const orderNumber = generateOrderNumber()
-  const itemLine = `${order.productName} (x${order.quantity || 1})`
+  const items = order.items?.length
+    ? order.items
+    : [{ productName: order.productName, quantity: order.quantity || 1, lineTotal: order.price }]
+  const itemLine =
+    items.length === 1
+      ? `${items[0].productName} (x${items[0].quantity || 1})`
+      : items.map((item) => `${item.productName} (x${item.quantity || 1})`).join(', ')
   const deliveryEstimate = order.deliveryEstimate || '5–7 business days'
 
   const summary = formatOrderSummary({
@@ -105,7 +111,7 @@ export default async function handler(req, res) {
     await transporter.sendMail({
       from,
       to: process.env.GMAIL_USER,
-      subject: `New website order #${orderNumber} — ${order.productName}`,
+      subject: `New website order #${orderNumber} — ${items.length === 1 ? order.productName : `${items.length} items`}`,
       text: `A new order was placed on the website.\n\n${summary}`,
       html: `<p><strong>New order #${orderNumber}</strong></p><pre style="font-family:system-ui,sans-serif;white-space:pre-wrap;background:#FAF6F0;padding:1rem;border-radius:0.75rem;">${summary}</pre>`,
     })

@@ -24,15 +24,31 @@ export function formatFullAddress(order) {
 }
 
 export function formatOrderSummary(order) {
-  const itemLine = `${order.productName} (x${order.quantity || 1})`
+  const items = order.items?.length
+    ? order.items
+    : [
+        {
+          productName: order.productName,
+          quantity: order.quantity || 1,
+          lineTotal: order.price,
+          category: order.category,
+        },
+      ]
+
+  const itemLines = items.map(
+    (item) =>
+      `  • ${item.productName} (x${item.quantity}) — ${item.lineTotal || order.price}`
+  )
+
   return [
     `Order #: ${order.orderNumber}`,
-    `Product: ${order.productName}`,
+    items.length === 1 ? `Product: ${items[0].productName}` : `Products: ${items.length} items`,
     order.selectedDesign ? `Design: ${order.selectedDesign}` : null,
-    `Category: ${order.category}`,
-    `Item(s): ${itemLine}`,
-    `Price: ${order.price}`,
-    `Quantity: ${order.quantity || 1}`,
+    order.category ? `Category: ${order.category}` : null,
+    'Item(s):',
+    ...itemLines,
+    `Total: ${order.price}`,
+    `Quantity: ${order.quantity || items.reduce((sum, item) => sum + (item.quantity || 1), 0)}`,
     `Payment: ${order.paymentType === 'cod' ? 'Cash on Delivery (Pakistan)' : 'Advance payment'}`,
     `Expected delivery: ${order.deliveryEstimate || '5–7 business days'}`,
     '',

@@ -1,57 +1,57 @@
-/** SEO-friendly product display names keyed by category context. */
+/** Catchy, SEO-friendly product display names keyed by category context. */
 
 export const SEO_WEDDING = {
-  1: 'Elegant Floral Wedding Invitation Card',
-  2: 'Minimalist Gold Wedding Invitation',
-  3: 'Royal Mughal Wedding Invitation Design',
-  4: 'Pastel Garden Wedding Invitation Card',
-  5: 'Classic Cream Wedding Invitation Suite',
-  6: 'Modern Geometric Wedding Invite',
-  7: 'Vintage Lace Wedding Invitation',
-  8: 'Blush Pink Floral Wedding Card',
-  9: 'Navy Blue Classic Wedding Invitation',
-  10: 'Sage Green Botanical Wedding Invite',
-  11: 'Terracotta Boho Wedding Invitation',
-  12: 'Black and Gold Luxury Wedding Card',
-  13: 'Watercolor Floral Wedding Invitation',
-  14: 'Islamic Calligraphy Wedding Invite',
-  15: 'Peacock Motif Wedding Invitation Card',
+  1: 'Blush & Bloom Floral Wedding Invite',
+  2: 'Gold Minimal Wedding Invitation',
+  3: 'Royal Mughal Wedding Invite Card',
+  4: 'Pastel Garden Party Wedding Card',
+  5: 'Classic Cream Wedding Invite Suite',
+  6: 'Modern Geo Wedding Invitation',
+  7: 'Vintage Lace Dream Wedding Card',
+  8: 'Blush Pink Floral Wedding Invite',
+  9: 'Navy Classic Wedding Invitation',
+  10: 'Sage Green Botanical Wedding Card',
+  11: 'Terracotta Boho Wedding Invite',
+  12: 'Black & Gold Luxe Wedding Card',
+  13: 'Watercolor Bloom Wedding Invite',
+  14: 'Islamic Calligraphy Wedding Card',
+  15: 'Peacock Motif Wedding Invitation',
   16: 'Rose Gold Glitter Wedding Invite',
-  17: 'Marble Texture Wedding Invitation',
-  18: 'Rustic Kraft Wedding Invitation Card',
-  19: 'Art Deco Wedding Invitation Design',
-  20: 'Cherry Blossom Wedding Invite Card',
-  21: 'Midnight Blue Starry Wedding Invitation',
+  17: 'Marble Luxe Wedding Invitation',
+  18: 'Rustic Kraft Wedding Invite',
+  19: 'Art Deco Glam Wedding Card',
+  20: 'Cherry Blossom Spring Wedding Invite',
+  21: 'Midnight Starry Wedding Invitation',
   22: 'Sunflower Summer Wedding Invite',
-  23: 'Lavender Dream Wedding Invitation Card',
+  23: 'Lavender Dream Wedding Card',
   24: 'Embossed Monogram Wedding Invite',
-  25: 'Tropical Palm Wedding Invitation',
-  26: 'Heritage Pakistani Wedding Invitation Card',
+  25: 'Tropical Palm Beach Wedding Card',
+  26: 'Heritage Pakistani Wedding Invite',
 }
 
 export const SEO_DIGITAL_IMAGE_WEDDING = {
-  1: 'Digital Floral Wedding Invitation Card',
-  2: 'Minimal Digital Wedding E-Invite',
-  3: 'Gold Typography Digital Wedding Invite',
-  4: 'Pastel Watercolor Digital Wedding Card',
-  5: 'Classic Urdu Digital Wedding Invitation',
-  6: 'Modern Couple Digital Wedding E-Card',
-  7: 'Botanical Digital Wedding Invitation',
+  1: 'Pretty Floral Digital Wedding E-Card',
+  2: 'Minimal Gold Digital Wedding Invite',
+  3: 'Gold Typography Digital Wedding Card',
+  4: 'Pastel Watercolor Digital Wedding Invite',
+  5: 'Classic Urdu Digital Wedding E-Card',
+  6: 'Modern Couple Digital Wedding Invite',
+  7: 'Botanical Digital Wedding E-Card',
   8: 'Royal Digital Wedding Invite Design',
   9: 'Simple Elegant Digital Wedding Card',
-  10: 'Shareable Digital Wedding Invitation PNG',
+  10: 'Shareable Digital Wedding Invite PNG',
 }
 
 export const SEO_DIGITAL_IMAGE_BABY = {
-  1: 'Baby Announcement Digital Invitation Card',
-  2: 'Newborn Welcome Digital Announcement Card',
+  1: 'Sweet Baby Announcement Digital Card',
+  2: 'Newborn Welcome Digital Announcement',
 }
 
 export const SEO_DIGITAL_ANIMATED_WEDDING = {
-  1: 'Animated Floral Wedding Video Invitation',
+  1: 'Animated Floral Wedding Video Invite',
   2: 'Animated Gold Wedding E-Invite Video',
   3: 'Animated Minimal Wedding Video Card',
-  4: 'Animated Urdu Wedding Video Invitation',
+  4: 'Animated Urdu Wedding Video Invite',
   5: 'Animated Royal Wedding E-Invite',
   6: 'Animated Pastel Wedding Video Card',
   7: 'Animated Islamic Wedding Video Invite',
@@ -59,7 +59,7 @@ export const SEO_DIGITAL_ANIMATED_WEDDING = {
 }
 
 export const SEO_DIGITAL_ANIMATED_BABY = {
-  1: 'Animated Baby Announcement Video Invitation',
+  1: 'Animated Baby Announcement Video Invite',
 }
 
 export const SEO_DIGITAL_ANIMATED_BIRTHDAY = {
@@ -67,15 +67,15 @@ export const SEO_DIGITAL_ANIMATED_BIRTHDAY = {
 }
 
 export const SEO_NIKKAH_HAND_PAINTED = {
-  1: 'Hand Painted Floral Nikkah Certificate',
+  1: 'Hand-Painted Floral Nikkah Certificate',
 }
 
 export const SEO_NIKKAH_PRINTED = {
-  1: 'Printed Classic Floral Nikkah Certificate',
-  2: 'Printed Minimal Nikkah Certificate Design',
-  3: 'Printed Modern Nikkah Certificate Card',
-  4: 'Printed Elegant Nikkah Certificate',
-  5: 'Printed Gold Border Nikkah Certificate',
+  1: 'Classic Floral Printed Nikkah Certificate',
+  2: 'Minimal Printed Nikkah Certificate',
+  3: 'Modern Printed Nikkah Certificate Card',
+  4: 'Elegant Printed Nikkah Certificate',
+  5: 'Gold Border Printed Nikkah Certificate',
 }
 
 export const SEO_PACKAGING_BUSINESS = {
@@ -84,7 +84,7 @@ export const SEO_PACKAGING_BUSINESS = {
 }
 
 export const SEO_VINYL = {
-  1: 'Custom Floral Vinyl Sticker Design',
+  1: 'Pretty Floral Vinyl Sticker Design',
   2: 'Personalised Script Vinyl Sticker',
   3: 'Custom Wedding Vinyl Sticker Decal',
   4: 'Branded Packaging Vinyl Sticker Set',
@@ -92,13 +92,13 @@ export const SEO_VINYL = {
 
 export const SEO_FAVOURS = {
   'Bid Potli': 'Custom Wedding Bid Potli Favour Bag',
-  'Baby Announcement Box': 'Custom Baby Announcement Gift Box Favour',
-  'Sweet Box with Gift Bags': 'Wedding Sweet Box with Gift Bags Favour',
+  'Baby Announcement Box': 'Sweet Baby Announcement Gift Box Favour',
+  'Sweet Box with Gift Bags': 'Wedding Sweet Box with Gift Bags',
   'Customised Bid Box': 'Personalised Wedding Bid Box Favour',
   'Customised Chocolate Box': 'Custom Chocolate Box Wedding Favour',
   'Customised Tin Bid Box': 'Personalised Tin Bid Box Wedding Favour',
-  'Personalised Golden Round Tin Favour': 'Personalised Golden Round Tin Wedding Favour',
-  'Golden Round Tin Favour — Rose Gold': 'Rose Gold Golden Round Tin Wedding Favour',
+  'Personalised Golden Round Tin Favour': 'Golden Round Tin Wedding Favour',
+  'Golden Round Tin Favour — Rose Gold': 'Rose Gold Round Tin Wedding Favour',
   'Custom Acrylic Wedding Cake Topper': 'Custom Acrylic Wedding Cake Topper',
 }
 
@@ -107,34 +107,34 @@ export const SEO_EIDI = {
 }
 
 export const SEO_DIARIES = {
-  1: 'Pastel Floral Hardcover Diary',
-  2: 'Marble Print Journal Notebook',
-  3: 'Kawaii Character Spiral Diary',
-  4: 'Minimalist Linen Cover Diary',
-  5: 'Glitter Unicorn Journal Notebook',
-  6: 'Vintage Leather Look Diary',
+  1: 'Pretty Pastel Floral Hardcover Diary',
+  2: 'Chic Marble Print Journal',
+  3: 'Cute Kawaii Character Spiral Diary',
+  4: 'Soft Minimalist Linen Cover Diary',
+  5: 'Sparkly Glitter Unicorn Journal',
+  6: 'Vintage Brown Leather Look Diary',
   7: 'Aesthetic Grid Bullet Journal',
-  8: 'Cute Cat Hardcover Diary',
-  9: 'Botanical Garden Journal',
-  10: 'Pink Striped Notebook Diary',
-  11: 'Blue Ocean Wave Journal',
-  12: 'Motivational Quote Diary',
-  13: 'Rainbow Pastel Journal',
+  8: 'Adorable Cat Hardcover Diary',
+  9: 'Pretty Botanical Garden Journal',
+  10: 'Sweet Pink Striped Notebook',
+  11: 'Dreamy Blue Ocean Wave Journal',
+  12: 'Inspiring Motivational Quote Diary',
+  13: 'Rainbow Pastel Cute Journal',
   14: 'Classic Black Hardcover Diary',
-  15: 'Heart Pattern Love Journal',
-  16: 'Cloud Sky Aesthetic Diary',
-  17: 'Fruit Print Summer Journal',
-  18: 'Starry Night Dream Diary',
-  19: 'Teddy Bear Cute Journal',
-  20: 'Monogram Initial Diary Notebook',
-  21: 'Striped Campus Study Journal',
-  22: 'Butterfly Garden Diary',
-  23: 'Cream Elegance Journal Notebook',
+  15: 'Lovely Heart Pattern Journal',
+  16: 'Cloudy Sky Aesthetic Diary',
+  17: 'Fruity Summer Print Journal',
+  18: 'Starry Night Dreamy Diary',
+  19: 'Cute Teddy Bear Journal',
+  20: 'Personal Monogram Diary Notebook',
+  21: 'Campus Striped Study Journal',
+  22: 'Pretty Butterfly Garden Diary',
+  23: 'Creamy Elegance Journal',
 }
 
 export const SEO_GREETING = {
-  1: 'Floral Greeting Card with Envelope',
-  2: 'Birthday Celebration Greeting Card',
+  1: 'Pretty Floral Greeting Card with Envelope',
+  2: 'Happy Birthday Celebration Greeting Card',
   3: 'Thank You Greeting Card Design',
   4: 'Elegant Wedding Greeting Card',
 }

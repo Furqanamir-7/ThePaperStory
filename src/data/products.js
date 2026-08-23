@@ -1028,7 +1028,7 @@ export const products = buildAllProducts()
 export const categories = shopCategories
 
 export function getAllSitemapPaths() {
-  const paths = new Set(['/', '/about', '/contact', '/shop'])
+  const paths = new Set(['/', '/about', '/contact', '/shop', '/cart'])
 
   for (const cat of shopCategories) {
     paths.add(`/shop/${cat.slug}`)

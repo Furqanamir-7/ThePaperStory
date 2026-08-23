@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { buildProductWhatsAppMessage, buildWhatsAppUrl } from '../utils/whatsapp'
-import { canPlaceOrder } from '../data/site'
+import { canAddToCart, canPlaceOrder } from '../data/site'
+import { useCart } from '../context/CartContext'
 import OrderModal from './OrderModal'
 import InquiryModal from './InquiryModal'
 import ImageLightbox from './ImageLightbox'
@@ -231,10 +232,13 @@ export default function ProductCard({ product }) {
   const [inquiryOpen, setInquiryOpen] = useState(false)
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState(0)
+  const [addedFeedback, setAddedFeedback] = useState(false)
+  const { addItem } = useCart()
   const whatsappUrl = buildWhatsAppUrl(buildProductWhatsAppMessage(product))
   const showPrice = product.showPrice && product.price
   const isCod = product.paymentType === 'cod'
   const orderable = canPlaceOrder(product)
+  const addToCartEnabled = canAddToCart(product)
   const orderOnline = Boolean(product.orderOnline)
   const gallery = product.images?.length ? product.images : [product.image]
 
@@ -254,6 +258,13 @@ export default function ProductCard({ product }) {
   }
 
   const toggleExpanded = () => setExpandedExclusive(!expanded)
+
+  const handleAddToCart = (event) => {
+    event.stopPropagation()
+    addItem(product, 1)
+    setAddedFeedback(true)
+    window.setTimeout(() => setAddedFeedback(false), 2000)
+  }
 
   return (
     <>
@@ -306,8 +317,13 @@ export default function ProductCard({ product }) {
 
           {!expanded && (
             <span className="inline-flex min-h-[40px] w-full items-center justify-center rounded-full border border-paperstory-maroon/25 bg-paperstory-wash/80 px-4 py-2 text-xs font-semibold tracking-wide text-paperstory-maroon uppercase transition-colors hover:border-paperstory-maroon/45 hover:bg-paperstory-blush/60">
-              Order options
+              {addToCartEnabled ? 'Add to cart · Shop now' : 'Order options'}
             </span>
+          )}
+          {addedFeedback && (
+            <p className="mt-2 text-center text-xs font-semibold text-paperstory-maroon">
+              Added to cart ✓
+            </p>
           )}
         </button>
 
@@ -316,13 +332,22 @@ export default function ProductCard({ product }) {
             id={`product-ctas-${cardId}`}
             className="mt-auto flex flex-col gap-2"
           >
+            {addToCartEnabled && (
+              <button
+                type="button"
+                onClick={handleAddToCart}
+                className="cute-btn-secondary w-full"
+              >
+                Add to cart
+              </button>
+            )}
             {orderable && (
               <button
                 type="button"
                 onClick={() => setOrderOpen(true)}
                 className="cute-btn-primary w-full"
               >
-                Place order
+                {addToCartEnabled ? 'Buy now' : 'Place order'}
               </button>
             )}
             {!orderable && (

@@ -10,6 +10,8 @@ import AboutPage from './pages/AboutPage'
 import ShopPage from './pages/ShopPage'
 import ShopCategoryPage from './pages/ShopCategoryPage'
 import ContactPage from './pages/ContactPage'
+import CartPage from './pages/CartPage'
+import { CartProvider } from './context/CartContext'
 
 function AppContent() {
   const location = useLocation()
@@ -47,6 +49,7 @@ function AppContent() {
           <Route path="/shop/:category/:subcategory" element={<ShopCategoryPage />} />
           <Route path="/shop/:category" element={<ShopCategoryPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/cart" element={<CartPage />} />
         </Routes>
       </main>
       <Footer />
@@ -58,8 +61,10 @@ function AppContent() {
 export default function App() {
   return (
     <BrowserRouter>
-      <ScrollToTop />
-      <AppContent />
+      <CartProvider>
+        <ScrollToTop />
+        <AppContent />
+      </CartProvider>
     </BrowserRouter>
   )
 }

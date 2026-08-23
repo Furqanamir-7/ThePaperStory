@@ -7,10 +7,11 @@ const mainLinks = [
   { label: 'Home', to: '/' },
   { label: 'About', to: '/about' },
   { label: 'Shop all', to: '/shop' },
+  { label: 'Cart', to: '/cart', badge: true },
   { label: 'Contact', to: '/contact' },
 ]
 
-export default function MobileMenu({ open, onClose }) {
+export default function MobileMenu({ open, onClose, itemCount = 0 }) {
   const [active, setActive] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [activeCategory, setActiveCategory] = useState(null)
@@ -91,7 +92,10 @@ export default function MobileMenu({ open, onClose }) {
                 {mainLinks.map((link) => (
                   <li key={link.to}>
                     <Link to={link.to} className="mobile-menu-link" onClick={onClose}>
-                      {link.label}
+                      <span>{link.label}</span>
+                      {link.badge && itemCount > 0 && (
+                        <span className="cart-nav-badge cart-nav-badge--menu">{itemCount > 99 ? '99+' : itemCount}</span>
+                      )}
                     </Link>
                   </li>
                 ))}

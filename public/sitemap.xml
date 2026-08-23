@@ -11,6 +11,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.thepaperstory.store/cart</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.thepaperstory.store/contact</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

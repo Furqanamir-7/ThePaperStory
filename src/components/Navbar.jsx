@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import BrandWordmark from './BrandWordmark'
 import MobileMenu from './MobileMenu'
+import { useCart } from '../context/CartContext'
 
 const mainLinks = [
   { label: 'Home', to: '/' },
@@ -13,6 +14,7 @@ const mainLinks = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
+  const { itemCount } = useCart()
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
@@ -58,21 +60,39 @@ export default function Navbar() {
             ))}
           </ul>
 
-          <button
-            type="button"
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={menuOpen}
-            className={`mobile-hamburger lg:hidden${menuOpen ? ' mobile-hamburger--open' : ''}`}
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            <span className="mobile-hamburger-line" />
-            <span className="mobile-hamburger-line" />
-            <span className="mobile-hamburger-line" />
-          </button>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Link
+              to="/cart"
+              className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-paperstory-cream/15 text-paperstory-cream transition-colors hover:bg-paperstory-cream/25 lg:h-11 lg:w-11"
+              aria-label={itemCount > 0 ? `Cart, ${itemCount} items` : 'Cart'}
+            >
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden="true">
+                <path d="M6 6h15l-1.5 9h-12z" strokeLinejoin="round" />
+                <path d="M6 6 5 3H2" strokeLinecap="round" />
+                <circle cx="9" cy="20" r="1.5" fill="currentColor" stroke="none" />
+                <circle cx="18" cy="20" r="1.5" fill="currentColor" stroke="none" />
+              </svg>
+              {itemCount > 0 && (
+                <span className="cart-nav-badge">{itemCount > 99 ? '99+' : itemCount}</span>
+              )}
+            </Link>
+
+            <button
+              type="button"
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={menuOpen}
+              className={`mobile-hamburger lg:hidden${menuOpen ? ' mobile-hamburger--open' : ''}`}
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              <span className="mobile-hamburger-line" />
+              <span className="mobile-hamburger-line" />
+              <span className="mobile-hamburger-line" />
+            </button>
+          </div>
         </nav>
       </header>
 
-      <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
+      <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} itemCount={itemCount} />
     </>
   )
 }
