@@ -1,0 +1,212 @@
+{
+  "wedding": [
+    {
+      "name": "Design 1",
+      "images": [
+        "/wedding-invites/design-1/01.jpg",
+        "/wedding-invites/design-1/02.jpg",
+        "/wedding-invites/design-1/03.jpg",
+        "/wedding-invites/design-1/04.jpg",
+        "/wedding-invites/design-1/05.jpg"
+      ]
+    },
+    {
+      "name": "Design 2",
+      "images": [
+        "/wedding-invites/design-2/01.jpg",
+        "/wedding-invites/design-2/02.jpg",
+        "/wedding-invites/design-2/03.jpg",
+        "/wedding-invites/design-2/04.jpg"
+      ]
+    },
+    {
+      "name": "Design 3",
+      "images": [
+        "/wedding-invites/design-3/01.jpg",
+        "/wedding-invites/design-3/02.jpg",
+        "/wedding-invites/design-3/03.jpg",
+        "/wedding-invites/design-3/04.jpg",
+        "/wedding-invites/design-3/05.jpg"
+      ]
+    },
+    {
+      "name": "Design 4",
+      "images": [
+        "/wedding-invites/design-4/01.jpg",
+        "/wedding-invites/design-4/02.jpg",
+        "/wedding-invites/design-4/03.jpg",
+        "/wedding-invites/design-4/04.jpg",
+        "/wedding-invites/design-4/05.jpg"
+      ]
+    },
+    {
+      "name": "Design 5",
+      "images": [
+        "/wedding-invites/design-5/01.jpg",
+        "/wedding-invites/design-5/02.jpg",
+        "/wedding-invites/design-5/03.jpg",
+        "/wedding-invites/design-5/04.jpg",
+        "/wedding-invites/design-5/05.jpg"
+      ]
+    },
+    {
+      "name": "Design 6",
+      "images": [
+        "/wedding-invites/design-6/01.jpg",
+        "/wedding-invites/design-6/02.jpg",
+        "/wedding-invites/design-6/03.jpg",
+        "/wedding-invites/design-6/04.jpg",
+        "/wedding-invites/design-6/05.jpg"
+      ]
+    },
+    {
+      "name": "Design 7",
+      "images": [
+        "/wedding-invites/design-7/01.jpg",
+        "/wedding-invites/design-7/02.jpg",
+        "/wedding-invites/design-7/03.jpg",
+        "/wedding-invites/design-7/04.jpg",
+        "/wedding-invites/design-7/05.jpg"
+      ]
+    },
+    {
+      "name": "Design 8",
+      "images": [
+        "/wedding-invites/design-8/01.jpg",
+        "/wedding-invites/design-8/02.jpg",
+        "/wedding-invites/design-8/03.jpg",
+        "/wedding-invites/design-8/04.jpg",
+        "/wedding-invites/design-8/05.jpg"
+      ]
+    },
+    {
+      "name": "Design 10",
+      "images": [
+        "/wedding-invites/design-10/01.jpg",
+        "/wedding-invites/design-10/02.jpg",
+        "/wedding-invites/design-10/03.jpg",
+        "/wedding-invites/design-10/04.jpg",
+        "/wedding-invites/design-10/05.jpg"
+      ]
+    },
+    {
+      "name": "Design 11",
+      "images": [
+        "/wedding-invites/design-11/01.jpg",
+        "/wedding-invites/design-11/02.jpg",
+        "/wedding-invites/design-11/03.jpg",
+        "/wedding-invites/design-11/04.jpg",
+        "/wedding-invites/design-11/05.jpg"
+      ]
+    }
+  ],
+  "favours": {
+    "potli": [
+      {
+        "name": "Bid Potli Design 1",
+        "images": [
+          "/favours/potli-1/01.jpg",
+          "/favours/potli-1/02.jpg",
+          "/favours/potli-1/03.jpg",
+          "/favours/potli-1/04.jpg",
+          "/favours/potli-1/05.jpg"
+        ]
+      },
+      {
+        "name": "Bid Potli Design 2",
+        "images": [
+          "/favours/potli-2/01.jpg",
+          "/favours/potli-2/02.jpg",
+          "/favours/potli-2/03.jpg",
+          "/favours/potli-2/04.jpg",
+          "/favours/potli-2/05.jpg"
+        ]
+      },
+      {
+        "name": "Bid Potli Design 3",
+        "images": [
+          "/favours/potli-3/01.jpg",
+          "/favours/potli-3/02.jpg",
+          "/favours/potli-3/03.jpg",
+          "/favours/potli-3/04.jpg",
+          "/favours/potli-3/05.jpg"
+        ]
+      },
+      {
+        "name": "Bid Potli Design 4",
+        "images": [
+          "/favours/potli-4/01.jpg",
+          "/favours/potli-4/02.jpg",
+          "/favours/potli-4/03.jpg",
+          "/favours/potli-4/04.jpg",
+          "/favours/potli-4/05.jpg"
+        ]
+      },
+      {
+        "name": "Bid Potli Design 5",
+        "images": [
+          "/favours/potli-5/01.jpg",
+          "/favours/potli-5/02.jpg",
+          "/favours/potli-5/03.jpg",
+          "/favours/potli-5/04.jpg",
+          "/favours/potli-5/05.jpg"
+        ]
+      },
+      {
+        "name": "Bid Potli Design 6",
+        "images": [
+          "/favours/potli-6/01.jpg",
+          "/favours/potli-6/02.jpg",
+          "/favours/potli-6/03.jpg",
+          "/favours/potli-6/04.jpg",
+          "/favours/potli-6/05.jpg"
+        ]
+      }
+    ],
+    "box-favours": [
+      {
+        "name": "Baby Announcement Box",
+        "images": [
+          "/favours/baby-announcement-box/01.jpg",
+          "/favours/baby-announcement-box/02.jpg",
+          "/favours/baby-announcement-box/03.jpg",
+          "/favours/baby-announcement-box/04.jpg",
+          "/favours/baby-announcement-box/05.jpg"
+        ]
+      },
+      {
+        "name": "Customised Bid Box",
+        "images": [
+          "/favours/bid-box/01.jpg",
+          "/favours/bid-box/02.jpg",
+          "/favours/bid-box/03.jpg",
+          "/favours/bid-box/04.jpg",
+          "/favours/bid-box/05.jpg"
+        ]
+      },
+      {
+        "name": "Customised Chocolate Box",
+        "images": [
+          "/favours/chocolate-box/01.jpg",
+          "/favours/chocolate-box/02.jpg",
+          "/favours/chocolate-box/03.jpg",
+          "/favours/chocolate-box/04.jpg",
+          "/favours/chocolate-box/05.jpg"
+        ]
+      }
+    ],
+    "tin-favours": [
+      {
+        "name": "Customised Tin Bid Box",
+        "images": [
+          "/favours/tin-bid-box/01.jpg",
+          "/favours/tin-bid-box/02.jpg",
+          "/favours/tin-bid-box/03.jpg",
+          "/favours/tin-bid-box/04.jpg",
+          "/favours/tin-bid-box/05.jpg"
+        ]
+      }
+    ]
+  },
+  "importedAt": "2026-08-23T12:00:03.001Z"
+}

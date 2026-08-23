@@ -1,4 +1,5 @@
 import stationaryGallery from './stationary-gallery.json' with { type: 'json' }
+import tpsDataGallery from './tps-data-gallery.json' with { type: 'json' }
 
 const IMG = {
   wedding: '/wedding-invites/cover.jpg',
@@ -113,7 +114,7 @@ export const shopCategories = [
     label: 'Favours',
     shortLabel: 'Favours',
     description: 'Potli, box, tin, and cake-topper favours for weddings and events.',
-    image: '/favours/baby-announcement-box/01.jpg',
+    image: '/favours/potli-1/01.jpg',
     showPrice: false,
     paymentType: 'advance',
     whatsappMode: 'price',
@@ -248,8 +249,8 @@ const VINYL_IMAGES = [
   '/vinyl/vinyl-4.jpeg',
 ]
 
-/** Wedding Invitations — each numbered Desktop folder → one product card */
-const WEDDING_GALLERY = [
+/** Wedding Invitations — each numbered folder → one product card */
+const WEDDING_GALLERY_BASE = [
   {
     name: 'Design 1',
     images: [
@@ -521,8 +522,8 @@ const PACKAGING_GALLERY = {
   ],
 }
 
-/** Favours — keyed by subcategory; potli has no Desktop assets yet */
-const FAVOURS_GALLERY = {
+/** Favours — keyed by subcategory */
+const FAVOURS_GALLERY_BASE = {
   potli: [],
   'box-favours': [
     {
@@ -584,6 +585,28 @@ const FAVOURS_GALLERY = {
     },
   ],
 }
+
+function mergeWeddingFromTps(base) {
+  const updates = new Map(tpsDataGallery.wedding.map((design) => [design.name, design]))
+  return base.map((design) => updates.get(design.name) ?? design)
+}
+
+function mergeFavoursFromTps(base) {
+  const tps = tpsDataGallery.favours
+  const tpsBoxNames = new Set(tps['box-favours'].map((design) => design.name))
+  return {
+    potli: tps.potli.length ? tps.potli : base.potli,
+    'box-favours': [
+      ...tps['box-favours'],
+      ...base['box-favours'].filter((design) => !tpsBoxNames.has(design.name)),
+    ],
+    'tin-favours': [...tps['tin-favours'], ...base['tin-favours']],
+    'cake-toppers': base['cake-toppers'],
+  }
+}
+
+const WEDDING_GALLERY = mergeWeddingFromTps(WEDDING_GALLERY_BASE)
+const FAVOURS_GALLERY = mergeFavoursFromTps(FAVOURS_GALLERY_BASE)
 
 /** Eidi and Money envelopes */
 const EIDI_GALLERY = [
