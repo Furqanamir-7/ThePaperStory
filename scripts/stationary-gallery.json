@@ -1,0 +1,226 @@
+{
+  "diaries": [
+    {
+      "name": "Diary 1",
+      "image": "/stationary/diaries/01.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 2",
+      "image": "/stationary/diaries/02.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 3",
+      "image": "/stationary/diaries/03.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 4",
+      "image": "/stationary/diaries/04.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 5",
+      "image": "/stationary/diaries/05.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 6",
+      "image": "/stationary/diaries/06.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 7",
+      "image": "/stationary/diaries/07.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 8",
+      "image": "/stationary/diaries/08.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 9",
+      "image": "/stationary/diaries/09.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 10",
+      "image": "/stationary/diaries/10.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 11",
+      "image": "/stationary/diaries/11.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 12",
+      "image": "/stationary/diaries/12.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 13",
+      "image": "/stationary/diaries/13.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 14",
+      "image": "/stationary/diaries/14.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 15",
+      "image": "/stationary/diaries/15.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 16",
+      "image": "/stationary/diaries/16.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 17",
+      "image": "/stationary/diaries/17.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 18",
+      "image": "/stationary/diaries/18.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 19",
+      "image": "/stationary/diaries/19.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 20",
+      "image": "/stationary/diaries/20.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 21",
+      "image": "/stationary/diaries/21.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 22",
+      "image": "/stationary/diaries/22.jpg",
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 23",
+      "image": "/stationary/diaries/23.jpg",
+      "price": "PKR 1150"
+    }
+  ],
+  "pens": [
+    {
+      "name": "Pen 1",
+      "image": "/stationary/pens/01.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 2",
+      "image": "/stationary/pens/02.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 3",
+      "image": "/stationary/pens/03.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 4",
+      "image": "/stationary/pens/04.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 5",
+      "image": "/stationary/pens/05.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 6",
+      "image": "/stationary/pens/06.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 7",
+      "image": "/stationary/pens/07.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 8",
+      "image": "/stationary/pens/08.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 9",
+      "image": "/stationary/pens/09.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 10",
+      "image": "/stationary/pens/10.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 11",
+      "image": "/stationary/pens/11.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 12",
+      "image": "/stationary/pens/12.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 13",
+      "image": "/stationary/pens/13.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 14",
+      "image": "/stationary/pens/14.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 15",
+      "image": "/stationary/pens/15.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 16",
+      "image": "/stationary/pens/16.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 17",
+      "image": "/stationary/pens/17.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 18",
+      "image": "/stationary/pens/18.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 19",
+      "image": "/stationary/pens/19.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 20",
+      "image": "/stationary/pens/20.jpg",
+      "price": "PKR 850"
+    },
+    {
+      "name": "Pen 21",
+      "image": "/stationary/pens/21.jpg",
+      "price": "PKR 850"
+    }
+  ]
+}

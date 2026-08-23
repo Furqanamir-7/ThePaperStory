@@ -90,8 +90,13 @@ export default function OrderModal({ product, onClose }) {
   if (!product) return null
 
   const isCod = product.paymentType === 'cod'
+  const orderOnline = Boolean(product.orderOnline)
   const totalLabel = product.price
-  const deliveryEstimate = isCod ? DELIVERY_ESTIMATE.cod : DELIVERY_ESTIMATE.advance
+  const deliveryEstimate = orderOnline
+    ? DELIVERY_ESTIMATE.onlineFree
+    : isCod
+      ? DELIVERY_ESTIMATE.cod
+      : DELIVERY_ESTIMATE.advance
   const isPakistan = form.country === 'Pakistan'
   const cityValue = form.city === 'Other' ? form.cityOther : form.city
 
@@ -177,8 +182,13 @@ export default function OrderModal({ product, onClose }) {
               </h2>
               <p className="text-paperstory-ink/75">
                 {product.name} · {totalLabel}
-                {isCod ? ' · COD' : ' · Advance'}
+                {orderOnline ? ' · Pay online · Free delivery' : isCod ? ' · COD' : ' · Advance'}
               </p>
+              {orderOnline && (
+                <p className="mt-2 text-xs font-medium text-paperstory-maroon">
+                  Complete payment online to get free delivery within Pakistan.
+                </p>
+              )}
             </div>
 
             <form onSubmit={handleSubmit} className="order-modal-form">

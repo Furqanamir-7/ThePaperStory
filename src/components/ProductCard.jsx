@@ -192,6 +192,7 @@ export default function ProductCard({ product }) {
   const showPrice = product.showPrice && product.price
   const isCod = product.paymentType === 'cod'
   const orderable = canPlaceOrder(product)
+  const orderOnline = Boolean(product.orderOnline)
   const gallery = product.images?.length ? product.images : [product.image]
 
   useEffect(() => {
@@ -248,9 +249,11 @@ export default function ProductCard({ product }) {
           )}
 
           <p className="mb-3 text-xs font-medium text-paperstory-ink/70">
-            {isCod
-              ? 'COD available within Pakistan'
-              : 'Advance payment required'}
+            {orderOnline
+              ? 'Order on website · Pay online · Free delivery'
+              : isCod
+                ? 'COD available within Pakistan'
+                : 'Advance payment required'}
           </p>
 
           {!expanded && (

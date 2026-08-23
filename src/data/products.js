@@ -1,3 +1,5 @@
+import stationaryGallery from './stationary-gallery.json' with { type: 'json' }
+
 const IMG = {
   wedding: '/wedding-invites/cover.jpg',
   digital: '/e-invites/wedding-static-01.png',
@@ -141,8 +143,9 @@ export const shopCategories = [
     slug: 'stationary-items',
     label: 'Stationary Items',
     shortLabel: 'Stationary',
-    description: 'Diaries, pens, and everyday stationery — COD available within Pakistan.',
-    image: IMG.stationary,
+    description:
+      'Diaries and pens — order directly on the website. Complete payment online for free delivery within Pakistan.',
+    image: '/stationary/diaries/01.jpg',
     showPrice: true,
     paymentType: 'cod',
     whatsappMode: 'more',
@@ -661,6 +664,31 @@ const NIKKAH_GALLERY_PRODUCTS = {
   ],
 }
 
+function addStationaryProducts({
+  categorySlug,
+  subcategorySlug,
+  items,
+  whatsappLabel,
+  categoryLabel,
+}) {
+  return items.map((item) => ({
+    id: productId++,
+    name: item.name,
+    category: categoryLabel,
+    categorySlug,
+    subcategorySlug,
+    typeSlug: null,
+    image: item.image,
+    images: null,
+    showPrice: true,
+    price: item.price,
+    paymentType: 'advance',
+    whatsappMode: 'more',
+    whatsappLabel,
+    orderOnline: true,
+  }))
+}
+
 function addDesigns({
   categorySlug,
   subcategorySlug,
@@ -785,6 +813,19 @@ function buildAllProducts() {
               })
             )
           }
+          continue
+        }
+
+        if (cat.slug === 'stationary-items' && stationaryGallery[sub.slug]?.length) {
+          all.push(
+            ...addStationaryProducts({
+              categorySlug: cat.slug,
+              subcategorySlug: sub.slug,
+              items: stationaryGallery[sub.slug],
+              whatsappLabel: sub.whatsappPrefix,
+              categoryLabel: cat.label,
+            })
+          )
           continue
         }
 
@@ -977,18 +1018,18 @@ export function getFeaturedProducts() {
   const picks = [
     { categorySlug: 'wedding-invitations', design: 1 },
     { categorySlug: 'digital-invitations', subcategorySlug: 'image-invitation', typeSlug: 'wedding', design: 1 },
-    { categorySlug: 'nikkahnama', subcategorySlug: 'hand-painted', design: 1 },
-    { categorySlug: 'greeting-cards', design: 1 },
+    { categorySlug: 'stationary-items', subcategorySlug: 'diaries', name: 'Diary 1' },
+    { categorySlug: 'stationary-items', subcategorySlug: 'pens', name: 'Pen 1' },
   ]
 
   return picks
-    .map(({ categorySlug, subcategorySlug, typeSlug, design }) =>
+    .map(({ categorySlug, subcategorySlug, typeSlug, design, name }) =>
       products.find(
         (product) =>
           product.categorySlug === categorySlug &&
           product.subcategorySlug === (subcategorySlug ?? null) &&
           (typeSlug == null || product.typeSlug === typeSlug) &&
-          product.name === `Design ${design}`
+          product.name === (name || `Design ${design}`)
       )
     )
     .filter(Boolean)

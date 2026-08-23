@@ -40,6 +40,7 @@ export const PHONE_COUNTRY_CODES = [
 export const DELIVERY_ESTIMATE = {
   cod: '5–7 business days (Pakistan)',
   advance: '5–7 business days',
+  onlineFree: 'Free delivery within Pakistan when you complete payment online',
 }
 
 export const ORDER_CONSENT_TEXT =
