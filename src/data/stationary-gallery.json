@@ -118,108 +118,91 @@
   ],
   "pens": [
     {
-      "name": "Pen 1",
-      "image": "/stationary/pens/01.jpg",
+      "name": "Cute Hello Kitty Printed Gel Pen",
+      "image": "/stationary/pens/cute-hello-kitty-printed-gel-pen/01.jpg",
+      "images": [
+        "/stationary/pens/cute-hello-kitty-printed-gel-pen/01.jpg",
+        "/stationary/pens/cute-hello-kitty-printed-gel-pen/02.jpg",
+        "/stationary/pens/cute-hello-kitty-printed-gel-pen/03.jpg"
+      ],
       "price": "PKR 850"
     },
     {
-      "name": "Pen 2",
-      "image": "/stationary/pens/02.jpg",
+      "name": "Cute Kawaii Printed Gel Pen",
+      "image": "/stationary/pens/cute-kawaii-printed-gel-pen/01.jpg",
+      "images": [
+        "/stationary/pens/cute-kawaii-printed-gel-pen/01.jpg",
+        "/stationary/pens/cute-kawaii-printed-gel-pen/02.jpg"
+      ],
       "price": "PKR 850"
     },
     {
-      "name": "Pen 3",
-      "image": "/stationary/pens/03.jpg",
+      "name": "Hello Kitty Kawaii Gel Pen",
+      "image": "/stationary/pens/hello-kitty-kawaii-gel-pen/01.jpg",
+      "images": [
+        "/stationary/pens/hello-kitty-kawaii-gel-pen/01.jpg",
+        "/stationary/pens/hello-kitty-kawaii-gel-pen/02.jpg",
+        "/stationary/pens/hello-kitty-kawaii-gel-pen/03.jpg"
+      ],
       "price": "PKR 850"
     },
     {
-      "name": "Pen 4",
-      "image": "/stationary/pens/04.jpg",
+      "name": "Pastel Kawaii Pattern Gel Pen",
+      "image": "/stationary/pens/pastel-kawaii-pattern-gel-pen/01.jpg",
+      "images": [
+        "/stationary/pens/pastel-kawaii-pattern-gel-pen/01.jpg",
+        "/stationary/pens/pastel-kawaii-pattern-gel-pen/02.jpg",
+        "/stationary/pens/pastel-kawaii-pattern-gel-pen/03.jpg"
+      ],
       "price": "PKR 850"
     },
     {
-      "name": "Pen 5",
-      "image": "/stationary/pens/05.jpg",
+      "name": "Pink Hello Kitty Gel Pen",
+      "image": "/stationary/pens/pink-hello-kitty-gel-pen/01.jpg",
+      "images": [
+        "/stationary/pens/pink-hello-kitty-gel-pen/01.jpg",
+        "/stationary/pens/pink-hello-kitty-gel-pen/02.jpg"
+      ],
       "price": "PKR 850"
     },
     {
-      "name": "Pen 6",
-      "image": "/stationary/pens/06.jpg",
+      "name": "Strawberry Kawaii Gel Pen",
+      "image": "/stationary/pens/strawberry-kawaii-gel-pen/01.jpg",
+      "images": [
+        "/stationary/pens/strawberry-kawaii-gel-pen/01.jpg",
+        "/stationary/pens/strawberry-kawaii-gel-pen/02.jpg",
+        "/stationary/pens/strawberry-kawaii-gel-pen/03.jpg"
+      ],
       "price": "PKR 850"
     },
     {
-      "name": "Pen 7",
-      "image": "/stationary/pens/07.jpg",
+      "name": "Cute Bunny Character Pen",
+      "image": "/stationary/pens/cute-bunny-character-pen/01.jpg",
+      "images": null,
       "price": "PKR 850"
     },
     {
-      "name": "Pen 8",
-      "image": "/stationary/pens/08.jpg",
+      "name": "Green Character Pen",
+      "image": "/stationary/pens/green-character-pen/01.jpg",
+      "images": null,
       "price": "PKR 850"
     },
     {
-      "name": "Pen 9",
-      "image": "/stationary/pens/09.jpg",
+      "name": "Pink Kawaii Character Pen",
+      "image": "/stationary/pens/pink-kawaii-character-pen/01.jpg",
+      "images": null,
       "price": "PKR 850"
     },
     {
-      "name": "Pen 10",
-      "image": "/stationary/pens/10.jpg",
+      "name": "Purple Kawaii Character Pen",
+      "image": "/stationary/pens/purple-kawaii-character-pen/01.jpg",
+      "images": null,
       "price": "PKR 850"
     },
     {
-      "name": "Pen 11",
-      "image": "/stationary/pens/11.jpg",
-      "price": "PKR 850"
-    },
-    {
-      "name": "Pen 12",
-      "image": "/stationary/pens/12.jpg",
-      "price": "PKR 850"
-    },
-    {
-      "name": "Pen 13",
-      "image": "/stationary/pens/13.jpg",
-      "price": "PKR 850"
-    },
-    {
-      "name": "Pen 14",
-      "image": "/stationary/pens/14.jpg",
-      "price": "PKR 850"
-    },
-    {
-      "name": "Pen 15",
-      "image": "/stationary/pens/15.jpg",
-      "price": "PKR 850"
-    },
-    {
-      "name": "Pen 16",
-      "image": "/stationary/pens/16.jpg",
-      "price": "PKR 850"
-    },
-    {
-      "name": "Pen 17",
-      "image": "/stationary/pens/17.jpg",
-      "price": "PKR 850"
-    },
-    {
-      "name": "Pen 18",
-      "image": "/stationary/pens/18.jpg",
-      "price": "PKR 850"
-    },
-    {
-      "name": "Pen 19",
-      "image": "/stationary/pens/19.jpg",
-      "price": "PKR 850"
-    },
-    {
-      "name": "Pen 20",
-      "image": "/stationary/pens/20.jpg",
-      "price": "PKR 850"
-    },
-    {
-      "name": "Pen 21",
-      "image": "/stationary/pens/21.jpg",
+      "name": "Super Mario Mushroom Pen",
+      "image": "/stationary/pens/super-mario-mushroom-pen/01.jpg",
+      "images": null,
       "price": "PKR 850"
     }
   ]

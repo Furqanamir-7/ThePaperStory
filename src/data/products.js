@@ -702,7 +702,7 @@ function addStationaryProducts({
     subcategorySlug,
     typeSlug: null,
     image: item.image,
-    images: null,
+    images: item.images?.length ? item.images : null,
     showPrice: true,
     price: item.price,
     paymentType: 'advance',
@@ -1042,7 +1042,7 @@ export function getFeaturedProducts() {
     { categorySlug: 'wedding-invitations', design: 1 },
     { categorySlug: 'digital-invitations', subcategorySlug: 'image-invitation', typeSlug: 'wedding', design: 1 },
     { categorySlug: 'stationary-items', subcategorySlug: 'diaries', name: 'Diary 1' },
-    { categorySlug: 'stationary-items', subcategorySlug: 'pens', name: 'Pen 1' },
+    { categorySlug: 'stationary-items', subcategorySlug: 'pens', name: 'Cute Hello Kitty Printed Gel Pen' },
   ]
 
   return picks
