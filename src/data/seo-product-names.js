@@ -107,29 +107,18 @@ export const SEO_EIDI = {
 }
 
 export const SEO_DIARIES = {
-  1: 'Pretty Pastel Floral Hardcover Diary',
-  2: 'Chic Marble Print Journal',
-  3: 'Cute Kawaii Character Spiral Diary',
-  4: 'Soft Minimalist Linen Cover Diary',
-  5: 'Sparkly Glitter Unicorn Journal',
-  6: 'Vintage Brown Leather Look Diary',
-  7: 'Aesthetic Grid Bullet Journal',
-  8: 'Adorable Cat Hardcover Diary',
-  9: 'Pretty Botanical Garden Journal',
-  10: 'Sweet Pink Striped Notebook',
-  11: 'Dreamy Blue Ocean Wave Journal',
-  12: 'Inspiring Motivational Quote Diary',
-  13: 'Rainbow Pastel Cute Journal',
-  14: 'Classic Black Hardcover Diary',
-  15: 'Lovely Heart Pattern Journal',
-  16: 'Cloudy Sky Aesthetic Diary',
-  17: 'Fruity Summer Print Journal',
-  18: 'Starry Night Dreamy Diary',
-  19: 'Cute Teddy Bear Journal',
-  20: 'Personal Monogram Diary Notebook',
-  21: 'Campus Striped Study Journal',
-  22: 'Pretty Butterfly Garden Diary',
-  23: 'Creamy Elegance Journal',
+  1: 'Pretty Pink Tulip Spiral Mini Diary',
+  2: 'Lavender Tulip Aesthetic Pocket Journal',
+  3: 'Silent Rose Vintage Mini Diary Set',
+  4: 'Blue Happy Day Floral Pocket Notebook',
+  5: 'Cute Heart Smile Flower Mini Diary',
+  6: 'One Life One Love Heart Pocket Journal',
+  7: 'Blush Floral Checkered Mini Diary',
+  8: 'Dreamy Pastel Bloom Pocket Notebook',
+  9: 'Soft Peach Petal Spiral Mini Diary',
+  10: 'Cherry Blossom Cute Pocket Journal',
+  11: 'Mint Garden Floral Mini Diary',
+  12: 'Green Daisy Plaid Pocket Notebook',
 }
 
 export const SEO_GREETING = {
@@ -152,7 +141,7 @@ export function weddingDesignNumber(images = []) {
 }
 
 export function diaryNumber(image = '') {
-  const match = image.match(/diaries\/(\d+)\.jpg/)
+  const match = image.match(/diaries\/(\d+)(?:-\d+)?\.jpg/)
   return match ? Number(match[1]) : null
 }
 

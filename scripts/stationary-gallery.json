@@ -2,117 +2,107 @@
   "diaries": [
     {
       "name": "Diary 1",
-      "image": "/stationary/diaries/01.jpg",
+      "image": "/stationary/diaries/01-01.jpg",
+      "images": [
+        "/stationary/diaries/01-01.jpg",
+        "/stationary/diaries/01-02.jpg"
+      ],
       "price": "PKR 1150"
     },
     {
       "name": "Diary 2",
-      "image": "/stationary/diaries/02.jpg",
+      "image": "/stationary/diaries/02-01.jpg",
+      "images": [
+        "/stationary/diaries/02-01.jpg",
+        "/stationary/diaries/02-02.jpg"
+      ],
       "price": "PKR 1150"
     },
     {
       "name": "Diary 3",
-      "image": "/stationary/diaries/03.jpg",
+      "image": "/stationary/diaries/03-01.jpg",
+      "images": [
+        "/stationary/diaries/03-01.jpg",
+        "/stationary/diaries/03-02.jpg"
+      ],
       "price": "PKR 1150"
     },
     {
       "name": "Diary 4",
-      "image": "/stationary/diaries/04.jpg",
+      "image": "/stationary/diaries/04-01.jpg",
+      "images": [
+        "/stationary/diaries/04-01.jpg",
+        "/stationary/diaries/04-02.jpg"
+      ],
       "price": "PKR 1150"
     },
     {
       "name": "Diary 5",
-      "image": "/stationary/diaries/05.jpg",
+      "image": "/stationary/diaries/05-01.jpg",
+      "images": [
+        "/stationary/diaries/05-01.jpg",
+        "/stationary/diaries/05-02.jpg"
+      ],
       "price": "PKR 1150"
     },
     {
       "name": "Diary 6",
-      "image": "/stationary/diaries/06.jpg",
+      "image": "/stationary/diaries/06-01.jpg",
+      "images": [
+        "/stationary/diaries/06-01.jpg",
+        "/stationary/diaries/06-02.jpg"
+      ],
       "price": "PKR 1150"
     },
     {
       "name": "Diary 7",
-      "image": "/stationary/diaries/07.jpg",
+      "image": "/stationary/diaries/07-01.jpg",
+      "images": [
+        "/stationary/diaries/07-01.jpg",
+        "/stationary/diaries/07-02.jpg"
+      ],
       "price": "PKR 1150"
     },
     {
       "name": "Diary 8",
-      "image": "/stationary/diaries/08.jpg",
+      "image": "/stationary/diaries/08-01.jpg",
+      "images": [
+        "/stationary/diaries/08-01.jpg",
+        "/stationary/diaries/08-02.jpg"
+      ],
       "price": "PKR 1150"
     },
     {
       "name": "Diary 9",
-      "image": "/stationary/diaries/09.jpg",
+      "image": "/stationary/diaries/09-01.jpg",
+      "images": [
+        "/stationary/diaries/09-01.jpg",
+        "/stationary/diaries/09-02.jpg"
+      ],
       "price": "PKR 1150"
     },
     {
       "name": "Diary 10",
-      "image": "/stationary/diaries/10.jpg",
+      "image": "/stationary/diaries/10-01.jpg",
+      "images": [
+        "/stationary/diaries/10-01.jpg",
+        "/stationary/diaries/10-02.jpg"
+      ],
       "price": "PKR 1150"
     },
     {
       "name": "Diary 11",
-      "image": "/stationary/diaries/11.jpg",
+      "image": "/stationary/diaries/11-01.jpg",
+      "images": [
+        "/stationary/diaries/11-01.jpg",
+        "/stationary/diaries/11-02.jpg"
+      ],
       "price": "PKR 1150"
     },
     {
       "name": "Diary 12",
-      "image": "/stationary/diaries/12.jpg",
-      "price": "PKR 1150"
-    },
-    {
-      "name": "Diary 13",
-      "image": "/stationary/diaries/13.jpg",
-      "price": "PKR 1150"
-    },
-    {
-      "name": "Diary 14",
-      "image": "/stationary/diaries/14.jpg",
-      "price": "PKR 1150"
-    },
-    {
-      "name": "Diary 15",
-      "image": "/stationary/diaries/15.jpg",
-      "price": "PKR 1150"
-    },
-    {
-      "name": "Diary 16",
-      "image": "/stationary/diaries/16.jpg",
-      "price": "PKR 1150"
-    },
-    {
-      "name": "Diary 17",
-      "image": "/stationary/diaries/17.jpg",
-      "price": "PKR 1150"
-    },
-    {
-      "name": "Diary 18",
-      "image": "/stationary/diaries/18.jpg",
-      "price": "PKR 1150"
-    },
-    {
-      "name": "Diary 19",
-      "image": "/stationary/diaries/19.jpg",
-      "price": "PKR 1150"
-    },
-    {
-      "name": "Diary 20",
-      "image": "/stationary/diaries/20.jpg",
-      "price": "PKR 1150"
-    },
-    {
-      "name": "Diary 21",
-      "image": "/stationary/diaries/21.jpg",
-      "price": "PKR 1150"
-    },
-    {
-      "name": "Diary 22",
-      "image": "/stationary/diaries/22.jpg",
-      "price": "PKR 1150"
-    },
-    {
-      "name": "Diary 23",
-      "image": "/stationary/diaries/23.jpg",
+      "image": "/stationary/diaries/12-01.jpg",
+      "images": null,
       "price": "PKR 1150"
     }
   ],
@@ -189,15 +179,15 @@
       "priceNote": "Pack of 2 = PKR 450"
     },
     {
-      "name": "Green Character Pen",
-      "image": "/stationary/pens/green-character-pen/01.jpg",
+      "name": "Green Flower Pen",
+      "image": "/stationary/pens/green-flower-pen/01.jpg",
       "images": null,
       "price": "PKR 250",
       "priceNote": "Pack of 2 = PKR 450"
     },
     {
-      "name": "Pink Kawaii Character Pen",
-      "image": "/stationary/pens/pink-kawaii-character-pen/01.jpg",
+      "name": "Pink Kawaii Tulip Flower Pen",
+      "image": "/stationary/pens/pink-kawaii-tulip-flower-pen/01.jpg",
       "images": null,
       "price": "PKR 250",
       "priceNote": "Pack of 2 = PKR 450"
