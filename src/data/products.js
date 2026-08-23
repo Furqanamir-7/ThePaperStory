@@ -705,6 +705,8 @@ function addStationaryProducts({
     images: item.images?.length ? item.images : null,
     showPrice: true,
     price: item.price,
+    priceNote: item.priceNote ?? null,
+    designOptions: item.designOptions?.length ? item.designOptions : null,
     paymentType: 'advance',
     whatsappMode: 'more',
     whatsappLabel,

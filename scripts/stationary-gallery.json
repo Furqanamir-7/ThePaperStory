@@ -125,7 +125,13 @@
         "/stationary/pens/cute-hello-kitty-printed-gel-pen/02.jpg",
         "/stationary/pens/cute-hello-kitty-printed-gel-pen/03.jpg"
       ],
-      "price": "PKR 850"
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450",
+      "designOptions": [
+        { "label": "Pink Hello Kitty", "image": "/stationary/pens/cute-hello-kitty-printed-gel-pen/01.jpg" },
+        { "label": "Blue Hello Kitty", "image": "/stationary/pens/cute-hello-kitty-printed-gel-pen/02.jpg" },
+        { "label": "Lavender Hello Kitty", "image": "/stationary/pens/cute-hello-kitty-printed-gel-pen/03.jpg" }
+      ]
     },
     {
       "name": "Cute Kawaii Printed Gel Pen",
@@ -134,7 +140,14 @@
         "/stationary/pens/cute-kawaii-printed-gel-pen/01.jpg",
         "/stationary/pens/cute-kawaii-printed-gel-pen/02.jpg"
       ],
-      "price": "PKR 850"
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450",
+      "designOptions": [
+        { "label": "Peach Checkered", "image": "/stationary/pens/cute-kawaii-printed-gel-pen/01.jpg" },
+        { "label": "Pink Checkered", "image": "/stationary/pens/cute-kawaii-printed-gel-pen/01.jpg" },
+        { "label": "Purple Checkered", "image": "/stationary/pens/cute-kawaii-printed-gel-pen/01.jpg" },
+        { "label": "Orange Checkered", "image": "/stationary/pens/cute-kawaii-printed-gel-pen/01.jpg" }
+      ]
     },
     {
       "name": "Hello Kitty Kawaii Gel Pen",
@@ -144,7 +157,13 @@
         "/stationary/pens/hello-kitty-kawaii-gel-pen/02.jpg",
         "/stationary/pens/hello-kitty-kawaii-gel-pen/03.jpg"
       ],
-      "price": "PKR 850"
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450",
+      "designOptions": [
+        { "label": "Classic Hello Kitty", "image": "/stationary/pens/hello-kitty-kawaii-gel-pen/01.jpg" },
+        { "label": "Pink Bow Hello Kitty", "image": "/stationary/pens/hello-kitty-kawaii-gel-pen/02.jpg" },
+        { "label": "Red Hello Kitty", "image": "/stationary/pens/hello-kitty-kawaii-gel-pen/03.jpg" }
+      ]
     },
     {
       "name": "Pastel Kawaii Pattern Gel Pen",
@@ -154,7 +173,13 @@
         "/stationary/pens/pastel-kawaii-pattern-gel-pen/02.jpg",
         "/stationary/pens/pastel-kawaii-pattern-gel-pen/03.jpg"
       ],
-      "price": "PKR 850"
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450",
+      "designOptions": [
+        { "label": "Pastel Pink", "image": "/stationary/pens/pastel-kawaii-pattern-gel-pen/01.jpg" },
+        { "label": "Pastel Blue", "image": "/stationary/pens/pastel-kawaii-pattern-gel-pen/02.jpg" },
+        { "label": "Pastel Purple", "image": "/stationary/pens/pastel-kawaii-pattern-gel-pen/03.jpg" }
+      ]
     },
     {
       "name": "Pink Hello Kitty Gel Pen",
@@ -163,7 +188,12 @@
         "/stationary/pens/pink-hello-kitty-gel-pen/01.jpg",
         "/stationary/pens/pink-hello-kitty-gel-pen/02.jpg"
       ],
-      "price": "PKR 850"
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450",
+      "designOptions": [
+        { "label": "Soft Pink", "image": "/stationary/pens/pink-hello-kitty-gel-pen/01.jpg" },
+        { "label": "Hot Pink", "image": "/stationary/pens/pink-hello-kitty-gel-pen/02.jpg" }
+      ]
     },
     {
       "name": "Strawberry Kawaii Gel Pen",
@@ -173,37 +203,48 @@
         "/stationary/pens/strawberry-kawaii-gel-pen/02.jpg",
         "/stationary/pens/strawberry-kawaii-gel-pen/03.jpg"
       ],
-      "price": "PKR 850"
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450",
+      "designOptions": [
+        { "label": "Strawberry Pink", "image": "/stationary/pens/strawberry-kawaii-gel-pen/01.jpg" },
+        { "label": "Strawberry Red", "image": "/stationary/pens/strawberry-kawaii-gel-pen/02.jpg" },
+        { "label": "Strawberry Green", "image": "/stationary/pens/strawberry-kawaii-gel-pen/03.jpg" }
+      ]
     },
     {
       "name": "Cute Bunny Character Pen",
       "image": "/stationary/pens/cute-bunny-character-pen/01.jpg",
       "images": null,
-      "price": "PKR 850"
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450"
     },
     {
       "name": "Green Character Pen",
       "image": "/stationary/pens/green-character-pen/01.jpg",
       "images": null,
-      "price": "PKR 850"
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450"
     },
     {
       "name": "Pink Kawaii Character Pen",
       "image": "/stationary/pens/pink-kawaii-character-pen/01.jpg",
       "images": null,
-      "price": "PKR 850"
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450"
     },
     {
       "name": "Purple Kawaii Character Pen",
       "image": "/stationary/pens/purple-kawaii-character-pen/01.jpg",
       "images": null,
-      "price": "PKR 850"
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450"
     },
     {
       "name": "Super Mario Mushroom Pen",
       "image": "/stationary/pens/super-mario-mushroom-pen/01.jpg",
       "images": null,
-      "price": "PKR 850"
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450"
     }
   ]
 }

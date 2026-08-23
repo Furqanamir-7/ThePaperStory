@@ -1349,6 +1349,68 @@ h1, h2, h3, h4 {
   color: rgba(74, 40, 53, 0.6);
 }
 
+.order-modal-pack-hint {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--paperstory-maroon);
+}
+
+.order-modal-designs {
+  margin-bottom: 0.35rem;
+  padding: 0.55rem;
+  border-radius: 0.65rem;
+  border: 1px solid var(--paperstory-blush);
+  background: var(--paperstory-wash);
+}
+
+.order-modal-designs-label {
+  margin: 0 0 0.45rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--paperstory-maroon);
+}
+
+.order-modal-designs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem;
+}
+
+.order-modal-design-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.4rem;
+  border-radius: 0.55rem;
+  border: 1.5px solid transparent;
+  background: #fff;
+  font-size: 0.65rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+  color: var(--paperstory-ink);
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.order-modal-design-option.is-selected {
+  border-color: var(--paperstory-maroon);
+  box-shadow: 0 0 0 1px rgba(163, 30, 59, 0.15);
+  color: var(--paperstory-maroon);
+}
+
+.order-modal-design-thumb {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 0.35rem;
+  background: var(--paperstory-blush);
+}
+
 /* ── WhatsApp FAB ── */
 .whatsapp-fab {
   position: fixed;

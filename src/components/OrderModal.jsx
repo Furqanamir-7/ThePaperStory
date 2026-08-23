@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import {
   DEFAULT_COUNTRY,
@@ -11,6 +11,11 @@ import {
   SHIPPING_COUNTRIES,
 } from '../data/checkout'
 import { submitOrder } from '../utils/placeOrder'
+import {
+  calculatePenOrderTotal,
+  formatOrderTotalPkr,
+  formatPenPriceNote,
+} from '../utils/penPricing'
 
 const emptyForm = {
   name: '',
@@ -74,11 +79,49 @@ function CityField({ form, setForm, isPakistan }) {
   )
 }
 
+function DesignPicker({ options, value, onChange }) {
+  return (
+    <div className="order-modal-designs">
+      <p className="order-modal-designs-label">Choose your design</p>
+      <div className="order-modal-designs-grid">
+        {options.map((option) => {
+          const selected = value === option.label
+          return (
+            <button
+              key={option.label}
+              type="button"
+              className={`order-modal-design-option${selected ? ' is-selected' : ''}`}
+              onClick={() => onChange(option.label)}
+              aria-pressed={selected}
+            >
+              {option.image && (
+                <img
+                  src={option.image}
+                  alt=""
+                  className="order-modal-design-thumb"
+                  loading="lazy"
+                  draggable={false}
+                />
+              )}
+              <span>{option.label}</span>
+            </button>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 export default function OrderModal({ product, onClose }) {
   const [form, setForm] = useState(emptyForm)
+  const [selectedDesign, setSelectedDesign] = useState('')
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState('')
   const [orderNumber, setOrderNumber] = useState('')
+
+  const isPen = product?.subcategorySlug === 'pens'
+  const designOptions = product?.designOptions ?? []
+  const hasDesignPicker = designOptions.length > 0
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
@@ -87,11 +130,21 @@ export default function OrderModal({ product, onClose }) {
     }
   }, [])
 
+  const quantity = Math.max(1, Number(form.quantity) || 1)
+
+  const orderTotal = useMemo(() => {
+    if (isPen) return calculatePenOrderTotal(quantity)
+    const match = product?.price?.match(/[\d,]+/)
+    const unit = match ? Number(match[0].replace(/,/g, '')) : 0
+    return unit * quantity
+  }, [isPen, product?.price, quantity])
+
+  const totalLabel = formatOrderTotalPkr(orderTotal)
+
   if (!product) return null
 
   const isCod = product.paymentType === 'cod'
   const orderOnline = Boolean(product.orderOnline)
-  const totalLabel = product.price
   const deliveryEstimate = orderOnline
     ? DELIVERY_ESTIMATE.onlineFree
     : isCod
@@ -103,6 +156,11 @@ export default function OrderModal({ product, onClose }) {
   const handleSubmit = async (event) => {
     event.preventDefault()
     if (status === 'loading') return
+
+    if (hasDesignPicker && !selectedDesign) {
+      setError('Please choose your design before confirming.')
+      return
+    }
 
     if (!form.consent) {
       setError('Please agree to receive order updates via WhatsApp and Email.')
@@ -117,13 +175,17 @@ export default function OrderModal({ product, onClose }) {
     setStatus('loading')
     setError('')
 
+    const designNote = selectedDesign ? `Design: ${selectedDesign}` : ''
+    const combinedNotes = [designNote, form.notes].filter(Boolean).join('\n')
+
     try {
       const data = await submitOrder({
         productId: product.id,
         productName: product.name,
         category: product.category,
-        price: product.price,
+        price: totalLabel,
         paymentType: product.paymentType,
+        selectedDesign: selectedDesign || null,
         name: form.name,
         email: form.email,
         phone: `${form.phoneCode} ${form.phone}`.trim(),
@@ -132,8 +194,8 @@ export default function OrderModal({ product, onClose }) {
         city: cityValue,
         country: form.country,
         postalCode: form.postalCode,
-        quantity: Number(form.quantity) || 1,
-        notes: form.notes,
+        quantity,
+        notes: combinedNotes,
         consent: form.consent,
         marketingConsent: form.marketingConsent,
         deliveryEstimate,
@@ -184,6 +246,11 @@ export default function OrderModal({ product, onClose }) {
                 {product.name} · {totalLabel}
                 {orderOnline ? ' · Pay online · Free delivery' : isCod ? ' · COD' : ' · Advance'}
               </p>
+              {isPen && (
+                <p className="mt-1 text-xs font-medium text-paperstory-maroon/90">
+                  {product.price} each · {product.priceNote || formatPenPriceNote()}
+                </p>
+              )}
               {orderOnline && (
                 <p className="mt-2 text-xs font-medium text-paperstory-maroon">
                   Complete payment online to get free delivery within Pakistan.
@@ -192,6 +259,14 @@ export default function OrderModal({ product, onClose }) {
             </div>
 
             <form onSubmit={handleSubmit} className="order-modal-form">
+              {hasDesignPicker && (
+                <DesignPicker
+                  options={designOptions}
+                  value={selectedDesign}
+                  onChange={setSelectedDesign}
+                />
+              )}
+
               <div className="order-modal-grid-2">
                 <input
                   type="text"
@@ -292,6 +367,12 @@ export default function OrderModal({ product, onClose }) {
                 />
               </div>
 
+              {isPen && quantity >= 2 && (
+                <p className="order-modal-pack-hint">
+                  {quantity} pens = {totalLabel} (includes pack pricing where applicable)
+                </p>
+              )}
+
               <textarea
                 rows={2}
                 placeholder="Order notes (optional)"
@@ -328,7 +409,7 @@ export default function OrderModal({ product, onClose }) {
                 disabled={status === 'loading'}
                 className="cute-btn-primary order-modal-submit w-full disabled:opacity-60"
               >
-                {status === 'loading' ? 'Placing order…' : 'Confirm order'}
+                {status === 'loading' ? 'Placing order…' : `Confirm order · ${totalLabel}`}
               </button>
             </form>
           </>

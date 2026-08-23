@@ -28,6 +28,7 @@ export function formatOrderSummary(order) {
   return [
     `Order #: ${order.orderNumber}`,
     `Product: ${order.productName}`,
+    order.selectedDesign ? `Design: ${order.selectedDesign}` : null,
     `Category: ${order.category}`,
     `Item(s): ${itemLine}`,
     `Price: ${order.price}`,

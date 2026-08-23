@@ -286,7 +286,12 @@ export default function ProductCard({ product }) {
           </h3>
 
           {showPrice ? (
-            <p className="mb-2 text-sm font-semibold text-paperstory-maroon">{product.price}</p>
+            <>
+              <p className="mb-1 text-sm font-semibold text-paperstory-maroon">{product.price}</p>
+              {product.priceNote && (
+                <p className="mb-2 text-xs font-medium text-paperstory-maroon/85">{product.priceNote}</p>
+              )}
+            </>
           ) : (
             <p className="mb-2 text-xs font-medium text-paperstory-ink/65">Price on request</p>
           )}
