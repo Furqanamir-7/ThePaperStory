@@ -82,7 +82,7 @@ async function compressImage(src, destJpg) {
     .toFile(destJpg)
 }
 
-async function pickImages(files, { globalDedupe = true } = {}) {
+async function pickImages(files, { globalDedupe = true, targetMax = TARGET_MAX } = {}) {
   const candidates = []
   for (const file of files) {
     const hash = hashFile(file)
@@ -93,21 +93,52 @@ async function pickImages(files, { globalDedupe = true } = {}) {
   }
   if (!candidates.length) return []
   candidates.sort((a, b) => b.score - a.score)
+
   const takeCount =
-    candidates.length >= TARGET_MIN ? Math.min(TARGET_MAX, candidates.length) : candidates.length
-  const picked = candidates.slice(0, takeCount)
-  if (globalDedupe) picked.forEach((p) => usedHashes.add(p.hash))
-  return picked
+    candidates.length >= TARGET_MIN ? Math.min(targetMax, candidates.length) : candidates.length
+
+  if (candidates.length <= takeCount) {
+    const picked = candidates.slice(0, takeCount)
+    if (globalDedupe) picked.forEach((p) => usedHashes.add(p.hash))
+    return picked
+  }
+
+  const picked = []
+  const step = candidates.length / takeCount
+  const usedIdx = new Set()
+  for (let i = 0; i < takeCount; i += 1) {
+    let idx = Math.min(candidates.length - 1, Math.floor(i * step))
+    while (usedIdx.has(idx) && idx < candidates.length - 1) idx += 1
+    while (usedIdx.has(idx) && idx > 0) idx -= 1
+    if (usedIdx.has(idx)) continue
+    usedIdx.add(idx)
+    picked.push(candidates[idx])
+  }
+  for (const c of candidates) {
+    if (picked.length >= takeCount) break
+    if (!picked.includes(c)) picked.push(c)
+  }
+
+  const final = picked.slice(0, takeCount)
+  if (globalDedupe) final.forEach((p) => usedHashes.add(p.hash))
+  return final
 }
 
-async function importGallery({ sourceDir, destDir, webPrefix, name, globalDedupe = true }) {
+async function importGallery({
+  sourceDir,
+  destDir,
+  webPrefix,
+  name,
+  globalDedupe = true,
+  targetMax = TARGET_MAX,
+}) {
   if (existsSync(destDir)) rmSync(destDir, { recursive: true, force: true })
   ensureDir(destDir)
 
   const files = listImages(sourceDir)
   if (!files.length) return null
 
-  const picked = await pickImages(files, { globalDedupe })
+  const picked = await pickImages(files, { globalDedupe, targetMax })
   if (!picked.length) return null
 
   const images = []
@@ -160,46 +191,23 @@ async function importFavours() {
     'tin-favours': [],
   }
 
-  const potliGroups = [
-    { source: 'Bid Pouches-Potli', dest: 'potli-1', name: 'Bid Potli Design 1' },
-  ]
+  // One design — single gallery with best spread of photos
+  for (let i = 1; i <= 6; i += 1) {
+    const oldDir = join(PUBLIC, 'favours', `potli-${i}`)
+    if (existsSync(oldDir)) rmSync(oldDir, { recursive: true, force: true })
+  }
 
-  for (const item of potliGroups) {
-    const srcDir = join(SOURCE, item.source)
-    const allFiles = listImages(srcDir)
-    if (!allFiles.length) continue
-
-    // Split 30 potli photos into up to 6 designs (5 images each)
-    const chunkSize = 5
-    const chunks = []
-    for (let i = 0; i < allFiles.length; i += chunkSize) {
-      chunks.push(allFiles.slice(i, i + chunkSize))
-    }
-    const useChunks = chunks.slice(0, 6)
-
-    for (let c = 0; c < useChunks.length; c += 1) {
-      const destKey = `potli-${c + 1}`
-      const destDir = join(PUBLIC, 'favours', destKey)
-      if (existsSync(destDir)) rmSync(destDir, { recursive: true, force: true })
-      ensureDir(destDir)
-
-      const picked = await pickImages(useChunks[c], { globalDedupe: false })
-      if (!picked.length) continue
-
-      const images = []
-      for (let i = 0; i < picked.length; i += 1) {
-        const outName = `${String(i + 1).padStart(2, '0')}.jpg`
-        await compressImage(picked[i].file, join(destDir, outName))
-        images.push(`/favours/${destKey}/${outName}`)
-        usedHashes.add(picked[i].hash)
-      }
-
-      favours.potli.push({
-        name: useChunks.length > 1 ? `Bid Potli Design ${c + 1}` : 'Bid Potli',
-        images,
-      })
-      console.log(`Potli ${c + 1}: ${images.length} images`)
-    }
+  const potliResult = await importGallery({
+    sourceDir: join(SOURCE, 'Bid Pouches-Potli'),
+    destDir: join(PUBLIC, 'favours', 'bid-potli'),
+    webPrefix: '/favours/bid-potli',
+    name: 'Bid Potli',
+    globalDedupe: false,
+    targetMax: 10,
+  })
+  if (potliResult) {
+    favours.potli.push(potliResult)
+    console.log(`Potli — ${potliResult.name}: ${potliResult.images.length} images`)
   }
 
   const boxMappings = [

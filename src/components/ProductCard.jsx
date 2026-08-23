@@ -198,18 +198,24 @@ function ProductMedia({ product, onOpenLightbox }) {
             ›
           </button>
           <div className="absolute bottom-2 left-1/2 z-10 flex -translate-x-1/2 gap-1.5">
-            {gallery.map((src, i) => (
-              <button
-                key={src}
-                type="button"
-                className={`h-1.5 rounded-full ${i === index ? 'w-4 bg-white' : 'w-1.5 bg-white/55'}`}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setIndex(i)
-                }}
-                aria-label={`Image ${i + 1}`}
-              />
-            ))}
+            {gallery.length <= 7 ? (
+              gallery.map((src, i) => (
+                <button
+                  key={src}
+                  type="button"
+                  className={`h-1.5 rounded-full ${i === index ? 'w-4 bg-white' : 'w-1.5 bg-white/55'}`}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setIndex(i)
+                  }}
+                  aria-label={`Image ${i + 1}`}
+                />
+              ))
+            ) : (
+              <span className="rounded-full bg-black/45 px-2.5 py-1 text-[11px] font-semibold tracking-wide text-white tabular-nums">
+                {index + 1} / {gallery.length}
+              </span>
+            )}
           </div>
         </>
       )}

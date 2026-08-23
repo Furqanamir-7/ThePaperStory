@@ -103,63 +103,18 @@
   "favours": {
     "potli": [
       {
-        "name": "Bid Potli Design 1",
+        "name": "Bid Potli",
         "images": [
-          "/favours/potli-1/01.jpg",
-          "/favours/potli-1/02.jpg",
-          "/favours/potli-1/03.jpg",
-          "/favours/potli-1/04.jpg",
-          "/favours/potli-1/05.jpg"
-        ]
-      },
-      {
-        "name": "Bid Potli Design 2",
-        "images": [
-          "/favours/potli-2/01.jpg",
-          "/favours/potli-2/02.jpg",
-          "/favours/potli-2/03.jpg",
-          "/favours/potli-2/04.jpg",
-          "/favours/potli-2/05.jpg"
-        ]
-      },
-      {
-        "name": "Bid Potli Design 3",
-        "images": [
-          "/favours/potli-3/01.jpg",
-          "/favours/potli-3/02.jpg",
-          "/favours/potli-3/03.jpg",
-          "/favours/potli-3/04.jpg",
-          "/favours/potli-3/05.jpg"
-        ]
-      },
-      {
-        "name": "Bid Potli Design 4",
-        "images": [
-          "/favours/potli-4/01.jpg",
-          "/favours/potli-4/02.jpg",
-          "/favours/potli-4/03.jpg",
-          "/favours/potli-4/04.jpg",
-          "/favours/potli-4/05.jpg"
-        ]
-      },
-      {
-        "name": "Bid Potli Design 5",
-        "images": [
-          "/favours/potli-5/01.jpg",
-          "/favours/potli-5/02.jpg",
-          "/favours/potli-5/03.jpg",
-          "/favours/potli-5/04.jpg",
-          "/favours/potli-5/05.jpg"
-        ]
-      },
-      {
-        "name": "Bid Potli Design 6",
-        "images": [
-          "/favours/potli-6/01.jpg",
-          "/favours/potli-6/02.jpg",
-          "/favours/potli-6/03.jpg",
-          "/favours/potli-6/04.jpg",
-          "/favours/potli-6/05.jpg"
+          "/favours/bid-potli/01.jpg",
+          "/favours/bid-potli/02.jpg",
+          "/favours/bid-potli/03.jpg",
+          "/favours/bid-potli/04.jpg",
+          "/favours/bid-potli/05.jpg",
+          "/favours/bid-potli/06.jpg",
+          "/favours/bid-potli/07.jpg",
+          "/favours/bid-potli/08.jpg",
+          "/favours/bid-potli/09.jpg",
+          "/favours/bid-potli/10.jpg"
         ]
       }
     ],
@@ -208,5 +163,5 @@
       }
     ]
   },
-  "importedAt": "2026-08-23T12:00:03.001Z"
+  "importedAt": "2026-08-23T12:11:51.627Z"
 }

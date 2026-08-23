@@ -114,7 +114,7 @@ export const shopCategories = [
     label: 'Favours',
     shortLabel: 'Favours',
     description: 'Potli, box, tin, and cake-topper favours for weddings and events.',
-    image: '/favours/potli-1/01.jpg',
+    image: '/favours/bid-potli/01.jpg',
     showPrice: false,
     paymentType: 'advance',
     whatsappMode: 'price',
