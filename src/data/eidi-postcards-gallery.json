@@ -1,0 +1,92 @@
+{
+  "eidi": {
+    "intro": [
+      "/eidi/intro/01.jpg",
+      "/eidi/intro/02.jpg"
+    ],
+    "designs": [
+      {
+        "folder": 1,
+        "images": [
+          "/eidi/design-1/01.jpg",
+          "/eidi/design-1/02.jpg",
+          "/eidi/design-1/03.jpg",
+          "/eidi/design-1/04.jpg",
+          "/eidi/design-1/05.jpg"
+        ]
+      },
+      {
+        "folder": 2,
+        "images": [
+          "/eidi/design-2/01.jpg",
+          "/eidi/design-2/02.jpg"
+        ]
+      },
+      {
+        "folder": 3,
+        "images": [
+          "/eidi/design-3/01.jpg",
+          "/eidi/design-3/02.jpg"
+        ]
+      },
+      {
+        "folder": 4,
+        "images": [
+          "/eidi/design-4/01.jpg",
+          "/eidi/design-4/02.jpg"
+        ]
+      },
+      {
+        "folder": 5,
+        "images": [
+          "/eidi/design-5/01.jpg",
+          "/eidi/design-5/02.jpg"
+        ]
+      },
+      {
+        "folder": 6,
+        "images": [
+          "/eidi/design-6/01.jpg",
+          "/eidi/design-6/02.jpg"
+        ]
+      },
+      {
+        "folder": 7,
+        "images": [
+          "/eidi/design-7/01.jpg",
+          "/eidi/design-7/02.jpg"
+        ]
+      }
+    ]
+  },
+  "postcards": [
+    {
+      "design": 1,
+      "image": "/postcards/01.jpg",
+      "images": [
+        "/postcards/01.jpg"
+      ]
+    },
+    {
+      "design": 2,
+      "image": "/postcards/02.jpg",
+      "images": [
+        "/postcards/02.jpg"
+      ]
+    },
+    {
+      "design": 3,
+      "image": "/postcards/03.jpg",
+      "images": [
+        "/postcards/03.jpg"
+      ]
+    },
+    {
+      "design": 4,
+      "image": "/postcards/04.jpg",
+      "images": [
+        "/postcards/04.jpg"
+      ]
+    }
+  ]
+}

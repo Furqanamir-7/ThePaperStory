@@ -1758,3 +1758,26 @@ h1, h2, h3, h4 {
   max-width: 24rem;
 }
 
+/* ── Category showcase (eidi intro photos) ── */
+.category-showcase {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .category-showcase {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+}
+
+.category-showcase-image {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 1rem;
+  background: rgba(163, 30, 59, 0.06);
+}
+

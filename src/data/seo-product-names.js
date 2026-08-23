@@ -104,6 +104,17 @@ export const SEO_FAVOURS = {
 
 export const SEO_EIDI = {
   'F.R.I.E.N.D.S Theme': 'F.R.I.E.N.D.S Theme Eidi Money Envelope',
+  1: 'Blushing Vintage Rose Eidi Envelope',
+  2: 'Bold Pink Stripe Eidi Envelope',
+  3: 'Mint Rose Garden Eidi Envelope',
+  4: 'Palm Oasis Checkered Eidi Envelope',
+  5: 'Heritage Olive Floral Eidi Envelope',
+  6: 'Soft Mauve Bloom Eidi Envelope',
+  7: 'Classic Blue Toile Eidi Envelope',
+}
+
+export const SEO_POSTCARDS = {
+  1: 'Sabr · Shukr · Tawakkul Landscape Postcard Set',
 }
 
 export const SEO_DIARIES = {
@@ -188,6 +199,14 @@ export function seoFavourName(name) {
   return SEO_FAVOURS[name] || name
 }
 
+export function seoEidiName(nameOrNum) {
+  return SEO_EIDI[nameOrNum] || (typeof nameOrNum === 'string' ? nameOrNum : `Eidi Envelope ${nameOrNum}`)
+}
+
+export function seoPostcardName(designNum) {
+  return SEO_POSTCARDS[designNum] || `Postcard ${designNum}`
+}
+
 export function seoDiaryName(item) {
   const num = diaryNumber(item.image)
   return (num && SEO_DIARIES[num]) || item.name
@@ -215,6 +234,8 @@ export function seoPickName(categorySlug, { subcategorySlug, typeSlug, design, n
   if (categorySlug === 'packaging') return seoPackagingName(subcategorySlug, design)
   if (categorySlug === 'vinyl-stickers') return SEO_VINYL[design]
   if (categorySlug === 'stationary-items' && subcategorySlug === 'diaries') return SEO_DIARIES[design]
+  if (categorySlug === 'eidi-envelopes') return SEO_EIDI[design] || SEO_EIDI[name]
+  if (categorySlug === 'post-cards') return SEO_POSTCARDS[design]
   if (categorySlug === 'favours' && subcategorySlug === 'tin-favours') {
     return design === 1
       ? SEO_FAVOURS['Personalised Golden Round Tin Favour']

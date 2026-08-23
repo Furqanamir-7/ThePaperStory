@@ -87,6 +87,10 @@ export default function PillsBar({ items, ariaLabel = 'Filter', static: isStatic
   useEffect(() => {
     if (isStatic) return undefined
 
+    // Route/filter changes remount this effect; clear pause so the marquee keeps moving
+    pausedRef.current = false
+    lastTsRef.current = 0
+    clearResumeTimer()
     measure()
 
     const track = trackRef.current

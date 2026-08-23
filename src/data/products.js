@@ -1,15 +1,18 @@
 import stationaryGallery from './stationary-gallery.json' with { type: 'json' }
 import tpsDataGallery from './tps-data-gallery.json' with { type: 'json' }
+import eidiPostcardsGallery from './eidi-postcards-gallery.json' with { type: 'json' }
 import {
   SEO_EIDI,
   seoDiaryName,
   seoDigitalName,
+  seoEidiName,
   seoFavourName,
   seoGreetingName,
   seoNikkahName,
   seoPackagingName,
   seoPamphletName,
   seoPickName,
+  seoPostcardName,
   seoVinylName,
   seoWeddingName,
   weddingDesignNumber,
@@ -220,12 +223,25 @@ export const shopCategories = [
     subcategories: null,
   },
   {
+    id: 'post-cards',
+    slug: 'post-cards',
+    label: 'Post Cards',
+    shortLabel: 'Post Cards',
+    description: '',
+    image: '/postcards/01.jpg',
+    showPrice: false,
+    paymentType: 'advance',
+    whatsappMode: 'price',
+    subcategories: null,
+  },
+  {
     id: 'eidi-envelopes',
     slug: 'eidi-envelopes',
     label: 'Eidi and Money Envelopes',
     shortLabel: 'Eidi & Money Envelopes',
-    description: 'Festive eidi and money envelope designs — pricing on request.',
-    image: '/eidi/friends-theme/01.jpg',
+    description: '',
+    image: eidiPostcardsGallery.eidi.intro[0] || '/eidi/friends-theme/01.jpg',
+    showcaseImages: eidiPostcardsGallery.eidi.intro,
     showPrice: false,
     paymentType: 'advance',
     whatsappMode: 'price',
@@ -641,6 +657,18 @@ const EIDI_GALLERY = [
       '/eidi/friends-theme/03.mp4',
     ],
   },
+  ...eidiPostcardsGallery.eidi.designs.map((design) => ({
+    name: seoEidiName(design.folder),
+    images: design.images,
+  })),
+]
+
+/** Post Cards — aesthetic landscape calligraphy set */
+const POSTCARDS_GALLERY = [
+  {
+    name: seoPostcardName(1),
+    images: eidiPostcardsGallery.postcards.map((card) => card.image),
+  },
 ]
 
 /** Each numbered folder becomes one product card with a gallery slider */
@@ -772,6 +800,9 @@ function resolveSeoDesignName({ name, categorySlug, subcategorySlug, typeSlug, d
   }
   if (categorySlug === 'eidi-envelopes' && name) {
     return SEO_EIDI[name] || name
+  }
+  if (categorySlug === 'post-cards' && name) {
+    return name
   }
   return name || `Design ${num}`
 }
@@ -979,6 +1010,22 @@ function buildAllProducts() {
             name: design.name,
             showPrice: cat.showPrice,
             priceBase: 1500,
+            paymentType: cat.paymentType,
+            whatsappMode: cat.whatsappMode,
+            categoryLabel: cat.label,
+          })
+        )
+      }
+    } else if (cat.slug === 'post-cards') {
+      for (const design of POSTCARDS_GALLERY) {
+        all.push(
+          ...addDesigns({
+            categorySlug: cat.slug,
+            whatsappLabel: 'Post Card',
+            galleryImages: design.images,
+            name: design.name,
+            showPrice: cat.showPrice,
+            priceBase: 0,
             paymentType: cat.paymentType,
             whatsappMode: cat.whatsappMode,
             categoryLabel: cat.label,
