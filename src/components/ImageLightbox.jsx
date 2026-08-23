@@ -58,6 +58,18 @@ export default function ImageLightbox({
     }
   }, [onClose, hasGallery, index])
 
+  // Preload neighbors so lightbox swipe is instant
+  useEffect(() => {
+    if (!hasGallery) return
+    ;[gallery[(index - 1 + gallery.length) % gallery.length], gallery[(index + 1) % gallery.length]]
+      .filter((src) => src && !isVideoSrc(src))
+      .forEach((src) => {
+        const img = new Image()
+        img.decoding = 'async'
+        img.src = src
+      })
+  }, [gallery, hasGallery, index])
+
   const clampOffset = (nextScale, nextOffset) => {
     const stage = stageRef.current
     if (!stage || nextScale <= 1) return { x: 0, y: 0 }
@@ -256,6 +268,8 @@ export default function ImageLightbox({
               alt={title}
               className="image-lightbox-image"
               draggable={false}
+              decoding="async"
+              fetchPriority="high"
             />
           )}
         </div>

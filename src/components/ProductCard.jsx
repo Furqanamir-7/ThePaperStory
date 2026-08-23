@@ -12,6 +12,15 @@ function isVideoSrc(src = '') {
   return /\.(mp4|webm|ogg)(\?|$)/i.test(src)
 }
 
+const TAP_MOVE_THRESHOLD_PX = 10
+
+function preloadMedia(src) {
+  if (!src || isVideoSrc(src)) return
+  const img = new Image()
+  img.decoding = 'async'
+  img.src = src
+}
+
 function ProductMedia({ product, onOpenLightbox }) {
   const gallery = product.images?.length ? product.images : [product.image]
   const [index, setIndex] = useState(0)
@@ -24,7 +33,17 @@ function ProductMedia({ product, onOpenLightbox }) {
   const startXRef = useRef(0)
   const startYRef = useRef(0)
   const swipingRef = useRef(false)
+  const movedRef = useRef(false)
   const lockedAxisRef = useRef(null)
+
+  // Warm adjacent gallery frames so swipe feels instant
+  useEffect(() => {
+    if (!hasGallery) return
+    const prev = gallery[(index - 1 + gallery.length) % gallery.length]
+    const next = gallery[(index + 1) % gallery.length]
+    preloadMedia(prev)
+    preloadMedia(next)
+  }, [gallery, hasGallery, index])
 
   const goTo = (next) => setIndex((next + gallery.length) % gallery.length)
 
@@ -36,6 +55,7 @@ function ProductMedia({ product, onOpenLightbox }) {
     startXRef.current = event.clientX
     startYRef.current = event.clientY
     swipingRef.current = false
+    movedRef.current = false
     lockedAxisRef.current = null
   }
 
@@ -44,6 +64,10 @@ function ProductMedia({ product, onOpenLightbox }) {
 
     const dx = event.clientX - startXRef.current
     const dy = event.clientY - startYRef.current
+
+    if (Math.abs(dx) >= TAP_MOVE_THRESHOLD_PX || Math.abs(dy) >= TAP_MOVE_THRESHOLD_PX) {
+      movedRef.current = true
+    }
 
     if (!lockedAxisRef.current) {
       if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return
@@ -60,13 +84,17 @@ function ProductMedia({ product, onOpenLightbox }) {
     if (pointerIdRef.current !== event.pointerId) return
 
     const dx = event.clientX - startXRef.current
+    const dy = event.clientY - startYRef.current
     const didSwipe =
       hasGallery &&
       lockedAxisRef.current === 'x' &&
       Math.abs(dx) >= SWIPE_THRESHOLD_PX
+    const wasScroll = lockedAxisRef.current === 'y' || Math.abs(dy) >= TAP_MOVE_THRESHOLD_PX
+    const wasMoved = movedRef.current
 
     pointerIdRef.current = null
     lockedAxisRef.current = null
+    movedRef.current = false
 
     if (didSwipe) {
       goTo(dx < 0 ? index + 1 : index - 1)
@@ -74,7 +102,7 @@ function ProductMedia({ product, onOpenLightbox }) {
       return
     }
 
-    if (swipingRef.current) {
+    if (swipingRef.current || wasScroll || wasMoved) {
       swipingRef.current = false
       return
     }
@@ -87,6 +115,13 @@ function ProductMedia({ product, onOpenLightbox }) {
     }
 
     onOpenLightbox?.(index)
+  }
+
+  const onPointerCancel = () => {
+    pointerIdRef.current = null
+    lockedAxisRef.current = null
+    swipingRef.current = false
+    movedRef.current = false
   }
 
   const media = mediaIsVideo ? (
@@ -106,20 +141,22 @@ function ProductMedia({ product, onOpenLightbox }) {
       key={current}
       src={current}
       alt={product.name}
-      loading="lazy"
+      loading={index === 0 ? 'eager' : 'lazy'}
+      decoding="async"
+      fetchPriority={index === 0 ? 'high' : 'auto'}
       draggable={false}
-      className="pointer-events-none h-full w-full object-cover transition-transform duration-400 ease-out group-hover:scale-105"
+      className="pointer-events-none h-full w-full object-cover sm:transition-transform sm:duration-400 sm:ease-out sm:group-hover:scale-105"
     />
   )
 
   return (
     <div
       className={`relative mb-4 aspect-[4/5] cursor-zoom-in overflow-hidden rounded-xl bg-paperstory-blush/30${hasGallery ? ' touch-pan-y' : ''}`}
-      style={hasGallery ? { touchAction: 'pan-y' } : undefined}
+      style={{ touchAction: hasGallery ? 'pan-y' : 'manipulation' }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
-      onPointerCancel={onPointerUp}
+      onPointerCancel={onPointerCancel}
       role="button"
       tabIndex={0}
       aria-label={`View ${product.name} larger`}
