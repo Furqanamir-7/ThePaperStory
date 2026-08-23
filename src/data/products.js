@@ -163,7 +163,7 @@ export const shopCategories = [
     shortLabel: 'Stationary',
     description:
       'Diaries and pens — order directly on the website. Complete payment online for free delivery within Pakistan.',
-    image: '/stationary/diaries/01.jpg',
+    image: '/stationary/diaries/01-01.jpg',
     showPrice: true,
     paymentType: 'cod',
     whatsappMode: 'more',
@@ -947,37 +947,23 @@ function buildAllProducts() {
           continue
         }
 
-        if (sub.types?.length) {
-          for (const type of sub.types) {
-            const typeImages = DIGITAL_TYPE_IMAGES[sub.slug]?.[type.slug]
-            if (Array.isArray(typeImages) && typeImages.length === 0) continue
-            all.push(
-              ...addDesigns({
-                categorySlug: cat.slug,
-                subcategorySlug: sub.slug,
-                typeSlug: type.slug,
-                whatsappLabel: type.whatsappPrefix || sub.whatsappPrefix,
-                image: cat.image,
-                images: typeImages,
-                count: typeImages?.length || 3,
-                showPrice: cat.showPrice,
-                priceBase: 1200,
-                paymentType: cat.paymentType,
-                whatsappMode: cat.whatsappMode,
-                categoryLabel: cat.label,
-              })
-            )
-          }
-        } else {
+        // Skip empty subcategories (e.g. cake-boxes) until real photos are imported
+        if (!sub.types?.length) continue
+
+        for (const type of sub.types) {
+          const typeImages = DIGITAL_TYPE_IMAGES[sub.slug]?.[type.slug]
+          if (Array.isArray(typeImages) && typeImages.length === 0) continue
           all.push(
             ...addDesigns({
               categorySlug: cat.slug,
               subcategorySlug: sub.slug,
-              whatsappLabel: sub.whatsappPrefix,
+              typeSlug: type.slug,
+              whatsappLabel: type.whatsappPrefix || sub.whatsappPrefix,
               image: cat.image,
-              count: 4,
+              images: typeImages,
+              count: typeImages?.length || 3,
               showPrice: cat.showPrice,
-              priceBase: cat.slug === 'stationary-items' ? 800 : 1200,
+              priceBase: 1200,
               paymentType: cat.paymentType,
               whatsappMode: cat.whatsappMode,
               categoryLabel: cat.label,
@@ -1047,27 +1033,16 @@ function buildAllProducts() {
           })
         )
       }
-    } else {
-      const prefixMap = {
-        pamphlets: 'Pamphlet',
-        'greeting-cards': 'Greeting Card',
-      }
-      all.push(
-        ...addDesigns({
-          categorySlug: cat.slug,
-          whatsappLabel: prefixMap[cat.slug] || cat.label,
-          image: cat.image,
-          showPrice: cat.showPrice,
-          priceBase: cat.showPrice ? 1500 : 0,
-          paymentType: cat.paymentType,
-          whatsappMode: cat.whatsappMode,
-          categoryLabel: cat.label,
-        })
-      )
     }
+    // Skip placeholder products (boxes / pamphlets / greeting-cards) until real photos are added
   }
 
-  return all
+  return all.filter((product) => {
+    if (!product?.image) return false
+    // Drop stock Unsplash fillers that aren't real catalog photos
+    if (String(product.image).includes('images.unsplash.com')) return false
+    return true
+  })
 }
 
 export const products = buildAllProducts()
