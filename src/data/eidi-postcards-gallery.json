@@ -1,9 +1,5 @@
 {
   "eidi": {
-    "intro": [
-      "/eidi/intro/01.jpg",
-      "/eidi/intro/02.jpg"
-    ],
     "designs": [
       {
         "folder": 1,

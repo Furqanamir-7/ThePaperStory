@@ -50,7 +50,8 @@
       "image": "/stationary/diaries/06-01.jpg",
       "images": [
         "/stationary/diaries/06-01.jpg",
-        "/stationary/diaries/06-02.jpg"
+        "/stationary/diaries/06-02.jpg",
+        "/stationary/diaries/06-03.jpg"
       ],
       "price": "PKR 1150"
     },
@@ -79,30 +80,6 @@
         "/stationary/diaries/09-01.jpg",
         "/stationary/diaries/09-02.jpg"
       ],
-      "price": "PKR 1150"
-    },
-    {
-      "name": "Diary 10",
-      "image": "/stationary/diaries/10-01.jpg",
-      "images": [
-        "/stationary/diaries/10-01.jpg",
-        "/stationary/diaries/10-02.jpg"
-      ],
-      "price": "PKR 1150"
-    },
-    {
-      "name": "Diary 11",
-      "image": "/stationary/diaries/11-01.jpg",
-      "images": [
-        "/stationary/diaries/11-01.jpg",
-        "/stationary/diaries/11-02.jpg"
-      ],
-      "price": "PKR 1150"
-    },
-    {
-      "name": "Diary 12",
-      "image": "/stationary/diaries/12-01.jpg",
-      "images": null,
       "price": "PKR 1150"
     }
   ],

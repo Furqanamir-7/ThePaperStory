@@ -51,26 +51,35 @@ async function isVertical(inputPath) {
   return (meta.height || 0) >= (meta.width || 0)
 }
 
-async function importDiaries(src, price) {
-  const files = (await fs.readdir(src))
-    .filter((name) => IMAGE_RE.test(name))
+async function listImages(dir) {
+  const entries = await fs.readdir(dir, { withFileTypes: true })
+  return entries
+    .filter((entry) => entry.isFile() && IMAGE_RE.test(entry.name))
+    .map((entry) => entry.name)
     .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+}
+
+async function importDiaries(src, price) {
+  const entries = await fs.readdir(src, { withFileTypes: true })
+  const folders = entries
+    .filter((entry) => entry.isDirectory() && /^\d+$/.test(entry.name))
+    .map((entry) => entry.name)
+    .sort((a, b) => Number(a) - Number(b))
 
   const destDir = path.join(ROOT, 'diaries')
   await fs.rm(destDir, { recursive: true, force: true })
   await fs.mkdir(destDir, { recursive: true })
 
   const products = []
-  let productNum = 0
 
-  for (let i = 0; i < files.length; ) {
-    productNum += 1
-    const group = files.slice(i, i + 2)
-    i += group.length
+  for (const folder of folders) {
+    const productNum = Number(folder)
+    const files = await listImages(path.join(src, folder))
+    if (!files.length) continue
 
     const scored = []
-    for (const fileName of group) {
-      const inputPath = path.join(src, fileName)
+    for (const fileName of files) {
+      const inputPath = path.join(src, folder, fileName)
       scored.push({
         fileName,
         inputPath,
@@ -78,14 +87,13 @@ async function importDiaries(src, price) {
       })
     }
 
-    // Closed cover first (higher color saturation), then open/group shot
+    // Closed cover first (higher color saturation)
     scored.sort((a, b) => b.sat - a.sat)
 
     const images = []
     for (let j = 0; j < scored.length; j += 1) {
       const outName = `${String(productNum).padStart(2, '0')}-${String(j + 1).padStart(2, '0')}.jpg`
-      const outPath = path.join(destDir, outName)
-      await compressToJpg(scored[j].inputPath, outPath)
+      await compressToJpg(scored[j].inputPath, path.join(destDir, outName))
       images.push(`/stationary/diaries/${outName}`)
     }
 
@@ -121,10 +129,7 @@ async function importPens(src, price) {
     const slug = slugify(folderName)
     const destDir = path.join(pensRoot, slug)
 
-    const files = (await fs.readdir(folderPath))
-      .filter((name) => IMAGE_RE.test(name))
-      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
-
+    const files = await listImages(folderPath)
     const scored = []
     for (const fileName of files) {
       const inputPath = path.join(folderPath, fileName)
@@ -135,14 +140,16 @@ async function importPens(src, price) {
       })
     }
 
-    // Vertical shots first for display; keep stable order within each group
-    scored.sort((a, b) => Number(b.vertical) - Number(a.vertical) || a.fileName.localeCompare(b.fileName, undefined, { numeric: true }))
+    scored.sort(
+      (a, b) =>
+        Number(b.vertical) - Number(a.vertical) ||
+        a.fileName.localeCompare(b.fileName, undefined, { numeric: true })
+    )
 
     const images = []
     for (let i = 0; i < scored.length; i += 1) {
       const outName = `${String(i + 1).padStart(2, '0')}.jpg`
-      const outPath = path.join(destDir, outName)
-      await compressToJpg(scored[i].inputPath, outPath)
+      await compressToJpg(scored[i].inputPath, path.join(destDir, outName))
       images.push(`/stationary/pens/${slug}/${outName}`)
     }
 
@@ -197,14 +204,8 @@ async function main() {
     /* fresh */
   }
 
-  const diaries = pensOnly
-    ? existing.diaries
-    : await importDiaries(DIARIES_SRC, 1150)
-
-  const pens = diariesOnly
-    ? existing.pens
-    : await importPens(PENS_SRC, 250)
-
+  const diaries = pensOnly ? existing.diaries : await importDiaries(DIARIES_SRC, 1150)
+  const pens = diariesOnly ? existing.pens : await importPens(PENS_SRC, 250)
   const result = { diaries, pens }
 
   await fs.writeFile(existingPath, `${JSON.stringify(result, null, 2)}\n`, 'utf8')

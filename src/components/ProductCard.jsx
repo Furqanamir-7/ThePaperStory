@@ -146,13 +146,16 @@ function ProductMedia({ product, onOpenLightbox }) {
       decoding="async"
       fetchPriority={index === 0 ? 'high' : 'auto'}
       draggable={false}
-      className="pointer-events-none h-full w-full object-cover sm:transition-transform sm:duration-400 sm:ease-out sm:group-hover:scale-105"
+      className="pointer-events-none h-full w-full object-cover object-center sm:transition-transform sm:duration-400 sm:ease-out sm:group-hover:scale-105"
+      onError={(event) => {
+        event.currentTarget.style.opacity = '0'
+      }}
     />
   )
 
   return (
     <div
-      className={`relative mb-4 aspect-[4/5] cursor-zoom-in overflow-hidden rounded-xl bg-paperstory-blush/30${hasGallery ? ' touch-pan-y' : ''}`}
+      className={`relative mb-4 aspect-[4/5] cursor-zoom-in overflow-hidden rounded-xl bg-paperstory-blush/40${hasGallery ? ' touch-pan-y' : ''}`}
       style={{ touchAction: hasGallery ? 'pan-y' : 'manipulation' }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}

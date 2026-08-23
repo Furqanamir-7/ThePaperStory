@@ -122,14 +122,11 @@ export const SEO_DIARIES = {
   2: 'Lavender Tulip Aesthetic Pocket Journal',
   3: 'Silent Rose Vintage Mini Diary Set',
   4: 'Blue Happy Day Floral Pocket Notebook',
-  5: 'Cute Heart Smile Flower Mini Diary',
-  6: 'One Life One Love Heart Pocket Journal',
-  7: 'Blush Floral Checkered Mini Diary',
-  8: 'Dreamy Pastel Bloom Pocket Notebook',
-  9: 'Soft Peach Petal Spiral Mini Diary',
-  10: 'Cherry Blossom Cute Pocket Journal',
-  11: 'Mint Garden Floral Mini Diary',
-  12: 'Green Daisy Plaid Pocket Notebook',
+  5: 'One Life One Love Heart Pocket Journal',
+  6: 'Lavender Bloom Textured Mini Diary',
+  7: 'Green Daisy Plaid Pocket Notebook',
+  8: 'Lucky Red Floral Spiral Mini Diary',
+  9: 'Day & Night Sky Mini Diary Set',
 }
 
 export const SEO_GREETING = {

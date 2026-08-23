@@ -98,7 +98,6 @@ export default function ShopCategoryPage() {
 
   const gridTitle = occasion ? occasion.label : sub ? sub.label : cat.label
   const gridSubtitle = sub?.tagline || cat.description || null
-  const showcaseImages = !sub && !type && cat.showcaseImages?.length ? cat.showcaseImages : null
   const pagePath = shopPath(normalizedCategory, normalizedSub, type || null)
   const seo = categorySeo(cat, sub, occasion)
   const breadcrumbItems = [
@@ -151,23 +150,6 @@ export default function ShopCategoryPage() {
             <TypePills category={cat} subcategory={sub} activeTypeSlug={type || null} />
           )}
         </div>
-
-        {showcaseImages && (
-          <div className="mx-auto max-w-7xl px-4 pt-2 sm:px-6 lg:px-8">
-            <div className="category-showcase">
-              {showcaseImages.map((src) => (
-                <img
-                  key={src}
-                  src={src}
-                  alt="Eidi and money envelopes"
-                  className="category-showcase-image"
-                  loading="eager"
-                  decoding="async"
-                />
-              ))}
-            </div>
-          </div>
-        )}
 
         {isWebsiteInvitation ? (
           <WebsiteInviteSlider
