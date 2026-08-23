@@ -79,49 +79,13 @@ function CityField({ form, setForm, isPakistan }) {
   )
 }
 
-function DesignPicker({ options, value, onChange }) {
-  return (
-    <div className="order-modal-designs">
-      <p className="order-modal-designs-label">Choose your design</p>
-      <div className="order-modal-designs-grid">
-        {options.map((option) => {
-          const selected = value === option.label
-          return (
-            <button
-              key={option.label}
-              type="button"
-              className={`order-modal-design-option${selected ? ' is-selected' : ''}`}
-              onClick={() => onChange(option.label)}
-              aria-pressed={selected}
-            >
-              {option.image && (
-                <img
-                  src={option.image}
-                  alt=""
-                  className="order-modal-design-thumb"
-                  loading="lazy"
-                  draggable={false}
-                />
-              )}
-              <span>{option.label}</span>
-            </button>
-          )
-        })}
-      </div>
-    </div>
-  )
-}
-
 export default function OrderModal({ product, onClose }) {
   const [form, setForm] = useState(emptyForm)
-  const [selectedDesign, setSelectedDesign] = useState('')
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState('')
   const [orderNumber, setOrderNumber] = useState('')
 
   const isPen = product?.subcategorySlug === 'pens'
-  const designOptions = product?.designOptions ?? []
-  const hasDesignPicker = designOptions.length > 0
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'
@@ -157,11 +121,6 @@ export default function OrderModal({ product, onClose }) {
     event.preventDefault()
     if (status === 'loading') return
 
-    if (hasDesignPicker && !selectedDesign) {
-      setError('Please choose your design before confirming.')
-      return
-    }
-
     if (!form.consent) {
       setError('Please agree to receive order updates via WhatsApp and Email.')
       return
@@ -175,9 +134,6 @@ export default function OrderModal({ product, onClose }) {
     setStatus('loading')
     setError('')
 
-    const designNote = selectedDesign ? `Design: ${selectedDesign}` : ''
-    const combinedNotes = [designNote, form.notes].filter(Boolean).join('\n')
-
     try {
       const data = await submitOrder({
         productId: product.id,
@@ -185,7 +141,6 @@ export default function OrderModal({ product, onClose }) {
         category: product.category,
         price: totalLabel,
         paymentType: product.paymentType,
-        selectedDesign: selectedDesign || null,
         name: form.name,
         email: form.email,
         phone: `${form.phoneCode} ${form.phone}`.trim(),
@@ -195,7 +150,7 @@ export default function OrderModal({ product, onClose }) {
         country: form.country,
         postalCode: form.postalCode,
         quantity,
-        notes: combinedNotes,
+        notes: form.notes,
         consent: form.consent,
         marketingConsent: form.marketingConsent,
         deliveryEstimate,
@@ -259,14 +214,6 @@ export default function OrderModal({ product, onClose }) {
             </div>
 
             <form onSubmit={handleSubmit} className="order-modal-form">
-              {hasDesignPicker && (
-                <DesignPicker
-                  options={designOptions}
-                  value={selectedDesign}
-                  onChange={setSelectedDesign}
-                />
-              )}
-
               <div className="order-modal-grid-2">
                 <input
                   type="text"

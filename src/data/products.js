@@ -1,5 +1,19 @@
 import stationaryGallery from './stationary-gallery.json' with { type: 'json' }
 import tpsDataGallery from './tps-data-gallery.json' with { type: 'json' }
+import {
+  SEO_EIDI,
+  seoDiaryName,
+  seoDigitalName,
+  seoFavourName,
+  seoGreetingName,
+  seoNikkahName,
+  seoPackagingName,
+  seoPamphletName,
+  seoPickName,
+  seoVinylName,
+  seoWeddingName,
+  weddingDesignNumber,
+} from './seo-product-names.js'
 
 const IMG = {
   wedding: '/wedding-invites/cover.jpg',
@@ -557,7 +571,7 @@ const FAVOURS_GALLERY_BASE = {
   ],
   'tin-favours': [
     {
-      name: 'Design 1',
+      name: 'Personalised Golden Round Tin Favour',
       images: [
         '/favours/golden-tin-1/01.jpg',
         '/favours/golden-tin-1/02.jpg',
@@ -566,7 +580,7 @@ const FAVOURS_GALLERY_BASE = {
       ],
     },
     {
-      name: 'Design 2',
+      name: 'Golden Round Tin Favour — Rose Gold',
       images: [
         '/favours/golden-tin-2/01.jpg',
         '/favours/golden-tin-2/02.jpg',
@@ -576,7 +590,7 @@ const FAVOURS_GALLERY_BASE = {
   ],
   'cake-toppers': [
     {
-      name: 'Design 1',
+      name: 'Custom Acrylic Wedding Cake Topper',
       images: [
         '/favours/cake-toppers-1/01.jpg',
         '/favours/cake-toppers-1/02.jpg',
@@ -587,21 +601,29 @@ const FAVOURS_GALLERY_BASE = {
 }
 
 function mergeWeddingFromTps(base) {
-  const updates = new Map(tpsDataGallery.wedding.map((design) => [design.name, design]))
-  return base.map((design) => updates.get(design.name) ?? design)
+  const updates = new Map(
+    tpsDataGallery.wedding.map((design) => [weddingDesignNumber(design.images), design])
+  )
+  return base.map((design) => {
+    const num = weddingDesignNumber(design.images)
+    const tps = num != null ? updates.get(num) : null
+    const merged = tps ? { ...design, images: tps.images } : design
+    return { ...merged, name: seoWeddingName(merged) }
+  })
 }
 
 function mergeFavoursFromTps(base) {
   const tps = tpsDataGallery.favours
   const tpsBoxNames = new Set(tps['box-favours'].map((design) => design.name))
+  const withSeo = (design) => ({ ...design, name: seoFavourName(design.name) })
   return {
-    potli: tps.potli.length ? tps.potli : base.potli,
+    potli: (tps.potli.length ? tps.potli : base.potli).map(withSeo),
     'box-favours': [
-      ...tps['box-favours'],
-      ...base['box-favours'].filter((design) => !tpsBoxNames.has(design.name)),
+      ...tps['box-favours'].map(withSeo),
+      ...base['box-favours'].filter((design) => !tpsBoxNames.has(design.name)).map(withSeo),
     ],
-    'tin-favours': [...tps['tin-favours'], ...base['tin-favours']],
-    'cake-toppers': base['cake-toppers'],
+    'tin-favours': [...tps['tin-favours'], ...base['tin-favours']].map(withSeo),
+    'cake-toppers': base['cake-toppers'].map(withSeo),
   }
 }
 
@@ -696,7 +718,7 @@ function addStationaryProducts({
 }) {
   return items.map((item) => ({
     id: productId++,
-    name: item.name,
+    name: subcategorySlug === 'diaries' ? seoDiaryName(item) : item.name,
     category: categoryLabel,
     categorySlug,
     subcategorySlug,
@@ -706,12 +728,52 @@ function addStationaryProducts({
     showPrice: true,
     price: item.price,
     priceNote: item.priceNote ?? null,
-    designOptions: item.designOptions?.length ? item.designOptions : null,
     paymentType: 'advance',
     whatsappMode: 'more',
     whatsappLabel,
     orderOnline: true,
   }))
+}
+
+function parseDesignNum(name, fallback = 1) {
+  const match = String(name || '').match(/Design\s+(\d+)/i)
+  return match ? Number(match[1]) : fallback
+}
+
+function resolveSeoDesignName({ name, categorySlug, subcategorySlug, typeSlug, designNum, galleryImages }) {
+  const num =
+    designNum ??
+    (galleryImages?.length ? weddingDesignNumber(galleryImages) : null) ??
+    parseDesignNum(name, 1)
+
+  if (categorySlug === 'wedding-invitations') {
+    return seoWeddingName(galleryImages?.length ? { images: galleryImages } : { images: [`/wedding-invites/design-${num}/01.jpg`] })
+  }
+  if (categorySlug === 'digital-invitations') {
+    return seoDigitalName(subcategorySlug, typeSlug, num) || name || `Design ${num}`
+  }
+  if (categorySlug === 'nikkahnama') {
+    return seoNikkahName(subcategorySlug, num) || name || `Design ${num}`
+  }
+  if (categorySlug === 'packaging') {
+    return seoPackagingName(subcategorySlug, num) || name || `Design ${num}`
+  }
+  if (categorySlug === 'vinyl-stickers') {
+    return seoVinylName(num) || name || `Design ${num}`
+  }
+  if (categorySlug === 'greeting-cards') {
+    return seoGreetingName(num) || name || `Design ${num}`
+  }
+  if (categorySlug === 'pamphlets') {
+    return seoPamphletName(num) || name || `Design ${num}`
+  }
+  if (categorySlug === 'favours' && name) {
+    return seoFavourName(name)
+  }
+  if (categorySlug === 'eidi-envelopes' && name) {
+    return SEO_EIDI[name] || name
+  }
+  return name || `Design ${num}`
 }
 
 function addDesigns({
@@ -731,10 +793,11 @@ function addDesigns({
   name,
 }) {
   if (galleryImages?.length) {
+    const designNum = weddingDesignNumber(galleryImages) ?? parseDesignNum(name, 1)
     return [
       {
         id: productId++,
-        name: name || 'Design 1',
+        name: resolveSeoDesignName({ name, categorySlug, subcategorySlug, typeSlug, designNum, galleryImages }),
         category: categoryLabel,
         categorySlug,
         subcategorySlug: subcategorySlug || null,
@@ -755,7 +818,7 @@ function addDesigns({
     const designNum = i + 1
     return {
       id: productId++,
-      name: name || `Design ${designNum}`,
+      name: resolveSeoDesignName({ name, categorySlug, subcategorySlug, typeSlug, designNum }),
       category: categoryLabel,
       categorySlug,
       subcategorySlug: subcategorySlug || null,
@@ -1043,7 +1106,7 @@ export function getFeaturedProducts() {
   const picks = [
     { categorySlug: 'wedding-invitations', design: 1 },
     { categorySlug: 'digital-invitations', subcategorySlug: 'image-invitation', typeSlug: 'wedding', design: 1 },
-    { categorySlug: 'stationary-items', subcategorySlug: 'diaries', name: 'Diary 1' },
+    { categorySlug: 'stationary-items', subcategorySlug: 'diaries', design: 1 },
     { categorySlug: 'stationary-items', subcategorySlug: 'pens', name: 'Cute Hello Kitty Printed Gel Pen' },
   ]
 
@@ -1054,7 +1117,7 @@ export function getFeaturedProducts() {
           product.categorySlug === categorySlug &&
           product.subcategorySlug === (subcategorySlug ?? null) &&
           (typeSlug == null || product.typeSlug === typeSlug) &&
-          product.name === (name || `Design ${design}`)
+          product.name === seoPickName(categorySlug, { subcategorySlug, typeSlug, design, name })
       )
     )
     .filter(Boolean)
@@ -1083,7 +1146,7 @@ export function getBestSellers() {
           product.categorySlug === categorySlug &&
           product.subcategorySlug === (subcategorySlug ?? null) &&
           (typeSlug == null || product.typeSlug === typeSlug) &&
-          product.name === (name || `Design ${design}`)
+          product.name === seoPickName(categorySlug, { subcategorySlug, typeSlug, design, name })
       )
     )
     .filter(Boolean)
