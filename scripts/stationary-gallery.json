@@ -1,0 +1,187 @@
+{
+  "diaries": [
+    {
+      "name": "Diary 1",
+      "image": "/stationary/diaries/01-01.jpg",
+      "images": [
+        "/stationary/diaries/01-01.jpg",
+        "/stationary/diaries/01-02.jpg"
+      ],
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 2",
+      "image": "/stationary/diaries/02-01.jpg",
+      "images": [
+        "/stationary/diaries/02-01.jpg",
+        "/stationary/diaries/02-02.jpg"
+      ],
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 3",
+      "image": "/stationary/diaries/03-01.jpg",
+      "images": [
+        "/stationary/diaries/03-01.jpg",
+        "/stationary/diaries/03-02.jpg"
+      ],
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 4",
+      "image": "/stationary/diaries/04-01.jpg",
+      "images": [
+        "/stationary/diaries/04-01.jpg",
+        "/stationary/diaries/04-02.jpg"
+      ],
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 5",
+      "image": "/stationary/diaries/05-01.jpg",
+      "images": [
+        "/stationary/diaries/05-01.jpg",
+        "/stationary/diaries/05-02.jpg"
+      ],
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 6",
+      "image": "/stationary/diaries/06-01.jpg",
+      "images": [
+        "/stationary/diaries/06-01.jpg",
+        "/stationary/diaries/06-02.jpg",
+        "/stationary/diaries/06-03.jpg"
+      ],
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 7",
+      "image": "/stationary/diaries/07-01.jpg",
+      "images": [
+        "/stationary/diaries/07-01.jpg",
+        "/stationary/diaries/07-02.jpg"
+      ],
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 8",
+      "image": "/stationary/diaries/08-01.jpg",
+      "images": [
+        "/stationary/diaries/08-01.jpg",
+        "/stationary/diaries/08-02.jpg"
+      ],
+      "price": "PKR 1150"
+    },
+    {
+      "name": "Diary 9",
+      "image": "/stationary/diaries/09-01.jpg",
+      "images": [
+        "/stationary/diaries/09-01.jpg",
+        "/stationary/diaries/09-02.jpg"
+      ],
+      "price": "PKR 1150"
+    }
+  ],
+  "pens": [
+    {
+      "name": "Cute Hello Kitty Printed Gel Pen",
+      "image": "/stationary/pens/cute-hello-kitty-printed-gel-pen/01.jpg",
+      "images": [
+        "/stationary/pens/cute-hello-kitty-printed-gel-pen/01.jpg",
+        "/stationary/pens/cute-hello-kitty-printed-gel-pen/02.jpg",
+        "/stationary/pens/cute-hello-kitty-printed-gel-pen/03.jpg"
+      ],
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450"
+    },
+    {
+      "name": "Cute Kawaii Printed Gel Pen",
+      "image": "/stationary/pens/cute-kawaii-printed-gel-pen/01.jpg",
+      "images": [
+        "/stationary/pens/cute-kawaii-printed-gel-pen/01.jpg",
+        "/stationary/pens/cute-kawaii-printed-gel-pen/02.jpg"
+      ],
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450"
+    },
+    {
+      "name": "Hello Kitty Kawaii Gel Pen",
+      "image": "/stationary/pens/hello-kitty-kawaii-gel-pen/01.jpg",
+      "images": [
+        "/stationary/pens/hello-kitty-kawaii-gel-pen/01.jpg",
+        "/stationary/pens/hello-kitty-kawaii-gel-pen/02.jpg",
+        "/stationary/pens/hello-kitty-kawaii-gel-pen/03.jpg"
+      ],
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450"
+    },
+    {
+      "name": "Pastel Kawaii Pattern Gel Pen",
+      "image": "/stationary/pens/pastel-kawaii-pattern-gel-pen/01.jpg",
+      "images": [
+        "/stationary/pens/pastel-kawaii-pattern-gel-pen/01.jpg",
+        "/stationary/pens/pastel-kawaii-pattern-gel-pen/02.jpg",
+        "/stationary/pens/pastel-kawaii-pattern-gel-pen/03.jpg"
+      ],
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450"
+    },
+    {
+      "name": "Pink Hello Kitty Gel Pen",
+      "image": "/stationary/pens/pink-hello-kitty-gel-pen/01.jpg",
+      "images": [
+        "/stationary/pens/pink-hello-kitty-gel-pen/01.jpg",
+        "/stationary/pens/pink-hello-kitty-gel-pen/02.jpg"
+      ],
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450"
+    },
+    {
+      "name": "Strawberry Kawaii Gel Pen",
+      "image": "/stationary/pens/strawberry-kawaii-gel-pen/01.jpg",
+      "images": [
+        "/stationary/pens/strawberry-kawaii-gel-pen/01.jpg",
+        "/stationary/pens/strawberry-kawaii-gel-pen/02.jpg",
+        "/stationary/pens/strawberry-kawaii-gel-pen/03.jpg"
+      ],
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450"
+    },
+    {
+      "name": "Cute Bunny Character Pen",
+      "image": "/stationary/pens/cute-bunny-character-pen/01.jpg",
+      "images": null,
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450"
+    },
+    {
+      "name": "Green Flower Pen",
+      "image": "/stationary/pens/green-flower-pen/01.jpg",
+      "images": null,
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450"
+    },
+    {
+      "name": "Pink Kawaii Tulip Flower Pen",
+      "image": "/stationary/pens/pink-kawaii-tulip-flower-pen/01.jpg",
+      "images": null,
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450"
+    },
+    {
+      "name": "Purple Kawaii Character Pen",
+      "image": "/stationary/pens/purple-kawaii-character-pen/01.jpg",
+      "images": null,
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450"
+    },
+    {
+      "name": "Super Mario Mushroom Pen",
+      "image": "/stationary/pens/super-mario-mushroom-pen/01.jpg",
+      "images": null,
+      "price": "PKR 250",
+      "priceNote": "Pack of 2 = PKR 450"
+    }
+  ]
+}

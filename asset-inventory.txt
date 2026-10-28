@@ -1,0 +1,285 @@
+ASSET INVENTORY
+Generated: 2026-07-22 18:54:12
+================================================================================
+
+
+################################################################################
+ROOT: Business-Brand Tags
+FULL PATH: C:\Users\Dell\Desktop\Business-Brand Tags
+################################################################################
+Summary: 2 directories, 9 files
+Total size: 51.61 MB (54,116,495 bytes)
+
+--- FOLDER TREE ---
+Business-Brand Tags\
+  [DIR]  1\
+    [FILE] IMG_0996.JPG  |  3.72 MB (3,895,684 bytes)  |  rel: 1\IMG_0996.JPG
+    [FILE] IMG_0997.JPG  |  5.09 MB (5,342,003 bytes)  |  rel: 1\IMG_0997.JPG
+    [FILE] IMG_1001.JPG  |  6.11 MB (6,411,587 bytes)  |  rel: 1\IMG_1001.JPG
+  [DIR]  2\
+    [FILE] IMG_E9425.JPG  |  3.31 MB (3,467,557 bytes)  |  rel: 2\IMG_E9425.JPG
+    [FILE] IMG_E9430.JPG  |  6.00 MB (6,286,941 bytes)  |  rel: 2\IMG_E9430.JPG
+    [FILE] IMG_E9431.JPG  |  5.83 MB (6,112,172 bytes)  |  rel: 2\IMG_E9431.JPG
+    [FILE] IMG_E9434.JPG  |  5.59 MB (5,856,371 bytes)  |  rel: 2\IMG_E9434.JPG
+    [FILE] IMG_E9441.JPG  |  5.34 MB (5,598,908 bytes)  |  rel: 2\IMG_E9441.JPG
+    [FILE] IMG_E9444.MOV  |  10.63 MB (11,145,272 bytes)  |  rel: 2\IMG_E9444.MOV
+
+--- COMPLETE FILE LIST (relative path | size) ---
+1\IMG_0996.JPG  |  3.72 MB (3,895,684 bytes)
+1\IMG_0997.JPG  |  5.09 MB (5,342,003 bytes)
+1\IMG_1001.JPG  |  6.11 MB (6,411,587 bytes)
+2\IMG_E9425.JPG  |  3.31 MB (3,467,557 bytes)
+2\IMG_E9430.JPG  |  6.00 MB (6,286,941 bytes)
+2\IMG_E9431.JPG  |  5.83 MB (6,112,172 bytes)
+2\IMG_E9434.JPG  |  5.59 MB (5,856,371 bytes)
+2\IMG_E9441.JPG  |  5.34 MB (5,598,908 bytes)
+2\IMG_E9444.MOV  |  10.63 MB (11,145,272 bytes)
+
+--- DIRECTORY STRUCTURE (numbered / product groups) ---
+Top-level directories (2):
+  1\  — 3 files, 0 immediate subdirs, 14.92 MB (15,649,274 bytes)  << NUMBERED (candidate product card slider)
+  2\  — 6 files, 0 immediate subdirs, 36.69 MB (38,467,221 bytes)  << NUMBERED (candidate product card slider)
+Top-level files (0):
+
+
+################################################################################
+ROOT: Money Envelopes
+FULL PATH: C:\Users\Dell\Desktop\Money Envelopes
+################################################################################
+Summary: 1 directories, 4 files
+Total size: 43.41 MB (45,521,969 bytes)
+
+--- FOLDER TREE ---
+Money Envelopes\
+  [DIR]  F.R.I.E.N.D.S Theme\
+    [FILE] IMG_4688.JPG  |  4.41 MB (4,624,157 bytes)  |  rel: F.R.I.E.N.D.S Theme\IMG_4688.JPG
+    [FILE] IMG_4688.MOV  |  5.76 MB (6,041,844 bytes)  |  rel: F.R.I.E.N.D.S Theme\IMG_4688.MOV
+    [FILE] IMG_4699.MOV  |  16.46 MB (17,256,518 bytes)  |  rel: F.R.I.E.N.D.S Theme\IMG_4699.MOV
+    [FILE] IMG_4700.MOV  |  16.78 MB (17,599,450 bytes)  |  rel: F.R.I.E.N.D.S Theme\IMG_4700.MOV
+
+--- COMPLETE FILE LIST (relative path | size) ---
+F.R.I.E.N.D.S Theme\IMG_4688.JPG  |  4.41 MB (4,624,157 bytes)
+F.R.I.E.N.D.S Theme\IMG_4688.MOV  |  5.76 MB (6,041,844 bytes)
+F.R.I.E.N.D.S Theme\IMG_4699.MOV  |  16.46 MB (17,256,518 bytes)
+F.R.I.E.N.D.S Theme\IMG_4700.MOV  |  16.78 MB (17,599,450 bytes)
+
+--- DIRECTORY STRUCTURE (numbered / product groups) ---
+Top-level directories (1):
+  F.R.I.E.N.D.S Theme\  — 4 files, 0 immediate subdirs, 43.41 MB (45,521,969 bytes)
+Top-level files (0):
+
+
+################################################################################
+ROOT: Favours-Gifting
+FULL PATH: C:\Users\Dell\Desktop\Favours-Gifting
+################################################################################
+Summary: 8 directories, 28 files
+Total size: 202.97 MB (212,829,707 bytes)
+
+--- FOLDER TREE ---
+Favours-Gifting\
+  [DIR]  Baby Announcement Box\
+    [FILE] IMG_9297.JPG  |  3.91 MB (4,094,890 bytes)  |  rel: Baby Announcement Box\IMG_9297.JPG
+    [FILE] IMG_9300.JPG  |  3.97 MB (4,164,764 bytes)  |  rel: Baby Announcement Box\IMG_9300.JPG
+    [FILE] IMG_9301.JPG  |  4.14 MB (4,339,335 bytes)  |  rel: Baby Announcement Box\IMG_9301.JPG
+    [FILE] IMG_9304.JPG  |  3.98 MB (4,173,047 bytes)  |  rel: Baby Announcement Box\IMG_9304.JPG
+    [FILE] IMG_9314.JPG  |  3.44 MB (3,607,186 bytes)  |  rel: Baby Announcement Box\IMG_9314.JPG
+    [FILE] IMG_9317.JPG  |  3.61 MB (3,786,617 bytes)  |  rel: Baby Announcement Box\IMG_9317.JPG
+    [FILE] IMG_9324.JPG  |  3.50 MB (3,669,600 bytes)  |  rel: Baby Announcement Box\IMG_9324.JPG
+    [FILE] IMG_9329.JPG  |  4.13 MB (4,334,316 bytes)  |  rel: Baby Announcement Box\IMG_9329.JPG
+  [DIR]  Cake Toppers\
+    [DIR]  1\
+      [FILE] IMG_7963.JPG  |  3.13 MB (3,285,548 bytes)  |  rel: Cake Toppers\1\IMG_7963.JPG
+      [FILE] IMG_7964.JPG  |  3.12 MB (3,272,771 bytes)  |  rel: Cake Toppers\1\IMG_7964.JPG
+      [FILE] IMG_E8057.JPG  |  4.92 MB (5,158,087 bytes)  |  rel: Cake Toppers\1\IMG_E8057.JPG
+  [DIR]  Personlised Golden Round Tin\
+    [DIR]  1\
+      [FILE] IMG_5401.JPG  |  3.60 MB (3,777,574 bytes)  |  rel: Personlised Golden Round Tin\1\IMG_5401.JPG
+      [FILE] IMG_5410.MOV  |  82.60 MB (86,616,182 bytes)  |  rel: Personlised Golden Round Tin\1\IMG_5410.MOV
+      [FILE] IMG_5428.JPG  |  3.51 MB (3,677,468 bytes)  |  rel: Personlised Golden Round Tin\1\IMG_5428.JPG
+      [FILE] IMG_E5401.JPG  |  1.91 MB (2,003,451 bytes)  |  rel: Personlised Golden Round Tin\1\IMG_E5401.JPG
+    [DIR]  2\
+      [FILE] IMG_0288.JPG  |  5.71 MB (5,986,266 bytes)  |  rel: Personlised Golden Round Tin\2\IMG_0288.JPG
+      [FILE] IMG_0290.JPG  |  4.60 MB (4,821,679 bytes)  |  rel: Personlised Golden Round Tin\2\IMG_0290.JPG
+      [FILE] IMG_0293.MOV  |  26.64 MB (27,939,111 bytes)  |  rel: Personlised Golden Round Tin\2\IMG_0293.MOV
+  [DIR]  Sweet Box with Gift Bags\
+    [DIR]  1\
+      [FILE] IMG_8023.JPG  |  3.50 MB (3,666,753 bytes)  |  rel: Sweet Box with Gift Bags\1\IMG_8023.JPG
+      [FILE] IMG_8024.JPG  |  3.60 MB (3,779,775 bytes)  |  rel: Sweet Box with Gift Bags\1\IMG_8024.JPG
+      [FILE] IMG_8025.JPG  |  3.45 MB (3,614,389 bytes)  |  rel: Sweet Box with Gift Bags\1\IMG_8025.JPG
+      [FILE] IMG_8027.JPG  |  3.48 MB (3,652,075 bytes)  |  rel: Sweet Box with Gift Bags\1\IMG_8027.JPG
+      [FILE] IMG_8029.JPG  |  3.53 MB (3,702,140 bytes)  |  rel: Sweet Box with Gift Bags\1\IMG_8029.JPG
+      [FILE] IMG_E8023.JPG  |  2.63 MB (2,758,627 bytes)  |  rel: Sweet Box with Gift Bags\1\IMG_E8023.JPG
+      [FILE] IMG_E8024.JPG  |  2.84 MB (2,978,196 bytes)  |  rel: Sweet Box with Gift Bags\1\IMG_E8024.JPG
+      [FILE] IMG_E8025.JPG  |  2.52 MB (2,647,447 bytes)  |  rel: Sweet Box with Gift Bags\1\IMG_E8025.JPG
+      [FILE] IMG_E8027.JPG  |  4.04 MB (4,236,481 bytes)  |  rel: Sweet Box with Gift Bags\1\IMG_E8027.JPG
+      [FILE] IMG_E8029.JPG  |  2.94 MB (3,085,932 bytes)  |  rel: Sweet Box with Gift Bags\1\IMG_E8029.JPG
+
+--- COMPLETE FILE LIST (relative path | size) ---
+Baby Announcement Box\IMG_9297.JPG  |  3.91 MB (4,094,890 bytes)
+Baby Announcement Box\IMG_9300.JPG  |  3.97 MB (4,164,764 bytes)
+Baby Announcement Box\IMG_9301.JPG  |  4.14 MB (4,339,335 bytes)
+Baby Announcement Box\IMG_9304.JPG  |  3.98 MB (4,173,047 bytes)
+Baby Announcement Box\IMG_9314.JPG  |  3.44 MB (3,607,186 bytes)
+Baby Announcement Box\IMG_9317.JPG  |  3.61 MB (3,786,617 bytes)
+Baby Announcement Box\IMG_9324.JPG  |  3.50 MB (3,669,600 bytes)
+Baby Announcement Box\IMG_9329.JPG  |  4.13 MB (4,334,316 bytes)
+Cake Toppers\1\IMG_7963.JPG  |  3.13 MB (3,285,548 bytes)
+Cake Toppers\1\IMG_7964.JPG  |  3.12 MB (3,272,771 bytes)
+Cake Toppers\1\IMG_E8057.JPG  |  4.92 MB (5,158,087 bytes)
+Personlised Golden Round Tin\1\IMG_5401.JPG  |  3.60 MB (3,777,574 bytes)
+Personlised Golden Round Tin\1\IMG_5410.MOV  |  82.60 MB (86,616,182 bytes)
+Personlised Golden Round Tin\1\IMG_5428.JPG  |  3.51 MB (3,677,468 bytes)
+Personlised Golden Round Tin\1\IMG_E5401.JPG  |  1.91 MB (2,003,451 bytes)
+Personlised Golden Round Tin\2\IMG_0288.JPG  |  5.71 MB (5,986,266 bytes)
+Personlised Golden Round Tin\2\IMG_0290.JPG  |  4.60 MB (4,821,679 bytes)
+Personlised Golden Round Tin\2\IMG_0293.MOV  |  26.64 MB (27,939,111 bytes)
+Sweet Box with Gift Bags\1\IMG_8023.JPG  |  3.50 MB (3,666,753 bytes)
+Sweet Box with Gift Bags\1\IMG_8024.JPG  |  3.60 MB (3,779,775 bytes)
+Sweet Box with Gift Bags\1\IMG_8025.JPG  |  3.45 MB (3,614,389 bytes)
+Sweet Box with Gift Bags\1\IMG_8027.JPG  |  3.48 MB (3,652,075 bytes)
+Sweet Box with Gift Bags\1\IMG_8029.JPG  |  3.53 MB (3,702,140 bytes)
+Sweet Box with Gift Bags\1\IMG_E8023.JPG  |  2.63 MB (2,758,627 bytes)
+Sweet Box with Gift Bags\1\IMG_E8024.JPG  |  2.84 MB (2,978,196 bytes)
+Sweet Box with Gift Bags\1\IMG_E8025.JPG  |  2.52 MB (2,647,447 bytes)
+Sweet Box with Gift Bags\1\IMG_E8027.JPG  |  4.04 MB (4,236,481 bytes)
+Sweet Box with Gift Bags\1\IMG_E8029.JPG  |  2.94 MB (3,085,932 bytes)
+
+--- DIRECTORY STRUCTURE (numbered / product groups) ---
+Top-level directories (4):
+  Baby Announcement Box\  — 8 files, 0 immediate subdirs, 30.68 MB (32,169,755 bytes)
+  Cake Toppers\  — 3 files, 1 immediate subdirs, 11.17 MB (11,716,406 bytes)
+    1\  — 3 files, 11.17 MB (11,716,406 bytes)  << NUMBERED (candidate product card slider)
+  Personlised Golden Round Tin\  — 7 files, 2 immediate subdirs, 128.58 MB (134,821,731 bytes)
+    1\  — 4 files, 91.62 MB (96,074,675 bytes)  << NUMBERED (candidate product card slider)
+    2\  — 3 files, 36.95 MB (38,747,056 bytes)  << NUMBERED (candidate product card slider)
+  Sweet Box with Gift Bags\  — 10 files, 1 immediate subdirs, 32.54 MB (34,121,815 bytes)
+    1\  — 10 files, 32.54 MB (34,121,815 bytes)  << NUMBERED (candidate product card slider)
+Top-level files (0):
+
+
+################################################################################
+ROOT: Vinyl Sticker
+FULL PATH: C:\Users\Dell\Desktop\Vinyl Sticker
+################################################################################
+Summary: 0 directories, 4 files
+Total size: 4.12 MB (4,317,550 bytes)
+
+--- FOLDER TREE ---
+Vinyl Sticker\
+  [FILE] image00001.jpeg  |  603.24 KB (617,717 bytes)  |  rel: image00001.jpeg
+  [FILE] image00002.jpeg  |  262.59 KB (268,895 bytes)  |  rel: image00002.jpeg
+  [FILE] image00003.jpeg  |  227.88 KB (233,347 bytes)  |  rel: image00003.jpeg
+  [FILE] image00004.png  |  3.05 MB (3,197,591 bytes)  |  rel: image00004.png
+
+--- COMPLETE FILE LIST (relative path | size) ---
+image00001.jpeg  |  603.24 KB (617,717 bytes)
+image00002.jpeg  |  262.59 KB (268,895 bytes)
+image00003.jpeg  |  227.88 KB (233,347 bytes)
+image00004.png  |  3.05 MB (3,197,591 bytes)
+
+--- DIRECTORY STRUCTURE (numbered / product groups) ---
+Top-level directories (0):
+Top-level files (4):
+  image00001.jpeg  |  603.24 KB (617,717 bytes)
+  image00002.jpeg  |  262.59 KB (268,895 bytes)
+  image00003.jpeg  |  227.88 KB (233,347 bytes)
+  image00004.png  |  3.05 MB (3,197,591 bytes)
+
+
+################################################################################
+ROOT: Nikkah Certificates
+FULL PATH: C:\Users\Dell\Desktop\Nikkah Certificates
+################################################################################
+Summary: 8 directories, 32 files
+Total size: 420.57 MB (441,003,874 bytes)
+
+--- FOLDER TREE ---
+Nikkah Certificates\
+  [DIR]  Hand Painted\
+    [DIR]  1\
+      [FILE] image00008.jpeg  |  382.64 KB (391,820 bytes)  |  rel: Hand Painted\1\image00008.jpeg
+      [FILE] image00009.jpeg  |  496.01 KB (507,918 bytes)  |  rel: Hand Painted\1\image00009.jpeg
+      [FILE] image00010.jpeg  |  290.25 KB (297,212 bytes)  |  rel: Hand Painted\1\image00010.jpeg
+      [FILE] IMG_8401.MOV  |  38.99 MB (40,884,147 bytes)  |  rel: Hand Painted\1\IMG_8401.MOV
+      [FILE] IMG_8402.MOV  |  55.40 MB (58,092,744 bytes)  |  rel: Hand Painted\1\IMG_8402.MOV
+      [FILE] IMG_8403.MOV  |  48.38 MB (50,729,100 bytes)  |  rel: Hand Painted\1\IMG_8403.MOV
+      [FILE] IMG_8404.JPG  |  3.76 MB (3,937,430 bytes)  |  rel: Hand Painted\1\IMG_8404.JPG
+      [FILE] IMG_8406.JPG  |  3.92 MB (4,108,355 bytes)  |  rel: Hand Painted\1\IMG_8406.JPG
+      [FILE] IMG_8408.JPG  |  3.70 MB (3,882,131 bytes)  |  rel: Hand Painted\1\IMG_8408.JPG
+      [FILE] IMG_8409.JPG  |  3.41 MB (3,576,130 bytes)  |  rel: Hand Painted\1\IMG_8409.JPG
+      [FILE] IMG_8415.JPG  |  3.09 MB (3,238,027 bytes)  |  rel: Hand Painted\1\IMG_8415.JPG
+      [FILE] IMG_8419.JPG  |  3.10 MB (3,246,661 bytes)  |  rel: Hand Painted\1\IMG_8419.JPG
+      [FILE] IMG_8424.JPG  |  3.02 MB (3,166,354 bytes)  |  rel: Hand Painted\1\IMG_8424.JPG
+      [FILE] IMG_8427.JPG  |  2.84 MB (2,981,102 bytes)  |  rel: Hand Painted\1\IMG_8427.JPG
+      [FILE] IMG_8430.JPG  |  3.24 MB (3,398,959 bytes)  |  rel: Hand Painted\1\IMG_8430.JPG
+      [FILE] IMG_8432.JPG  |  3.03 MB (3,181,036 bytes)  |  rel: Hand Painted\1\IMG_8432.JPG
+      [FILE] IMG_E8432.JPG  |  3.76 MB (3,938,100 bytes)  |  rel: Hand Painted\1\IMG_E8432.JPG
+      [FILE] IMG_E8433.MOV  |  38.77 MB (40,648,262 bytes)  |  rel: Hand Painted\1\IMG_E8433.MOV
+  [DIR]  Printed\
+    [DIR]  1\
+      [FILE] image00005.jpeg  |  317.05 KB (324,657 bytes)  |  rel: Printed\1\image00005.jpeg
+      [FILE] image00006.jpeg  |  311.19 KB (318,662 bytes)  |  rel: Printed\1\image00006.jpeg
+      [FILE] image00007.jpeg  |  438.51 KB (449,031 bytes)  |  rel: Printed\1\image00007.jpeg
+      [FILE] IMG_E0389.JPG  |  4.14 MB (4,344,170 bytes)  |  rel: Printed\1\IMG_E0389.JPG
+      [FILE] IMG_E0401.MOV  |  13.68 MB (14,348,877 bytes)  |  rel: Printed\1\IMG_E0401.MOV
+      [FILE] nikkahnama Mockup1.png  |  31.41 MB (32,933,203 bytes)  |  rel: Printed\1\nikkahnama Mockup1.png
+    [DIR]  2\
+      [FILE] image00002.jpeg  |  277.87 KB (284,536 bytes)  |  rel: Printed\2\image00002.jpeg
+      [FILE] image00003.jpeg  |  288.03 KB (294,939 bytes)  |  rel: Printed\2\image00003.jpeg
+      [FILE] image00004.jpeg  |  329.26 KB (337,164 bytes)  |  rel: Printed\2\image00004.jpeg
+    [DIR]  3\
+      [FILE] IMG_7989.MOV  |  77.61 MB (81,381,781 bytes)  |  rel: Printed\3\IMG_7989.MOV
+    [DIR]  4\
+      [FILE] fatima-nikkah-nama-post.jpg  |  2.96 MB (3,100,736 bytes)  |  rel: Printed\4\fatima-nikkah-nama-post.jpg
+    [DIR]  5\
+      [FILE] IMG_E9688.MOV  |  47.19 MB (49,477,726 bytes)  |  rel: Printed\5\IMG_E9688.MOV
+      [FILE] IMG_E9700.JPG  |  4.11 MB (4,311,723 bytes)  |  rel: Printed\5\IMG_E9700.JPG
+      [FILE] nikkahnama Mockup2.png  |  18.02 MB (18,891,181 bytes)  |  rel: Printed\5\nikkahnama Mockup2.png
+
+--- COMPLETE FILE LIST (relative path | size) ---
+Hand Painted\1\image00008.jpeg  |  382.64 KB (391,820 bytes)
+Hand Painted\1\image00009.jpeg  |  496.01 KB (507,918 bytes)
+Hand Painted\1\image00010.jpeg  |  290.25 KB (297,212 bytes)
+Hand Painted\1\IMG_8401.MOV  |  38.99 MB (40,884,147 bytes)
+Hand Painted\1\IMG_8402.MOV  |  55.40 MB (58,092,744 bytes)
+Hand Painted\1\IMG_8403.MOV  |  48.38 MB (50,729,100 bytes)
+Hand Painted\1\IMG_8404.JPG  |  3.76 MB (3,937,430 bytes)
+Hand Painted\1\IMG_8406.JPG  |  3.92 MB (4,108,355 bytes)
+Hand Painted\1\IMG_8408.JPG  |  3.70 MB (3,882,131 bytes)
+Hand Painted\1\IMG_8409.JPG  |  3.41 MB (3,576,130 bytes)
+Hand Painted\1\IMG_8415.JPG  |  3.09 MB (3,238,027 bytes)
+Hand Painted\1\IMG_8419.JPG  |  3.10 MB (3,246,661 bytes)
+Hand Painted\1\IMG_8424.JPG  |  3.02 MB (3,166,354 bytes)
+Hand Painted\1\IMG_8427.JPG  |  2.84 MB (2,981,102 bytes)
+Hand Painted\1\IMG_8430.JPG  |  3.24 MB (3,398,959 bytes)
+Hand Painted\1\IMG_8432.JPG  |  3.03 MB (3,181,036 bytes)
+Hand Painted\1\IMG_E8432.JPG  |  3.76 MB (3,938,100 bytes)
+Hand Painted\1\IMG_E8433.MOV  |  38.77 MB (40,648,262 bytes)
+Printed\1\image00005.jpeg  |  317.05 KB (324,657 bytes)
+Printed\1\image00006.jpeg  |  311.19 KB (318,662 bytes)
+Printed\1\image00007.jpeg  |  438.51 KB (449,031 bytes)
+Printed\1\IMG_E0389.JPG  |  4.14 MB (4,344,170 bytes)
+Printed\1\IMG_E0401.MOV  |  13.68 MB (14,348,877 bytes)
+Printed\1\nikkahnama Mockup1.png  |  31.41 MB (32,933,203 bytes)
+Printed\2\image00002.jpeg  |  277.87 KB (284,536 bytes)
+Printed\2\image00003.jpeg  |  288.03 KB (294,939 bytes)
+Printed\2\image00004.jpeg  |  329.26 KB (337,164 bytes)
+Printed\3\IMG_7989.MOV  |  77.61 MB (81,381,781 bytes)
+Printed\4\fatima-nikkah-nama-post.jpg  |  2.96 MB (3,100,736 bytes)
+Printed\5\IMG_E9688.MOV  |  47.19 MB (49,477,726 bytes)
+Printed\5\IMG_E9700.JPG  |  4.11 MB (4,311,723 bytes)
+Printed\5\nikkahnama Mockup2.png  |  18.02 MB (18,891,181 bytes)
+
+--- DIRECTORY STRUCTURE (numbered / product groups) ---
+Top-level directories (2):
+  Hand Painted\  — 18 files, 1 immediate subdirs, 219.54 MB (230,205,488 bytes)
+    1\  — 18 files, 219.54 MB (230,205,488 bytes)  << NUMBERED (candidate product card slider)
+  Printed\  — 14 files, 5 immediate subdirs, 201.03 MB (210,798,386 bytes)
+    1\  — 6 files, 50.28 MB (52,718,600 bytes)  << NUMBERED (candidate product card slider)
+    2\  — 3 files, 895.16 KB (916,639 bytes)  << NUMBERED (candidate product card slider)
+    3\  — 1 files, 77.61 MB (81,381,781 bytes)  << NUMBERED (candidate product card slider)
+    4\  — 1 files, 2.96 MB (3,100,736 bytes)  << NUMBERED (candidate product card slider)
+    5\  — 3 files, 69.31 MB (72,680,630 bytes)  << NUMBERED (candidate product card slider)
+Top-level files (0):
+
