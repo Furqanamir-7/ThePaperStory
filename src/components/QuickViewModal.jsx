@@ -120,10 +120,12 @@ export default function QuickViewModal({
               {isVideo ? (
                 <video
                   src={current}
+                  poster="/wedding-invites/cover.jpg"
                   autoPlay
                   muted
                   loop
                   playsInline
+                  controls
                   className="h-full w-full object-cover object-center"
                 />
               ) : (

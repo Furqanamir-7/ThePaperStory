@@ -58,6 +58,7 @@ export default function ProductCard({ product }) {
             {isVideo ? (
               <video
                 src={primaryImg}
+                poster="/wedding-invites/cover.jpg"
                 autoPlay
                 muted
                 loop
