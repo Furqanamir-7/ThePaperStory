@@ -372,8 +372,8 @@ const WEDDING_GALLERY_BASE = [
   {
     name: 'Design 10',
     images: [
-      '/wedding-invites/design-10/04.jpg',
       '/wedding-invites/design-10/01.jpg',
+      '/wedding-invites/design-10/04.jpg',
       '/wedding-invites/design-10/02.jpg',
       '/wedding-invites/design-10/03.jpg',
       '/wedding-invites/design-10/05.jpg',
@@ -436,8 +436,8 @@ const WEDDING_GALLERY_BASE = [
   {
     name: 'Design 17',
     images: [
-      '/wedding-invites/design-17/01.jpg',
       '/wedding-invites/design-17/05.jpg',
+      '/wedding-invites/design-17/01.jpg',
       '/wedding-invites/design-17/02.jpg',
       '/wedding-invites/design-17/03.jpg',
       '/wedding-invites/design-17/04.jpg',
@@ -525,11 +525,11 @@ const WEDDING_GALLERY_BASE = [
   {
     name: 'Design 26',
     images: [
+      '/wedding-invites/design-26/05.jpg',
+      '/wedding-invites/design-26/02.jpg',
       '/wedding-invites/design-26/01.jpg',
       '/wedding-invites/design-26/04.jpg',
-      '/wedding-invites/design-26/02.jpg',
       '/wedding-invites/design-26/03.jpg',
-      '/wedding-invites/design-26/05.jpg',
     ],
   },
 ]
@@ -1209,22 +1209,22 @@ export function getProductsByCategory(categorySlug, subcategorySlug = null, type
   })
 
   if (normalizedCategory === 'wedding-invitations' && !normalizedSub) {
-    return [GET_CUSTOMISED_WEDDING, ...list]
+    return [...list, GET_CUSTOMISED_WEDDING]
   }
 
   if (normalizedCategory !== 'digital-invitations') return list
 
   if (normalizedSub === 'image-invitation') {
     if (typeSlug === 'wedding' || !typeSlug) {
-      return [GET_CUSTOMISED_DIGITAL, ...list, WEBSITE_WEDDING_INVITE]
+      return [...list, WEBSITE_WEDDING_INVITE, GET_CUSTOMISED_DIGITAL]
     }
-    return [GET_CUSTOMISED_DIGITAL, ...list]
+    return [...list, GET_CUSTOMISED_DIGITAL]
   }
   if (normalizedSub === 'animated-invitation') {
-    return [GET_CUSTOMISED_DIGITAL, ...list]
+    return [...list, GET_CUSTOMISED_DIGITAL]
   }
   if (!normalizedSub) {
-    return [GET_CUSTOMISED_DIGITAL, ...list, WEBSITE_WEDDING_INVITE]
+    return [...list, WEBSITE_WEDDING_INVITE, GET_CUSTOMISED_DIGITAL]
   }
 
   return list

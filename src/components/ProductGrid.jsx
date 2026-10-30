@@ -22,7 +22,10 @@ export default function ProductGrid({
   const isVisibleNow = showOnLoad || isVisible
 
   const sortedProducts = useMemo(() => {
-    const list = [...baseProducts]
+    const customItems = baseProducts.filter(p => p.id?.toString().includes('customised') || p.id?.toString().includes('custom-design'))
+    const standardItems = baseProducts.filter(p => !p.id?.toString().includes('customised') && !p.id?.toString().includes('custom-design'))
+
+    const list = [...standardItems]
     if (sortBy === 'a-z') {
       list.sort((a, b) => a.name.localeCompare(b.name))
     } else if (sortBy === 'z-a') {
@@ -40,7 +43,7 @@ export default function ProductGrid({
         return pB - pA
       })
     }
-    return list
+    return [...list, ...customItems]
   }, [baseProducts, sortBy])
 
   const displayProducts = sortedProducts.slice(0, limit ?? undefined)
