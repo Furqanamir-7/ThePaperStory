@@ -1,4 +1,5 @@
 import stationaryGallery from './stationary-gallery.json' with { type: 'json' }
+import importedDesktopGallery from './imported-desktop-gallery.json' with { type: 'json' }
 import tpsDataGallery from './tps-data-gallery.json' with { type: 'json' }
 import eidiPostcardsGallery from './eidi-postcards-gallery.json' with { type: 'json' }
 import {
@@ -55,6 +56,18 @@ export const BABY_IMAGE_INVITES = [
 export const INSTAGRAM_URL = 'https://www.instagram.com/thepaperstory.co/'
 
 export const shopCategories = [
+  {
+    id: 'wax-seals',
+    slug: 'wax-seals',
+    label: 'Customised Wax Seals',
+    shortLabel: 'Wax Seals',
+    description: 'Bespoke custom wax seal stamps, monogram sealing kits, and luxury accents.',
+    image: '/wax-seals/seal-1/01.jpg',
+    showPrice: false,
+    paymentType: 'advance',
+    whatsappMode: 'price',
+    subcategories: null,
+  },
   {
     id: 'wedding-invitations',
     slug: 'wedding-invitations',
@@ -139,6 +152,8 @@ export const shopCategories = [
       { slug: 'potli', label: 'Potli', whatsappPrefix: 'Favours (Potli)' },
       { slug: 'box-favours', label: 'Box Favours', whatsappPrefix: 'Favours (Box)' },
       { slug: 'tin-favours', label: 'Tin Favours', whatsappPrefix: 'Favours (Tin)' },
+      { slug: 'cones', label: 'Saunf Cones', whatsappPrefix: 'Favours (Saunf Cones)' },
+      { slug: 'tags', label: 'Favour Tags', whatsappPrefix: 'Favours (Tags)' },
       { slug: 'cake-toppers', label: 'Cake Toppers', whatsappPrefix: 'Favours (Cake Toppers)' },
     ],
   },
@@ -537,6 +552,9 @@ const WEDDING_GALLERY_BASE = [
 /** Packaging — numbered folders → product-card sliders */
 const PACKAGING_GALLERY = {
   'business-stickers': [
+    ...(importedDesktopGallery?.packaging || []).map((p) => ({ name: p.name, images: p.images })),
+  ],
+  'business-stickers': [
     {
       name: 'Design 1',
       images: [
@@ -644,8 +662,38 @@ function mergeFavoursFromTps(base) {
   }
 }
 
-const WEDDING_GALLERY = mergeWeddingFromTps(WEDDING_GALLERY_BASE)
-const FAVOURS_GALLERY = mergeFavoursFromTps(FAVOURS_GALLERY_BASE)
+const WEDDING_GALLERY = importedDesktopGallery?.wedding?.length
+  ? importedDesktopGallery.wedding.map((design) => ({
+      ...design,
+      name: seoWeddingName(design),
+    }))
+  : mergeWeddingFromTps(WEDDING_GALLERY_BASE)
+function buildComprehensiveFavours() {
+  const base = mergeFavoursFromTps(FAVOURS_GALLERY_BASE);
+  const imp = importedDesktopGallery?.favours || {};
+
+  const boxMap = new Map();
+  base['box-favours'].forEach((b) => boxMap.set(b.name, b));
+  (imp['box-favours'] || []).forEach((b) => {
+    boxMap.set(seoFavourName(b.name), { name: seoFavourName(b.name), images: b.images });
+  });
+
+  const tinMap = new Map();
+  base['tin-favours'].forEach((t) => tinMap.set(t.name, t));
+  (imp['tin-favours'] || []).forEach((t) => {
+    tinMap.set(seoFavourName(t.name), { name: seoFavourName(t.name), images: t.images });
+  });
+
+  return {
+    potli: (imp.potli?.length ? imp.potli : base.potli).map((p) => ({ ...p, name: seoFavourName(p.name) })),
+    'box-favours': Array.from(boxMap.values()),
+    'tin-favours': Array.from(tinMap.values()),
+    'cake-toppers': base['cake-toppers'],
+    cones: (imp.cones || []).map((c) => ({ name: c.name, images: c.images })),
+    tags: (imp.tags || []).map((t) => ({ name: t.name, images: t.images })),
+  };
+}
+const FAVOURS_GALLERY = buildComprehensiveFavours()
 
 /** Eidi and Money envelopes */
 const EIDI_GALLERY = [
@@ -1019,7 +1067,32 @@ function buildAllProducts() {
           })
         )
       }
-    } else if (cat.slug === 'wedding-invitations') {
+    } else if (cat.slug === 'wax-seals') {
+      const seals = importedDesktopGallery?.waxSeals || [
+        { name: 'Custom Wax Seal - Collection 1', images: ['/wax-seals/seal-1/01.jpg'] },
+        { name: 'Custom Wax Seal - Collection 2', images: ['/wax-seals/seal-2/01.jpg'] },
+        { name: 'Custom Wax Seal - Collection 3', images: ['/wax-seals/seal-3/01.jpg'] },
+      ];
+      for (const seal of seals) {
+        all.push({
+          id: productId++,
+          name: seal.name,
+          category: cat.label,
+          categorySlug: cat.slug,
+          subcategorySlug: null,
+          typeSlug: null,
+          image: seal.images[0],
+          images: seal.images,
+          showPrice: false,
+          paymentType: 'advance',
+          whatsappMode: 'price',
+          whatsappLabel: 'Customised Wax Seals',
+        });
+      }
+      continue;
+    }
+
+    if (cat.slug === 'wedding-invitations') {
       for (const design of WEDDING_GALLERY) {
         all.push(
           ...addDesigns({

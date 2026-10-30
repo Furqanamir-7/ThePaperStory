@@ -1,7 +1,12 @@
-import nodemailer from 'nodemailer'
+﻿import nodemailer from 'nodemailer'
+import { createClient } from '@supabase/supabase-js'
 import { formatOrderSummary, generateOrderNumber } from './order-utils.js'
 
 const OWNER_WHATSAPP = '+923144392928'
+
+const supabaseUrl = process.env.SUPABASE_URL || 'https://cldmkkbrovisonhgugvl.supabase.co'
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'sb_secret_gfFEzcrb_jC6RoFLKqZKJw_gVSkiPdQ'
+const supabase = createClient(supabaseUrl, supabaseKey, { auth: { persistSession: false } })
 
 function buildTransporter() {
   const user = process.env.GMAIL_USER
@@ -49,13 +54,6 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const transporter = buildTransporter()
-  if (!transporter) {
-    return res.status(503).json({
-      error: 'Order email is not configured yet. Please contact us on WhatsApp to place your order.',
-    })
-  }
-
   const order = req.body || {}
   const required = [
     'name',
@@ -78,7 +76,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Please agree to receive order updates via WhatsApp and Email.' })
   }
 
-  const orderNumber = generateOrderNumber()
+  const orderNumber = order.orderNumber || generateOrderNumber()
   const items = order.items?.length
     ? order.items
     : [{ productName: order.productName, quantity: order.quantity || 1, lineTotal: order.price }]
@@ -88,44 +86,72 @@ export default async function handler(req, res) {
       : items.map((item) => `${item.productName} (x${item.quantity || 1})`).join(', ')
   const deliveryEstimate = order.deliveryEstimate || '5–7 business days'
 
+  // 1. Record to Supabase
+  try {
+    await supabase.from('orders').insert([
+      {
+        order_number: orderNumber,
+        customer_name: order.name,
+        customer_email: order.email,
+        customer_phone: order.phone,
+        city: order.city,
+        delivery_address: order.address,
+        notes: order.notes || '',
+        items: items,
+        subtotal: order.subtotal || null,
+        shipping_fee: order.shippingFee || 0,
+        total_amount: order.price || 0,
+        payment_method: order.paymentMethod || 'cod',
+        payment_status: 'pending',
+        order_status: 'new',
+      },
+    ])
+  } catch (dbErr) {
+    console.warn('[Supabase Order Insert Warning]:', dbErr.message)
+  }
+
+  // 2. Email & WhatsApp notification if configured
+  const transporter = buildTransporter()
   const summary = formatOrderSummary({
-    ...order,
     orderNumber,
-    quantity: order.quantity || 1,
-    paymentType: order.paymentType || 'advance',
+    name: order.name,
+    email: order.email,
+    phone: order.phone,
+    address: order.address,
+    city: order.city,
+    country: order.country,
+    itemLine,
+    notes: order.notes,
+    total: order.price,
     deliveryEstimate,
   })
 
-  const from = `"The Paper Story" <${process.env.GMAIL_USER}>`
+  let emailSent = false
+  if (transporter) {
+    try {
+      await transporter.sendMail({
+        from: `The Paper Story <${process.env.GMAIL_USER}>`,
+        to: order.email,
+        bcc: process.env.OWNER_EMAIL || process.env.GMAIL_USER,
+        subject: `Order Confirmation - ${orderNumber}`,
+        text: summary,
+      })
+      emailSent = true
+    } catch (mailErr) {
+      console.warn('Mail send warning:', mailErr.message)
+    }
+  }
 
   try {
-    await transporter.sendMail({
-      from,
-      to: order.email,
-      replyTo: process.env.GMAIL_USER,
-      subject: `Your The Paper Story Order #${orderNumber} is Confirmed`,
-      text: `Hi ${order.name},\n\nYour order #${orderNumber} has been confirmed.\n\nItem(s): ${itemLine}\nTotal: ${order.price}\nExpected delivery: ${deliveryEstimate}\n\nDelivery address:\n${summary.split('Address:\n')[1] || ''}\n\nWe'll message you again once it ships. Thank you for shopping with The Paper Story.\n\nthepaperstoryc@gmail.com`,
-      html: `<p>Hi ${order.name},</p><p>Your order <strong>#${orderNumber}</strong> has been confirmed.</p><pre style="font-family:system-ui,sans-serif;white-space:pre-wrap;background:#FAF6F0;padding:1rem;border-radius:0.75rem;">${summary}</pre><p>We'll message you again once it ships. Thank you for shopping with <strong>The Paper Story</strong>.</p><p><a href="mailto:thepaperstoryc@gmail.com">thepaperstoryc@gmail.com</a></p>`,
-    })
-
-    await transporter.sendMail({
-      from,
-      to: process.env.GMAIL_USER,
-      subject: `New website order #${orderNumber} — ${items.length === 1 ? order.productName : `${items.length} items`}`,
-      text: `A new order was placed on the website.\n\n${summary}`,
-      html: `<p><strong>New order #${orderNumber}</strong></p><pre style="font-family:system-ui,sans-serif;white-space:pre-wrap;background:#FAF6F0;padding:1rem;border-radius:0.75rem;">${summary}</pre>`,
-    })
-
-    let whatsapp = { sent: false }
-    try {
-      whatsapp = await notifyOwnerWhatsApp(summary)
-    } catch {
-      whatsapp = { sent: false, reason: 'WhatsApp alert failed' }
-    }
-
-    return res.status(200).json({ ok: true, orderNumber, whatsapp })
-  } catch (error) {
-    console.error('place-order error:', error)
-    return res.status(500).json({ error: 'Could not send order confirmation. Please try again or WhatsApp us.' })
+    await notifyOwnerWhatsApp(summary)
+  } catch (waErr) {
+    console.warn('WhatsApp notify warning:', waErr.message)
   }
+
+  return res.status(200).json({
+    success: true,
+    orderNumber,
+    emailSent,
+    message: 'Order received successfully.',
+  })
 }

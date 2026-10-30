@@ -1,7 +1,12 @@
-import nodemailer from 'nodemailer'
+﻿import nodemailer from 'nodemailer'
+import { createClient } from '@supabase/supabase-js'
 import { formatInquirySummary, generateInquiryNumber } from './order-utils.js'
 
 const OWNER_WHATSAPP = '+923144392928'
+
+const supabaseUrl = process.env.SUPABASE_URL || 'https://cldmkkbrovisonhgugvl.supabase.co'
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'sb_secret_gfFEzcrb_jC6RoFLKqZKJw_gVSkiPdQ'
+const supabase = createClient(supabaseUrl, supabaseKey, { auth: { persistSession: false } })
 
 function buildTransporter() {
   const user = process.env.GMAIL_USER
@@ -49,15 +54,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const transporter = buildTransporter()
-  if (!transporter) {
-    return res.status(503).json({
-      error: 'Inquiry form is not configured yet. Please contact us on WhatsApp.',
-    })
-  }
-
   const inquiry = req.body || {}
-  const required = ['name', 'email', 'phone', 'address', 'city', 'country', 'productName', 'consent']
+  const required = ['name', 'email', 'phone', 'productName', 'consent']
   const missing = required.filter((field) => !inquiry[field])
 
   if (missing.length) {
@@ -68,38 +66,67 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Please agree to receive updates via WhatsApp and Email.' })
   }
 
-  const inquiryNumber = generateInquiryNumber()
-  const summary = formatInquirySummary({ ...inquiry, inquiryNumber })
-  const from = `"The Paper Story" <${process.env.GMAIL_USER}>`
+  const inquiryNumber = inquiry.inquiryNumber || generateInquiryNumber()
+
+  // 1. Record to Supabase
+  try {
+    await supabase.from('inquiries').insert([
+      {
+        inquiry_number: inquiryNumber,
+        customer_name: inquiry.name,
+        customer_email: inquiry.email,
+        customer_phone: inquiry.phone,
+        product_category: inquiry.productCategory || inquiry.category || '',
+        product_name: inquiry.productName,
+        event_date: inquiry.eventDate || '',
+        quantity: inquiry.quantity ? String(inquiry.quantity) : '',
+        details: inquiry.details || '',
+        inquiry_status: 'new',
+      },
+    ])
+  } catch (dbErr) {
+    console.warn('[Supabase Inquiry Insert Warning]:', dbErr.message)
+  }
+
+  // 2. Email & WhatsApp notification if configured
+  const transporter = buildTransporter()
+  const summary = formatInquirySummary({
+    inquiryNumber,
+    name: inquiry.name,
+    email: inquiry.email,
+    phone: inquiry.phone,
+    productName: inquiry.productName,
+    eventDate: inquiry.eventDate,
+    quantity: inquiry.quantity,
+    details: inquiry.details,
+  })
+
+  let emailSent = false
+  if (transporter) {
+    try {
+      await transporter.sendMail({
+        from: `The Paper Story <${process.env.GMAIL_USER}>`,
+        to: inquiry.email,
+        bcc: process.env.OWNER_EMAIL || process.env.GMAIL_USER,
+        subject: `Inquiry Received - ${inquiryNumber}`,
+        text: summary,
+      })
+      emailSent = true
+    } catch (mailErr) {
+      console.warn('Mail send warning:', mailErr.message)
+    }
+  }
 
   try {
-    await transporter.sendMail({
-      from,
-      to: inquiry.email,
-      replyTo: process.env.GMAIL_USER,
-      subject: `Your inquiry #${inquiryNumber} — The Paper Story`,
-      text: `Hi ${inquiry.name},\n\nThanks for reaching out about ${inquiry.productName}!\n\nYour inquiry reference is ${inquiryNumber}. Our team will get back to you shortly with pricing and details.\n\nThe Paper Story\nthepaperstoryc@gmail.com`,
-      html: `<p>Hi ${inquiry.name},</p><p>Thanks for reaching out about <strong>${inquiry.productName}</strong>!</p><p>Your inquiry reference is <strong>${inquiryNumber}</strong>. Our team will get back to you shortly with pricing and details.</p><pre style="font-family:system-ui,sans-serif;white-space:pre-wrap;background:#FAF6F0;padding:1rem;border-radius:0.75rem;">${summary}</pre><p><strong>The Paper Story</strong><br><a href="mailto:thepaperstoryc@gmail.com">thepaperstoryc@gmail.com</a></p>`,
-    })
-
-    await transporter.sendMail({
-      from,
-      to: process.env.GMAIL_USER,
-      subject: `New inquiry #${inquiryNumber} — ${inquiry.productName}`,
-      text: `A new custom order inquiry was submitted.\n\n${summary}`,
-      html: `<p><strong>New inquiry #${inquiryNumber}</strong></p><pre style="font-family:system-ui,sans-serif;white-space:pre-wrap;background:#FAF6F0;padding:1rem;border-radius:0.75rem;">${summary}</pre>`,
-    })
-
-    let whatsapp = { sent: false }
-    try {
-      whatsapp = await notifyOwnerWhatsApp(summary)
-    } catch {
-      whatsapp = { sent: false, reason: 'WhatsApp alert failed' }
-    }
-
-    return res.status(200).json({ ok: true, inquiryNumber, whatsapp })
-  } catch (error) {
-    console.error('submit-inquiry error:', error)
-    return res.status(500).json({ error: 'Could not submit inquiry. Please try again or WhatsApp us.' })
+    await notifyOwnerWhatsApp(summary)
+  } catch (waErr) {
+    console.warn('WhatsApp notify warning:', waErr.message)
   }
+
+  return res.status(200).json({
+    success: true,
+    inquiryNumber,
+    emailSent,
+    message: 'Inquiry received successfully.',
+  })
 }

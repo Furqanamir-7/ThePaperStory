@@ -101,7 +101,17 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.thepaperstory.store/shop/favours/cones</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.thepaperstory.store/shop/favours/potli</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.thepaperstory.store/shop/favours/tags</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -167,6 +177,11 @@
   </url>
   <url>
     <loc>https://www.thepaperstory.store/shop/vinyl-stickers</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.thepaperstory.store/shop/wax-seals</loc>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>

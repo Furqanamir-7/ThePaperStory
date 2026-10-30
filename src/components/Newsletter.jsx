@@ -1,14 +1,22 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { useInView } from '../hooks/useInView'
+import { subscribeNewsletterToSupabase } from '../utils/supabase'
 
 export default function Newsletter() {
   const [ref, isVisible] = useInView()
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    if (email) setSubmitted(true)
+    if (email) {
+      setSubmitted(true)
+      try {
+        await subscribeNewsletterToSupabase(email)
+      } catch (err) {
+        console.warn('Newsletter subscribe:', err)
+      }
+    }
   }
 
   return (
@@ -26,7 +34,7 @@ export default function Newsletter() {
 
         {submitted ? (
           <p className="rounded-full bg-white/20 px-6 py-3 text-white">
-            Thank you for subscribing! 💌
+            Thank you for subscribing! ✨
           </p>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:flex-row sm:gap-0">
@@ -40,7 +48,7 @@ export default function Newsletter() {
             />
             <button
               type="submit"
-              className="min-h-[48px] rounded-full bg-paperstory-maroon-deep px-8 py-3 text-sm font-semibold tracking-wide text-white uppercase transition-all hover:bg-paperstory-maroon sm:rounded-l-none"
+              className="min-h-[48px] rounded-full bg-paperstory-maroon-deep px-8 py-3 text-sm font-semibold tracking-wide text-white uppercase transition-all hover:bg-paperstory-maroon sm:rounded-l-none cursor-pointer"
             >
               Subscribe
             </button>
