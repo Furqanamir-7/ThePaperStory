@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { buildWhatsAppUrl, buildProductWhatsAppMessage } from '../utils/whatsapp'
+import ProductMediaGallery from './ProductMediaGallery'
 import {
   getProductCode,
   getProductDescription,
@@ -39,9 +40,6 @@ export default function QuickViewModal({ product, onClose }) {
     ? product.images
     : [product.image || '/wedding-invites/cover.jpg']
 
-  const activeMedia = images[selectedImageIndex] || images[0]
-  const isVideo = typeof activeMedia === 'string' && /\.(mp4|webm|mov)(\?.*)?$/i.test(activeMedia)
-
   const handleAddToCart = () => {
     addItem(product, 1)
     setAdded(true)
@@ -73,65 +71,13 @@ export default function QuickViewModal({ product, onClose }) {
         </button>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-          {/* Media Column */}
-          <div className="flex flex-col gap-3">
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-paperstory-wash/50 border border-paperstory-maroon/10">
-              {isVideo ? (
-                <video
-                  src={activeMedia}
-                  controls
-                  autoPlay
-                  muted
-                  loop
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <img
-                  src={activeMedia}
-                  alt={product.name}
-                  className="h-full w-full object-cover"
-                  onError={(e) => {
-                    e.currentTarget.onerror = null
-                    e.currentTarget.src = '/wedding-invites/cover.jpg'
-                  }}
-                />
-              )}
-            </div>
-
-            {/* Thumbnails */}
-            {images.length > 1 && (
-              <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-thin">
-                {images.map((img, idx) => {
-                  const thumbIsVideo = typeof img === 'string' && /\.(mp4|webm|mov)(\?.*)?$/i.test(img)
-                  return (
-                    <button
-                      key={idx}
-                      onClick={() => setSelectedImageIndex(idx)}
-                      className={`relative h-16 w-16 sm:h-20 sm:w-20 shrink-0 overflow-hidden rounded-lg border-2 transition cursor-pointer ${
-                        selectedImageIndex === idx
-                          ? 'border-paperstory-maroon shadow-xs'
-                          : 'border-transparent opacity-60 hover:opacity-100'
-                      }`}
-                    >
-                      {thumbIsVideo ? (
-                        <video src={img} className="h-full w-full object-cover pointer-events-none" />
-                      ) : (
-                        <img
-                          src={img}
-                          alt=""
-                          className="h-full w-full object-cover"
-                          onError={(e) => {
-                            e.currentTarget.onerror = null
-                            e.currentTarget.src = '/wedding-invites/cover.jpg'
-                          }}
-                        />
-                      )}
-                    </button>
-                  )
-                })}
-              </div>
-            )}
-          </div>
+          {/* Swipeable & Zoomable Media Column */}
+          <ProductMediaGallery
+            images={images}
+            selectedIndex={selectedImageIndex}
+            onSelectIndex={setSelectedImageIndex}
+            alt={product.name}
+          />
 
           {/* Details Column */}
           <div className="flex flex-col justify-between">
