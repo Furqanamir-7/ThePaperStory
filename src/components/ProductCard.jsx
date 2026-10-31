@@ -156,9 +156,13 @@ export default function ProductCard({ product, inFeaturedCollection = false }) {
               {addedFeedback ? 'Added ✓' : 'Add to Cart'}
             </button>
           ) : (
-            <span className="block w-full rounded-full border border-paperstory-maroon/20 bg-paperstory-wash/60 py-1.5 sm:py-2 text-center text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-paperstory-maroon transition-all duration-200 group-hover:border-paperstory-maroon group-hover:bg-paperstory-maroon group-hover:text-white">
+            <button
+              type="button"
+              onClick={handleCardClick}
+              className="block w-full rounded-full border border-paperstory-maroon/20 bg-paperstory-wash/60 py-1.5 sm:py-2 text-center text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-paperstory-maroon transition-all duration-200 hover:border-paperstory-maroon hover:bg-paperstory-maroon hover:text-white cursor-pointer"
+            >
               View Details
-            </span>
+            </button>
           )}
         </div>
       </article>

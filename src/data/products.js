@@ -3,6 +3,7 @@ import {
   getProductDescription,
   getProductWhatsIncluded,
   getProductSeoKeywords,
+  CATEGORY_INITIALS,
 } from './product-metadata.js'
 import stationaryGallery from './stationary-gallery.json' with { type: 'json' }
 import importedDesktopGallery from './imported-desktop-gallery.json' with { type: 'json' }
@@ -1168,12 +1169,32 @@ function buildAllProducts() {
     // Skip placeholder products (boxes / pamphlets / greeting-cards) until real photos are added
   }
 
-  return all.filter((product) => {
-    if (!product?.image) return false
-    // Drop stock Unsplash fillers that aren't real catalog photos
-    if (String(product.image).includes('images.unsplash.com')) return false
-    return true
-  })
+  const categoryCounters = {}
+  return all
+    .filter((product) => {
+      if (!product?.image) return false
+      // Drop stock Unsplash fillers that aren't real catalog photos
+      if (String(product.image).includes('images.unsplash.com')) return false
+      return true
+    })
+    .map((product) => {
+      const slug = product.categorySlug || 'wedding-invitations'
+      categoryCounters[slug] = (categoryCounters[slug] || 0) + 1
+      const designNum = (slug === 'wedding-invitations' && product.designNumber)
+        ? product.designNumber
+        : categoryCounters[slug]
+      const initial = CATEGORY_INITIALS[slug] || 'WI'
+      const code = `TPS-${initial}-${String(designNum).padStart(2, '0')}`
+      const baseObj = { ...product, code, designNumber: designNum }
+      return {
+        ...product,
+        code,
+        designNumber: designNum,
+        description: getProductDescription(baseObj, designNum),
+        whatsIncluded: getProductWhatsIncluded(baseObj, designNum),
+        seoKeywords: getProductSeoKeywords(baseObj, designNum),
+      }
+    })
 }
 
 export const products = buildAllProducts()

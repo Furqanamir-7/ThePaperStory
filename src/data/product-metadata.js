@@ -1,7 +1,24 @@
 /**
- * Rich product metadata: unique design codes, suite contents breakdown,
- * and SEO search keywords.
+ * Rich product metadata: unique design codes with category middle initials,
+ * suite contents breakdown, and SEO search keywords.
  */
+
+export const CATEGORY_INITIALS = {
+  'wedding-invitations': 'WI',
+  'digital-invitations': 'DI',
+  'nikkahnama': 'NC',
+  'stationary-items': 'S',
+  'stationary': 'S',
+  'post-cards': 'PC',
+  'wax-seals': 'WS',
+  'favours': 'F',
+  'packaging': 'PK',
+  'vinyl-stickers': 'VS',
+  'eidi-envelopes': 'EE',
+  'greeting-cards': 'GC',
+  'boxes': 'BX',
+  'pamphlets': 'PM',
+};
 
 export const WEDDING_DESCRIPTIONS = {
   1: 'Bespoke blush and bloom floral suite featuring delicate pastel watercolor roses, soft eucalyptus greenery, and deckled-edge textured cardstock with matching dusty rose envelopes.',
@@ -54,52 +71,190 @@ export const WEDDING_DESCRIPTIONS = {
   48: 'Ethereal translucent frosted acrylic invitation card printed with white UV ink, enclosed in a luxury velvet envelope.'
 };
 
-export const DEFAULT_WHATS_INCLUDED_WEDDING = [
-  'Main Invitation Card (Premium 350-400 GSM textured / matte stock)',
-  'Designer Envelope with Custom Monogram / Crest Printing',
-  'Event Insert Card (Mehndi / Baraat / Valima / Reception)',
-  'Custom Venue Scan-to-Locate QR Code Integration',
-  'Digital Proof & 3 Rounds of Complimentary Revisions'
-];
+export const CATEGORY_DESCRIPTIONS = {
+  'wedding-invitations': 'Bespoke luxury wedding invitation suite crafted on premium textured cardstock with designer monogram envelopes and matching event inserts.',
+  'digital-invitations': 'High-definition digital video and e-card invitation tailored for instant sharing on WhatsApp and social media with interactive maps and RSVP integration.',
+  'nikkahnama': 'Handcrafted luxury Nikkah Certificate printed on heavy archival cardstock or canvas with traditional Islamic illumination and ornate Urdu/Arabic calligraphy.',
+  'stationary-items': 'Designer everyday stationery, cute spiral mini diaries, and smooth gel pens crafted with care for journaling, planning, and celebration gifting.',
+  'wax-seals': 'Custom engraved solid brass wax seal stamp with bespoke couple monogram, paired with premium metallic sealing wax sticks.',
+  'favours': 'Handcrafted luxury wedding favour packaging, potli pouches, and custom gift boxes personalized with hot-foil monograms and satin ribbons.',
+  'packaging': 'Premium custom business and wedding packaging solutions, including high-gloss stickers, branded labels, and bespoke event packaging.',
+  'vinyl-stickers': 'Durable waterproof die-cut vinyl stickers featuring aesthetic botanical artwork with UV-resistant scratch-proof laminate finish.',
+  'eidi-envelopes': 'Festive celebratory money and Eidi envelopes crafted on rich pearlescent paper with gold foil greetings and festive themes.',
+  'post-cards': 'Fine art collectible postcard printed on heavy textured linen paper featuring inspirational Islamic quotes and serene artwork.'
+};
 
-export const DEFAULT_SEO_KEYWORDS_WEDDING = [
-  'Wedding Invitations Pakistan',
-  'Luxury Wedding Cards Lahore',
-  'Bespoke Wedding Stationery Islamabad',
-  'Shaadi Cards Karachi',
-  'Custom Wedding Invitation Suite',
-  'Handmade Wax Seal Wedding Invites',
-  'Gold Foil Shaadi Card',
-  'The Paper Story Wedding Cards'
-];
+export const CATEGORY_WHATS_INCLUDED = {
+  'wedding-invitations': [
+    'Main Invitation Card (Premium 350-400 GSM textured / matte stock)',
+    'Designer Envelope with Custom Monogram / Crest Printing',
+    'Event Insert Card (Mehndi / Baraat / Valima / Reception)',
+    'Custom Venue Scan-to-Locate QR Code Integration',
+    'Digital Proof & 3 Rounds of Complimentary Revisions'
+  ],
+  'digital-invitations': [
+    'High-Definition Animated MP4 Video & Static High-Res JPG/PDF',
+    'Interactive Venue Google Maps QR Code / Direct Link',
+    'Direct WhatsApp Click-to-RSVP Integration',
+    'Unlimited Distribution Rights across WhatsApp & Social Media',
+    'Fast 24-48 Hour Turnaround with Complimentary Proof Revisions'
+  ],
+  'nikkahnama': [
+    '1x Luxury Printed / Hand-Embellished Nikkah Certificate',
+    '1x Hardbound Presentation Folder or Velvet Keepsake Box',
+    'Complimentary Feather Calligraphy Signing Pen with Gold Accents',
+    'Custom Couple Names & Nikah Date Calligraphy / Foil Imprint',
+    'Complimentary Digital Text & Proof Approval'
+  ],
+  'stationary-items': [
+    'Premium Bound Diary / Spiral Ruled Mini Notebook',
+    'Smooth-Flow Designer Gel Pen / Fine Point Writing Tool',
+    'Thick High-GSM Paper (No Ink Bleed-Through)',
+    'Protective Sleeve Packaging — Ready for Gifting'
+  ],
+  'wax-seals': [
+    'Custom Laser-Engraved Solid Brass Stamp Head',
+    'Handcrafted Ergonomic Natural Wood Handle',
+    '2x Premium Metallic Sealing Wax Sticks (approx. 20-25 seals)',
+    'Bespoke Initial / Monogram Design Service Included',
+    'Velvet Storage Keepsake Pouch'
+  ],
+  'favours': [
+    'Custom Crafted Favour Box / Potli Pouch (Selected Model)',
+    'Personalized Couple Names & Monogram Foil Printing',
+    'Matching Silk / Satin Ribbon Closure',
+    'Food-Safe Certified Inner Lining (for confectioneries & sweets)'
+  ],
+  'packaging': [
+    'High-Resolution Printed Adhesive Sticker Rolls / Die-Cut Sheets',
+    'Waterproof & Smudge-Resistant Gloss / Matte Laminate',
+    'Custom Brand Logo or Event Text Integration',
+    'Precision Die-Cut for Clean Peel-and-Stick Application'
+  ],
+  'vinyl-stickers': [
+    'Waterproof & Weather-Proof Die-Cut Vinyl Sticker',
+    'UV-Resistant Scratch-Proof Matte Laminate',
+    'Residue-Free Clean Peel Adhesive Backing'
+  ],
+  'eidi-envelopes': [
+    'Pack of Premium Pearlescent / Textured Money Envelopes',
+    'Rich Metallic Hot Foil Stamped Greetings & Motifs',
+    'Pre-Applied Self-Sealing Adhesive Flap'
+  ],
+  'post-cards': [
+    'Heavy 350 GSM Textured Linen Cardstock Art Postcard',
+    'Fine Art Archival Ink Printing with Vibrant Colorfast Finish',
+    'Lined Reverse Surface for Personalized Messages & Postage'
+  ]
+};
+
+export const CATEGORY_SEO_KEYWORDS = {
+  'wedding-invitations': [
+    'Wedding Invitations Pakistan',
+    'Luxury Wedding Cards Lahore',
+    'Bespoke Wedding Stationery Islamabad',
+    'Shaadi Cards Karachi',
+    'Custom Wedding Invitation Suite',
+    'Handmade Wax Seal Wedding Invites',
+    'Gold Foil Shaadi Card',
+    'The Paper Story Wedding Cards'
+  ],
+  'digital-invitations': [
+    'Digital Wedding Invitations Pakistan',
+    'WhatsApp Wedding Card Lahore',
+    'Animated E-Invite Video Pakistan',
+    'Digital Shaadi Card Karachi',
+    'Interactive Nikkah E-Card',
+    'Paperless Wedding Invitations',
+    'Digital Save the Date Video'
+  ],
+  'nikkahnama': [
+    'Custom Nikkahnama Certificate Pakistan',
+    'Handmade Nikkah Certificate Lahore',
+    'Islamic Marriage Certificate Islamabad',
+    'Framed Nikkahnama Karachi',
+    'Nikkah Signing Pen & Folder',
+    'Urdu Calligraphy Nikkahnama'
+  ],
+  'stationary-items': [
+    'Aesthetic Stationery Pakistan',
+    'Cute Mini Diaries Lahore',
+    'Spiral Planners & Journals',
+    'Kawaii Gel Pens Karachi',
+    'The Paper Story Stationery'
+  ],
+  'wax-seals': [
+    'Custom Wax Seal Stamp Pakistan',
+    'Brass Wax Seal Lahore',
+    'Wedding Monogram Stamp Karachi',
+    'Sealing Wax Sticks Islamabad',
+    'Wax Seal Gift Kit'
+  ],
+  'favours': [
+    'Wedding Favours Pakistan',
+    'Custom Bid Boxes Lahore',
+    'Luxury Gift Pouches Karachi',
+    'Baraat Favour Boxes',
+    'Baby Announcement Gifts'
+  ],
+  'packaging': [
+    'Custom Stickers Pakistan',
+    'Branded Packaging Labels Lahore',
+    'Product Tags Printing Karachi',
+    'Thank You Business Stickers'
+  ],
+  'vinyl-stickers': [
+    'Waterproof Vinyl Stickers Pakistan',
+    'Aesthetic Laptop Stickers Lahore',
+    'Floral Vinyl Decals'
+  ],
+  'eidi-envelopes': [
+    'Eidi Envelopes Pakistan',
+    'Luxury Money Envelopes Lahore',
+    'Salami Envelopes Karachi',
+    'Gold Foil Eid Envelopes'
+  ],
+  'post-cards': [
+    'Postcards Pakistan',
+    'Islamic Art Prints Lahore',
+    'Linen Postcard Set'
+  ]
+};
 
 export function getProductCode(product = {}, designNum) {
-  const num = designNum || parseInt(product.designNumber || product.id, 10);
-  if (!isNaN(num)) {
-    return `TPS-WI-${String(num).padStart(2, '0')}`;
-  }
-  return product.code || 'TPS-WI-01';
+  if (product.code) return product.code;
+  const slug = product.categorySlug || 'wedding-invitations';
+  const initial = CATEGORY_INITIALS[slug] || 'WI';
+  const num = designNum || parseInt(product.designNumber || product.id, 10) || 1;
+  return `TPS-${initial}-${String(num).padStart(2, '0')}`;
 }
 
 export function getProductDescription(product = {}, designNum) {
+  const slug = product.categorySlug || 'wedding-invitations';
   const num = designNum || parseInt(product.designNumber || product.id, 10);
-  if (!isNaN(num) && WEDDING_DESCRIPTIONS[num]) {
+  if (slug === 'wedding-invitations' && !isNaN(num) && WEDDING_DESCRIPTIONS[num]) {
     return WEDDING_DESCRIPTIONS[num];
   }
-  return product.description || 'Custom crafted luxury stationery suite designed and printed by The Paper Story. Fully customizable colors, fonts, inserts, and finishes.';
+  if (product.description && product.description.length > 20) {
+    return product.description;
+  }
+  return CATEGORY_DESCRIPTIONS[slug] || 'Custom crafted luxury stationery designed and printed by The Paper Story.';
 }
 
 export function getProductWhatsIncluded(product = {}, designNum) {
   if (product.whatsIncluded && Array.isArray(product.whatsIncluded) && product.whatsIncluded.length > 0) {
     return product.whatsIncluded;
   }
-  return DEFAULT_WHATS_INCLUDED_WEDDING;
+  const slug = product.categorySlug || 'wedding-invitations';
+  return CATEGORY_WHATS_INCLUDED[slug] || CATEGORY_WHATS_INCLUDED['wedding-invitations'];
 }
 
 export function getProductSeoKeywords(product = {}, designNum) {
   if (product.seoKeywords && Array.isArray(product.seoKeywords) && product.seoKeywords.length > 0) {
     return product.seoKeywords;
   }
-  const tags = (product.tags || []).map(t => `${t} Wedding Card`);
-  return Array.from(new Set([...tags, ...DEFAULT_SEO_KEYWORDS_WEDDING])).slice(0, 8);
+  const slug = product.categorySlug || 'wedding-invitations';
+  const defaults = CATEGORY_SEO_KEYWORDS[slug] || CATEGORY_SEO_KEYWORDS['wedding-invitations'];
+  const tags = (product.tags || []).map(t => `${t} Pakistan`);
+  return Array.from(new Set([...tags, ...defaults])).slice(0, 8);
 }

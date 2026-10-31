@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { buildWhatsAppUrl, buildProductWhatsAppMessage } from '../utils/whatsapp'
@@ -10,6 +11,8 @@ import {
 } from '../data/product-metadata'
 
 export default function QuickViewModal({ product, onClose }) {
+  if (!product) return null
+
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
   const [added, setAdded] = useState(false)
   const { addItem } = useCart()
@@ -18,8 +21,6 @@ export default function QuickViewModal({ product, onClose }) {
   const productDescription = product?.description || getProductDescription(product)
   const whatsIncluded = product?.whatsIncluded || getProductWhatsIncluded(product)
   const seoKeywords = product?.seoKeywords || getProductSeoKeywords(product)
-
-  const isWeddingInvite = product.categorySlug === 'wedding-invitations'
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -50,9 +51,12 @@ export default function QuickViewModal({ product, onClose }) {
   const waProduct = { ...product, code: productCode }
   const whatsappUrl = buildWhatsAppUrl(buildProductWhatsAppMessage(waProduct))
 
-  return (
+  const collectionSlug = product.categorySlug || 'wedding-invitations'
+  const isWeddingInvite = collectionSlug === 'wedding-invitations'
+
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-paperstory-charcoal/60 backdrop-blur-xs animate-fadeIn"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-paperstory-charcoal/70 backdrop-blur-xs animate-fadeIn"
       onClick={onClose}
     >
       <div
@@ -237,19 +241,18 @@ export default function QuickViewModal({ product, onClose }) {
                 <span>Inquire on WhatsApp {productCode ? `(${productCode})` : ''}</span>
               </a>
 
-              {isWeddingInvite && (
-                <Link
-                  to="/shop/wedding-invitations"
-                  onClick={onClose}
-                  className="text-center font-sans text-xs text-paperstory-maroon font-semibold underline underline-offset-4 hover:opacity-80 py-1"
-                >
-                  View All Wedding Invitations Collection (48 Designs) →
-                </Link>
-              )}
+              <Link
+                to={`/shop/${collectionSlug}`}
+                onClick={onClose}
+                className="text-center font-sans text-xs text-paperstory-maroon font-semibold underline underline-offset-4 hover:opacity-80 py-1"
+              >
+                View Full {product.category || 'Collection'} ({isWeddingInvite ? '48 Designs' : 'All Designs'}) →
+              </Link>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
