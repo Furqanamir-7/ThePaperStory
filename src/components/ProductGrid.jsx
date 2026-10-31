@@ -21,7 +21,7 @@ export default function ProductGrid({
   const [sortBy, setSortBy] = useState('featured')
   const baseProducts = items ?? products
   const isVisibleNow = showOnLoad || isVisible
-  const isFeatured = Boolean(isFeaturedCollection) || (Boolean(title) && title.toLowerCase().includes("featured"))
+  const isFeatured = Boolean(isFeaturedCollection) || (Boolean(title) && (title.toLowerCase().includes("featured") || title.toLowerCase().includes("best seller"))) || id === "best-sellers"
 
   const sortedProducts = useMemo(() => {
     const customItems = baseProducts.filter(p => p.id?.toString().includes('customised') || p.id?.toString().includes('custom-design'))

@@ -23,6 +23,7 @@ export default function HomePage() {
         title="Featured Collection"
         subtitle="Our top picks and best-selling designs, hand-selected for life's most beautiful moments."
         items={getFeaturedProducts()}
+        isFeaturedCollection={true}
         showViewAll
       />
       <PaperStoryDifference />
@@ -32,6 +33,7 @@ export default function HomePage() {
         title="Best Sellers"
         subtitle="The designs our clients love most — from wedding invites to favours and packaging."
         items={getBestSellers()}
+        isFeaturedCollection={true}
         showViewAll
       />
       <RealWeddings />
