@@ -162,13 +162,16 @@ export const shopCategories = [
     slug: 'packaging',
     label: 'Packaging Material / Items',
     shortLabel: 'Packaging',
-    description: 'Business stickers for branding and packaging.',
-    image: '/packaging/business-1/01.jpg',
+    description: 'Bespoke custom packaging, luxury paper bags, artisan gift tags, and business stickers for branding.',
+    image: '/packaging/paper-bags-design-1/01.jpg',
     showPrice: false,
     paymentType: 'advance',
     whatsappMode: 'price',
     subcategories: [
-      { slug: 'business-stickers', label: 'Business Stickers', whatsappPrefix: 'Packaging (Business Stickers)' },
+      { slug: 'business-stickers', label: 'Business & Event Stickers', whatsappPrefix: 'Packaging (Stickers)' },
+      { slug: 'paper-bags', label: 'Luxury Paper Bags', whatsappPrefix: 'Packaging (Paper Bags)' },
+      { slug: 'gift-tags', label: 'Artisan Gift & Event Tags', whatsappPrefix: 'Packaging (Gift Tags)' },
+      { slug: 'business-cards', label: 'Business Cards & Boxes', whatsappPrefix: 'Packaging (Business Cards)' },
     ],
   },
   {
@@ -185,6 +188,7 @@ export const shopCategories = [
     subcategories: [
       { slug: 'diaries', label: 'Diaries', whatsappPrefix: 'Stationary (Diaries)' },
       { slug: 'pens', label: 'Pens', whatsappPrefix: 'Stationary (Pens)' },
+      { slug: 'ramadan-calendar', label: 'Ramadan Calendar', whatsappPrefix: 'Stationary (Ramadan Calendar)' },
     ],
   },
   {
@@ -549,12 +553,9 @@ const WEDDING_GALLERY_BASE = [
   },
 ]
 
-/** Packaging — numbered folders → product-card sliders */
-const PACKAGING_GALLERY = {
-  'business-stickers': [
-    ...(importedDesktopGallery?.packaging || []).map((p) => ({ name: p.name, images: p.images })),
-  ],
-  'business-stickers': [
+/** Packaging — dynamically categorized gallery */
+function buildPackagingGallery() {
+  const stickers = [
     {
       name: 'Design 1',
       images: [
@@ -574,8 +575,34 @@ const PACKAGING_GALLERY = {
         '/packaging/business-2/01.mp4',
       ],
     },
-  ],
+  ];
+
+  const paperBags = [];
+  const giftTags = [];
+  const businessCards = [];
+
+  for (const item of (importedDesktopGallery?.packaging || [])) {
+    const n = item.name.toLowerCase();
+    if (n.includes('bag')) {
+      paperBags.push(item);
+    } else if (n.includes('tag')) {
+      giftTags.push(item);
+    } else if (n.includes('card') || n.includes('box')) {
+      businessCards.push(item);
+    } else {
+      stickers.push(item);
+    }
+  }
+
+  return {
+    'business-stickers': stickers,
+    'paper-bags': paperBags,
+    'gift-tags': giftTags,
+    'business-cards': businessCards,
+  };
 }
+
+const PACKAGING_GALLERY = buildPackagingGallery();
 
 /** Favours — keyed by subcategory */
 const FAVOURS_GALLERY_BASE = {
@@ -710,15 +737,20 @@ const EIDI_GALLERY = [
     name: seoEidiName(design.folder),
     images: design.images,
   })),
-]
+  ...(importedDesktopGallery?.extra?.moneyEnvelope1 ? [importedDesktopGallery.extra.moneyEnvelope1] : []),
+  ...(importedDesktopGallery?.extra?.moneyEnvelope2 ? [importedDesktopGallery.extra.moneyEnvelope2] : []),
+  ...(importedDesktopGallery?.extra?.eidCards ? [importedDesktopGallery.extra.eidCards] : []),
+];
 
 /** Post Cards — aesthetic landscape calligraphy set */
 const POSTCARDS_GALLERY = [
   {
     name: seoPostcardName(1),
-    images: eidiPostcardsGallery.postcards.map((card) => card.image),
+    images: importedDesktopGallery?.eidiCards?.postcards?.[0]?.images?.length
+      ? importedDesktopGallery.eidiCards.postcards[0].images
+      : eidiPostcardsGallery.postcards.map((card) => card.image),
   },
-]
+];
 
 /** Each numbered folder becomes one product card with a gallery slider */
 const NIKKAH_GALLERY_PRODUCTS = {
@@ -783,6 +815,10 @@ const NIKKAH_GALLERY_PRODUCTS = {
         '/nikkah/printed-5/01.mp4',
       ],
     },
+    ...(importedDesktopGallery?.nikkahnama || []).map((n) => ({
+      name: n.name,
+      images: n.images,
+    })),
   ],
 }
 
@@ -818,6 +854,9 @@ function parseDesignNum(name, fallback = 1) {
 }
 
 function resolveSeoDesignName({ name, categorySlug, subcategorySlug, typeSlug, designNum, galleryImages }) {
+  if (categorySlug !== 'wedding-invitations' && name && !/^Design \d+$/i.test(name)) {
+    return name;
+  }
   const num =
     designNum ??
     (galleryImages?.length ? weddingDesignNumber(galleryImages) : null) ??

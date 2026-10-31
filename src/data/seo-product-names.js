@@ -27,7 +27,14 @@ export const SEO_WEDDING = {
   24: 'Embossed Monogram Wedding Invite',
   25: 'Tropical Palm Beach Wedding Card',
   26: 'Heritage Pakistani Wedding Invite',
-}
+  27: 'Crimson Velvet Royal Wedding Card',
+  28: 'Emerald Green Floral Wedding Invite',
+  29: 'Golden Arch Luxury Wedding Suite',
+  30: 'Ivory Pearl Traditional Wedding Card',
+  31: 'Champagne Shimmer Wedding Invitation',
+  32: 'Royal Burgundy Foil Wedding Invite',
+  33: 'Botanical Wreath Wedding Invitation Suite',
+};
 
 export const SEO_DIGITAL_IMAGE_WEDDING = {
   1: 'Pretty Floral Digital Wedding E-Card',
@@ -154,8 +161,8 @@ export function diaryNumber(image = '') {
 }
 
 export function seoWeddingName(design) {
-  const num = weddingDesignNumber(design.images)
-  return (num && SEO_WEDDING[num]) || design.name
+  const num = weddingDesignNumber(design?.images || [])
+  return (num && SEO_WEDDING[num]) || design?.name || (num ? `Wedding Invitation Design ${num}` : 'Custom Wedding Invitation')
 }
 
 export function seoDigitalName(subcategorySlug, typeSlug, designNum) {

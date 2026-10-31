@@ -146,7 +146,22 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://www.thepaperstory.store/shop/packaging/business-cards</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.thepaperstory.store/shop/packaging/business-stickers</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.thepaperstory.store/shop/packaging/gift-tags</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.thepaperstory.store/shop/packaging/paper-bags</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -172,6 +187,11 @@
   </url>
   <url>
     <loc>https://www.thepaperstory.store/shop/stationary-items/pens</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.thepaperstory.store/shop/stationary-items/ramadan-calendar</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

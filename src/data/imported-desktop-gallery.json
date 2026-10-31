@@ -129,14 +129,19 @@
         "/wedding-invites/design-12/01.jpg",
         "/wedding-invites/design-12/02.jpg",
         "/wedding-invites/design-12/03.jpg",
-        "/wedding-invites/design-12/04.jpg"
+        "/wedding-invites/design-12/04.jpg",
+        "/wedding-invites/design-12/05.jpg"
       ]
     },
     {
       "designNumber": 13,
       "name": "Design 13",
       "images": [
-        "/wedding-invites/design-13/01.jpg"
+        "/wedding-invites/design-13/01.jpg",
+        "/wedding-invites/design-13/02.jpg",
+        "/wedding-invites/design-13/03.jpg",
+        "/wedding-invites/design-13/04.jpg",
+        "/wedding-invites/design-13/05.jpg"
       ]
     },
     {
@@ -321,7 +326,9 @@
       "images": [
         "/wedding-invites/design-30/01.jpg",
         "/wedding-invites/design-30/02.jpg",
-        "/wedding-invites/design-30/03.jpg"
+        "/wedding-invites/design-30/03.jpg",
+        "/wedding-invites/design-30/04.jpg",
+        "/wedding-invites/design-30/05.jpg"
       ]
     },
     {
@@ -379,6 +386,13 @@
       "images": [
         "/wax-seals/seal-3/01.jpg",
         "/wax-seals/seal-3/02.jpg"
+      ]
+    },
+    {
+      "name": "Custom Wax Seal - Collection 4",
+      "images": [
+        "/wax-seals/seal-4/01.jpg",
+        "/wax-seals/seal-4/02.jpg"
       ]
     }
   ],
@@ -460,7 +474,13 @@
         "images": [
           "/favours/flower-shaped-favours/01.jpg",
           "/favours/flower-shaped-favours/02.jpg",
-          "/favours/flower-shaped-favours/03.jpg"
+          "/favours/flower-shaped-favours/03.jpg",
+          "/favours/flower-shaped-favours/04.jpg",
+          "/favours/flower-shaped-favours/05.jpg",
+          "/favours/flower-shaped-favours/06.jpg",
+          "/favours/flower-shaped-favours/07.jpg",
+          "/favours/flower-shaped-favours/08.jpg",
+          "/favours/flower-shaped-favours/09.jpg"
         ]
       },
       {
@@ -472,6 +492,14 @@
           "/favours/trifold-favours/04.jpg",
           "/favours/trifold-favours/05.jpg",
           "/favours/trifold-favours/06.jpg"
+        ]
+      },
+      {
+        "name": "Luxury Handcrafted Box Favours",
+        "images": [
+          "/favours/luxury-box-favours/01.jpg",
+          "/favours/luxury-box-favours/02.jpg",
+          "/favours/luxury-box-favours/03.jpg"
         ]
       }
     ],
@@ -505,6 +533,23 @@
           "/favours/mithai-tin-baby/03.jpg",
           "/favours/mithai-tin-baby/04.jpg",
           "/favours/mithai-tin-baby/05.jpg"
+        ]
+      },
+      {
+        "name": "Mithai Favour Tin Box - Style 2",
+        "images": [
+          "/favours/mithai-tin-2/01.jpg",
+          "/favours/mithai-tin-2/02.jpg"
+        ]
+      },
+      {
+        "name": "Round Metallic Mithai & Bid Tin",
+        "images": [
+          "/favours/round-tin/01.jpg",
+          "/favours/round-tin/02.jpg",
+          "/favours/round-tin/03.jpg",
+          "/favours/round-tin/04.jpg",
+          "/favours/round-tin/05.jpg"
         ]
       }
     ],
@@ -600,6 +645,101 @@
         "/packaging/personalized-tags/04.jpg",
         "/packaging/personalized-tags/05.jpg"
       ]
+    },
+    {
+      "name": "Customised Luxury Paper Bags - Style 1",
+      "images": [
+        "/packaging/paper-bags-design-1/01.jpg"
+      ]
+    },
+    {
+      "name": "Artisan Gift & Event Tags - Collection 1",
+      "images": [
+        "/packaging/gift-tags-collection-1/01.jpg",
+        "/packaging/gift-tags-collection-1/02.jpg",
+        "/packaging/gift-tags-collection-1/03.jpg"
+      ]
+    },
+    {
+      "name": "Bespoke Customised Stickers",
+      "images": [
+        "/packaging/custom-stickers/01.jpg"
+      ]
+    },
+    {
+      "name": "Traditional Nikkah & Event Tags",
+      "images": [
+        "/packaging/nikkah-tags/01.jpg",
+        "/packaging/nikkah-tags/02.jpg",
+        "/packaging/nikkah-tags/03.jpg",
+        "/packaging/nikkah-tags/04.jpg",
+        "/packaging/nikkah-tags/05.jpg"
+      ]
+    },
+    {
+      "name": "Artisan Custom Business Cards - Collection 1",
+      "images": [
+        "/packaging/business-cards-1/01.jpg",
+        "/packaging/business-cards-1/02.jpg",
+        "/packaging/business-cards-1/03.jpg",
+        "/packaging/business-cards-1/04.jpg",
+        "/packaging/business-cards-1/05.jpg"
+      ]
+    },
+    {
+      "name": "Artisan Custom Business Cards - Collection 2",
+      "images": [
+        "/packaging/business-cards-2/01.jpg",
+        "/packaging/business-cards-2/02.jpg",
+        "/packaging/business-cards-2/03.jpg",
+        "/packaging/business-cards-2/04.jpg",
+        "/packaging/business-cards-2/05.jpg"
+      ]
+    },
+    {
+      "name": "Customised Luxury Paper Bags - Style 2",
+      "images": [
+        "/packaging/paper-bags-style-2/01.jpg",
+        "/packaging/paper-bags-style-2/02.jpg",
+        "/packaging/paper-bags-style-2/03.jpg"
+      ]
+    },
+    {
+      "name": "Customised Luxury Paper Bags - Style 3",
+      "images": [
+        "/packaging/paper-bags-style-3/01.jpg",
+        "/packaging/paper-bags-style-3/02.jpg",
+        "/packaging/paper-bags-style-3/03.jpg",
+        "/packaging/paper-bags-style-3/04.jpg"
+      ]
+    },
+    {
+      "name": "Customised Luxury Paper Bags - Style 4",
+      "images": [
+        "/packaging/paper-bags-style-4/01.jpg",
+        "/packaging/paper-bags-style-4/02.jpg",
+        "/packaging/paper-bags-style-4/03.jpg"
+      ]
+    },
+    {
+      "name": "Bespoke Event & Gift Stickers",
+      "images": [
+        "/packaging/event-stickers/01.jpg",
+        "/packaging/event-stickers/02.jpg",
+        "/packaging/event-stickers/03.jpg",
+        "/packaging/event-stickers/04.jpg",
+        "/packaging/event-stickers/05.jpg"
+      ]
+    },
+    {
+      "name": "Luxury Event Gift Tags - Collection 2",
+      "images": [
+        "/packaging/gift-tags-collection-2/01.jpg",
+        "/packaging/gift-tags-collection-2/02.jpg",
+        "/packaging/gift-tags-collection-2/03.jpg",
+        "/packaging/gift-tags-collection-2/04.jpg",
+        "/packaging/gift-tags-collection-2/05.jpg"
+      ]
     }
   ],
   "eidiCards": {
@@ -654,7 +794,12 @@
         "name": "Artisan Aesthetic Postcards",
         "images": [
           "/postcards/artisan-collection/01.jpg",
-          "/postcards/artisan-collection/02.jpg"
+          "/postcards/artisan-collection/02.jpg",
+          "/postcards/artisan-collection/03.jpg",
+          "/postcards/artisan-collection/04.jpg",
+          "/postcards/artisan-collection/05.jpg",
+          "/postcards/artisan-collection/06.jpg",
+          "/postcards/artisan-collection/07.jpg"
         ]
       }
     ]
@@ -664,8 +809,52 @@
       "name": "Custom Calligraphy Nikkah Certificate",
       "images": [
         "/nikkah/printed-custom/01.jpg",
-        "/nikkah/printed-custom/02.jpg"
+        "/nikkah/printed-custom/02.jpg",
+        "/nikkah/printed-custom/03.jpg",
+        "/nikkah/printed-custom/04.jpg"
+      ]
+    },
+    {
+      "name": "Islamic Calligraphy Nikkah Certificate Suite",
+      "images": [
+        "/nikkah/calligraphy-certificate/01.jpg",
+        "/nikkah/calligraphy-certificate/02.jpg",
+        "/nikkah/calligraphy-certificate/03.jpg"
       ]
     }
-  ]
+  ],
+  "updatedAt": "2026-10-31T04:46:38.501Z",
+  "extra": {
+    "eidCards": {
+      "name": "Artisan Eid Calligraphy Greeting Cards",
+      "images": [
+        "/eidi-envelopes/eid-cards/01.jpg",
+        "/eidi-envelopes/eid-cards/02.jpg"
+      ]
+    },
+    "ramadanCalendar": {
+      "name": "Bespoke Ramadan Calendar & Daily Tracker",
+      "images": [
+        "/stationary/ramadan-calendar/01.jpg",
+        "/stationary/ramadan-calendar/02.jpg",
+        "/stationary/ramadan-calendar/03.jpg"
+      ]
+    },
+    "moneyEnvelope1": {
+      "name": "Luxury Artisan Money Envelope - Style 1",
+      "images": [
+        "/eidi-envelopes/money-envelope-1/01.jpg"
+      ]
+    },
+    "moneyEnvelope2": {
+      "name": "Luxury Artisan Money Envelope - Style 2",
+      "images": [
+        "/eidi-envelopes/money-envelope-2/01.jpg",
+        "/eidi-envelopes/money-envelope-2/02.jpg",
+        "/eidi-envelopes/money-envelope-2/03.jpg",
+        "/eidi-envelopes/money-envelope-2/04.jpg",
+        "/eidi-envelopes/money-envelope-2/05.jpg"
+      ]
+    }
+  }
 }
