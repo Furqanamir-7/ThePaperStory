@@ -78,6 +78,7 @@ export function CartProvider({ children }) {
       removeItem,
       clearCart,
       itemCount,
+      totalItems: () => itemCount,
       total,
     }),
     [items, addItem, updateQuantity, removeItem, clearCart, itemCount, total]

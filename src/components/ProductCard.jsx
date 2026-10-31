@@ -4,6 +4,8 @@ import QuickViewModal from './QuickViewModal'
 import { useCart } from '../context/CartContext'
 
 export default function ProductCard({ product, inFeaturedCollection = false }) {
+  if (!product) return null
+
   const [quickViewOpen, setQuickViewOpen] = useState(false)
   const [addedFeedback, setAddedFeedback] = useState(false)
   const { addItem } = useCart()

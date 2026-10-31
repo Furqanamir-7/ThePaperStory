@@ -15,8 +15,7 @@ const mainLinks = [
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
-  const { totalItems } = useCart()
-  const itemCount = totalItems()
+  const { itemCount = 0 } = useCart()
 
   const linkClass = ({ isActive }) =>
     `font-sans text-sm font-semibold tracking-widest uppercase transition-colors hover:text-paperstory-gold ${
