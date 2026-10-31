@@ -1,58 +1,77 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import BrandWordmark from './BrandWordmark'
-import MobileMenu from './MobileMenu'
 import { useCart } from '../context/CartContext'
+import MobileMenu from './MobileMenu'
+import BrandWordmark from './BrandWordmark'
 
 const mainLinks = [
   { label: 'Home', to: '/' },
   { label: 'About', to: '/about' },
-  { label: 'Shop', to: '/shop' },
+  { label: 'Shop all', to: '/shop' },
+  { label: 'Cart', to: '/cart' },
   { label: 'Contact', to: '/contact' },
 ]
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
-  const { itemCount } = useCart()
-
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [menuOpen])
-
-  useEffect(() => {
-    setMenuOpen(false)
-  }, [location.pathname])
+  const { totalItems } = useCart()
+  const itemCount = totalItems()
 
   const linkClass = ({ isActive }) =>
-    `text-sm font-semibold tracking-wide transition-colors hover:text-white sm:text-base ${
-      isActive ? 'text-white' : 'text-paperstory-cream/90'
+    `font-sans text-sm font-semibold tracking-widest uppercase transition-colors hover:text-paperstory-gold ${
+      isActive ? 'text-paperstory-gold' : 'text-paperstory-cream'
     }`
 
   return (
     <>
       <header className="fixed top-0 right-0 left-0 z-50 bg-paperstory-maroon shadow-md">
         <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-5 lg:px-8">
-          <Link to="/" className="flex min-w-0 items-center gap-2 sm:gap-4">
-            <img
-              src="/logo.png"
-              alt=""
-              aria-hidden="true"
-              className="h-10 w-10 shrink-0 rounded-full sm:h-14 sm:w-14"
-            />
-            <BrandWordmark size="nav" variant="light" className="min-w-0 truncate" />
-          </Link>
+          {/* Left section: Hamburger button on mobile & desktop + Logo */}
+          <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+            <button
+              type="button"
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={menuOpen}
+              className={`flex items-center gap-2 rounded-full px-2.5 py-1.5 sm:px-3 sm:py-2 text-paperstory-cream transition-colors hover:bg-paperstory-cream/15 focus:outline-hidden cursor-pointer ${
+                menuOpen ? 'bg-paperstory-cream/20' : ''
+              }`}
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              <div className={`mobile-hamburger mobile-hamburger--nav${menuOpen ? ' mobile-hamburger--open' : ''}`}>
+                <span className="mobile-hamburger-line" />
+                <span className="mobile-hamburger-line" />
+                <span className="mobile-hamburger-line" />
+              </div>
+              <span className="hidden font-sans text-xs font-semibold tracking-widest uppercase sm:inline text-paperstory-cream/90">
+                Menu
+              </span>
+            </button>
 
+            <Link to="/" className="flex min-w-0 items-center gap-2 sm:gap-4">
+              <img
+                src="/logo.png"
+                alt=""
+                aria-hidden="true"
+                className="h-10 w-10 shrink-0 rounded-full sm:h-14 sm:w-14"
+              />
+              <BrandWordmark size="nav" variant="light" className="min-w-0 truncate" />
+            </Link>
+          </div>
+
+          {/* Center Links (Desktop) */}
           <ul className="hidden items-center gap-7 lg:flex xl:gap-9">
             {mainLinks.map((link) => (
               <li key={link.to}>
                 <NavLink
                   to={link.to}
                   end={link.to === '/'}
-                  className={link.to === '/shop'
-                    ? ({ isActive }) => linkClass({ isActive: isActive || location.pathname.startsWith('/shop') })
-                    : linkClass}
+                  className={
+                    link.to === '/shop'
+                      ? ({ isActive }) =>
+                          linkClass({ isActive: isActive || location.pathname.startsWith('/shop') })
+                      : linkClass
+                  }
                 >
                   {link.label}
                 </NavLink>
@@ -60,6 +79,7 @@ export default function Navbar() {
             ))}
           </ul>
 
+          {/* Right section: Cart link */}
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               to="/cart"
@@ -76,22 +96,11 @@ export default function Navbar() {
                 <span className="cart-nav-badge">{itemCount > 99 ? '99+' : itemCount}</span>
               )}
             </Link>
-
-            <button
-              type="button"
-              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={menuOpen}
-              className={`mobile-hamburger lg:hidden${menuOpen ? ' mobile-hamburger--open' : ''}`}
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              <span className="mobile-hamburger-line" />
-              <span className="mobile-hamburger-line" />
-              <span className="mobile-hamburger-line" />
-            </button>
           </div>
         </nav>
       </header>
 
+      {/* Drawer slides out from left side */}
       <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} itemCount={itemCount} />
     </>
   )

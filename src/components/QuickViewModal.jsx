@@ -1,349 +1,255 @@
-import { useEffect, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
-import { buildProductWhatsAppMessage, buildWhatsAppUrl } from '../utils/whatsapp'
-import { canAddToCart, canPlaceOrder } from '../data/site'
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
+import { buildWhatsAppUrl, buildProductWhatsAppMessage } from '../utils/whatsapp'
+import {
+  getProductCode,
+  getProductDescription,
+  getProductWhatsIncluded,
+  getProductSeoKeywords,
+} from '../data/product-metadata'
 
-function isVideoSrc(src = '') {
-  return /\.(mp4|webm|ogg)(\?|$)/i.test(src)
-}
-
-export default function QuickViewModal({
-  product,
-  initialIndex = 0,
-  onClose,
-  onOpenOrder,
-  onOpenInquiry,
-}) {
-  const [index, setIndex] = useState(initialIndex)
-  const [quantity, setQuantity] = useState(1)
-  const [addedFeedback, setAddedFeedback] = useState(false)
+export default function QuickViewModal({ product, onClose }) {
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+  const [added, setAdded] = useState(false)
   const { addItem } = useCart()
 
-  const gallery = product?.images?.length ? product.images : [product?.image]
-  const current = gallery[index] || product?.image
-  const isVideo = isVideoSrc(current)
-  const hasGallery = gallery.length > 1
-  const externalUrl = product?.externalUrl
+  const productCode = product?.code || getProductCode(product)
+  const productDescription = product?.description || getProductDescription(product)
+  const whatsIncluded = product?.whatsIncluded || getProductWhatsIncluded(product)
+  const seoKeywords = product?.seoKeywords || getProductSeoKeywords(product)
 
-  const whatsappUrl = buildWhatsAppUrl(buildProductWhatsAppMessage(product))
-  const showPrice = product?.showPrice && product?.price
-  const isCod = product?.paymentType === 'cod'
-  const orderable = canPlaceOrder(product)
-  const addToCartEnabled = canAddToCart(product)
-  const orderOnline = Boolean(product?.orderOnline)
-
-  // Touch swipe support
-  const touchStartXRef = useRef(0)
-  const touchEndXRef = useRef(0)
-
-  const goTo = (next) => setIndex((next + gallery.length) % gallery.length)
+  const isWeddingInvite = product.categorySlug === 'wedding-invitations'
 
   useEffect(() => {
-    const prevOverflow = document.body.style.overflow
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', handleKeyDown)
     document.body.style.overflow = 'hidden'
 
-    const onKeyDown = (e) => {
-      if (e.key === 'Escape') onClose?.()
-      if (e.key === 'ArrowLeft' && hasGallery) goTo(index - 1)
-      if (e.key === 'ArrowRight' && hasGallery) goTo(index + 1)
-    }
-
-    window.addEventListener('keydown', onKeyDown)
     return () => {
-      document.body.style.overflow = prevOverflow
-      window.removeEventListener('keydown', onKeyDown)
+      window.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = 'unset'
     }
-  }, [hasGallery, index, onClose])
+  }, [onClose])
 
-  const handleTouchStart = (e) => {
-    touchStartXRef.current = e.touches[0].clientX
-  }
+  const images = (product.images && product.images.length > 0)
+    ? product.images
+    : [product.image || '/wedding-invites/cover.jpg']
 
-  const handleTouchMove = (e) => {
-    touchEndXRef.current = e.touches[0].clientX
-  }
-
-  const handleTouchEnd = () => {
-    if (!hasGallery) return
-    const diff = touchStartXRef.current - touchEndXRef.current
-    if (diff > 45) {
-      goTo(index + 1)
-    } else if (diff < -45) {
-      goTo(index - 1)
-    }
-  }
+  const activeMedia = images[selectedImageIndex] || images[0]
+  const isVideo = typeof activeMedia === 'string' && /\.(mp4|webm|mov)(\?.*)?$/i.test(activeMedia)
 
   const handleAddToCart = () => {
-    addItem(product, quantity)
-    setAddedFeedback(true)
-    setTimeout(() => setAddedFeedback(false), 2200)
+    addItem(product, 1)
+    setAdded(true)
+    setTimeout(() => setAdded(false), 2000)
   }
 
-  const priceFormatted = showPrice
-    ? (product.price.startsWith('PKR') || product.price.startsWith('Rs')
-        ? product.price
-        : `Rs. ${product.price}`)
-    : 'Price on request'
+  const waProduct = { ...product, code: productCode }
+  const whatsappUrl = buildWhatsAppUrl(buildProductWhatsAppMessage(waProduct))
 
-  return createPortal(
+  return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-4 md:p-6 bg-black/65 backdrop-blur-xs animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-paperstory-charcoal/60 backdrop-blur-xs animate-fadeIn"
       onClick={onClose}
-      role="dialog"
-      aria-modal="true"
-      aria-label={product.name}
     >
       <div
-        className="relative max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-2xl bg-white shadow-2xl ring-1 ring-paperstory-maroon/15"
+        className="relative w-full max-w-4xl max-h-[92vh] overflow-y-auto rounded-2xl bg-white shadow-2xl border border-paperstory-maroon/10 p-4 sm:p-6 lg:p-8 animate-scaleIn"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
-          type="button"
           onClick={onClose}
-          className="absolute top-3 right-3 z-30 flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-white/90 text-paperstory-ink shadow-md transition hover:bg-paperstory-maroon hover:text-white cursor-pointer"
+          className="absolute top-3 right-3 sm:top-5 sm:right-5 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-paperstory-wash text-paperstory-charcoal hover:bg-paperstory-maroon hover:text-white transition cursor-pointer"
           aria-label="Close modal"
         >
           ✕
         </button>
 
-        <div className="grid grid-cols-1 md:grid-cols-2">
-          {/* Left: Media Gallery */}
-          <div className="flex flex-col bg-paperstory-wash/50 p-3 sm:p-6 border-b md:border-b-0 md:border-r border-paperstory-maroon/10">
-            <div
-              className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-white shadow-inner flex items-center justify-center"
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-            >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+          {/* Media Column */}
+          <div className="flex flex-col gap-3">
+            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-paperstory-wash/50 border border-paperstory-maroon/10">
               {isVideo ? (
                 <video
-                  src={current}
-                  poster="/wedding-invites/cover.jpg"
+                  src={activeMedia}
+                  controls
                   autoPlay
                   muted
                   loop
-                  playsInline
-                  controls
-                  className="h-full w-full object-cover object-center"
+                  className="h-full w-full object-cover"
                 />
               ) : (
                 <img
-                  src={current}
+                  src={activeMedia}
                   alt={product.name}
-                  className="h-full w-full object-cover object-center transition-all duration-300"
+                  className="h-full w-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null
+                    e.currentTarget.src = '/wedding-invites/cover.jpg'
+                  }}
                 />
-              )}
-
-              {/* Gallery Navigation Arrows */}
-              {hasGallery && (
-                <>
-                  <button
-                    type="button"
-                    onClick={() => goTo(index - 1)}
-                    className="absolute left-2.5 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-paperstory-maroon shadow-md hover:bg-paperstory-maroon hover:text-white transition cursor-pointer"
-                    aria-label="Previous image"
-                  >
-                    ‹
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => goTo(index + 1)}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-paperstory-maroon shadow-md hover:bg-paperstory-maroon hover:text-white transition cursor-pointer"
-                    aria-label="Next image"
-                  >
-                    ›
-                  </button>
-                </>
-              )}
-
-              {/* Counter badge */}
-              {hasGallery && (
-                <span className="absolute bottom-2.5 right-2.5 rounded-full bg-black/55 px-2.5 py-0.5 text-[11px] font-medium text-white tracking-wider tabular-nums backdrop-blur-xs">
-                  {index + 1} / {gallery.length}
-                </span>
               )}
             </div>
 
-            {/* Thumbnail Strip */}
-            {hasGallery && (
-              <div className="mt-3 flex gap-2 overflow-x-auto pb-1 pt-1 scrollbar-thin">
-                {gallery.map((img, i) => (
-                  <button
-                    key={img + i}
-                    type="button"
-                    onClick={() => setIndex(i)}
-                    className={`relative h-14 w-12 shrink-0 overflow-hidden rounded-md border-2 transition cursor-pointer ${
-                      i === index
-                        ? 'border-paperstory-maroon ring-1 ring-paperstory-maroon'
-                        : 'border-transparent opacity-65 hover:opacity-100'
-                    }`}
-                  >
-                    {isVideoSrc(img) ? (
-                      <div className="h-full w-full bg-paperstory-pale flex items-center justify-center text-[10px] text-paperstory-maroon font-bold">
-                        ▶
-                      </div>
-                    ) : (
-                      <img
-                        src={img}
-                        alt=""
-                        className="h-full w-full object-cover"
-                        loading="lazy"
-                      />
-                    )}
-                  </button>
-                ))}
+            {/* Thumbnails */}
+            {images.length > 1 && (
+              <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-thin">
+                {images.map((img, idx) => {
+                  const thumbIsVideo = typeof img === 'string' && /\.(mp4|webm|mov)(\?.*)?$/i.test(img)
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => setSelectedImageIndex(idx)}
+                      className={`relative h-16 w-16 sm:h-20 sm:w-20 shrink-0 overflow-hidden rounded-lg border-2 transition cursor-pointer ${
+                        selectedImageIndex === idx
+                          ? 'border-paperstory-maroon shadow-xs'
+                          : 'border-transparent opacity-60 hover:opacity-100'
+                      }`}
+                    >
+                      {thumbIsVideo ? (
+                        <video src={img} className="h-full w-full object-cover pointer-events-none" />
+                      ) : (
+                        <img
+                          src={img}
+                          alt=""
+                          className="h-full w-full object-cover"
+                          onError={(e) => {
+                            e.currentTarget.onerror = null
+                            e.currentTarget.src = '/wedding-invites/cover.jpg'
+                          }}
+                        />
+                      )}
+                    </button>
+                  )
+                })}
               </div>
             )}
           </div>
 
-          {/* Right: Product Details & Actions */}
-          <div className="flex flex-col justify-between p-4 sm:p-6 md:p-8 pb-8 sm:pb-8 bg-white">
+          {/* Details Column */}
+          <div className="flex flex-col justify-between">
             <div>
-              {/* Brand Tag & Category */}
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-[11px] font-sans uppercase tracking-widest text-paperstory-maroon/70 font-semibold">
-                  The Paper Story
-                </span>
-                <span className="text-paperstory-maroon/30">·</span>
+              {/* Category & Design Code Badges */}
+              <div className="flex flex-wrap items-center gap-2 mb-2">
                 <span className="rounded-full bg-paperstory-blush/80 px-2.5 py-0.5 text-[11px] font-medium text-paperstory-maroon">
                   {product.category || 'Luxury Stationery'}
                 </span>
-              </div>
-
-              {/* Product Title */}
-              <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-semibold text-paperstory-ink leading-tight mb-2">
-                {product.name}
-              </h2>
-
-              {/* Price */}
-              <div className="mb-4 flex items-baseline gap-2">
-                <span className="text-lg sm:text-2xl font-serif font-bold text-paperstory-maroon">
-                  {priceFormatted}
-                </span>
-                {showPrice && <span className="text-xs font-sans text-paperstory-ink/60">PKR</span>}
-                {product.priceNote && (
-                  <span className="text-xs font-medium text-paperstory-maroon/80">
-                    ({product.priceNote})
+                {productCode && (
+                  <span className="rounded-full bg-paperstory-maroon/10 px-2.5 py-0.5 font-mono text-[11px] font-bold text-paperstory-maroon border border-paperstory-maroon/20">
+                    {productCode}
+                  </span>
+                )}
+                {product.type && (
+                  <span className="rounded-full bg-paperstory-wash px-2.5 py-0.5 text-[11px] text-paperstory-charcoal/70">
+                    {product.type}
                   </span>
                 )}
               </div>
 
-              {/* Description / Highlights */}
-              <div className="mb-4 space-y-2 text-xs sm:text-sm text-readable-muted border-t border-b border-paperstory-maroon/10 py-3">
-                <p>
-                  Handcrafted with fine textured cardstock, bespoke foil accents, and artisanal detailing.
-                </p>
-                <div className="flex flex-wrap gap-2 pt-1">
-                  <span className="inline-flex items-center gap-1 rounded-md bg-paperstory-wash px-2 py-1 text-[11px] text-paperstory-maroon font-medium">
-                    ✓ {orderOnline ? 'Order online with card' : isCod ? 'Cash on Delivery (Pakistan)' : 'Advance payment'}
+              {/* Title */}
+              <h2 className="font-serif text-xl sm:text-2xl lg:text-3xl font-normal text-paperstory-charcoal leading-tight">
+                {product.name}
+              </h2>
+
+              {/* Price */}
+              <div className="mt-3 flex items-baseline gap-2">
+                {product.showPrice && product.price ? (
+                  <span className="font-sans text-xl sm:text-2xl font-bold text-paperstory-maroon">
+                    {product.price}
                   </span>
-                  <span className="inline-flex items-center gap-1 rounded-md bg-paperstory-wash px-2 py-1 text-[11px] text-paperstory-maroon font-medium">
-                    ✓ Custom suite & inserts available
+                ) : (
+                  <span className="font-sans text-sm sm:text-base text-paperstory-charcoal/70 italic">
+                    Price available on inquiry (Custom orders vary by quantity)
                   </span>
-                </div>
+                )}
               </div>
 
-              {/* Quantity selector (for cart-enabled items) */}
-              {addToCartEnabled && (
-                <div className="mb-4 flex items-center gap-3">
-                  <span className="text-xs font-medium text-paperstory-ink uppercase tracking-wider">
-                    Quantity:
-                  </span>
-                  <div className="flex items-center rounded-lg border border-paperstory-maroon/25 bg-paperstory-wash">
-                    <button
-                      type="button"
-                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="px-3 py-1 text-sm font-semibold text-paperstory-maroon hover:bg-paperstory-blush rounded-l-lg transition cursor-pointer"
-                      aria-label="Decrease quantity"
-                    >
-                      −
-                    </button>
-                    <span className="w-10 text-center text-sm font-semibold text-paperstory-ink">
-                      {quantity}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => setQuantity(quantity + 1)}
-                      className="px-3 py-1 text-sm font-semibold text-paperstory-maroon hover:bg-paperstory-blush rounded-r-lg transition cursor-pointer"
-                      aria-label="Increase quantity"
-                    >
-                      +
-                    </button>
+              {/* Description */}
+              <div className="mt-4 pt-4 border-t border-paperstory-maroon/10">
+                <h4 className="text-xs font-semibold uppercase tracking-wider text-paperstory-maroon mb-1.5">
+                  About This Design
+                </h4>
+                <p className="font-sans text-xs sm:text-sm text-paperstory-charcoal/80 leading-relaxed">
+                  {productDescription}
+                </p>
+              </div>
+
+              {/* What's Included */}
+              {whatsIncluded && whatsIncluded.length > 0 && (
+                <div className="mt-4 pt-3 border-t border-paperstory-maroon/10">
+                  <h4 className="text-xs font-semibold uppercase tracking-wider text-paperstory-maroon mb-2 flex items-center gap-1.5">
+                    <span>What's Included in This Suite</span>
+                  </h4>
+                  <ul className="space-y-1.5">
+                    {whatsIncluded.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-paperstory-charcoal/85">
+                        <span className="text-paperstory-gold font-bold text-xs mt-0.5">✦</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* SEO / Style Tags */}
+              {seoKeywords && seoKeywords.length > 0 && (
+                <div className="mt-4 pt-3 border-t border-paperstory-maroon/10">
+                  <h4 className="text-[11px] font-semibold uppercase tracking-wider text-paperstory-charcoal/60 mb-2">
+                    Design & Style Tags
+                  </h4>
+                  <div className="flex flex-wrap gap-1.5">
+                    {seoKeywords.map((tag, idx) => (
+                      <span
+                        key={idx}
+                        className="rounded bg-paperstory-wash px-2 py-0.5 text-[10px] sm:text-[11px] text-paperstory-charcoal/75 border border-paperstory-maroon/10"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Action Buttons */}
-            <div className="mt-4 space-y-2.5">
-              {addedFeedback && (
-                <div className="rounded-lg bg-paperstory-wash p-2 text-center text-xs font-semibold text-paperstory-maroon border border-paperstory-maroon/20 animate-in fade-in">
-                  Added to cart ✓
-                </div>
-              )}
-
-              {addToCartEnabled && (
+            {/* Actions */}
+            <div className="mt-6 pt-4 border-t border-paperstory-maroon/10 flex flex-col gap-2.5">
+              {product.showPrice && product.price ? (
                 <button
-                  type="button"
                   onClick={handleAddToCart}
-                  className="cute-btn-secondary w-full py-2.5 text-xs sm:text-sm font-semibold uppercase tracking-wider cursor-pointer"
+                  className="w-full rounded-full bg-paperstory-maroon py-3 text-center text-xs sm:text-sm font-semibold uppercase tracking-widest text-white shadow-md transition hover:bg-paperstory-maroon/90 active:scale-98 cursor-pointer"
                 >
-                  Add to Cart
+                  {added ? 'Added to Cart ✓' : 'Add to Cart'}
                 </button>
-              )}
-
-              {orderable && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    onClose?.()
-                    onOpenOrder?.(product)
-                  }}
-                  className="cute-btn-primary w-full py-2.5 text-xs sm:text-sm font-semibold uppercase tracking-wider cursor-pointer"
-                >
-                  {addToCartEnabled ? 'Buy Now' : 'Place Order'}
-                </button>
-              )}
-
-              {!orderable && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    onClose?.()
-                    onOpenInquiry?.(product)
-                  }}
-                  className="cute-btn-primary w-full py-2.5 text-xs sm:text-sm font-semibold uppercase tracking-wider cursor-pointer"
-                >
-                  Request Custom Order / Inquiry
-                </button>
-              )}
+              ) : null}
 
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="gradient-btn inline-flex min-h-[42px] w-full items-center justify-center rounded-full px-5 py-2.5 text-center text-xs sm:text-sm font-semibold tracking-wider text-white uppercase shadow-sm transition hover:opacity-95"
+                className="w-full flex items-center justify-center gap-2 rounded-full border-2 border-paperstory-maroon bg-white py-2.5 sm:py-3 text-center text-xs sm:text-sm font-semibold uppercase tracking-wider text-paperstory-maroon transition hover:bg-paperstory-maroon hover:text-white"
               >
-                Inquire on WhatsApp
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+                </svg>
+                <span>Inquire on WhatsApp {productCode ? `(${productCode})` : ''}</span>
               </a>
 
-              {externalUrl && (
-                <a
-                  href={externalUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-center text-xs font-medium text-paperstory-maroon underline underline-offset-2 pt-1 hover:text-paperstory-maroon-deep"
+              {isWeddingInvite && (
+                <Link
+                  to="/shop/wedding-invitations"
+                  onClick={onClose}
+                  className="text-center font-sans text-xs text-paperstory-maroon font-semibold underline underline-offset-4 hover:opacity-80 py-1"
                 >
-                  Open live wedding website preview ↗
-                </a>
+                  View All Wedding Invitations Collection (48 Designs) →
+                </Link>
               )}
             </div>
           </div>
         </div>
       </div>
-    </div>,
-    document.body
+    </div>
   )
 }

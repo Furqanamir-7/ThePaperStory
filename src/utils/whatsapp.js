@@ -5,11 +5,12 @@ export function buildWhatsAppUrl(message) {
 }
 
 export function buildProductWhatsAppMessage(product) {
-  const label = product.whatsappLabel || product.name
-  const design = product.name
+  const codeStr = product?.code ? ` [Code: ${product.code}]` : ''
+  const label = product?.whatsappLabel || product?.name || 'Wedding Invitation'
+  const design = product?.name || 'Design'
 
-  if (product.whatsappMode === 'more') {
-    return `Hey please tell me more about ${label} ${design}`
+  if (product?.whatsappMode === 'more') {
+    return `Hey! Please tell me more about ${label}${codeStr}: ${design}`
   }
-  return `Hey please tell me the price of ${label} ${design}`
+  return `Hey! Please tell me the price and details for ${label}${codeStr}: ${design}`
 }

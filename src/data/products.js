@@ -1,3 +1,9 @@
+import {
+  getProductCode,
+  getProductDescription,
+  getProductWhatsIncluded,
+  getProductSeoKeywords,
+} from './product-metadata.js'
 import stationaryGallery from './stationary-gallery.json' with { type: 'json' }
 import importedDesktopGallery from './imported-desktop-gallery.json' with { type: 'json' }
 import tpsDataGallery from './tps-data-gallery.json' with { type: 'json' }
@@ -896,26 +902,29 @@ function resolveSeoDesignName({ name, categorySlug, subcategorySlug, typeSlug, d
 }
 
 function addDesigns({
+  name,
+  categoryLabel,
   categorySlug,
   subcategorySlug,
   typeSlug,
-  whatsappLabel,
   image,
   images,
   galleryImages,
-  count = 4,
+  count = 1,
   showPrice,
-  priceBase,
-  paymentType,
-  whatsappMode,
-  categoryLabel,
-  name,
+  priceBase = 500,
+  paymentType = 'direct',
+  whatsappMode = 'price',
+  whatsappLabel,
 }) {
   if (galleryImages?.length) {
     const designNum = weddingDesignNumber(galleryImages) ?? parseDesignNum(name, 1)
+    const baseObj = { categorySlug, subcategorySlug: subcategorySlug || null, typeSlug: typeSlug || null }
     return [
       {
         id: productId++,
+        code: getProductCode(baseObj, designNum),
+        designNumber: designNum,
         name: resolveSeoDesignName({ name, categorySlug, subcategorySlug, typeSlug, designNum, galleryImages }),
         category: categoryLabel,
         categorySlug,
@@ -923,6 +932,9 @@ function addDesigns({
         typeSlug: typeSlug || null,
         image: galleryImages[0],
         images: galleryImages,
+        description: getProductDescription(baseObj, designNum),
+        whatsIncluded: getProductWhatsIncluded(baseObj, designNum),
+        seoKeywords: getProductSeoKeywords(baseObj, designNum),
         showPrice: showPrice ?? false,
         price: showPrice ? `PKR ${priceBase + 350}` : null,
         paymentType,
@@ -931,12 +943,14 @@ function addDesigns({
       },
     ]
   }
-
   const total = images?.length || count
   return Array.from({ length: total }, (_, i) => {
     const designNum = i + 1
+    const baseObj = { categorySlug, subcategorySlug: subcategorySlug || null, typeSlug: typeSlug || null }
     return {
       id: productId++,
+      code: getProductCode(baseObj, designNum),
+      designNumber: designNum,
       name: resolveSeoDesignName({ name, categorySlug, subcategorySlug, typeSlug, designNum }),
       category: categoryLabel,
       categorySlug,
@@ -944,6 +958,9 @@ function addDesigns({
       typeSlug: typeSlug || null,
       image: images?.[i] || image,
       images: null,
+      description: getProductDescription(baseObj, designNum),
+      whatsIncluded: getProductWhatsIncluded(baseObj, designNum),
+      seoKeywords: getProductSeoKeywords(baseObj, designNum),
       showPrice: showPrice ?? false,
       price: showPrice ? `PKR ${priceBase + designNum * 350}` : null,
       paymentType,
