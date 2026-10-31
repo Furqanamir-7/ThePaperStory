@@ -311,9 +311,8 @@ export default function ProductMediaGallery({
       {/* Main Interactive Stage Container (4:5 Aspect Ratio) */}
       <div
         ref={containerRef}
-        className={`relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-paperstory-wash/50 border border-paperstory-maroon/15 shadow-inner touch-none ${
-          isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'
-        }`}
+        className={`relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-paperstory-wash/50 border border-paperstory-maroon/15 shadow-inner touch-none ${isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'
+          }`}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -486,8 +485,8 @@ export default function ProductMediaGallery({
             {isZoomed
               ? 'Drag or move mouse to pan · Tap 1× to reset'
               : hasMultiple
-              ? 'Pinch or click to zoom · Swipe to browse'
-              : 'Pinch on mobile · Click or scroll to zoom'}
+                ? 'Pinch or click to zoom · Swipe to browse'
+                : 'Pinch on mobile · Click or scroll to zoom'}
           </span>
         </div>
       </div>
@@ -503,11 +502,10 @@ export default function ProductMediaGallery({
                 key={idx}
                 type="button"
                 onClick={() => setIndex(idx)}
-                className={`relative h-16 w-16 sm:h-20 sm:w-20 shrink-0 overflow-hidden rounded-lg border-2 transition cursor-pointer ${
-                  isActive
+                className={`relative h-16 w-16 sm:h-20 sm:w-20 shrink-0 overflow-hidden rounded-lg border-2 transition cursor-pointer ${isActive
                     ? 'border-paperstory-maroon ring-2 ring-paperstory-maroon/30 shadow-xs'
                     : 'border-transparent opacity-60 hover:opacity-100 hover:border-paperstory-maroon/30'
-                }`}
+                  }`}
                 aria-label={`View photo ${idx + 1}`}
               >
                 {thumbIsVideo ? (
