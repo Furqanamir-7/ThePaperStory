@@ -8,28 +8,28 @@ const WHATSAPP_URL =
 
 export default function Hero() {
   return (
-    <section id="home" className="cute-hero relative overflow-hidden flex flex-col justify-between">
+    <section id="home" className="cute-hero relative overflow-hidden flex flex-col justify-between lg:h-screen lg:max-h-screen">
       <div className="pointer-events-none absolute -top-20 -left-20 h-64 w-64 rounded-full bg-paperstory-blush/60 blur-3xl" />
       <div className="pointer-events-none absolute top-1/3 -right-16 h-72 w-72 rounded-full bg-paperstory-berry/20 blur-3xl" />
 
-      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-4 pt-20 pb-8 sm:px-6 sm:pt-24 sm:pb-12 lg:flex-row lg:items-center lg:gap-14 lg:px-8 lg:pt-36 lg:pb-28 xl:pt-40 xl:pb-32">
+      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-4 pt-20 pb-8 sm:px-6 sm:pt-24 sm:pb-12 lg:flex-row lg:items-center lg:gap-10 lg:px-8 lg:pt-24 lg:pb-3 min-h-0">
         {/* Left Column: Brand Text & Actions */}
         <div className="flex min-w-0 flex-1 flex-col items-center text-center lg:items-start lg:text-left">
-          <p className="mb-3 text-[11px] font-semibold tracking-[0.35em] text-paperstory-maroon/70 uppercase sm:mb-4">
+          <p className="mb-2 text-[11px] font-semibold tracking-[0.35em] text-paperstory-maroon/70 uppercase sm:mb-3">
             Welcome to
           </p>
 
-          <div className="mb-4 flex max-w-full items-center gap-3 sm:mb-6 sm:gap-4">
+          <div className="mb-3 flex max-w-full items-center gap-3 sm:mb-5 sm:gap-4">
             <img
               src="/logo.png"
               alt=""
               aria-hidden="true"
-              className="h-14 w-14 shrink-0 rounded-full sm:h-20 sm:w-20"
+              className="h-12 w-12 shrink-0 rounded-full sm:h-18 sm:w-18"
             />
             <BrandWordmark size="lg" variant="dark" className="min-w-0" />
           </div>
 
-          <p className="mb-4 max-w-lg px-1 font-serif text-lg leading-relaxed text-paperstory-ink/90 italic sm:mb-6 sm:text-2xl">
+          <p className="mb-3 max-w-lg px-1 font-serif text-lg leading-relaxed text-paperstory-ink/90 italic sm:mb-5 sm:text-2xl">
             {SITE_TAGLINE}
           </p>
 
@@ -48,7 +48,7 @@ export default function Hero() {
 
         {/* Right Column: Hero Video Showcase (Clean rectangular frame matching the video) */}
         <div className="mt-8 flex flex-1 items-center justify-center lg:mt-0 lg:justify-end w-full">
-          <div className="relative mx-auto w-full max-w-[500px] sm:max-w-[580px] lg:max-w-[620px] xl:max-w-[660px]">
+          <div className="relative mx-auto w-full max-w-[460px] sm:max-w-[520px] lg:max-w-[540px] xl:max-w-[580px]">
             {/* Soft decorative background glow */}
             <div className="pointer-events-none absolute -inset-3 rounded-2xl bg-gradient-to-tr from-paperstory-maroon/15 via-paperstory-berry/10 to-transparent blur-2xl" />
 
@@ -67,7 +67,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="w-full mt-auto">
+      <div className="w-full shrink-0 mt-auto">
         <MarqueeTicker />
       </div>
     </section>

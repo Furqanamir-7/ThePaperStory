@@ -81,26 +81,21 @@ h1, h2, h3, h4 {
   .cute-hero,
   .cute-hero > .relative.mx-auto {
     min-height: 0 !important;
-    height: auto;
+    height: auto !important;
   }
 }
 
-/* Generously extended hero height on desktop so the video showcase frame fits comfortably with breathing room */
+/* Desktop viewport fit: Header, Hero content & Marquee strip all fit in screen view */
 @media (min-width: 1024px) {
   .cute-hero {
-    min-height: clamp(760px, 88vh, 920px);
+    height: 100vh;
+    height: 100dvh;
+    min-height: 540px;
+    max-height: 100vh;
   }
   .cute-hero > .relative.mx-auto {
-    min-height: clamp(660px, 78vh, 820px);
-  }
-}
-
-@media (min-width: 1280px) {
-  .cute-hero {
-    min-height: clamp(820px, 92vh, 980px);
-  }
-  .cute-hero > .relative.mx-auto {
-    min-height: clamp(720px, 82vh, 880px);
+    min-height: 0;
+    height: 100%;
   }
 }
 
