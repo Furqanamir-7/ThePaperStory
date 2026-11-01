@@ -4,9 +4,9 @@ import QuickViewModal from './QuickViewModal'
 import { useCart } from '../context/CartContext'
 
 const CATEGORY_DESIGN_COUNTS = {
-  'wedding-invitations': 48,
+  'wedding-invitations': 58,
   'digital-invitations': 22,
-  'nikkahnama': 8,
+  'nikkahnama': 9,
   'favours': 22,
   'packaging': 19,
   'stationary-items': 20,

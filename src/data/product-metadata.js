@@ -68,7 +68,25 @@ export const WEDDING_DESCRIPTIONS = {
   45: 'Whimsical fairytale garden wedding suite with pastel floral illustrations, gold foil stars, and ribbon tie.',
   46: 'Sophisticated modern black and white typography invitation with blind debossed borders and luxury silk ribbon.',
   47: 'Royal Rajasthani heritage wedding invitation with festive golden elephant and palace arch motifs on ivory card.',
-  48: 'Ethereal translucent frosted acrylic invitation card printed with white UV ink, enclosed in a luxury velvet envelope.'
+  48: 'Ethereal translucent frosted acrylic invitation card printed with white UV ink, enclosed in a luxury velvet envelope.',
+  49: 'Exquisite blush and gold gilded wedding invitation suite featuring intricate botanical filigree, handcrafted deckled cotton cardstock, and matching monogrammed stationery inserts.',
+  50: 'Enchanting pastel garden wedding card with delicate floral sprays, soft ivory tones, premium textured cardstock, and bespoke RSVP details.',
+  51: 'Majestic wedding suite adorned with a regal heraldic crest, deep warm tones, embossed metallic foil borders, and luxury envelope seal.',
+  52: 'Romantic rose damask foil-stamped invitation on heavy velvet-touch matte cardstock with matching insert cards and satin ribbon wrap.',
+  53: 'Deep midnight navy blue cardstock illuminated with fine celestial gold foil typography, constellation detailing, and bespoke wax-stamped envelope.',
+  54: 'Organic olive branch and botanical meadow motif printed on textured recycled cotton paper with minimalist typography and translucent vellum band.',
+  55: 'Grand royal wedding invitation suite inspired by classic Mughal architecture, illuminated arabesque borders, and intricate gold foil calligraphy.',
+  56: 'Nostalgic vintage rosebud florals on pearlized cardstock, finished with scalloped die-cut edges and romantic calligraphy script.',
+  57: 'Clean, modern luxury in alabaster off-white and warm metallic gold foil with architectural arch frame and custom seal.',
+  58: 'Soft twilight lilac and champagne shimmer invitation with delicate watercolor wash, gold edging, and personalized monogram.',
+  59: 'Intricate baroque gilded filigree framing a classic royal invitation layout on thick museum-grade cotton cardstock.',
+  60: 'Stunning deep ruby card with rich gold foil stamping, royal Urdu and English wedding typography, and matching lined envelopes.',
+  61: 'Regal sapphire blue invitation suite accented with silver foil blossom branches, matching event cards, and luxury pocketfold.',
+  62: 'Fragrant jasmine vines cascading around a golden arched frame on warm ivory textured paper with bespoke sealing wax.',
+  63: 'Heirloom-inspired damask pattern in burnished gold on heavy cream cardstock, accompanied by an RSVP insert card.',
+  64: 'Lush blush peony florals with reflective rose gold foil typography, soft vellum jacket, and wax seal closure.',
+  65: 'Minimalist eucalyptus greenery illustration on natural linen-textured cardstock with clean contemporary typography.',
+  66: 'Deep burgundy and cream invitation suite featuring delicate cherry blossom accents, gold foiled names, and customized matching stationery.'
 };
 
 export const CATEGORY_DESCRIPTIONS = {

@@ -679,6 +679,202 @@
         "/wedding-invites/design-47/04.jpg",
         "/wedding-invites/design-47/05.jpg"
       ]
+    },
+    {
+      "designNumber": 49,
+      "name": "Design 49",
+      "images": [
+        "/wedding-invites/design-49/04.jpg",
+        "/wedding-invites/design-49/03.jpg",
+        "/wedding-invites/design-49/01.jpg",
+        "/wedding-invites/design-49/02.jpg",
+        "/wedding-invites/design-49/05.jpg"
+      ]
+    },
+    {
+      "designNumber": 50,
+      "name": "Design 50",
+      "images": [
+        "/wedding-invites/design-50/03.jpg",
+        "/wedding-invites/design-50/02.jpg",
+        "/wedding-invites/design-50/01.jpg",
+        "/wedding-invites/design-50/04.jpg",
+        "/wedding-invites/design-50/05.jpg"
+      ]
+    },
+    {
+      "designNumber": 51,
+      "name": "Design 51",
+      "images": [
+        "/wedding-invites/design-51/02.jpg",
+        "/wedding-invites/design-51/01.jpg",
+        "/wedding-invites/design-51/03.jpg",
+        "/wedding-invites/design-51/04.jpg",
+        "/wedding-invites/design-51/05.jpg"
+      ]
+    },
+    {
+      "designNumber": 52,
+      "name": "Design 52",
+      "images": [
+        "/wedding-invites/design-52/02.jpg",
+        "/wedding-invites/design-52/04.jpg",
+        "/wedding-invites/design-52/01.jpg",
+        "/wedding-invites/design-52/03.jpg",
+        "/wedding-invites/design-52/05.jpg"
+      ]
+    },
+    {
+      "designNumber": 53,
+      "name": "Design 53",
+      "images": [
+        "/wedding-invites/design-53/01.jpg",
+        "/wedding-invites/design-53/02.jpg",
+        "/wedding-invites/design-53/03.jpg",
+        "/wedding-invites/design-53/04.jpg",
+        "/wedding-invites/design-53/05.jpg"
+      ]
+    },
+    {
+      "designNumber": 54,
+      "name": "Design 54",
+      "images": [
+        "/wedding-invites/design-54/04.jpg",
+        "/wedding-invites/design-54/01.jpg",
+        "/wedding-invites/design-54/02.jpg",
+        "/wedding-invites/design-54/03.jpg",
+        "/wedding-invites/design-54/05.jpg"
+      ]
+    },
+    {
+      "designNumber": 55,
+      "name": "Design 55",
+      "images": [
+        "/wedding-invites/design-55/04.jpg",
+        "/wedding-invites/design-55/02.jpg",
+        "/wedding-invites/design-55/01.jpg",
+        "/wedding-invites/design-55/03.jpg",
+        "/wedding-invites/design-55/05.jpg"
+      ]
+    },
+    {
+      "designNumber": 56,
+      "name": "Design 56",
+      "images": [
+        "/wedding-invites/design-56/05.jpg",
+        "/wedding-invites/design-56/01.jpg",
+        "/wedding-invites/design-56/02.jpg",
+        "/wedding-invites/design-56/03.jpg",
+        "/wedding-invites/design-56/04.jpg"
+      ]
+    },
+    {
+      "designNumber": 57,
+      "name": "Design 57",
+      "images": [
+        "/wedding-invites/design-57/02.jpg",
+        "/wedding-invites/design-57/04.jpg",
+        "/wedding-invites/design-57/01.jpg",
+        "/wedding-invites/design-57/03.jpg",
+        "/wedding-invites/design-57/05.jpg"
+      ]
+    },
+    {
+      "designNumber": 58,
+      "name": "Design 58",
+      "images": [
+        "/wedding-invites/design-58/03.jpg",
+        "/wedding-invites/design-58/01.jpg",
+        "/wedding-invites/design-58/02.jpg",
+        "/wedding-invites/design-58/04.jpg",
+        "/wedding-invites/design-58/05.jpg"
+      ]
+    },
+    {
+      "designNumber": 59,
+      "name": "Design 59",
+      "images": [
+        "/wedding-invites/design-59/02.jpg",
+        "/wedding-invites/design-59/04.jpg",
+        "/wedding-invites/design-59/01.jpg",
+        "/wedding-invites/design-59/03.jpg",
+        "/wedding-invites/design-59/05.jpg"
+      ]
+    },
+    {
+      "designNumber": 60,
+      "name": "Design 60",
+      "images": [
+        "/wedding-invites/design-60/04.jpg",
+        "/wedding-invites/design-60/01.jpg",
+        "/wedding-invites/design-60/02.jpg",
+        "/wedding-invites/design-60/03.jpg",
+        "/wedding-invites/design-60/05.jpg"
+      ]
+    },
+    {
+      "designNumber": 61,
+      "name": "Design 61",
+      "images": [
+        "/wedding-invites/design-61/05.jpg",
+        "/wedding-invites/design-61/01.jpg",
+        "/wedding-invites/design-61/02.jpg",
+        "/wedding-invites/design-61/03.jpg",
+        "/wedding-invites/design-61/04.jpg"
+      ]
+    },
+    {
+      "designNumber": 62,
+      "name": "Design 62",
+      "images": [
+        "/wedding-invites/design-62/02.jpg",
+        "/wedding-invites/design-62/01.jpg",
+        "/wedding-invites/design-62/03.jpg",
+        "/wedding-invites/design-62/04.jpg",
+        "/wedding-invites/design-62/05.jpg"
+      ]
+    },
+    {
+      "designNumber": 63,
+      "name": "Design 63",
+      "images": [
+        "/wedding-invites/design-63/03.jpg",
+        "/wedding-invites/design-63/01.jpg",
+        "/wedding-invites/design-63/02.jpg"
+      ]
+    },
+    {
+      "designNumber": 64,
+      "name": "Design 64",
+      "images": [
+        "/wedding-invites/design-64/01.jpg",
+        "/wedding-invites/design-64/04.jpg",
+        "/wedding-invites/design-64/02.jpg",
+        "/wedding-invites/design-64/03.jpg",
+        "/wedding-invites/design-64/05.jpg"
+      ]
+    },
+    {
+      "designNumber": 65,
+      "name": "Design 65",
+      "images": [
+        "/wedding-invites/design-65/03.jpg",
+        "/wedding-invites/design-65/01.jpg",
+        "/wedding-invites/design-65/02.jpg",
+        "/wedding-invites/design-65/04.jpg",
+        "/wedding-invites/design-65/05.jpg"
+      ]
+    },
+    {
+      "designNumber": 66,
+      "name": "Design 66",
+      "images": [
+        "/wedding-invites/design-66/05.jpg",
+        "/wedding-invites/design-66/02.jpg",
+        "/wedding-invites/design-66/03.jpg",
+        "/wedding-invites/design-66/04.jpg",
+        "/wedding-invites/design-66/01.jpg"
+      ]
     }
   ],
   "waxSeals": [
@@ -1150,7 +1346,7 @@
       ]
     }
   ],
-  "updatedAt": "2026-10-31T07:55:57.578Z",
+  "updatedAt": "2026-11-01T05:38:56.434Z",
   "extra": {
     "eidCards": {
       "name": "Artisan Eid Calligraphy Greeting Cards",
