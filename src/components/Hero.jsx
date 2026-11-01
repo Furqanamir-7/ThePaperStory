@@ -13,6 +13,7 @@ export default function Hero() {
       <div className="pointer-events-none absolute top-1/3 -right-16 h-72 w-72 rounded-full bg-paperstory-berry/20 blur-3xl" />
 
       <div className="relative mx-auto flex max-w-6xl flex-col justify-center px-4 pt-24 pb-8 sm:px-6 sm:pt-28 sm:pb-12 lg:min-h-screen lg:flex-row lg:items-center lg:gap-12 lg:px-8 lg:pb-28 lg:pt-32">
+        {/* Left Column: Brand Text & Actions */}
         <div className="flex min-w-0 flex-1 flex-col items-center text-center lg:items-start lg:text-left">
           <p className="mb-3 text-[11px] font-semibold tracking-[0.35em] text-paperstory-maroon/70 uppercase sm:mb-4">
             Welcome to
@@ -28,9 +29,9 @@ export default function Hero() {
             <BrandWordmark size="lg" variant="dark" className="min-w-0" />
           </div>
 
-        <p className="mb-4 max-w-md px-1 font-serif text-lg leading-relaxed text-paperstory-ink/90 italic sm:mb-6 sm:text-2xl">
-          {SITE_TAGLINE}
-        </p>
+          <p className="mb-4 max-w-md px-1 font-serif text-lg leading-relaxed text-paperstory-ink/90 italic sm:mb-6 sm:text-2xl">
+            {SITE_TAGLINE}
+          </p>
 
           <div className="flex w-full justify-center lg:justify-start">
             <div className="flex w-full max-w-lg flex-col gap-3 sm:flex-row sm:justify-center lg:justify-start">
@@ -45,7 +46,40 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="mt-6 hidden flex-1 sm:mt-10 lg:mt-0 lg:block" aria-hidden="true" />
+        {/* Right Column: Hero Video Showcase */}
+        <div className="mt-8 flex flex-1 items-center justify-center lg:mt-0 lg:justify-end">
+          <div className="relative mx-auto w-full max-w-[340px] sm:max-w-[400px] lg:max-w-[430px]">
+            {/* Soft decorative background glow */}
+            <div className="pointer-events-none absolute -inset-3 rounded-3xl bg-gradient-to-tr from-paperstory-maroon/20 via-paperstory-berry/15 to-transparent blur-2xl" />
+
+            {/* Video container card */}
+            <div className="relative overflow-hidden rounded-3xl border-2 border-white/90 bg-paperstory-wash shadow-[0_16px_50px_rgba(163,30,59,0.16)] ring-1 ring-paperstory-maroon/15 transition-all duration-300 hover:shadow-[0_20px_60px_rgba(163,30,59,0.22)]">
+              <video
+                src="/hero-showcase.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="h-full w-full object-cover max-h-[500px]"
+              />
+
+              {/* Floating frosted brand seal */}
+              <div className="pointer-events-none absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-2xl bg-white/90 px-4 py-2.5 backdrop-blur-md border border-white/60 shadow-sm">
+                <div>
+                  <p className="text-[10px] font-bold tracking-widest text-paperstory-maroon uppercase">
+                    Bespoke Craftsmanship
+                  </p>
+                  <p className="font-serif text-xs text-paperstory-ink font-medium">
+                    Luxury Invitations & Stationery
+                  </p>
+                </div>
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-paperstory-maroon/10 text-paperstory-maroon text-xs">
+                  ✦
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <MarqueeTicker />
