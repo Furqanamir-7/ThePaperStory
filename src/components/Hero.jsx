@@ -8,11 +8,11 @@ const WHATSAPP_URL =
 
 export default function Hero() {
   return (
-    <section id="home" className="cute-hero relative overflow-hidden lg:min-h-screen">
+    <section id="home" className="cute-hero relative overflow-hidden flex flex-col justify-between lg:min-h-screen">
       <div className="pointer-events-none absolute -top-20 -left-20 h-64 w-64 rounded-full bg-paperstory-blush/60 blur-3xl" />
       <div className="pointer-events-none absolute top-1/3 -right-16 h-72 w-72 rounded-full bg-paperstory-berry/20 blur-3xl" />
 
-      <div className="relative mx-auto flex max-w-7xl flex-col justify-center px-4 pt-20 pb-8 sm:px-6 sm:pt-24 sm:pb-12 lg:min-h-[86vh] lg:flex-row lg:items-center lg:gap-12 lg:px-8 lg:pb-24 lg:pt-28">
+      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-4 pt-20 pb-8 sm:px-6 sm:pt-24 sm:pb-12 lg:flex-row lg:items-center lg:gap-12 lg:px-8 lg:pt-32 lg:pb-24 xl:pt-36 xl:pb-28">
         {/* Left Column: Brand Text & Actions */}
         <div className="flex min-w-0 flex-1 flex-col items-center text-center lg:items-start lg:text-left">
           <p className="mb-3 text-[11px] font-semibold tracking-[0.35em] text-paperstory-maroon/70 uppercase sm:mb-4">
@@ -67,7 +67,9 @@ export default function Hero() {
         </div>
       </div>
 
-      <MarqueeTicker />
+      <div className="w-full mt-auto">
+        <MarqueeTicker />
+      </div>
     </section>
   )
 }

@@ -2,6 +2,56 @@ import React, { useState, useMemo } from 'react';
 import { useAdminData } from '../AdminDataContext';
 import { useAdminToast } from '../AdminLayout';
 
+// Helper to rotate an image via client-side canvas
+function rotateImageSrc(src, degrees = 90) {
+  return new Promise((resolve, reject) => {
+    if (!src) return reject(new Error('No image source'));
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        const naturalWidth = img.naturalWidth || img.width;
+        const naturalHeight = img.naturalHeight || img.height;
+
+        const swap = degrees === 90 || degrees === 270;
+        let targetWidth = swap ? naturalHeight : naturalWidth;
+        let targetHeight = swap ? naturalWidth : naturalHeight;
+
+        // Scale down very large camera images to max 1600px to maintain crisp clarity without overflowing localStorage
+        const maxDim = 1600;
+        if (Math.max(targetWidth, targetHeight) > maxDim) {
+          const scale = maxDim / Math.max(targetWidth, targetHeight);
+          targetWidth = Math.round(targetWidth * scale);
+          targetHeight = Math.round(targetHeight * scale);
+        }
+
+        canvas.width = targetWidth;
+        canvas.height = targetHeight;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return reject(new Error('Canvas 2D context unavailable'));
+
+        ctx.translate(canvas.width / 2, canvas.height / 2);
+        ctx.rotate((degrees * Math.PI) / 180);
+        ctx.drawImage(
+          img,
+          -(swap ? targetHeight : targetWidth) / 2,
+          -(swap ? targetWidth : targetHeight) / 2,
+          swap ? targetHeight : targetWidth,
+          swap ? targetWidth : targetHeight
+        );
+
+        const rotatedData = canvas.toDataURL('image/jpeg', 0.88);
+        resolve(rotatedData);
+      } catch (err) {
+        reject(err);
+      }
+    };
+    img.onerror = () => reject(new Error('Failed to load image for rotation'));
+    img.src = src;
+  });
+}
+
 export default function ProductsPage() {
   const { products, categories, addProduct, updateProduct, deleteProduct, bulkDeleteProducts } = useAdminData();
   const showToast = useAdminToast();
@@ -11,6 +61,8 @@ export default function ProductsPage() {
   const [selectedStatus, setSelectedStatus] = useState('all');
   const [viewMode, setViewMode] = useState('table'); // 'table' | 'grid'
   const [selectedIds, setSelectedIds] = useState([]);
+  const [rotatingIdx, setRotatingIdx] = useState(null);
+  const [rotatingProductId, setRotatingProductId] = useState(null);
 
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -161,6 +213,44 @@ export default function ProductsPage() {
       const reordered = [...formData.images];
       reordered[idx] = newUrl.trim();
       setFormData((prev) => ({ ...prev, images: reordered }));
+    }
+  };
+
+  const rotateImage = async (idx) => {
+    const src = formData.images[idx];
+    if (!src) return;
+    setRotatingIdx(idx);
+    try {
+      const rotated = await rotateImageSrc(src, 90);
+      const reordered = [...formData.images];
+      reordered[idx] = rotated;
+      setFormData((prev) => ({ ...prev, images: reordered }));
+      showToast(`Image #${idx + 1} rotated 90° clockwise`);
+    } catch (err) {
+      console.error('Failed to rotate image:', err);
+      alert('Could not rotate image. Please ensure the image is accessible.');
+    } finally {
+      setRotatingIdx(null);
+    }
+  };
+
+  const rotateProductCover = async (p) => {
+    const images = p.images && p.images.length > 0 ? [...p.images] : (p.image ? [p.image] : []);
+    if (images.length === 0) {
+      alert('No images to rotate for this product.');
+      return;
+    }
+    setRotatingProductId(p.id);
+    try {
+      const rotated = await rotateImageSrc(images[0], 90);
+      images[0] = rotated;
+      updateProduct(p.id, { images, image: rotated });
+      showToast(`Rotated cover photo for "${p.sku || p.name}"`);
+    } catch (err) {
+      console.error('Failed to rotate cover image:', err);
+      alert('Could not rotate cover photo.');
+    } finally {
+      setRotatingProductId(null);
     }
   };
 
@@ -326,6 +416,15 @@ export default function ProductsPage() {
                       </td>
                       <td style={{ textAlign: 'right' }}>
                         <div style={{ display: 'inline-flex', gap: '6px' }}>
+                          <button
+                            onClick={() => rotateProductCover(p)}
+                            disabled={rotatingProductId === p.id}
+                            className="admin-btn admin-btn-secondary"
+                            style={{ padding: '4px 8px', fontSize: '12px' }}
+                            title="Rotate cover photo 90° clockwise"
+                          >
+                            {rotatingProductId === p.id ? '⏳' : '⟳'}
+                          </button>
                           <button onClick={() => openEditModal(p)} className="admin-btn admin-btn-secondary" style={{ padding: '4px 10px', fontSize: '12px' }}>
                             Edit
                           </button>
@@ -368,6 +467,15 @@ export default function ProductsPage() {
                   </div>
                   <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
                     <button onClick={() => openEditModal(p)} className="admin-btn admin-btn-secondary" style={{ flex: 1, padding: '6px' }}>Edit</button>
+                    <button
+                      onClick={() => rotateProductCover(p)}
+                      disabled={rotatingProductId === p.id}
+                      className="admin-btn admin-btn-secondary"
+                      style={{ padding: '6px 10px', fontSize: '13px' }}
+                      title="Rotate cover photo 90° clockwise"
+                    >
+                      {rotatingProductId === p.id ? '⏳' : '⟳'}
+                    </button>
                     <button onClick={() => handleDelete(p.id, p.name)} className="admin-btn admin-btn-danger" style={{ padding: '6px 10px' }}>🗑️</button>
                   </div>
                 </div>
@@ -469,7 +577,7 @@ export default function ProductsPage() {
                     <div>
                       <h4 style={{ margin: 0, fontSize: '15px', fontWeight: '700' }}>Product Images ({formData.images.length})</h4>
                       <p style={{ margin: '2px 0 0', fontSize: '12px', color: 'var(--admin-muted)' }}>
-                        First image is automatically used as the <strong>Cover Badge</strong> photo on the website. Use arrows to reorder.
+                        First image is automatically used as the <strong>Cover Badge</strong> photo on the website. Use arrows to reorder, or <strong>⟳ 90°</strong> to rotate any photo.
                       </p>
                     </div>
                     <button type="button" onClick={addImageUrl} className="admin-btn admin-btn-secondary" style={{ fontSize: '12px' }}>
@@ -503,20 +611,41 @@ export default function ProductsPage() {
                         </div>
 
                         {/* Image Action buttons */}
-                        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '4px', background: '#fff' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '4px 6px', background: '#fff', borderTop: '1px solid var(--admin-border)' }}>
                           <button
                             type="button"
                             onClick={() => moveImage(idx, idx - 1)}
                             disabled={idx === 0}
-                            style={{ border: 'none', background: 'none', cursor: idx === 0 ? 'default' : 'pointer', opacity: idx === 0 ? 0.3 : 1 }}
-                            title="Move left"
+                            style={{ border: 'none', background: 'none', cursor: idx === 0 ? 'default' : 'pointer', opacity: idx === 0 ? 0.3 : 1, padding: '2px 4px' }}
+                            title="Move left (set earlier)"
                           >
                             ◀
                           </button>
                           <button
                             type="button"
+                            onClick={() => rotateImage(idx)}
+                            disabled={rotatingIdx === idx}
+                            style={{
+                              border: '1px solid #E5E7EB',
+                              borderRadius: '4px',
+                              background: '#F9FAFB',
+                              cursor: rotatingIdx === idx ? 'wait' : 'pointer',
+                              fontSize: '11px',
+                              padding: '2px 5px',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '2px',
+                              color: 'var(--admin-brand)',
+                              fontWeight: '600'
+                            }}
+                            title="Rotate 90° clockwise"
+                          >
+                            {rotatingIdx === idx ? '⏳' : '⟳ 90°'}
+                          </button>
+                          <button
+                            type="button"
                             onClick={() => replaceImage(idx)}
-                            style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: '12px' }}
+                            style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: '12px', padding: '2px 4px' }}
                             title="Replace URL"
                           >
                             🔄
@@ -525,15 +654,15 @@ export default function ProductsPage() {
                             type="button"
                             onClick={() => moveImage(idx, idx + 1)}
                             disabled={idx === formData.images.length - 1}
-                            style={{ border: 'none', background: 'none', cursor: idx === formData.images.length - 1 ? 'default' : 'pointer', opacity: idx === formData.images.length - 1 ? 0.3 : 1 }}
-                            title="Move right"
+                            style={{ border: 'none', background: 'none', cursor: idx === formData.images.length - 1 ? 'default' : 'pointer', opacity: idx === formData.images.length - 1 ? 0.3 : 1, padding: '2px 4px' }}
+                            title="Move right (set later)"
                           >
                             ▶
                           </button>
                           <button
                             type="button"
                             onClick={() => removeImage(idx)}
-                            style={{ border: 'none', background: 'none', cursor: 'pointer', color: 'var(--admin-danger)' }}
+                            style={{ border: 'none', background: 'none', cursor: 'pointer', color: 'var(--admin-danger)', padding: '2px 4px' }}
                             title="Delete"
                           >
                             ✕

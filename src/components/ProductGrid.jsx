@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useInView } from '../hooks/useInView'
 import { products } from '../data/products'
+import { useAdminData } from '../admin/AdminDataContext'
 import ProductCard from './ProductCard'
 
 export default function ProductGrid({
@@ -19,7 +20,39 @@ export default function ProductGrid({
 }) {
   const [ref, isVisible] = useInView()
   const [sortBy, setSortBy] = useState('featured')
-  const baseProducts = items ?? products
+
+  let adminProducts = null
+  try {
+    const admin = useAdminData()
+    if (admin && admin.products) {
+      adminProducts = admin.products
+    }
+  } catch (e) {
+    // Outside admin context
+  }
+
+  const rawBaseProducts = items ?? products
+  const baseProducts = useMemo(() => {
+    if (!adminProducts || adminProducts.length === 0) return rawBaseProducts
+    const adminMap = new Map()
+    adminProducts.forEach((p) => {
+      if (p.id) adminMap.set(String(p.id), p)
+      if (p.sku) adminMap.set(String(p.sku), p)
+      if (p.slug) adminMap.set(String(p.slug), p)
+    })
+    return rawBaseProducts.map((p) => {
+      const match = adminMap.get(String(p.id)) || adminMap.get(String(p.sku)) || adminMap.get(String(p.slug))
+      if (match) {
+        return {
+          ...p,
+          ...match,
+          image: match.images?.[0] || match.image || p.image,
+          images: match.images && match.images.length > 0 ? match.images : p.images,
+        }
+      }
+      return p
+    })
+  }, [rawBaseProducts, adminProducts])
   const isVisibleNow = showOnLoad || isVisible
   const isFeatured = Boolean(isFeaturedCollection) || (Boolean(title) && (title.toLowerCase().includes("featured") || title.toLowerCase().includes("best seller"))) || id === "best-sellers"
 

@@ -8,6 +8,7 @@ export default function MediaPage() {
 
   const [search, setSearch] = useState('');
   const [newUrl, setNewUrl] = useState('');
+  const [rotatingUrl, setRotatingUrl] = useState(null);
 
   // Collect all images from products and media list
   const allMedia = Array.from(
@@ -34,6 +35,44 @@ export default function MediaPage() {
     if (window.confirm('Delete this image from media library?')) {
       deleteMedia(url);
       showToast('Media deleted');
+    }
+  };
+
+  const handleRotate = async (url) => {
+    setRotatingUrl(url);
+    try {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      await new Promise((res, rej) => {
+        img.onload = res;
+        img.onerror = rej;
+        img.src = url;
+      });
+      const canvas = document.createElement('canvas');
+      const naturalWidth = img.naturalWidth || img.width;
+      const naturalHeight = img.naturalHeight || img.height;
+      let targetWidth = naturalHeight;
+      let targetHeight = naturalWidth;
+      const maxDim = 1600;
+      if (Math.max(targetWidth, targetHeight) > maxDim) {
+        const scale = maxDim / Math.max(targetWidth, targetHeight);
+        targetWidth = Math.round(targetWidth * scale);
+        targetHeight = Math.round(targetHeight * scale);
+      }
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.rotate((90 * Math.PI) / 180);
+      ctx.drawImage(img, -targetHeight / 2, -targetWidth / 2, targetHeight, targetWidth);
+      const rotated = canvas.toDataURL('image/jpeg', 0.88);
+      addMedia(rotated);
+      deleteMedia(url);
+      showToast('Image rotated 90° and updated');
+    } catch (e) {
+      alert('Could not rotate this media item.');
+    } finally {
+      setRotatingUrl(null);
     }
   };
 
@@ -116,7 +155,17 @@ export default function MediaPage() {
                   className="admin-btn admin-btn-secondary"
                   style={{ flex: 1, padding: '4px', fontSize: '11px' }}
                 >
-                  📋 Copy URL
+                  📋 Copy
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleRotate(url)}
+                  disabled={rotatingUrl === url}
+                  className="admin-btn admin-btn-secondary"
+                  style={{ padding: '4px 8px', fontSize: '11px' }}
+                  title="Rotate 90° clockwise"
+                >
+                  {rotatingUrl === url ? '⏳' : '⟳'}
                 </button>
                 <button
                   type="button"
