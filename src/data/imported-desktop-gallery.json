@@ -1137,6 +1137,17 @@
         "/nikkah/calligraphy-certificate/02.jpg",
         "/nikkah/calligraphy-certificate/03.jpg"
       ]
+    },
+    {
+      "name": "Royal Gold Foil Floral Nikkah Certificate",
+      "code": "TPS-NC-06",
+      "sku": "TPS-NC-06",
+      "images": [
+        "/nikkah/printed-6/01.jpg",
+        "/nikkah/printed-6/02.jpg",
+        "/nikkah/printed-6/03.jpg",
+        "/nikkah/printed-6/04.jpg"
+      ]
     }
   ],
   "updatedAt": "2026-10-31T07:55:57.578Z",

@@ -1,5 +1,6 @@
 import Hero from '../components/Hero'
 import ProductGrid from '../components/ProductGrid'
+import InstagramShowcase from '../components/InstagramShowcase'
 import PaperStoryDifference from '../components/PaperStoryDifference'
 import OurStoryHome from '../components/OurStoryHome'
 import RealWeddings from '../components/RealWeddings'
@@ -26,6 +27,7 @@ export default function HomePage() {
         isFeaturedCollection={true}
         showViewAll
       />
+      <InstagramShowcase />
       <PaperStoryDifference />
       <OurStoryHome />
       <ProductGrid

@@ -824,6 +824,8 @@ const NIKKAH_GALLERY_PRODUCTS = {
     },
     ...(importedDesktopGallery?.nikkahnama || []).map((n) => ({
       name: n.name,
+      code: n.code || n.sku,
+      sku: n.sku || n.code,
       images: n.images,
     })),
   ],
@@ -904,6 +906,8 @@ function resolveSeoDesignName({ name, categorySlug, subcategorySlug, typeSlug, d
 
 function addDesigns({
   name,
+  code,
+  sku,
   categoryLabel,
   categorySlug,
   subcategorySlug,
@@ -921,10 +925,12 @@ function addDesigns({
   if (galleryImages?.length) {
     const designNum = weddingDesignNumber(galleryImages) ?? parseDesignNum(name, 1)
     const baseObj = { categorySlug, subcategorySlug: subcategorySlug || null, typeSlug: typeSlug || null }
+    const resolvedCode = code || sku || getProductCode(baseObj, designNum)
     return [
       {
         id: productId++,
-        code: getProductCode(baseObj, designNum),
+        code: resolvedCode,
+        sku: sku || resolvedCode,
         designNumber: designNum,
         name: resolveSeoDesignName({ name, categorySlug, subcategorySlug, typeSlug, designNum, galleryImages }),
         category: categoryLabel,
@@ -988,6 +994,8 @@ function buildAllProducts() {
                 whatsappLabel: sub.whatsappPrefix,
                 galleryImages: design.images,
                 name: design.name,
+                code: design.code,
+                sku: design.sku,
                 showPrice: cat.showPrice,
                 priceBase: 1200,
                 paymentType: cat.paymentType,

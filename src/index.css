@@ -520,6 +520,60 @@ h1, h2, h3, h4 {
   100% { transform: translateY(-50%); }
 }
 
+/* ── Instagram Marquee Showcase ── */
+.insta-marquee {
+  overflow: hidden;
+}
+
+.insta-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 0.75rem;
+  animation: review-marquee-x 52s linear infinite;
+  will-change: transform;
+}
+
+.insta-marquee:hover .insta-marquee-track {
+  animation-play-state: paused;
+}
+
+.insta-slider-desktop .insta-marquee {
+  height: 32rem;
+  display: flex;
+  justify-content: center;
+}
+
+.insta-slider-desktop .insta-marquee-track {
+  flex-direction: column;
+  width: auto;
+  height: max-content;
+  animation-name: review-marquee-y;
+  animation-duration: 44s;
+}
+
+.insta-slider-desktop .insta-marquee--reverse .insta-marquee-track {
+  animation-direction: reverse;
+  animation-duration: 50s;
+}
+
+.insta-slide-card {
+  margin: 0;
+  flex-shrink: 0;
+  width: 13.5rem;
+  border-radius: 0.75rem;
+  background: #fff;
+  border: 1px solid rgba(163, 30, 59, 0.12);
+  box-shadow: 0 4px 14px rgba(139, 26, 50, 0.08);
+  padding: 0;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.insta-slider-desktop .insta-slide-card {
+  width: 100%;
+  max-width: 15rem;
+}
+
 /* ── Testimonial slider ── */
 .testimonial-slider {
   display: flex;

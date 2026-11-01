@@ -83,6 +83,7 @@ export const SEO_NIKKAH_PRINTED = {
   3: 'Modern Printed Nikkah Certificate Card',
   4: 'Elegant Printed Nikkah Certificate',
   5: 'Gold Border Printed Nikkah Certificate',
+  6: 'Royal Gold Foil Floral Nikkah Certificate',
 }
 
 export const SEO_PACKAGING_BUSINESS = {

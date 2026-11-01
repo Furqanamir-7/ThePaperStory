@@ -199,6 +199,33 @@ function seedInitialProducts() {
       rating: 4.9,
       reviewCount: 5,
       createdAt: new Date().toISOString(),
+    },
+    {
+      id: 'prod-nc-09',
+      name: 'Royal Gold Foil Floral Nikkah Certificate',
+      slug: 'royal-gold-foil-floral-nikkah-certificate',
+      sku: 'TPS-NC-09',
+      category: 'Nikkah Certificates',
+      categoryId: 'cat-3',
+      price: 'Price on Request',
+      numericPrice: 0,
+      salePrice: null,
+      stock: 50,
+      status: 'Active',
+      featured: true,
+      isNew: true,
+      type: 'physical',
+      description: 'Handcrafted luxury Nikkah certificate featuring intricate royal gold foil floral borders, classic Islamic arches, and bespoke calligraphy on archival textured imported cardstock.',
+      shortDescription: 'Luxury gold foil floral Nikkah certificate in heirloom presentation folder.',
+      images: [
+        '/nikkah/printed-6/01.jpg',
+        '/nikkah/printed-6/02.jpg',
+        '/nikkah/printed-6/03.jpg',
+        '/nikkah/printed-6/04.jpg',
+      ],
+      rating: 5.0,
+      reviewCount: 3,
+      createdAt: new Date().toISOString(),
     }
   );
 
@@ -209,7 +236,16 @@ export function AdminDataProvider({ children }) {
   const [data, setData] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        const seeded = seedInitialProducts();
+        const existingSkus = new Set((parsed.products || []).map((p) => p.sku || p.id));
+        const missing = seeded.filter((s) => !existingSkus.has(s.sku) && !existingSkus.has(s.id));
+        if (missing.length > 0) {
+          parsed.products = [...(parsed.products || []), ...missing];
+        }
+        return parsed;
+      }
     } catch (e) {
       console.warn('Could not read admin data from localStorage:', e);
     }

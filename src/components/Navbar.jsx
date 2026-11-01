@@ -25,14 +25,14 @@ export default function Navbar() {
   return (
     <>
       <header className="fixed top-0 right-0 left-0 z-50 bg-paperstory-maroon shadow-md">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 sm:py-5 lg:px-8">
-          {/* Left section: Hamburger button on mobile & desktop + Logo */}
-          <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+        <nav className="mx-auto flex max-w-[96rem] items-center justify-between gap-3 px-3 py-3 sm:px-5 sm:py-4 lg:pl-5 lg:pr-7 xl:pl-6 xl:pr-8">
+          {/* Left section: Hamburger button on mobile & desktop + Logo (positioned neatly to the left) */}
+          <div className="flex items-center gap-2 sm:gap-3.5 min-w-0">
             <button
               type="button"
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={menuOpen}
-              className={`flex items-center gap-2 rounded-full px-2.5 py-1.5 sm:px-3 sm:py-2 text-paperstory-cream transition-colors hover:bg-paperstory-cream/15 focus:outline-hidden cursor-pointer ${
+              className={`flex items-center gap-2 rounded-full px-2 py-1.5 sm:px-2.5 sm:py-2 text-paperstory-cream transition-colors hover:bg-paperstory-cream/15 focus:outline-hidden cursor-pointer ${
                 menuOpen ? 'bg-paperstory-cream/20' : ''
               }`}
               onClick={() => setMenuOpen(!menuOpen)}
@@ -47,12 +47,12 @@ export default function Navbar() {
               </span>
             </button>
 
-            <Link to="/" className="flex min-w-0 items-center gap-2 sm:gap-4">
+            <Link to="/" className="flex min-w-0 items-center gap-2 sm:gap-3">
               <img
                 src="/logo.png"
                 alt=""
                 aria-hidden="true"
-                className="h-10 w-10 shrink-0 rounded-full sm:h-14 sm:w-14"
+                className="h-10 w-10 shrink-0 rounded-full sm:h-13 sm:w-13"
               />
               <BrandWordmark size="nav" variant="light" className="min-w-0 truncate" />
             </Link>
