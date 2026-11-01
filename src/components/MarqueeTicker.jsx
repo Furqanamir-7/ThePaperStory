@@ -1,3 +1,5 @@
+import { useAdminData } from '../admin/AdminDataContext'
+
 function MarqueeFlower() {
   return (
     <svg className="marquee-flower" viewBox="0 0 64 64" fill="none" aria-hidden="true">
@@ -12,7 +14,7 @@ function MarqueeFlower() {
   )
 }
 
-const items = [
+const DEFAULT_ITEMS = [
   'LUXURY WEDDING INVITATIONS',
   'BESPOKE STATIONERY',
   'CUSTOM DESIGNING, PRINTING & PACKAGING',
@@ -25,11 +27,11 @@ const items = [
   'FAVOURS',
 ]
 
-function MarqueeContent() {
+function MarqueeContent({ items }) {
   return (
     <>
-      {items.map((item) => (
-        <span key={item} className="marquee-item">
+      {items.map((item, idx) => (
+        <span key={`${item}-${idx}`} className="marquee-item">
           {item}
           <MarqueeFlower />
         </span>
@@ -39,14 +41,33 @@ function MarqueeContent() {
 }
 
 export default function MarqueeTicker() {
+  let marqueeConfig = null
+  try {
+    const admin = useAdminData()
+    marqueeConfig = admin?.marquee
+  } catch {}
+
+  if (marqueeConfig && !marqueeConfig.enabled) {
+    return null
+  }
+
+  const items =
+    marqueeConfig?.items?.filter((i) => i.active).map((i) => i.text) || DEFAULT_ITEMS
+
   return (
-    <div className="marquee-ticker">
+    <div
+      className="marquee-ticker"
+      style={{
+        backgroundColor: marqueeConfig?.bgColor || undefined,
+        color: marqueeConfig?.textColor || undefined,
+      }}
+    >
       <div className="marquee-track">
         <div className="marquee-track-group">
-          <MarqueeContent />
+          <MarqueeContent items={items} />
         </div>
         <div className="marquee-track-group" aria-hidden="true">
-          <MarqueeContent />
+          <MarqueeContent items={items} />
         </div>
       </div>
     </div>
