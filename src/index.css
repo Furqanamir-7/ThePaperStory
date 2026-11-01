@@ -85,6 +85,25 @@ h1, h2, h3, h4 {
   }
 }
 
+/* Generously extended hero height on desktop so the video showcase frame fits comfortably with breathing room */
+@media (min-width: 1024px) {
+  .cute-hero {
+    min-height: clamp(760px, 88vh, 920px);
+  }
+  .cute-hero > .relative.mx-auto {
+    min-height: clamp(660px, 78vh, 820px);
+  }
+}
+
+@media (min-width: 1280px) {
+  .cute-hero {
+    min-height: clamp(820px, 92vh, 980px);
+  }
+  .cute-hero > .relative.mx-auto {
+    min-height: clamp(720px, 82vh, 880px);
+  }
+}
+
 .hero-floral-bg,
 .loader-floral-bg {
   position: absolute;
