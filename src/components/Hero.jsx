@@ -46,21 +46,21 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Right Column: Hero Video Showcase (Expanded to cover space, badge removed) */}
+        {/* Right Column: Hero Video Showcase (Clean rectangular frame matching the video) */}
         <div className="mt-8 flex flex-1 items-center justify-center lg:mt-0 lg:justify-end w-full">
-          <div className="relative mx-auto w-full max-w-[460px] sm:max-w-[540px] lg:max-w-[580px] xl:max-w-[620px]">
+          <div className="relative mx-auto w-full max-w-[500px] sm:max-w-[580px] lg:max-w-[620px] xl:max-w-[660px]">
             {/* Soft decorative background glow */}
-            <div className="pointer-events-none absolute -inset-4 rounded-3xl bg-gradient-to-tr from-paperstory-maroon/20 via-paperstory-berry/15 to-transparent blur-3xl" />
+            <div className="pointer-events-none absolute -inset-3 rounded-2xl bg-gradient-to-tr from-paperstory-maroon/15 via-paperstory-berry/10 to-transparent blur-2xl" />
 
-            {/* Video container card */}
-            <div className="relative overflow-hidden rounded-3xl border-2 border-white/90 bg-paperstory-wash shadow-[0_20px_60px_rgba(163,30,59,0.18)] ring-1 ring-paperstory-maroon/15 transition-all duration-300 hover:shadow-[0_24px_70px_rgba(163,30,59,0.25)]">
+            {/* Crisp rectangular video frame preserving the natural video aspect ratio */}
+            <div className="relative overflow-hidden rounded-xl border border-white/90 bg-white/40 p-1.5 shadow-[0_16px_50px_rgba(163,30,59,0.14)] backdrop-blur-sm transition-all duration-300 hover:shadow-[0_20px_60px_rgba(163,30,59,0.2)]">
               <video
                 src="/hero-showcase.mp4"
                 autoPlay
                 loop
                 muted
                 playsInline
-                className="h-full w-full object-cover min-h-[380px] sm:min-h-[460px] lg:min-h-[520px] max-h-[640px]"
+                className="block w-full h-auto rounded-lg shadow-sm"
               />
             </div>
           </div>
