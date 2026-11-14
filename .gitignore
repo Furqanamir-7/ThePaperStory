@@ -11,3 +11,5 @@ scripts/*.cjs
 
 .env*
 .vercel
+
+public/IMG_7290.MP4
