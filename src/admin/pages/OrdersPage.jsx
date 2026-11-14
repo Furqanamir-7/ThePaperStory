@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useAdminData } from '../AdminDataContext';
 import { useAdminToast } from '../AdminLayout';
+import InvoiceModal from '../../components/InvoiceModal';
 
 export default function OrdersPage() {
   const { orders, updateOrderStatus, addOrder, deleteOrder, products = [] } = useAdminData();
@@ -28,6 +29,9 @@ export default function OrdersPage() {
     phone: '',
     shippingAddress: '',
     items: [{ productName: '', quantity: 1, unitPrice: '', lineTotal: '' }],
+    subtotal: '',
+    discount: '',
+    deliveryCharges: '',
     total: '',
     paymentMethod: 'Bank Transfer',
     paymentStatus: 'Paid',
@@ -95,10 +99,29 @@ export default function OrdersPage() {
   };
 
   const handleRemoveItem = (index) => {
-    setNewOrder((prev) => ({
-      ...prev,
-      items: prev.items.filter((_, i) => i !== index),
-    }));
+    setNewOrder((prev) => {
+      const updated = prev.items.filter((_, i) => i !== index);
+      let sum = 0;
+      let hasValidPrice = false;
+      for (const item of updated) {
+        const itemP = parseFloat(String(item.unitPrice).replace(/[^0-9.]/g, ''));
+        const itemQ = parseInt(item.quantity, 10) || 1;
+        if (!isNaN(itemP) && itemP > 0) {
+          sum += itemP * itemQ;
+          hasValidPrice = true;
+        }
+      }
+      const discNum = parseFloat(String(prev.discount).replace(/[^0-9.]/g, '')) || 0;
+      const deliveryNum = parseFloat(String(prev.deliveryCharges).replace(/[^0-9.]/g, '')) || 0;
+      const finalTotalNum = hasValidPrice ? Math.max(0, sum - discNum + deliveryNum) : '';
+
+      return {
+        ...prev,
+        items: updated,
+        subtotal: hasValidPrice ? `PKR ${sum.toLocaleString()}` : '',
+        total: hasValidPrice ? `PKR ${finalTotalNum.toLocaleString()}` : prev.total,
+      };
+    });
   };
 
   const handleItemChange = (index, field, value) => {
@@ -114,7 +137,7 @@ export default function OrdersPage() {
         updated[index].lineTotal = `PKR ${(priceNum * qty).toLocaleString()}`;
       }
 
-      // Auto-compute overall total
+      // Auto-compute overall subtotal & total
       let sum = 0;
       let hasValidPrice = false;
       for (const item of updated) {
@@ -126,10 +149,81 @@ export default function OrdersPage() {
         }
       }
 
+      const discNum = parseFloat(String(prev.discount).replace(/[^0-9.]/g, '')) || 0;
+      const deliveryNum = parseFloat(String(prev.deliveryCharges).replace(/[^0-9.]/g, '')) || 0;
+      const finalTotalNum = hasValidPrice ? Math.max(0, sum - discNum + deliveryNum) : '';
+
       return {
         ...prev,
         items: updated,
-        total: hasValidPrice ? `PKR ${sum.toLocaleString()}` : prev.total,
+        subtotal: hasValidPrice ? `PKR ${sum.toLocaleString()}` : prev.subtotal,
+        total: hasValidPrice ? `PKR ${finalTotalNum.toLocaleString()}` : prev.total,
+      };
+    });
+  };
+
+  const handleDiscountChange = (val) => {
+    setNewOrder((prev) => {
+      let sum = 0;
+      let hasValidPrice = false;
+      for (const item of prev.items) {
+        const itemP = parseFloat(String(item.unitPrice).replace(/[^0-9.]/g, ''));
+        const itemQ = parseInt(item.quantity, 10) || 1;
+        if (!isNaN(itemP) && itemP > 0) {
+          sum += itemP * itemQ;
+          hasValidPrice = true;
+        }
+      }
+
+      if (!hasValidPrice && prev.subtotal) {
+        const subP = parseFloat(String(prev.subtotal).replace(/[^0-9.]/g, ''));
+        if (!isNaN(subP) && subP > 0) {
+          sum = subP;
+          hasValidPrice = true;
+        }
+      }
+
+      const discNum = parseFloat(String(val).replace(/[^0-9.]/g, '')) || 0;
+      const deliveryNum = parseFloat(String(prev.deliveryCharges).replace(/[^0-9.]/g, '')) || 0;
+      const finalTotalNum = hasValidPrice ? Math.max(0, sum - discNum + deliveryNum) : '';
+
+      return {
+        ...prev,
+        discount: val,
+        total: hasValidPrice ? `PKR ${finalTotalNum.toLocaleString()}` : prev.total,
+      };
+    });
+  };
+
+  const handleDeliveryChange = (val) => {
+    setNewOrder((prev) => {
+      let sum = 0;
+      let hasValidPrice = false;
+      for (const item of prev.items) {
+        const itemP = parseFloat(String(item.unitPrice).replace(/[^0-9.]/g, ''));
+        const itemQ = parseInt(item.quantity, 10) || 1;
+        if (!isNaN(itemP) && itemP > 0) {
+          sum += itemP * itemQ;
+          hasValidPrice = true;
+        }
+      }
+
+      if (!hasValidPrice && prev.subtotal) {
+        const subP = parseFloat(String(prev.subtotal).replace(/[^0-9.]/g, ''));
+        if (!isNaN(subP) && subP > 0) {
+          sum = subP;
+          hasValidPrice = true;
+        }
+      }
+
+      const discNum = parseFloat(String(prev.discount).replace(/[^0-9.]/g, '')) || 0;
+      const deliveryNum = parseFloat(String(val).replace(/[^0-9.]/g, '')) || 0;
+      const finalTotalNum = hasValidPrice ? Math.max(0, sum - discNum + deliveryNum) : '';
+
+      return {
+        ...prev,
+        deliveryCharges: val,
+        total: hasValidPrice ? `PKR ${finalTotalNum.toLocaleString()}` : prev.total,
       };
     });
   };
@@ -157,14 +251,20 @@ export default function OrdersPage() {
     const finalOrder = {
       ...newOrder,
       items: cleanedItems.length ? cleanedItems : [{ productName: 'Custom Bespoke Stationery Order', quantity: 1, unitPrice: newOrder.total || 'Custom', lineTotal: newOrder.total || 'Custom' }],
+      subtotal: newOrder.subtotal || newOrder.total,
+      discount: newOrder.discount || '',
+      deliveryCharges: newOrder.deliveryCharges || '',
+      delivery: newOrder.deliveryCharges || '',
       total: newOrder.total.trim() ? (newOrder.total.startsWith('PKR') ? newOrder.total : `PKR ${newOrder.total}`) : 'PKR 0',
       createdAt: new Date().toISOString(),
     };
 
-    addOrder(finalOrder);
+    const createdOrder = addOrder(finalOrder);
     setIsAddOrderOpen(false);
     setNewOrder(initialNewOrderState());
     showToast(`Order ${finalOrder.number} created successfully!`);
+    setSelectedOrder(createdOrder || finalOrder);
+    setIsInvoiceOpen(true);
   };
 
   const handleExportCSV = () => {
@@ -227,21 +327,21 @@ export default function OrdersPage() {
 
       {/* Filter / Search Bar */}
       <div className="admin-card" style={{ padding: '16px 20px', marginBottom: '20px' }}>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px', alignItems: 'center' }}>
+        <div className="admin-filter-inputs" style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
           <input
             type="text"
             placeholder="Search by order #, customer name, email, phone..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="admin-input"
-            style={{ flex: 1, minWidth: '280px' }}
+            style={{ flex: '1 1 220px' }}
           />
 
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
             className="admin-select"
-            style={{ width: '180px' }}
+            style={{ flex: '0 1 180px' }}
           >
             <option value="all">All Statuses</option>
             <option value="Pending">Pending</option>
@@ -314,14 +414,27 @@ export default function OrdersPage() {
                         {o.status}
                       </span>
                     </td>
-                    <td style={{ textAlign: 'right' }}>
-                      <button
-                        onClick={() => openOrderDetail(o)}
-                        className="admin-btn admin-btn-secondary"
-                        style={{ padding: '6px 12px', fontSize: '12px' }}
-                      >
-                        View Details
-                      </button>
+                    <td style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>
+                      <div style={{ display: 'inline-flex', gap: '6px' }}>
+                        <button
+                          onClick={() => {
+                            setSelectedOrder(o);
+                            setIsInvoiceOpen(true);
+                          }}
+                          className="admin-btn admin-btn-primary"
+                          style={{ padding: '6px 10px', fontSize: '12px' }}
+                          title="View & Download Invoice"
+                        >
+                          🧾 Invoice
+                        </button>
+                        <button
+                          onClick={() => openOrderDetail(o)}
+                          className="admin-btn admin-btn-secondary"
+                          style={{ padding: '6px 10px', fontSize: '12px' }}
+                        >
+                          View Details
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))
@@ -548,22 +661,75 @@ export default function OrdersPage() {
                   </div>
                 </div>
 
-                {/* Financials & Courier */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '14px', marginBottom: '18px' }}>
+                {/* Financials: Subtotal, Discount, Delivery Charges, Grand Total */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '14px', marginBottom: '14px' }}>
                   <div>
                     <label style={{ display: 'block', fontSize: '12px', fontWeight: '600', color: 'var(--admin-ink)', marginBottom: '4px' }}>
-                      Grand Total (PKR) *
+                      Subtotal
                     </label>
                     <input
                       type="text"
                       placeholder="e.g. PKR 45,000"
                       className="admin-input"
+                      value={newOrder.subtotal}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        const subNum = parseFloat(val.replace(/[^0-9.]/g, '')) || 0;
+                        const discNum = parseFloat(String(newOrder.discount).replace(/[^0-9.]/g, '')) || 0;
+                        const deliveryNum = parseFloat(String(newOrder.deliveryCharges).replace(/[^0-9.]/g, '')) || 0;
+                        setNewOrder({
+                          ...newOrder,
+                          subtotal: val,
+                          total: subNum ? `PKR ${(Math.max(0, subNum - discNum + deliveryNum)).toLocaleString()}` : newOrder.total,
+                        });
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '600', color: '#B91C1C', marginBottom: '4px' }}>
+                      Discount (PKR)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. 5,000 or PKR 5,000"
+                      className="admin-input"
+                      value={newOrder.discount}
+                      onChange={(e) => handleDiscountChange(e.target.value)}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '600', color: '#0369A1', marginBottom: '4px' }}>
+                      Delivery Charges (PKR)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. 500 or PKR 500"
+                      className="admin-input"
+                      value={newOrder.deliveryCharges}
+                      onChange={(e) => handleDeliveryChange(e.target.value)}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: 'var(--admin-ink)', marginBottom: '4px' }}>
+                      Grand Total (PKR) *
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. PKR 40,500"
+                      className="admin-input"
+                      style={{ fontWeight: '700', color: 'var(--admin-brand)', borderColor: 'var(--admin-brand)' }}
                       value={newOrder.total}
                       onChange={(e) => setNewOrder({ ...newOrder, total: e.target.value })}
                       required
                     />
                   </div>
+                </div>
 
+                {/* Payment & Courier Row */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '18px' }}>
                   <div>
                     <label style={{ display: 'block', fontSize: '12px', fontWeight: '600', color: 'var(--admin-ink)', marginBottom: '4px' }}>
                       Payment Method
@@ -682,7 +848,7 @@ export default function OrdersPage() {
 
               {/* Order Items Table */}
               <h4 style={{ margin: '0 0 10px', fontSize: '14px', color: 'var(--admin-ink)' }}>Ordered Items</h4>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', marginBottom: '20px' }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', marginBottom: '14px' }}>
                 <thead>
                   <tr style={{ borderBottom: '1px solid var(--admin-border)', textAlign: 'left', color: 'var(--admin-muted)' }}>
                     <th style={{ padding: '8px 0' }}>Item Name</th>
@@ -700,6 +866,38 @@ export default function OrdersPage() {
                   ))}
                 </tbody>
               </table>
+
+              {/* Totals Summary */}
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}>
+                <div style={{ width: '260px', background: '#FAFAF9', padding: '12px', borderRadius: '8px', border: '1px solid var(--admin-border)', fontSize: '13px' }}>
+                  {selectedOrder.subtotal && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                      <span style={{ color: 'var(--admin-muted)' }}>Subtotal:</span>
+                      <span style={{ fontWeight: '600' }}>{selectedOrder.subtotal}</span>
+                    </div>
+                  )}
+                  {selectedOrder.discount && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px', color: '#B91C1C' }}>
+                      <span>Discount:</span>
+                      <span style={{ fontWeight: '600' }}>-{selectedOrder.discount.startsWith('PKR') ? selectedOrder.discount : `PKR ${selectedOrder.discount}`}</span>
+                    </div>
+                  )}
+                  {(selectedOrder.deliveryCharges || selectedOrder.delivery) && (
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px', color: '#0369A1' }}>
+                      <span>Delivery Charges:</span>
+                      <span style={{ fontWeight: '600' }}>
+                        +{(selectedOrder.deliveryCharges || selectedOrder.delivery).startsWith('PKR')
+                          ? (selectedOrder.deliveryCharges || selectedOrder.delivery)
+                          : `PKR ${selectedOrder.deliveryCharges || selectedOrder.delivery}`}
+                      </span>
+                    </div>
+                  )}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '6px', borderTop: '1px solid var(--admin-border)', fontWeight: '700', fontSize: '14px', color: 'var(--admin-primary)' }}>
+                    <span>Grand Total:</span>
+                    <span>{selectedOrder.total}</span>
+                  </div>
+                </div>
+              </div>
 
               {/* Status & Courier update */}
               <div style={{ padding: '16px', backgroundColor: '#FAFAF9', borderRadius: '10px', border: '1px solid var(--admin-border)' }}>
@@ -761,11 +959,15 @@ export default function OrdersPage() {
               </button>
 
               <div style={{ display: 'flex', gap: '10px' }}>
-                <button onClick={() => setIsInvoiceOpen(true)} className="admin-btn admin-btn-secondary" style={{ fontSize: '13px' }}>
-                  🖨️ Print Packing Invoice
+                <button
+                  onClick={() => setIsInvoiceOpen(true)}
+                  className="admin-btn admin-btn-primary"
+                  style={{ fontSize: '13px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                >
+                  🧾 View & Download Invoice
                 </button>
-                <button onClick={() => setSelectedOrder(null)} className="admin-btn admin-btn-primary" style={{ fontSize: '13px' }}>
-                  Done
+                <button onClick={() => setSelectedOrder(null)} className="admin-btn admin-btn-secondary" style={{ fontSize: '13px' }}>
+                  Close
                 </button>
               </div>
             </div>
@@ -773,63 +975,12 @@ export default function OrdersPage() {
         </div>
       )}
 
-      {/* Printable Invoice Modal */}
+      {/* Official Branded Invoice Modal */}
       {isInvoiceOpen && selectedOrder && (
-        <div className="admin-modal-overlay">
-          <div className="admin-modal" style={{ maxWidth: '640px', backgroundColor: '#fff', padding: '36px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '2px solid #A62341', paddingBottom: '16px', marginBottom: '24px' }}>
-              <div>
-                <h2 style={{ margin: 0, color: '#A62341', fontFamily: 'serif' }}>The Paper Story</h2>
-                <div style={{ fontSize: '12px', color: '#7A6A6E' }}>Luxury Invitations & Bespoke Stationery</div>
-                <div style={{ fontSize: '12px', color: '#7A6A6E' }}>Lahore, Pakistan • WhatsApp: +92 314 4392928</div>
-              </div>
-              <div style={{ textAlign: 'right' }}>
-                <h3 style={{ margin: 0, fontSize: '16px', color: '#2B1B1F' }}>INVOICE / PACKING SLIP</h3>
-                <div style={{ fontSize: '13px', fontWeight: '700', marginTop: '4px' }}>{selectedOrder.number}</div>
-                <div style={{ fontSize: '12px', color: '#7A6A6E' }}>Date: {new Date(selectedOrder.createdAt).toLocaleDateString()}</div>
-              </div>
-            </div>
-
-            <div style={{ marginBottom: '24px', fontSize: '13px' }}>
-              <strong>Ship To:</strong>
-              <div>{selectedOrder.customerName}</div>
-              <div style={{ whiteSpace: 'pre-line', color: '#555' }}>{selectedOrder.shippingAddress}</div>
-              <div>Phone: {selectedOrder.phone}</div>
-            </div>
-
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px', marginBottom: '24px' }}>
-              <thead>
-                <tr style={{ borderBottom: '1px solid #ddd', textAlign: 'left' }}>
-                  <th style={{ padding: '8px 0' }}>Item</th>
-                  <th style={{ padding: '8px 0' }}>Qty</th>
-                  <th style={{ padding: '8px 0', textAlign: 'right' }}>Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {selectedOrder.items?.map((it, i) => (
-                  <tr key={i} style={{ borderBottom: '1px solid #eee' }}>
-                    <td style={{ padding: '8px 0' }}>{it.productName}</td>
-                    <td style={{ padding: '8px 0' }}>{it.quantity}</td>
-                    <td style={{ padding: '8px 0', textAlign: 'right' }}>{it.lineTotal || selectedOrder.total}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            <div style={{ textAlign: 'right', fontSize: '15px', fontWeight: '700', marginBottom: '24px' }}>
-              Grand Total: {selectedOrder.total}
-            </div>
-
-            <div style={{ borderTop: '1px solid #eee', paddingTop: '16px', textAlign: 'center', fontSize: '12px', color: '#7A6A6E' }}>
-              Thank you for trusting The Paper Story with your celebrations!
-            </div>
-
-            <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
-              <button onClick={() => setIsInvoiceOpen(false)} className="admin-btn admin-btn-secondary">Close</button>
-              <button onClick={printInvoice} className="admin-btn admin-btn-primary">Print Now</button>
-            </div>
-          </div>
-        </div>
+        <InvoiceModal
+          order={selectedOrder}
+          onClose={() => setIsInvoiceOpen(false)}
+        />
       )}
     </div>
   );

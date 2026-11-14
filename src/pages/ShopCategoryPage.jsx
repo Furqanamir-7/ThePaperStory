@@ -1,11 +1,14 @@
-import { Link, Navigate, useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, Navigate, useParams, useSearchParams } from 'react-router-dom'
 import PageHeader from '../components/PageHeader'
 import ProductGrid from '../components/ProductGrid'
+import QuickViewModal from '../components/QuickViewModal'
 import CategoryFilterPills from '../components/CategoryFilterPills'
 import SubcategoryPills from '../components/SubcategoryPills'
 import TypePills from '../components/TypePills'
 import WebsiteInviteSlider from '../components/WebsiteInviteSlider'
 import Seo from '../components/Seo'
+import { useAdminData } from '../admin/AdminDataContext'
 import {
   getCategoryBySlug,
   getProductsByCategory,
@@ -13,6 +16,7 @@ import {
   getType,
   normalizeCategorySlug,
   normalizeSubcategorySlug,
+  products,
 } from '../data/products'
 import {
   buildBreadcrumbSchema,
@@ -23,6 +27,19 @@ import {
 
 export default function ShopCategoryPage() {
   const { category, subcategory, type } = useParams()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const codeParam = searchParams.get('code') || searchParams.get('item') || searchParams.get('design')
+  const [autoProduct, setAutoProduct] = useState(null)
+
+  let adminProducts = null
+  try {
+    const admin = useAdminData()
+    if (admin && admin.products) {
+      adminProducts = admin.products
+    }
+  } catch (e) {
+    // Outside admin context
+  }
   const normalizedCategory = normalizeCategorySlug(category)
   const normalizedSub = subcategory ? normalizeSubcategorySlug(subcategory) : null
 
@@ -45,6 +62,51 @@ export default function ShopCategoryPage() {
     type || null
   )
   const isWebsiteInvitation = sub?.slug === 'website-invitation'
+
+  useEffect(() => {
+    if (!codeParam) {
+      setAutoProduct(null)
+      return
+    }
+
+    const clean = codeParam.trim().toLowerCase()
+    const pool = [
+      ...(categoryProducts || []),
+      ...(adminProducts || []),
+      ...(products || []),
+    ]
+
+    const match = pool.find((p) => {
+      const pCode = (p.code || p.sku || '').toLowerCase()
+      const pId = String(p.id || '').toLowerCase()
+      const pSlug = (p.slug || '').toLowerCase()
+      return pCode === clean || pId === clean || pSlug === clean
+    })
+
+    if (match) {
+      // Merge with any admin updates
+      if (adminProducts && adminProducts.length > 0) {
+        const adminOverride = adminProducts.find(
+          (ap) =>
+            String(ap.id) === String(match.id) ||
+            (ap.code && ap.code.toLowerCase() === (match.code || '').toLowerCase()) ||
+            (ap.sku && ap.sku.toLowerCase() === (match.sku || '').toLowerCase())
+        )
+        if (adminOverride) {
+          setAutoProduct({
+            ...match,
+            ...adminOverride,
+            code: match.code || adminOverride.code || adminOverride.sku,
+            sku: match.sku || adminOverride.sku || adminOverride.code,
+            categorySlug: match.categorySlug || adminOverride.categorySlug,
+            designNumber: match.designNumber || adminOverride.designNumber,
+          })
+          return
+        }
+      }
+      setAutoProduct(match)
+    }
+  }, [codeParam, categoryProducts, adminProducts])
 
   if (!cat) {
     return (
@@ -175,6 +237,21 @@ export default function ShopCategoryPage() {
           </Link>
         </div>
       </section>
+
+      {/* Auto-open direct design modal from WhatsApp / Direct Link */}
+      {autoProduct && (
+        <QuickViewModal
+          product={autoProduct}
+          onClose={() => {
+            setAutoProduct(null)
+            const p = new URLSearchParams(searchParams)
+            p.delete('code')
+            p.delete('item')
+            p.delete('design')
+            setSearchParams(p, { replace: true })
+          }}
+        />
+      )}
     </>
   )
 }

@@ -1,0 +1,57 @@
+{
+  "ribbon": [
+    "/add-ons/ribbon/img-01.jpg",
+    "/add-ons/ribbon/img-02.jpg",
+    "/add-ons/ribbon/img-03.jpg",
+    "/add-ons/ribbon/img-04.jpg",
+    "/add-ons/ribbon/img-05.jpg",
+    "/add-ons/ribbon/img-06.jpg",
+    "/add-ons/ribbon/img-07.jpg",
+    "/add-ons/ribbon/img-08.jpg",
+    "/add-ons/ribbon/img-09.jpg"
+  ],
+  "gold-printing": [
+    "/add-ons/gold-printing/img-01.jpg",
+    "/add-ons/gold-printing/img-02.jpg",
+    "/add-ons/gold-printing/video-01.mp4",
+    "/add-ons/gold-printing/video-02.mp4",
+    "/add-ons/gold-printing/video-03.mp4",
+    "/add-ons/gold-printing/video-04.mp4",
+    "/add-ons/gold-printing/video-05.mp4"
+  ],
+  "printed-butter-vellum-paper": [
+    "/add-ons/printed-butter-vellum-paper/img-01.jpg",
+    "/add-ons/printed-butter-vellum-paper/img-02.jpg",
+    "/add-ons/printed-butter-vellum-paper/img-03.jpg",
+    "/add-ons/printed-butter-vellum-paper/img-04.jpg",
+    "/add-ons/printed-butter-vellum-paper/img-05.jpg",
+    "/add-ons/printed-butter-vellum-paper/img-06.jpg",
+    "/add-ons/printed-butter-vellum-paper/img-07.jpg",
+    "/add-ons/printed-butter-vellum-paper/img-08.jpg",
+    "/add-ons/printed-butter-vellum-paper/img-09.jpg",
+    "/add-ons/printed-butter-vellum-paper/img-10.jpg",
+    "/add-ons/printed-butter-vellum-paper/video-01.mp4",
+    "/add-ons/printed-butter-vellum-paper/img-11.jpg",
+    "/add-ons/printed-butter-vellum-paper/img-12.jpg"
+  ],
+  "envelope-liner": [
+    "/add-ons/envelope-liner/img-01.jpg",
+    "/add-ons/envelope-liner/img-02.jpg"
+  ],
+  "scalloped-insert": [
+    "/add-ons/scalloped-insert/img-01.jpg",
+    "/add-ons/scalloped-insert/img-02.jpg",
+    "/add-ons/scalloped-insert/video-01.mp4",
+    "/add-ons/scalloped-insert/img-03.jpg",
+    "/add-ons/scalloped-insert/video-02.mp4"
+  ],
+  "gold-foiling": [
+    "/add-ons/gold-foiling/img-01.jpg",
+    "/add-ons/gold-foiling/img-02.jpg",
+    "/add-ons/gold-foiling/img-03.jpg",
+    "/add-ons/gold-foiling/img-04.jpg",
+    "/add-ons/gold-foiling/video-01.mp4",
+    "/add-ons/gold-foiling/video-02.mp4",
+    "/add-ons/gold-foiling/video-03.mp4"
+  ]
+}

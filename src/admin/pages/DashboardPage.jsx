@@ -4,12 +4,17 @@ import { useAdminData } from '../AdminDataContext';
 import { useAdminToast } from '../AdminLayout';
 
 export default function DashboardPage() {
-  const { products, orders, reviews, deals, deleteReview } = useAdminData();
+  const { products, orders = [], reviews = [], deals = [], deleteReview } = useAdminData();
   const showToast = useAdminToast();
   const [chartRange, setChartRange] = useState('30d');
 
   const pendingOrders = orders.filter((o) => o.status === 'Pending' || o.status === 'Processing');
   const activeDeals = deals.filter((d) => d.active);
+
+  const totalRevenue = orders.reduce((sum, o) => {
+    const num = parseInt(String(o.total || '0').replace(/[^0-9]/g, ''), 10);
+    return sum + (isNaN(num) ? 0 : num);
+  }, 0);
 
   const handleDeleteReview = (id) => {
     if (window.confirm('Are you sure you want to delete this review?')) {
@@ -21,10 +26,10 @@ export default function DashboardPage() {
   return (
     <div>
       {/* Greeting Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
         <div>
           <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '700', color: 'var(--admin-ink)', fontFamily: 'serif' }}>
-            Welcome back, Administrator
+            Welcome back, Fatima Huzefa
           </h1>
           <p style={{ margin: '4px 0 0', fontSize: '14px', color: 'var(--admin-muted)' }}>
             Here is your store summary and order activity for today.
@@ -36,9 +41,6 @@ export default function DashboardPage() {
           <Link to="/admin/products" className="admin-btn admin-btn-primary">
             + Add Product
           </Link>
-          <Link to="/admin/deals" className="admin-btn admin-btn-secondary">
-            + Add Deal
-          </Link>
           <Link to="/admin/orders" className="admin-btn admin-btn-secondary">
             📦 Orders ({orders.length})
           </Link>
@@ -46,23 +48,29 @@ export default function DashboardPage() {
       </div>
 
       {/* KPI Cards Grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '18px', marginBottom: '24px' }}>
+      <div className="admin-kpi-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '16px', marginBottom: '24px' }}>
         <div className="admin-card" style={{ padding: '18px' }}>
           <div style={{ fontSize: '13px', color: 'var(--admin-muted)', marginBottom: '8px' }}>Total Revenue</div>
-          <div style={{ fontSize: '22px', fontWeight: '700', color: 'var(--admin-ink)' }}>PKR 92,550</div>
-          <div style={{ fontSize: '12px', color: 'var(--admin-success)', marginTop: '4px', fontWeight: '600' }}>↑ 18.2% vs last month</div>
+          <div style={{ fontSize: '22px', fontWeight: '700', color: 'var(--admin-ink)' }}>PKR {totalRevenue.toLocaleString()}</div>
+          <div style={{ fontSize: '12px', color: orders.length > 0 ? 'var(--admin-success)' : 'var(--admin-muted)', marginTop: '4px', fontWeight: '600' }}>
+            {orders.length > 0 ? '↑ Live order total' : 'No orders yet'}
+          </div>
         </div>
 
         <div className="admin-card" style={{ padding: '18px' }}>
           <div style={{ fontSize: '13px', color: 'var(--admin-muted)', marginBottom: '8px' }}>Total Orders</div>
           <div style={{ fontSize: '22px', fontWeight: '700', color: 'var(--admin-ink)' }}>{orders.length}</div>
-          <div style={{ fontSize: '12px', color: 'var(--admin-success)', marginTop: '4px', fontWeight: '600' }}>↑ 5 new this week</div>
+          <div style={{ fontSize: '12px', color: orders.length > 0 ? 'var(--admin-success)' : 'var(--admin-muted)', marginTop: '4px', fontWeight: '600' }}>
+            {orders.length > 0 ? `${orders.length} orders placed` : '0 new this week'}
+          </div>
         </div>
 
         <div className="admin-card" style={{ padding: '18px' }}>
           <div style={{ fontSize: '13px', color: 'var(--admin-muted)', marginBottom: '8px' }}>Pending Orders</div>
-          <div style={{ fontSize: '22px', fontWeight: '700', color: 'var(--admin-brand)' }}>{pendingOrders.length}</div>
-          <div style={{ fontSize: '12px', color: 'var(--admin-warning)', marginTop: '4px', fontWeight: '600' }}>Requires fulfillment</div>
+          <div style={{ fontSize: '22px', fontWeight: '700', color: pendingOrders.length > 0 ? 'var(--admin-brand)' : 'var(--admin-ink)' }}>{pendingOrders.length}</div>
+          <div style={{ fontSize: '12px', color: pendingOrders.length > 0 ? 'var(--admin-warning)' : 'var(--admin-muted)', marginTop: '4px', fontWeight: '600' }}>
+            {pendingOrders.length > 0 ? 'Requires fulfillment' : 'All orders fulfilled'}
+          </div>
         </div>
 
         <div className="admin-card" style={{ padding: '18px' }}>
@@ -76,16 +84,10 @@ export default function DashboardPage() {
           <div style={{ fontSize: '22px', fontWeight: '700', color: 'var(--admin-ink)' }}>4.95 ★</div>
           <div style={{ fontSize: '12px', color: 'var(--admin-muted)', marginTop: '4px' }}>From {reviews.length} reviews</div>
         </div>
-
-        <div className="admin-card" style={{ padding: '18px' }}>
-          <div style={{ fontSize: '13px', color: 'var(--admin-muted)', marginBottom: '8px' }}>Active Deals</div>
-          <div style={{ fontSize: '22px', fontWeight: '700', color: 'var(--admin-ink)' }}>{activeDeals.length}</div>
-          <div style={{ fontSize: '12px', color: 'var(--admin-success)', marginTop: '4px' }}>Live on storefront</div>
-        </div>
       </div>
 
       {/* Analytics & Charts Section */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px', marginBottom: '24px' }}>
+      <div className="admin-dashboard-analytics" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px', marginBottom: '24px' }}>
         {/* Revenue Chart */}
         <div className="admin-card">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
@@ -168,30 +170,36 @@ export default function DashboardPage() {
           </div>
 
           <div className="admin-table-container">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Order #</th>
-                  <th>Customer</th>
-                  <th>Total</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.slice(0, 5).map((order) => (
-                  <tr key={order.id}>
-                    <td style={{ fontWeight: '600' }}>{order.number}</td>
-                    <td>{order.customerName}</td>
-                    <td style={{ fontWeight: '600' }}>{order.total}</td>
-                    <td>
-                      <span className={`admin-badge ${order.status === 'Processing' ? 'admin-badge-warning' : 'admin-badge-success'}`}>
-                        {order.status}
-                      </span>
-                    </td>
+            {orders.length === 0 ? (
+              <div style={{ padding: '36px 16px', textAlign: 'center', color: 'var(--admin-muted)', fontSize: '13px' }}>
+                📦 No active orders yet. New store orders placed by customers will appear here automatically.
+              </div>
+            ) : (
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th>Order #</th>
+                    <th>Customer</th>
+                    <th>Total</th>
+                    <th>Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {orders.slice(0, 5).map((order) => (
+                    <tr key={order.id}>
+                      <td style={{ fontWeight: '600' }}>{order.number}</td>
+                      <td>{order.customerName}</td>
+                      <td style={{ fontWeight: '600' }}>{order.total}</td>
+                      <td>
+                        <span className={`admin-badge ${order.status === 'Processing' ? 'admin-badge-warning' : 'admin-badge-success'}`}>
+                          {order.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         </div>
 

@@ -44,8 +44,10 @@ function AboutBody() {
               </p>
               <p>
                 From wedding invitations to keepsakes and custom stationery, everything we create is made
-                with care and attention to detail. We&apos;re grateful to be part of your celebrations and
-                hope our work becomes a small but meaningful part of your story.
+                with care and attention to detail. Based in Pakistan, we work with couples and businesses
+                worldwide—shipping custom wedding suites, Nikkah certificates, and bespoke packaging across
+                the UK, USA, UAE, Canada, Australia, and worldwide. We&apos;re grateful to be part of your
+                celebrations and hope our work becomes a cherished part of your story.
               </p>
             </div>
 

@@ -2,54 +2,92 @@ import { Link } from 'react-router-dom'
 import BrandWordmark from './BrandWordmark'
 import MarqueeTicker from './MarqueeTicker'
 import { SITE_TAGLINE } from '../data/site'
+import { useAdminData } from '../admin/AdminDataContext'
 
 const WHATSAPP_URL =
   'https://wa.me/923144392928?text=Hi!%20I%27d%20like%20to%20know%20more%20about%20The%20Paper%20Story.'
 
 export default function Hero() {
+  const adminData = useAdminData()
+  const settings = adminData?.settings || {}
+
+  const desktopVideo = settings.heroDesktopVideo || '/hero-section.mp4'
+  const mobileVideo = settings.heroMobileVideo || '/hero-showcase-mobile.mp4'
+  const overlayDarkness = typeof settings.heroOverlayDarkness === 'number' ? settings.heroOverlayDarkness : 20
+
   return (
     <section
       id="home"
-      className="relative overflow-hidden flex flex-col justify-between min-h-[580px] sm:min-h-[660px] lg:h-screen lg:max-h-screen"
+      className="relative overflow-hidden flex flex-col justify-between h-[100dvh] max-h-[100dvh] min-h-[560px] lg:h-screen lg:max-h-screen"
     >
-      {/* Background Video */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+      {/* Background Video — full edge-to-edge fit without side letterbox gaps */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none bg-black">
+        {/* Desktop Video */}
         <video
-          src="/hero-showcase.mp4"
+          key={desktopVideo}
+          src={desktopVideo}
           autoPlay
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover"
+          preload="auto"
+          className="hidden md:block absolute inset-0 w-full h-full object-cover object-center"
+          style={{
+            transform: settings.heroDesktopZoom && settings.heroDesktopZoom !== 100 ? `scale(${settings.heroDesktopZoom / 100})` : undefined,
+            transformOrigin: 'center center',
+          }}
         />
-        {/* Soft natural tint for clarity while letting the video shine through */}
-        <div className="absolute inset-0 bg-black/15" />
+
+        {/* Mobile Video */}
+        <video
+          key={mobileVideo}
+          src={mobileVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="block md:hidden absolute inset-0 w-full h-full object-cover object-center"
+          style={{
+            transform: settings.heroMobileZoom && settings.heroMobileZoom !== 100 ? `scale(${settings.heroMobileZoom / 100})` : undefined,
+            transformOrigin: 'center center',
+          }}
+        />
+
+        {/* Soft tint overlay for text readability */}
+        <div
+          className="absolute inset-0 bg-black transition-opacity duration-300"
+          style={{ opacity: overlayDarkness / 100 }}
+        />
       </div>
 
       {/* Hero Content Over Background Video */}
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center px-4 pt-24 pb-8 sm:px-6 sm:pt-28 sm:pb-12 lg:px-8 min-h-0">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center px-4 pt-20 pb-4 sm:px-6 sm:pt-28 sm:pb-12 lg:px-8 min-h-0">
         {/* Transparent Brand Container Floating Over Video */}
         <div className="relative mx-auto w-full max-w-2xl bg-transparent p-4 sm:p-8 text-center transition-all duration-300">
-          <p className="mb-2 text-[11px] font-semibold tracking-[0.35em] text-paperstory-maroon uppercase drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)] sm:mb-3">
-            Welcome to
+          <p className="mb-2 text-[11px] sm:text-xs font-semibold tracking-[0.35em] text-white/90 uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] sm:mb-3">
+            WELCOME TO
           </p>
 
-          <div className="mb-3 flex items-center justify-center gap-3 sm:mb-5 sm:gap-4">
+          <div className="mb-3 flex items-center justify-center gap-3 sm:mb-4 sm:gap-4">
             <img
               src="/logo.png"
               alt="The Paper Story Logo"
               className="h-12 w-12 shrink-0 rounded-full shadow-md sm:h-16 sm:w-16"
             />
-            <BrandWordmark size="lg" variant="dark" className="drop-shadow-[0_1px_3px_rgba(255,255,255,0.8)]" />
+            <BrandWordmark size="lg" variant="dark" />
           </div>
 
-          <p className="mb-5 px-2 font-serif text-base leading-relaxed text-paperstory-ink italic drop-shadow-[0_1px_2px_rgba(255,255,255,0.85)] sm:mb-7 sm:text-2xl">
+          <p
+            className="mb-6 px-2 font-serif text-lg leading-relaxed text-white italic drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)] sm:mb-8 sm:text-3xl font-normal"
+            style={{ fontWeight: 400 }}
+          >
             {SITE_TAGLINE}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
             <Link to="/shop" className="cute-btn-primary w-full sm:w-auto shadow-lg hover:shadow-xl">
-              VIEW COLLECTION
+              EXPLORE COLLECTIONS
             </Link>
             <a
               href={WHATSAPP_URL}

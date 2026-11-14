@@ -1,4 +1,4 @@
-﻿import { createClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl =
   import.meta.env?.VITE_SUPABASE_URL || 'https://cldmkkbrovisonhgugvl.supabase.co'
@@ -90,13 +90,85 @@ export async function subscribeNewsletterToSupabase(email) {
 
 export async function checkSupabaseHealth() {
   try {
-    const res = await supabase.from('orders').select('id').limit(1)
+    const res = await supabase.from('store_catalog').select('id').limit(1)
+    if (res.error && res.error.code !== 'PGRST116') {
+      const ordersRes = await supabase.from('orders').select('id').limit(1)
+      return {
+        connected: !ordersRes.error,
+        tablesExist: !ordersRes.error,
+        details: ordersRes.error?.message || 'Healthy',
+      }
+    }
     return {
-      connected: !res.error || res.error.code !== 'PGRST301',
-      tablesExist: !res.error,
-      details: res.error?.message || 'Healthy',
+      connected: true,
+      tablesExist: true,
+      details: 'Healthy',
     }
   } catch (e) {
     return { connected: false, error: e.message }
+  }
+}
+
+/** Sync live store catalog (products, categories, settings) to Supabase */
+export async function syncCatalogToSupabase(catalogData) {
+  try {
+    const payload = {
+      id: 'live_store_catalog',
+      data: catalogData,
+      updated_at: new Date().toISOString(),
+      updated_by: 'admin',
+    }
+    const { data, error } = await supabase
+      .from('store_catalog')
+      .upsert([payload], { onConflict: 'id' })
+      .select()
+    if (error) {
+      console.warn('[Supabase] catalog upsert note:', error.message)
+      return { success: false, error: error.message }
+    }
+    return { success: true, data }
+  } catch (err) {
+    return { success: false, error: err.message }
+  }
+}
+
+/** Pull live store catalog from Supabase */
+export async function fetchCatalogFromSupabase() {
+  try {
+    const { data, error } = await supabase
+      .from('store_catalog')
+      .select('data, updated_at')
+      .eq('id', 'live_store_catalog')
+      .maybeSingle()
+    if (error) {
+      return { success: false, error: error.message }
+    }
+    if (data && data.data) {
+      return { success: true, data: data.data, updatedAt: data.updated_at }
+    }
+    return { success: true, data: null }
+  } catch (err) {
+    return { success: false, error: err.message }
+  }
+}
+
+/**
+ * Lightweight heartbeat keepalive ping to Supabase.
+ * Touching the database on site & admin visits keeps free-tier projects active
+ * and prevents 7-day inactivity pausing.
+ */
+export async function pingSupabaseKeepAlive() {
+  try {
+    const { data, error } = await supabase
+      .from('store_catalog')
+      .select('id, updated_at')
+      .eq('id', 'live_store_catalog')
+      .maybeSingle()
+    if (error) {
+      return { success: false, error: error.message }
+    }
+    return { success: true, updatedAt: data?.updated_at }
+  } catch (err) {
+    return { success: false, error: err.message }
   }
 }

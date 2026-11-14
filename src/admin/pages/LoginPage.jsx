@@ -65,21 +65,19 @@ export default function LoginPage() {
       }}>
         {/* Brand Header */}
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-          <div style={{
-            width: '54px',
-            height: '54px',
-            backgroundColor: '#A62341',
-            color: '#FFFFFF',
-            borderRadius: '14px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '24px',
-            fontWeight: '700',
-            margin: '0 auto 14px'
-          }}>
-            TPS
-          </div>
+          <img
+            src="/logo.png"
+            alt="The Paper Story"
+            style={{
+              width: '64px',
+              height: '64px',
+              borderRadius: '50%',
+              objectFit: 'contain',
+              margin: '0 auto 14px',
+              display: 'block',
+              boxShadow: '0 4px 16px rgba(166, 35, 65, 0.15)',
+            }}
+          />
           <h1 style={{ fontSize: '22px', fontWeight: '700', color: '#2B1B1F', margin: '0 0 6px', fontFamily: 'serif' }}>
             The Paper Story
           </h1>

@@ -4,14 +4,6 @@ import { useCart } from '../context/CartContext'
 import MobileMenu from './MobileMenu'
 import BrandWordmark from './BrandWordmark'
 
-const mainLinks = [
-  { label: 'Home', to: '/' },
-  { label: 'About', to: '/about' },
-  { label: 'Shop all', to: '/shop' },
-  { label: 'Cart', to: '/cart' },
-  { label: 'Contact', to: '/contact' },
-]
-
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
@@ -59,23 +51,34 @@ export default function Navbar() {
           </div>
 
           {/* Center Links (Desktop) */}
-          <ul className="hidden items-center gap-7 lg:flex xl:gap-9">
-            {mainLinks.map((link) => (
-              <li key={link.to}>
-                <NavLink
-                  to={link.to}
-                  end={link.to === '/'}
-                  className={
-                    link.to === '/shop'
-                      ? ({ isActive }) =>
-                          linkClass({ isActive: isActive || location.pathname.startsWith('/shop') })
-                      : linkClass
-                  }
-                >
-                  {link.label}
-                </NavLink>
-              </li>
-            ))}
+          <ul className="hidden items-center gap-6 xl:gap-8 lg:flex">
+            <li>
+              <NavLink to="/" end className={linkClass}>
+                Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/about" className={linkClass}>
+                About
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/shop" className={linkClass}>
+                Shop all
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to="/shipping" className={linkClass}>
+                Shipping
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to="/contact" className={linkClass}>
+                Contact
+              </NavLink>
+            </li>
           </ul>
 
           {/* Right section: Cart link */}

@@ -8,8 +8,8 @@ const WHATSAPP_URL = `https://wa.me/${STORE_WHATSAPP}?text=${encodeURIComponent(
 
 const pillars = [
   {
-    title: 'Premium quality',
-    text: 'The finest papers, finishes, and printing techniques for every celebration.',
+    title: 'Quality Printing',
+    text: 'Choose from fine paper stocks and finishes such as foiling, embossing and letterpress. We check every print before it ships.',
     icon: (
       <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
         <rect x="14" y="18" width="36" height="28" rx="3" stroke="currentColor" strokeWidth="1.8" />
@@ -20,8 +20,8 @@ const pillars = [
     ),
   },
   {
-    title: 'Designed with care',
-    text: 'Every piece is thoughtfully designed to hold emotion, memory, and meaning.',
+    title: 'Designed In-House',
+    text: 'We design every piece ourselves, built around your event, your colours and your story.',
     icon: (
       <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
         <circle cx="28" cy="28" r="12" stroke="currentColor" strokeWidth="1.8" />
@@ -33,8 +33,8 @@ const pillars = [
     ),
   },
   {
-    title: 'Easy customization',
-    text: 'Personalize colours, fonts, wording, packaging, and finishes to match your story.',
+    title: 'Made Around You',
+    text: "Pick your wording, colours, fonts, paper and finish. Tell us what you want and we'll make it.",
     icon: (
       <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
         <rect x="12" y="14" width="32" height="26" rx="2" stroke="currentColor" strokeWidth="1.8" />
@@ -45,8 +45,8 @@ const pillars = [
     ),
   },
   {
-    title: 'Personal support',
-    text: 'Bring your vision to life with dedicated WhatsApp guidance from our team.',
+    title: 'Real People, Real Support',
+    text: 'You talk to us directly, from your first message to delivery. Questions are welcome at any stage.',
     icon: (
       <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
         <rect x="18" y="10" width="22" height="38" rx="4" stroke="currentColor" strokeWidth="1.8" />

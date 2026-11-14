@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import PageHeader from '../components/PageHeader'
 import CategoryFilterPills from '../components/CategoryFilterPills'
 import CategoryCard from '../components/CategoryCard'
@@ -9,18 +11,31 @@ import { PAGE_SEO } from '../utils/seo'
 
 export default function ShopPage() {
   const [ref, isVisible] = useInView()
+  const [searchParams] = useSearchParams()
+  const searchQuery = searchParams.get('search') || searchParams.get('q') || ''
+
+  const displayProducts = useMemo(() => {
+    if (!searchQuery.trim()) return products
+    const q = searchQuery.trim().toLowerCase()
+    return products.filter((p) => {
+      const name = (p.name || '').toLowerCase()
+      const code = (p.code || p.sku || '').toLowerCase()
+      const cat = (p.category || '').toLowerCase()
+      return name.includes(q) || code.includes(q) || cat.includes(q)
+    })
+  }, [searchQuery])
 
   return (
     <>
       <Seo
-        title={PAGE_SEO.shop.title}
+        title={searchQuery ? `Search: ${searchQuery} | The Paper Story` : PAGE_SEO.shop.title}
         description={PAGE_SEO.shop.description}
         path="/shop"
       />
       <PageHeader
         compact
-        title="Shop"
-        subtitle="Luxury Stationery Designed for Every Celebration."
+        title={searchQuery ? `Search Results` : "Shop"}
+        subtitle={searchQuery ? `Showing results for "${searchQuery}" (${displayProducts.length} items)` : "Luxury Stationery Designed for Every Celebration."}
         breadcrumb="Home / Shop"
       />
       <section className="bg-paperstory-cream pb-12">
@@ -32,9 +47,9 @@ export default function ShopPage() {
         <ProductGrid
           compactTop
           showOnLoad
-          title="All Collections & Invitations"
-          subtitle="Explore our bespoke wedding invites, digital cards, stationery, and handcrafted gifting suites."
-          items={products}
+          title={searchQuery ? `Designs matching "${searchQuery}"` : "All Collections & Invitations"}
+          subtitle={searchQuery ? undefined : "Explore our bespoke wedding invites, digital cards, stationery, and handcrafted gifting suites."}
+          items={displayProducts}
         />
 
         {/* Categories Section */}

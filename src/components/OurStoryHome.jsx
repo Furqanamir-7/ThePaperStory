@@ -18,9 +18,7 @@ export default function OurStoryHome() {
             About The Paper Story
           </h2>
           <p className="mb-4 text-sm leading-relaxed text-paperstory-ink/75 sm:mb-8 sm:text-lg">
-            At The Paper Story, we create thoughtfully designed stationery for life&apos;s most meaningful
-            celebrations. As a husband and wife team, we personally design, produce, and package every
-            order, ensuring exceptional quality and attention to detail.
+            The Paper Story is a creative design and printing company founded by Fatima and Huzaifa. We create Custom Wedding Invitations, Nikkahnama/Certificates, Digital/E- invites, Personalised Stationery, Favous & Gifting, packaging for celebrations and businesses and much more. Based in Pakistan, we work with clients worldwide, bringing their ideas to life through thoughtful design, quality printing and attention to detail.
           </p>
           <Link
             to="/about"

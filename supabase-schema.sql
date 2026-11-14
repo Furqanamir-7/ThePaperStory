@@ -1,4 +1,4 @@
-﻿-- ===================================================
+-- ===================================================
 -- The Paper Story - Supabase Database Schema
 -- Run this in the Supabase SQL Editor:
 -- https://supabase.com/dashboard/project/cldmkkbrovisonhgugvl/sql
@@ -42,7 +42,21 @@ CREATE TABLE IF NOT EXISTS public.inquiries (
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 3. Newsletter Subscribers Table
+-- 4. Live Store Catalog Table (for multi-device sync of products, prices, descriptions, specifications)
+CREATE TABLE IF NOT EXISTS public.store_catalog (
+    id TEXT PRIMARY KEY,
+    data JSONB NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_by TEXT DEFAULT 'admin'
+);
+
+ALTER TABLE public.store_catalog ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Allow public read on store_catalog" ON public.store_catalog;
+CREATE POLICY "Allow public read on store_catalog" ON public.store_catalog FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Allow public upsert on store_catalog" ON public.store_catalog;
+CREATE POLICY "Allow public upsert on store_catalog" ON public.store_catalog FOR ALL USING (true) WITH CHECK (true);
 CREATE TABLE IF NOT EXISTS public.newsletter_subscribers (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email TEXT UNIQUE NOT NULL,

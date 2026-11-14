@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from 'react'
 import { DEFAULT_OG_IMAGE, absoluteUrl } from '../utils/seo'
+import { alternatesFor } from '../config/locales'
 
 function upsertMeta(selector, attributes) {
   let element = document.head.querySelector(selector)
@@ -52,7 +53,16 @@ export default function Seo({
     })
 
     upsertLink('canonical', canonical)
-    upsertLink('alternate', canonical, { hreflang: 'x-default' })
+
+    // International hreflang alternate tags for all target locales + x-default
+    try {
+      const alternates = alternatesFor(path)
+      Object.entries(alternates).forEach(([lang, href]) => {
+        upsertLink('alternate', href, { hreflang: lang })
+      })
+    } catch (err) {
+      upsertLink('alternate', canonical, { hreflang: 'x-default' })
+    }
 
     upsertMeta('meta[property="og:type"]', { property: 'og:type', content: 'website' })
     upsertMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: 'The Paper Story' })

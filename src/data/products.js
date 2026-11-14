@@ -11,6 +11,7 @@ import tpsDataGallery from './tps-data-gallery.json' with { type: 'json' }
 import eidiPostcardsGallery from './eidi-postcards-gallery.json' with { type: 'json' }
 import {
   SEO_EIDI,
+  SEO_PAMPHLET,
   seoDiaryName,
   seoDigitalName,
   seoEidiName,
@@ -64,23 +65,12 @@ export const INSTAGRAM_URL = 'https://www.instagram.com/thepaperstory.co/'
 
 export const shopCategories = [
   {
-    id: 'wax-seals',
-    slug: 'wax-seals',
-    label: 'Customised Wax Seals',
-    shortLabel: 'Wax Seals',
-    description: 'Bespoke custom wax seal stamps, monogram sealing kits, and luxury accents.',
-    image: '/wax-seals/seal-1/01.jpg',
-    showPrice: false,
-    paymentType: 'advance',
-    whatsappMode: 'price',
-    subcategories: null,
-  },
-  {
     id: 'wedding-invitations',
     slug: 'wedding-invitations',
     label: 'Wedding Invitations',
     shortLabel: 'Wedding',
-    description: 'Elegant wedding invitation designs — enquire for pricing.',
+    description:
+      'Custom wedding invitations designed around your wedding. Choose from floral, minimalist, traditional and modern styles, then personalise the wording, colours, paper and finish. Matching inserts and envelopes are available.',
     image: IMG.wedding,
     showPrice: false,
     paymentType: 'advance',
@@ -92,7 +82,8 @@ export const shopCategories = [
     slug: 'digital-invitations',
     label: 'Digital Invitations',
     shortLabel: 'Digital Invitations',
-    description: 'Find the perfect digital invitation for your celebration',
+    description:
+      'Digital wedding invitations as image or animated e-invites, customised with your names, event details and design style. Easy to share on WhatsApp, email and social media. Worldwide digital delivery.',
     image: IMG.digital,
     showPrice: false,
     paymentType: 'advance',
@@ -101,7 +92,7 @@ export const shopCategories = [
       {
         slug: 'image-invitation',
         label: 'Image Invitation',
-        tagline: 'Invitation designs that are easy to share',
+        tagline: 'Invitation designs that are easy to share on WhatsApp and email',
         whatsappPrefix: 'Digital Invitation (Image)',
         types: [
           { slug: 'wedding', label: 'Wedding', whatsappPrefix: 'Digital Invitation — Image (Wedding)' },
@@ -111,7 +102,7 @@ export const shopCategories = [
       {
         slug: 'animated-invitation',
         label: 'Animated Invitations',
-        tagline: 'Bring your invitation to life with beautiful animations',
+        tagline: 'Bring your invitation to life with music and motion',
         whatsappPrefix: 'Digital Invitation (Animated)',
         types: [
           { slug: 'wedding', label: 'Wedding', whatsappPrefix: 'Digital Invitation — Animated (Wedding)' },
@@ -135,7 +126,8 @@ export const shopCategories = [
     slug: 'nikkahnama',
     label: 'Nikkah Certificates',
     shortLabel: 'Nikkah Certificates',
-    description: 'Hand-painted and printed nikkah certificates — pricing on request only.',
+    description:
+      'Custom Nikkah certificates with your names, dates and details in a layout that suits your wedding ceremony. Handcrafted on archival textured cardstock with gold foil embellishments.',
     image: '/nikkah/cover-printed.jpg',
     showPrice: false,
     paymentType: 'advance',
@@ -150,7 +142,8 @@ export const shopCategories = [
     slug: 'favours',
     label: 'Favours',
     shortLabel: 'Favours',
-    description: 'Potli, box, tin, and cake-topper favours for weddings and events.',
+    description:
+      'Custom wedding favours and favour boxes for your guests, personalised with your names, date or monogram.',
     image: '/favours/bid-potli/01.jpg',
     showPrice: false,
     paymentType: 'advance',
@@ -165,11 +158,57 @@ export const shopCategories = [
     ],
   },
   {
+    id: 'gifting-envelopes-tags',
+    slug: 'gifting-envelopes-tags',
+    label: 'Gifting Envelopes & Tags',
+    shortLabel: 'Envelopes & Tags',
+    description: 'Luxury handcrafted money envelopes, artisan gift tags, and custom stationery for celebrations.',
+    image: '/eidi/friends-theme/01.jpg',
+    showPrice: false,
+    paymentType: 'advance',
+    whatsappMode: 'price',
+    subcategories: [
+      { slug: 'gifting-envelopes', label: 'Gifting Envelopes', whatsappPrefix: 'Gifting Envelopes' },
+      { slug: 'gift-tags', label: 'Gift Tags', whatsappPrefix: 'Gift Tags' },
+      { slug: 'custom-stationery', label: 'Custom Stationery', whatsappPrefix: 'Custom Stationery' },
+    ],
+  },
+  {
+    id: 'greeting-cards',
+    slug: 'greeting-cards',
+    label: 'Greeting Cards',
+    shortLabel: 'Greeting Cards',
+    description: 'Bespoke heartfelt greeting cards for every special celebration.',
+    image: IMG.greeting,
+    showPrice: true,
+    paymentType: 'advance',
+    whatsappMode: 'price',
+    subcategories: [
+      { slug: 'all-cards', label: 'All Cards', whatsappPrefix: 'Greeting Cards (All Cards)' },
+      { slug: 'birthday-cards', label: 'Birthday Cards', whatsappPrefix: 'Greeting Cards (Birthday)' },
+      { slug: 'for-mothers', label: 'For Mothers', whatsappPrefix: 'Greeting Cards (For Mothers)' },
+      { slug: 'for-fathers', label: 'For Fathers', whatsappPrefix: 'Greeting Cards (For Fathers)' },
+    ],
+  },
+  {
+    id: 'ramadan-eid-gifts',
+    slug: 'ramadan-eid-gifts',
+    label: 'Ramadan & Eid Gifts',
+    shortLabel: 'Ramadan & Eid',
+    description: 'Artisan Ramadan calendars, luxury Eid gift sets, money envelope hampers, and celebratory keepsakes.',
+    image: '/stationary/ramadan-calendar/01.jpg',
+    showPrice: false,
+    paymentType: 'advance',
+    whatsappMode: 'price',
+    subcategories: null,
+  },
+  {
     id: 'packaging',
     slug: 'packaging',
     label: 'Packaging Material / Items',
     shortLabel: 'Packaging',
-    description: 'Bespoke custom packaging, luxury paper bags, artisan gift tags, and business stickers for branding.',
+    description:
+      "Custom printed boxes, gift boxes, cake boxes, stickers and branded packaging for businesses and personal orders. Share your size, quantity and design, and we'll quote you.",
     image: '/packaging/paper-bags-design-1/01.jpg',
     showPrice: false,
     paymentType: 'advance',
@@ -184,18 +223,18 @@ export const shopCategories = [
   {
     id: 'stationary-items',
     slug: 'stationary-items',
-    label: 'Stationary Items',
-    shortLabel: 'Stationary',
+    label: 'Stationery Items',
+    shortLabel: 'Stationery',
     description:
-      'Diaries and pens — order directly on the website. Complete payment online for free delivery within Pakistan.',
+      'Personalised greeting cards, Eidi and money envelopes, baby announcement boxes and other custom stationery for everyday occasions and celebrations.',
     image: '/stationary/diaries/01-01.jpg',
     showPrice: true,
     paymentType: 'cod',
     whatsappMode: 'more',
     subcategories: [
-      { slug: 'diaries', label: 'Diaries', whatsappPrefix: 'Stationary (Diaries)' },
-      { slug: 'pens', label: 'Pens', whatsappPrefix: 'Stationary (Pens)' },
-      { slug: 'ramadan-calendar', label: 'Ramadan Calendar', whatsappPrefix: 'Stationary (Ramadan Calendar)' },
+      { slug: 'diaries', label: 'Diaries', whatsappPrefix: 'Stationery (Diaries)' },
+      { slug: 'pens', label: 'Pens', whatsappPrefix: 'Stationery (Pens)' },
+      { slug: 'ramadan-calendar', label: 'Ramadan Calendar', whatsappPrefix: 'Stationery (Ramadan Calendar)' },
     ],
   },
   {
@@ -217,8 +256,8 @@ export const shopCategories = [
     slug: 'pamphlets',
     label: 'Pamphlets',
     shortLabel: 'Pamphlets',
-    description: 'Printed pamphlets for events and promotions.',
-    image: IMG.pamphlet,
+    description: 'Bespoke printed pamphlets, folded ceremony programs, brand brochures, and celebration menus.',
+    image: '/pamphlets/pamphlet-01.jpg',
     showPrice: false,
     paymentType: 'advance',
     whatsappMode: 'price',
@@ -234,18 +273,6 @@ export const shopCategories = [
     showPrice: false,
     paymentType: 'advance',
     whatsappMode: 'price',
-    subcategories: null,
-  },
-  {
-    id: 'greeting-cards',
-    slug: 'greeting-cards',
-    label: 'Greeting Cards',
-    shortLabel: 'Greeting Cards',
-    description: 'Beautiful greeting card designs with listed prices.',
-    image: IMG.greeting,
-    showPrice: true,
-    paymentType: 'advance',
-    whatsappMode: 'more',
     subcategories: null,
   },
   {
@@ -271,6 +298,44 @@ export const shopCategories = [
     paymentType: 'advance',
     whatsappMode: 'price',
     subcategories: null,
+  },
+  {
+    id: 'wax-seals',
+    slug: 'wax-seals',
+    label: 'Wax Seal and Custom Stamps',
+    shortLabel: 'Wax Seals & Stamps',
+    description: 'Bespoke custom wax seal stamps, monogram sealing kits, and luxury accents.',
+    image: '/wax-seals/seal-1/01.jpg',
+    showPrice: false,
+    paymentType: 'advance',
+    whatsappMode: 'price',
+    subcategories: null,
+  },
+  {
+    id: 'accessories-add-ons',
+    slug: 'accessories-add-ons',
+    label: 'Premium Add-ons',
+    shortLabel: 'Premium Add-ons',
+    description: 'Decorative ribbons, gold printing, embossing, vellum paper, envelope liners, belly bands, die-cut inserts, wax seals & gold foiling.',
+    image: '/add-ons/gold-foiling/img-01.jpg',
+    showPrice: false,
+    paymentType: 'advance',
+    whatsappMode: 'price',
+    subcategories: [
+      { id: 'sub-ribbon', slug: 'ribbon', label: 'Ribbon', code: 'TPS-ACC-01' },
+      { id: 'sub-gold-printing', slug: 'gold-printing', label: 'Gold Printing / Screen Printing', code: 'TPS-ACC-02' },
+      { id: 'sub-embossing', slug: 'embossing', label: 'Embossing', code: 'TPS-ACC-03' },
+      { id: 'sub-printed-butter', slug: 'printed-butter-vellum-paper', label: 'Printed Butter / Vellum Paper', code: 'TPS-ACC-04' },
+      { id: 'sub-envelope-liner', slug: 'envelope-liner', label: 'Envelope Liner', code: 'TPS-ACC-05' },
+      { id: 'sub-belly-band', slug: 'belly-band', label: 'Belly Band', code: 'TPS-ACC-06' },
+      { id: 'sub-butter-belly-band', slug: 'butter-vellum-paper-belly-band', label: 'Butter / Vellum Paper Belly Band', code: 'TPS-ACC-07' },
+      { id: 'sub-arch-shape', slug: 'arch-shape-insert', label: 'Arch Shape Insert', code: 'TPS-ACC-08' },
+      { id: 'sub-scalloped', slug: 'scalloped-insert', label: 'Scalloped Insert', code: 'TPS-ACC-09' },
+      { id: 'sub-oval', slug: 'oval-insert', label: 'Oval Insert', code: 'TPS-ACC-10' },
+      { id: 'sub-wax-seal', slug: 'custom-stamp-wax-seal', label: 'Custom Stamp / Wax Seal', code: 'TPS-ACC-11' },
+      { id: 'sub-sticker-seal', slug: 'sticker-seal', label: 'Sticker Seal', code: 'TPS-ACC-12' },
+      { id: 'sub-gold-foiling', slug: 'gold-foiling', label: 'Gold Foiling', code: 'TPS-ACC-13' },
+    ],
   },
 ]
 
@@ -722,9 +787,9 @@ function buildComprehensiveFavours() {
     potli: (imp.potli?.length ? imp.potli : base.potli).map((p) => ({ ...p, name: seoFavourName(p.name) })),
     'box-favours': Array.from(boxMap.values()),
     'tin-favours': Array.from(tinMap.values()),
-    'cake-toppers': base['cake-toppers'],
-    cones: (imp.cones || []).map((c) => ({ name: c.name, images: c.images })),
-    tags: (imp.tags || []).map((t) => ({ name: t.name, images: t.images })),
+    'cake-toppers': base['cake-toppers'].map((c) => ({ ...c, name: seoFavourName(c.name) })),
+    cones: (imp.cones || []).map((c) => ({ name: seoFavourName(c.name), images: c.images })),
+    tags: (imp.tags || []).map((t) => ({ name: seoFavourName(t.name), images: t.images })),
   };
 }
 const FAVOURS_GALLERY = buildComprehensiveFavours()
@@ -759,11 +824,301 @@ const POSTCARDS_GALLERY = [
   },
 ];
 
+/** ACCESSORIES/ADD ONS catalogue */
+export const ACCESSORIES_ADDONS_GALLERY = [
+  {
+    name: 'Ribbon',
+    slug: 'ribbon',
+    code: 'TPS-ACC-01',
+    description: 'Add a finishing touch to your wedding invitations with decorative ribbons, available in different colours and styles to match your wedding theme.',
+    images: [
+      '/add-ons/ribbon/img-01.jpg',
+      '/add-ons/ribbon/img-02.jpg',
+      '/add-ons/ribbon/img-03.jpg',
+      '/add-ons/ribbon/img-04.jpg',
+      '/add-ons/ribbon/img-05.jpg',
+      '/add-ons/ribbon/img-06.jpg',
+      '/add-ons/ribbon/img-07.jpg',
+      '/add-ons/ribbon/img-08.jpg',
+      '/add-ons/ribbon/img-09.jpg',
+    ],
+  },
+  {
+    name: 'Gold Printing / Screen Printing',
+    slug: 'gold-printing',
+    code: 'TPS-ACC-02',
+    description: 'Give your wedding cards a subtle metallic finish with gold screen printing, perfect for names, initials, borders and other design details.',
+    images: [
+      '/add-ons/gold-printing/img-01.jpg',
+      '/add-ons/gold-printing/img-02.jpg',
+      '/add-ons/gold-printing/video-01.mp4',
+      '/add-ons/gold-printing/video-02.mp4',
+      '/add-ons/gold-printing/video-03.mp4',
+      '/add-ons/gold-printing/video-04.mp4',
+      '/add-ons/gold-printing/video-05.mp4',
+    ],
+  },
+  {
+    name: 'Embossing',
+    slug: 'embossing',
+    code: 'TPS-ACC-03',
+    description: 'Add texture to your custom wedding stationery with embossed details. This technique creates raised designs, patterns or lettering on paper.',
+    images: [
+      '/add-ons/embossing/img-01.jpg',
+      '/add-ons/embossing/video-01.mp4',
+    ],
+  },
+  {
+    name: 'Printed Butter / Vellum Paper',
+    slug: 'printed-butter-vellum-paper',
+    code: 'TPS-ACC-04',
+    description: 'Add a personalised layer to your wedding invitations with printed butter or vellum paper, featuring custom text, patterns or designs.',
+    images: [
+      '/add-ons/printed-butter-vellum-paper/img-01.jpg',
+      '/add-ons/printed-butter-vellum-paper/img-02.jpg',
+      '/add-ons/printed-butter-vellum-paper/img-03.jpg',
+      '/add-ons/printed-butter-vellum-paper/img-04.jpg',
+      '/add-ons/printed-butter-vellum-paper/img-05.jpg',
+      '/add-ons/printed-butter-vellum-paper/img-06.jpg',
+      '/add-ons/printed-butter-vellum-paper/img-07.jpg',
+      '/add-ons/printed-butter-vellum-paper/img-08.jpg',
+      '/add-ons/printed-butter-vellum-paper/img-09.jpg',
+      '/add-ons/printed-butter-vellum-paper/img-10.jpg',
+      '/add-ons/printed-butter-vellum-paper/video-01.mp4',
+      '/add-ons/printed-butter-vellum-paper/img-11.jpg',
+      '/add-ons/printed-butter-vellum-paper/img-12.jpg',
+    ],
+  },
+  {
+    name: 'Envelope Liner',
+    slug: 'envelope-liner',
+    code: 'TPS-ACC-05',
+    description: 'Complete your wedding invitation envelopes with custom printed liners featuring matching patterns, illustrations, monograms or personalised designs.',
+    images: [
+      '/add-ons/envelope-liner/img-01.jpg',
+      '/add-ons/envelope-liner/img-02.jpg',
+    ],
+  },
+  {
+    name: 'Belly Band',
+    slug: 'belly-band',
+    code: 'TPS-ACC-06',
+    description: "Keep your wedding invitation cards together with a personalised belly band featuring the couple's names, initials or wedding monogram.",
+    images: [
+      '/add-ons/name-belly-band/img-01.jpg',
+      '/add-ons/name-belly-band/img-02.jpg',
+      '/add-ons/name-belly-band/img-03.jpg',
+      '/add-ons/name-belly-band/img-04.jpg',
+    ],
+  },
+  {
+    name: 'Butter / Vellum Paper Belly Band',
+    slug: 'butter-vellum-paper-belly-band',
+    code: 'TPS-ACC-07',
+    description: 'Wrap your wedding invitation suite in translucent butter or vellum paper, customised with names, initials or printed designs.',
+    images: [
+      '/add-ons/butter-vellum-belly-band/img-01.jpg',
+      '/add-ons/butter-vellum-belly-band/img-02.jpg',
+    ],
+  },
+  {
+    name: 'Arch Shape Insert',
+    slug: 'arch-shape-insert',
+    code: 'TPS-ACC-08',
+    description: 'Add an arch-shaped card to your wedding invitation set for event details, additional information or personalised messages.',
+    images: [
+      '/add-ons/arch-shape-insert/img-01.jpg',
+      '/add-ons/arch-shape-insert/img-02.jpg',
+      '/add-ons/arch-shape-insert/img-03.jpg',
+      '/add-ons/arch-shape-insert/img-04.jpg',
+      '/add-ons/arch-shape-insert/img-05.jpg',
+    ],
+  },
+  {
+    name: 'Scalloped Insert',
+    slug: 'scalloped-insert',
+    code: 'TPS-ACC-09',
+    description: 'Give your wedding stationery a decorative finish with scalloped-edge inserts, perfect for event details and additional invitation cards.',
+    images: [
+      '/add-ons/scalloped-insert/img-01.jpg',
+      '/add-ons/scalloped-insert/img-02.jpg',
+      '/add-ons/scalloped-insert/video-01.mp4',
+      '/add-ons/scalloped-insert/img-03.jpg',
+      '/add-ons/scalloped-insert/video-02.mp4',
+    ],
+  },
+  {
+    name: 'Oval Insert',
+    slug: 'oval-insert',
+    code: 'TPS-ACC-10',
+    description: 'Add an oval-shaped insert to your wedding invitation suite for event details, personalised messages or additional information.',
+    images: [
+      '/add-ons/oval-insert/img-01.jpg',
+      '/add-ons/oval-insert/video-01.mp4',
+    ],
+  },
+  {
+    name: 'Custom Stamp / Wax Seal',
+    slug: 'custom-stamp-wax-seal',
+    code: 'TPS-ACC-11',
+    description: 'Personalise your wedding invitations with custom wax seals or stamps featuring your initials, names or wedding monogram.',
+    images: [
+      '/wax-seals/seal-1/01.jpg',
+      '/wax-seals/seal-2/01.jpg',
+      '/wax-seals/seal-3/01.jpg',
+      '/wax-seals/seal-4/01.jpg',
+    ],
+  },
+  {
+    name: 'Sticker Seal',
+    slug: 'sticker-seal',
+    code: 'TPS-ACC-12',
+    description: 'Personalise your wedding envelopes and stationery suites with custom self-adhesive sticker seals featuring your monogram, initials or bespoke illustrations.',
+    images: [
+      '/add-ons/sticker-seal/img-01.jpg',
+      '/add-ons/sticker-seal/img-02.jpg',
+      '/add-ons/sticker-seal/img-03.jpg',
+      '/add-ons/sticker-seal/img-04.jpg',
+      '/add-ons/sticker-seal/img-05.jpg',
+      '/add-ons/sticker-seal/video-01.mp4',
+    ],
+  },
+  {
+    name: 'Gold Foiling',
+    slug: 'gold-foiling',
+    code: 'TPS-ACC-13',
+    badge: 'Premium Finish',
+    description: 'Add a luxurious metallic finish to your wedding invitations with gold foil stamping. Perfect for highlighting names, initials, wedding monograms, borders and other design details.',
+    images: [
+      '/add-ons/gold-foiling/img-01.jpg',
+      '/add-ons/gold-foiling/img-02.jpg',
+      '/add-ons/gold-foiling/img-03.jpg',
+      '/add-ons/gold-foiling/img-04.jpg',
+      '/add-ons/gold-foiling/video-01.mp4',
+      '/add-ons/gold-foiling/video-02.mp4',
+      '/add-ons/gold-foiling/video-03.mp4',
+    ],
+  },
+];
+
+/** Gifting Envelopes & Tags catalogue */
+export const GIFTING_ENVELOPES_TAGS_GALLERY = {
+  'gifting-envelopes': [
+    ...EIDI_GALLERY,
+  ],
+  'gift-tags': [
+    {
+      name: 'Artisan Foil Gift Tags',
+      images: ['/packaging/paper-bags-design-1/01.jpg', '/real-moments/moment-05.jpg'],
+    },
+    {
+      name: 'Monogrammed Botanical Gift Tags',
+      images: ['/real-moments/moment-04.jpg', '/real-moments/moment-06.jpg'],
+    },
+    {
+      name: 'Celebratory Ribbon & Event Tag Set',
+      images: ['/real-moments/moment-11.jpg', '/real-moments/moment-02.jpg'],
+    },
+  ],
+  'custom-stationery': [
+    {
+      name: 'Personalized Monogram Stationery Suite',
+      images: ['/stationary/diaries/01-01.jpg', '/stationary/diaries/01-02.jpg'],
+    },
+    {
+      name: 'Bespoke Luxury Correspondence Notecards',
+      images: ['/stationary/diaries/02-01.jpg', '/stationary/diaries/03-01.jpg'],
+    },
+    {
+      name: 'Handcrafted Letterhead & Envelope Set',
+      images: ['/stationary/diaries/04-01.jpg', '/real-moments/moment-09.jpg'],
+    },
+  ],
+};
+
+/** Greeting Cards gallery */
+export const GREETING_CARDS_GALLERY = {
+  'all-cards': [
+    {
+      name: 'Artisan Eid Calligraphy Greeting Cards',
+      images: ['/greeting/eid-cards/01.jpg', '/greeting/eid-cards/02.jpg'],
+    },
+    {
+      name: 'Botanical Celebration Keepsake Card',
+      images: ['/postcards/01.jpg', '/postcards/02.jpg'],
+    },
+    {
+      name: 'Floral Blossom Greeting Card',
+      images: ['/postcards/03.jpg', '/postcards/04.jpg'],
+    },
+  ],
+  'birthday-cards': [
+    {
+      name: 'Pastel Floral Happy Birthday Card',
+      images: ['/postcards/01.jpg', '/postcards/02.jpg'],
+    },
+    {
+      name: 'Golden Confetti Birthday Keepsake Card',
+      images: ['/postcards/03.jpg'],
+    },
+  ],
+  'for-mothers': [
+    {
+      name: "Blush Roses Mother's Day Keepsake Card",
+      images: ['/postcards/02.jpg', '/greeting/eid-cards/01.jpg'],
+    },
+    {
+      name: "Timeless Gratitude Card for Mother",
+      images: ['/postcards/04.jpg'],
+    },
+  ],
+  'for-fathers': [
+    {
+      name: "Regal Navy & Gold Father's Day Card",
+      images: ['/postcards/01.jpg', '/postcards/03.jpg'],
+    },
+    {
+      name: "Classic Heritage Keepsake Card for Father",
+      images: ['/postcards/04.jpg'],
+    },
+  ],
+};
+
+/** Ramadan & Eid Gifts catalogue */
+export const RAMADAN_EID_GALLERY = [
+  {
+    name: 'Ramadan Kareem Daily Countdown Calendar',
+    images: [
+      '/stationary/ramadan-calendar/01.jpg',
+      '/stationary/ramadan-calendar/02.jpg',
+      '/stationary/ramadan-calendar/03.jpg',
+    ],
+  },
+  {
+    name: 'Artisan Ramadan & Eid Keepsake Hamper',
+    images: ['/stationary/ramadan-calendar/01.jpg', '/eidi/friends-theme/01.jpg'],
+  },
+  {
+    name: 'Luxury Eid Mubarak Money & Gifting Suite',
+    images: ['/eidi/friends-theme/01.jpg', '/greeting/eid-cards/01.jpg'],
+  },
+];
+
 /** Each numbered folder becomes one product card with a gallery slider */
 const NIKKAH_GALLERY_PRODUCTS = {
   'hand-painted': [
     {
-      name: 'Design 1',
+      name: 'Hand-Painted Floral Nikkah Certificate',
+      code: 'TPS-NC-01',
+      sku: 'TPS-NC-01',
+      designNumber: 1,
+      minQuantity: 1,
+      specifications: [
+        { label: 'Certificate Size', value: 'A3 (11.7 × 16.5 inches)' },
+        { label: 'Material', value: 'Archival Heavyweight Textured Cotton Card (360–400 GSM)' },
+        { label: 'Presentation Folder', value: 'Signature Protective Velvet Keepsake Folder' },
+        { label: 'Printing Technique', value: 'Original Hand-Painted Watercolor & Traditional Arabic Calligraphy' },
+      ],
       images: [
         '/nikkah/hand-painted-1/01.jpg',
         '/nikkah/hand-painted-1/02.jpg',
@@ -788,7 +1143,17 @@ const NIKKAH_GALLERY_PRODUCTS = {
   ],
   printed: [
     {
-      name: 'Design 1',
+      name: 'Classic Floral Printed Nikkah Certificate',
+      code: 'TPS-NC-02',
+      sku: 'TPS-NC-02',
+      designNumber: 2,
+      minQuantity: 1,
+      specifications: [
+        { label: 'Certificate Size', value: 'A3 (11.7 × 16.5 inches)' },
+        { label: 'Material', value: '9K Archival Textured Card (350 GSM)' },
+        { label: 'Presentation Folder', value: 'Protective Luxury Keepsake Folder' },
+        { label: 'Printing Technique', value: 'High-Definition Archival Pigment Printing' },
+      ],
       images: [
         '/nikkah/printed-1/01.jpg',
         '/nikkah/printed-1/02.jpg',
@@ -799,7 +1164,17 @@ const NIKKAH_GALLERY_PRODUCTS = {
       ],
     },
     {
-      name: 'Design 2',
+      name: 'Minimal Printed Nikkah Certificate',
+      code: 'TPS-NC-03',
+      sku: 'TPS-NC-03',
+      designNumber: 3,
+      minQuantity: 1,
+      specifications: [
+        { label: 'Certificate Size', value: 'A3 (11.7 × 16.5 inches)' },
+        { label: 'Material', value: 'Warm Off-White Cotton Felt Card (320–350 GSM)' },
+        { label: 'Presentation Folder', value: 'Sleek Signature Certificate Sleeve' },
+        { label: 'Printing Technique', value: 'Fine Line Digital Archival Print' },
+      ],
       images: [
         '/nikkah/printed-2/01.jpg',
         '/nikkah/printed-2/02.jpg',
@@ -807,29 +1182,119 @@ const NIKKAH_GALLERY_PRODUCTS = {
       ],
     },
     {
-      name: 'Design 3',
+      name: 'Modern Printed Nikkah Certificate Card',
+      code: 'TPS-NC-04',
+      sku: 'TPS-NC-04',
+      designNumber: 4,
+      minQuantity: 1,
+      specifications: [
+        { label: 'Certificate Size', value: 'A3 (11.7 × 16.5 inches)' },
+        { label: 'Material', value: 'Premium Textured Matte Card (350 GSM)' },
+        { label: 'Presentation Folder', value: 'Keepsake Hardcover Folder' },
+        { label: 'Printing Technique', value: 'Precision Archival Print with Gold Accents' },
+      ],
       images: ['/nikkah/printed-3/01.mp4'],
     },
     {
-      name: 'Design 4',
+      name: 'Elegant Printed Nikkah Certificate',
+      code: 'TPS-NC-05',
+      sku: 'TPS-NC-05',
+      designNumber: 5,
+      minQuantity: 1,
+      specifications: [
+        { label: 'Certificate Size', value: 'A3 (11.7 × 16.5 inches)' },
+        { label: 'Material', value: 'Premium Heavy Textured Card (350 GSM)' },
+        { label: 'Presentation Folder', value: 'Deluxe Velvet Presentation Folder' },
+        { label: 'Printing Technique', value: 'High-Resolution Archival Digital Printing' },
+      ],
       images: ['/nikkah/printed-4/01.jpg'],
     },
     {
-      name: 'Design 5',
+      name: 'Gold Border Printed Nikkah Certificate',
+      code: 'TPS-NC-06',
+      sku: 'TPS-NC-06',
+      designNumber: 6,
+      minQuantity: 1,
+      specifications: [
+        { label: 'Certificate Size', value: 'A3 (11.7 × 16.5 inches)' },
+        { label: 'Material', value: 'Heavyweight Pearl Archival Stock (360 GSM)' },
+        { label: 'Presentation Folder', value: 'Luxury Golden Ribbon Keepsake Folder' },
+        { label: 'Printing Technique', value: 'Archival Print with Gilded Gold Foil Border' },
+      ],
       images: [
         '/nikkah/printed-5/01.jpg',
         '/nikkah/printed-5/02.jpg',
         '/nikkah/printed-5/01.mp4',
       ],
     },
-    ...(importedDesktopGallery?.nikkahnama || []).map((n) => ({
-      name: n.name,
-      code: n.code || n.sku,
-      sku: n.sku || n.code,
-      images: n.images,
-    })),
+    {
+      name: 'Custom Calligraphy Nikkah Certificate',
+      code: 'TPS-NC-07',
+      sku: 'TPS-NC-07',
+      designNumber: 7,
+      minQuantity: 1,
+      specifications: [
+        { label: 'Certificate Size', value: 'A3 (11.7 × 16.5 inches)' },
+        { label: 'Material', value: '9K Textured Archival Card (350 GSM)' },
+        { label: 'Presentation Folder', value: 'Signature Hardcover Keepsake Folder' },
+        { label: 'Printing Technique', value: 'Custom Calligraphy & Archival Pigment Print' },
+      ],
+      images: [
+        '/nikkah/printed-custom/01.jpg',
+        '/nikkah/printed-custom/02.jpg',
+        '/nikkah/printed-custom/03.jpg',
+        '/nikkah/printed-custom/04.jpg',
+      ],
+    },
+    {
+      name: 'Islamic Calligraphy Nikkah Certificate Suite',
+      code: 'TPS-NC-08',
+      sku: 'TPS-NC-08',
+      designNumber: 8,
+      minQuantity: 1,
+      specifications: [
+        { label: 'Certificate Size', value: 'A3 (11.7 × 16.5 inches)' },
+        { label: 'Material', value: 'Antique Ivory Deckled Cotton Card (360 GSM)' },
+        { label: 'Presentation Folder', value: 'Regal Certificate Folder with Ribbon Tie' },
+        { label: 'Printing Technique', value: 'Illuminated Archival Print with Gold Accents' },
+      ],
+      images: [
+        '/nikkah/calligraphy-certificate/01.jpg',
+        '/nikkah/calligraphy-certificate/02.jpg',
+        '/nikkah/calligraphy-certificate/03.jpg',
+      ],
+    },
+    {
+      name: 'Royal Gold Foil Floral Nikkah Certificate',
+      code: 'TPS-NC-09',
+      sku: 'TPS-NC-09',
+      designNumber: 9,
+      minQuantity: 1,
+      specifications: [
+        { label: 'Certificate Size', value: 'A3 (11.7 × 16.5 inches)' },
+        { label: 'Material', value: '9K Textured Archival Cotton Card (380 GSM)' },
+        { label: 'Presentation Folder', value: 'Luxury Velvet Presentation Mount' },
+        { label: 'Printing Technique', value: 'Raised Metallic Gold Foil Stamping & Archival Print' },
+      ],
+      images: [
+        '/nikkah/printed-6/01.jpg',
+        '/nikkah/printed-6/02.jpg',
+        '/nikkah/printed-6/03.jpg',
+        '/nikkah/printed-6/04.jpg',
+      ],
+    },
   ],
 }
+
+export const PAMPHLETS_GALLERY = Array.from({ length: 16 }, (_, i) => {
+  const num = i + 1
+  const numStr = String(num).padStart(2, '0')
+  return {
+    designNumber: num,
+    name: SEO_PAMPHLET[num] || `Printed Pamphlet Design ${num}`,
+    images: [`/pamphlets/pamphlet-${numStr}.jpg`],
+  }
+})
 
 function addStationaryProducts({
   categorySlug,
@@ -863,6 +1328,9 @@ function parseDesignNum(name, fallback = 1) {
 }
 
 function resolveSeoDesignName({ name, categorySlug, subcategorySlug, typeSlug, designNum, galleryImages }) {
+  if (categorySlug === 'favours' && name) {
+    return seoFavourName(name)
+  }
   if (categorySlug !== 'wedding-invitations' && name && !/^Design \d+$/i.test(name)) {
     return name;
   }
@@ -908,6 +1376,9 @@ function addDesigns({
   name,
   code,
   sku,
+  designNumber,
+  minQuantity,
+  specifications,
   categoryLabel,
   categorySlug,
   subcategorySlug,
@@ -923,7 +1394,7 @@ function addDesigns({
   whatsappLabel,
 }) {
   if (galleryImages?.length) {
-    const designNum = weddingDesignNumber(galleryImages) ?? parseDesignNum(name, 1)
+    const designNum = designNumber ?? weddingDesignNumber(galleryImages) ?? parseDesignNum(name, 1)
     const baseObj = { categorySlug, subcategorySlug: subcategorySlug || null, typeSlug: typeSlug || null }
     const resolvedCode = code || sku || getProductCode(baseObj, designNum)
     return [
@@ -940,6 +1411,13 @@ function addDesigns({
         image: galleryImages[0],
         images: galleryImages,
         description: getProductDescription(baseObj, designNum),
+        specifications: specifications || (categorySlug === 'nikkahnama' ? [
+          { label: 'Certificate Size', value: 'A3 (11.7 × 16.5 inches)' },
+          { label: 'Material', value: 'Archival Heavyweight Textured Cotton Card (360–400 GSM)' },
+          { label: 'Presentation Folder', value: 'Signature Protective Velvet Keepsake Folder' },
+          { label: 'Printing Technique', value: 'Original Hand-Painted & Traditional Islamic Calligraphy' },
+        ] : undefined),
+        minQuantity: minQuantity ?? (categorySlug === 'nikkahnama' ? 1 : 25),
         whatsIncluded: getProductWhatsIncluded(baseObj, designNum),
         seoKeywords: getProductSeoKeywords(baseObj, designNum),
         showPrice: showPrice ?? false,
@@ -981,6 +1459,35 @@ function buildAllProducts() {
   const all = []
 
   for (const cat of shopCategories) {
+    if (cat.slug === 'accessories-add-ons') {
+      for (const item of ACCESSORIES_ADDONS_GALLERY) {
+        // One product per add-on type — all photos/videos go into the gallery slider
+        all.push({
+          id: `prod-acc-${item.code.toLowerCase()}`,
+          designNumber: 1,
+          code: item.code,
+          altCode: item.code,
+          sku: item.code,
+          slug: item.slug,
+          name: item.name,
+          category: cat.label,
+          categorySlug: cat.slug,
+          subcategorySlug: item.slug,
+          typeSlug: null,
+          image: item.images[0],
+          images: item.images,
+          imageCount: item.images.length,
+          showPrice: false,
+          paymentType: 'advance',
+          whatsappMode: 'price',
+          whatsappLabel: 'Premium Add-ons',
+          description: item.description,
+          badge: item.badge || null,
+        })
+      }
+      continue
+    }
+
     if (cat.subcategories?.length) {
       for (const sub of cat.subcategories) {
         if (sub.slug === 'website-invitation') continue
@@ -996,8 +1503,51 @@ function buildAllProducts() {
                 name: design.name,
                 code: design.code,
                 sku: design.sku,
+                designNumber: design.designNumber,
+                minQuantity: design.minQuantity || 1,
+                specifications: design.specifications,
                 showPrice: cat.showPrice,
                 priceBase: 1200,
+                paymentType: cat.paymentType,
+                whatsappMode: cat.whatsappMode,
+                categoryLabel: cat.label,
+              })
+            )
+          }
+          continue
+        }
+
+        if (cat.slug === 'gifting-envelopes-tags' && GIFTING_ENVELOPES_TAGS_GALLERY[sub.slug]) {
+          for (const design of GIFTING_ENVELOPES_TAGS_GALLERY[sub.slug]) {
+            all.push(
+              ...addDesigns({
+                categorySlug: cat.slug,
+                subcategorySlug: sub.slug,
+                whatsappLabel: sub.whatsappPrefix,
+                galleryImages: design.images,
+                name: design.name,
+                showPrice: cat.showPrice,
+                priceBase: 1200,
+                paymentType: cat.paymentType,
+                whatsappMode: cat.whatsappMode,
+                categoryLabel: cat.label,
+              })
+            )
+          }
+          continue
+        }
+
+        if (cat.slug === 'greeting-cards' && GREETING_CARDS_GALLERY[sub.slug]) {
+          for (const design of GREETING_CARDS_GALLERY[sub.slug]) {
+            all.push(
+              ...addDesigns({
+                categorySlug: cat.slug,
+                subcategorySlug: sub.slug,
+                whatsappLabel: sub.whatsappPrefix,
+                galleryImages: design.images,
+                name: design.name,
+                showPrice: true,
+                priceBase: 650,
                 paymentType: cat.paymentType,
                 whatsappMode: cat.whatsappMode,
                 categoryLabel: cat.label,
@@ -1132,6 +1682,23 @@ function buildAllProducts() {
           })
         )
       }
+    } else if (cat.slug === 'ramadan-eid-gifts') {
+      for (const design of RAMADAN_EID_GALLERY) {
+        all.push(
+          ...addDesigns({
+            categorySlug: cat.slug,
+            whatsappLabel: 'Ramadan & Eid Gifts',
+            galleryImages: design.images,
+            name: design.name,
+            showPrice: cat.showPrice,
+            priceBase: 2500,
+            paymentType: cat.paymentType,
+            whatsappMode: cat.whatsappMode,
+            categoryLabel: cat.label,
+          })
+        )
+      }
+      continue;
     } else if (cat.slug === 'wax-seals') {
       const seals = importedDesktopGallery?.waxSeals || [
         { name: 'Custom Wax Seal - Collection 1', images: ['/wax-seals/seal-1/01.jpg'] },
@@ -1151,8 +1718,28 @@ function buildAllProducts() {
           showPrice: false,
           paymentType: 'advance',
           whatsappMode: 'price',
-          whatsappLabel: 'Customised Wax Seals',
+          whatsappLabel: 'Wax Seal and Custom Stamps',
         });
+      }
+      continue;
+    }
+
+    if (cat.slug === 'pamphlets') {
+      for (const design of PAMPHLETS_GALLERY) {
+        all.push(
+          ...addDesigns({
+            categorySlug: cat.slug,
+            whatsappLabel: 'Printed Pamphlet',
+            galleryImages: design.images,
+            name: design.name,
+            showPrice: cat.showPrice,
+            priceBase: 0,
+            paymentType: cat.paymentType,
+            whatsappMode: cat.whatsappMode,
+            categoryLabel: cat.label,
+            designNum: design.designNumber,
+          })
+        )
       }
       continue;
     }
@@ -1174,7 +1761,7 @@ function buildAllProducts() {
         )
       }
     }
-    // Skip placeholder products (boxes / pamphlets / greeting-cards) until real photos are added
+    // Skip placeholder products (boxes / greeting-cards) until real photos are added
   }
 
   const categoryCounters = {}
@@ -1188,17 +1775,26 @@ function buildAllProducts() {
     .map((product) => {
       const slug = product.categorySlug || 'wedding-invitations'
       categoryCounters[slug] = (categoryCounters[slug] || 0) + 1
-      const designNum = (slug === 'wedding-invitations' && product.designNumber)
-        ? product.designNumber
-        : categoryCounters[slug]
       const initial = CATEGORY_INITIALS[slug] || 'WI'
-      const code = `TPS-${initial}-${String(designNum).padStart(2, '0')}`
+
+      let designNum
+      let code
+      if (slug === 'wedding-invitations') {
+        designNum = product.designNumber || categoryCounters[slug]
+        code = `TPS-WI-${String(designNum).padStart(2, '0')}`
+      } else {
+        designNum = categoryCounters[slug]
+        code = `TPS-${initial}-${String(designNum).padStart(2, '0')}`
+      }
+
       const baseObj = { ...product, code, designNumber: designNum }
       return {
         ...product,
         code,
+        sku: code,
+        slug: product.slug || product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
         designNumber: designNum,
-        description: getProductDescription(baseObj, designNum),
+        description: product.description || getProductDescription(baseObj, designNum),
         whatsIncluded: getProductWhatsIncluded(baseObj, designNum),
         seoKeywords: getProductSeoKeywords(baseObj, designNum),
       }
@@ -1209,7 +1805,7 @@ export const products = buildAllProducts()
 export const categories = shopCategories
 
 export function getAllSitemapPaths() {
-  const paths = new Set(['/', '/about', '/contact', '/shop', '/cart'])
+  const paths = new Set(['/', '/about', '/contact', '/shop', '/shipping', '/cart'])
 
   for (const cat of shopCategories) {
     paths.add(`/shop/${cat.slug}`)
@@ -1220,6 +1816,13 @@ export function getAllSitemapPaths() {
       for (const type of sub.types || []) {
         paths.add(`/shop/${cat.slug}/${sub.slug}/${type.slug}`)
       }
+    }
+  }
+
+  for (const p of products) {
+    const code = p.code || p.sku || p.id
+    if (code) {
+      paths.add(`/product/${encodeURIComponent(code)}`)
     }
   }
 
@@ -1284,53 +1887,47 @@ const SUBCATEGORY_ALIASES = {
 }
 
 export function getFeaturedProducts() {
-  const picks = [
-    { categorySlug: 'wedding-invitations', design: 1 },
-    { categorySlug: 'digital-invitations', subcategorySlug: 'image-invitation', typeSlug: 'wedding', design: 1 },
-    { categorySlug: 'stationary-items', subcategorySlug: 'diaries', design: 1 },
-    { categorySlug: 'stationary-items', subcategorySlug: 'pens', name: 'Cute Hello Kitty Printed Gel Pen' },
-  ]
+  const weddingInvite = products.find((p) => p.categorySlug === 'wedding-invitations')
+  const nikkahnama = products.find((p) => p.categorySlug === 'nikkahnama')
+  const seal = products.find((p) => p.categorySlug === 'wax-seals')
+  const potli =
+    products.find((p) => p.categorySlug === 'favours' && p.subcategorySlug === 'potli') ||
+    products.find((p) => p.categorySlug === 'favours')
 
-  return picks
-    .map(({ categorySlug, subcategorySlug, typeSlug, design, name }) =>
-      products.find(
-        (product) =>
-          product.categorySlug === categorySlug &&
-          product.subcategorySlug === (subcategorySlug ?? null) &&
-          (typeSlug == null || product.typeSlug === typeSlug) &&
-          product.name === seoPickName(categorySlug, { subcategorySlug, typeSlug, design, name })
-      )
-    )
-    .filter(Boolean)
+  return [weddingInvite, nikkahnama, seal, potli].filter(Boolean)
 }
 
 export function getBestSellers() {
-  const picks = [
-    { categorySlug: 'wedding-invitations', design: 1 },
-    { categorySlug: 'wedding-invitations', design: 8 },
-    { categorySlug: 'digital-invitations', subcategorySlug: 'image-invitation', typeSlug: 'wedding', design: 1 },
-    { categorySlug: 'nikkahnama', subcategorySlug: 'hand-painted', design: 1 },
-    { categorySlug: 'nikkahnama', subcategorySlug: 'printed', design: 1 },
-    { categorySlug: 'favours', subcategorySlug: 'box-favours', name: 'Baby Announcement Box' },
-    { categorySlug: 'favours', subcategorySlug: 'box-favours', name: 'Sweet Box with Gift Bags' },
-    { categorySlug: 'favours', subcategorySlug: 'tin-favours', design: 1 },
-    { categorySlug: 'packaging', subcategorySlug: 'business-stickers', design: 1 },
-    { categorySlug: 'packaging', subcategorySlug: 'business-stickers', design: 2 },
-    { categorySlug: 'vinyl-stickers', design: 1 },
-    { categorySlug: 'eidi-envelopes', name: 'F.R.I.E.N.D.S Theme' },
-  ]
+  const selected = [
+    // 1. Wedding Invitations (2 top distinct luxury suites)
+    products.find((p) => p.categorySlug === 'wedding-invitations' && p.designNumber === 1),
+    products.find((p) => p.categorySlug === 'wedding-invitations' && p.designNumber === 8),
+    // 2. Digital E-Invites
+    products.find((p) => p.categorySlug === 'digital-invitations' && p.typeSlug === 'wedding' && p.designNumber === 1),
+    // 3. Nikkah Certificates (2 completely distinct styles)
+    products.find((p) => p.categorySlug === 'nikkahnama' && p.name && p.name.includes('Islamic Calligraphy')) ||
+      products.find((p) => p.categorySlug === 'nikkahnama' && p.subcategorySlug === 'printed'),
+    products.find((p) => p.categorySlug === 'nikkahnama' && p.subcategorySlug === 'hand-painted'),
+    // 4. Favours (3 completely distinct styles: Baby Gift Box, Sweet Box with Bag, and Metallic Tin)
+    products.find((p) => p.categorySlug === 'favours' && p.name && (p.name.includes('Baby Announcement') || p.name.includes('Teddy'))),
+    products.find((p) => p.categorySlug === 'favours' && p.name && (p.name.includes('Royal Heritage') || p.name.includes('Sweet Box'))),
+    products.find((p) => p.categorySlug === 'favours' && p.name && (p.name.includes('Golden Tin') || p.name.includes('Round Tin'))),
+    // 5. Packaging (Brand stickers & Custom cards)
+    products.find((p) => p.categorySlug === 'packaging' && p.subcategorySlug === 'business-stickers' && p.designNumber === 1),
+    products.find((p) => p.categorySlug === 'packaging' && p.subcategorySlug === 'business-stickers' && p.designNumber === 2),
+    // 6. Vinyl Stickers
+    products.find((p) => p.categorySlug === 'vinyl-stickers' && p.designNumber === 1),
+    // 7. Premium Add-on / Wax Seals
+    products.find((p) => p.categorySlug === 'accessories-add-ons' && p.slug === 'gold-foiling') ||
+      products.find((p) => p.categorySlug === 'wax-seals' && p.designNumber === 1),
+  ].filter(Boolean)
 
-  return picks
-    .map(({ categorySlug, subcategorySlug, typeSlug, design, name }) =>
-      products.find(
-        (product) =>
-          product.categorySlug === categorySlug &&
-          product.subcategorySlug === (subcategorySlug ?? null) &&
-          (typeSlug == null || product.typeSlug === typeSlug) &&
-          product.name === seoPickName(categorySlug, { subcategorySlug, typeSlug, design, name })
-      )
-    )
-    .filter(Boolean)
+  const seenIds = new Set()
+  return selected.filter((p) => {
+    if (seenIds.has(p.id)) return false
+    seenIds.add(p.id)
+    return true
+  })
 }
 
 export function normalizeCategorySlug(slug) {

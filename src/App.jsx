@@ -11,7 +11,11 @@ import ShopPage from './pages/ShopPage'
 import ShopCategoryPage from './pages/ShopCategoryPage'
 import ContactPage from './pages/ContactPage'
 import CartPage from './pages/CartPage'
+import InvoicePage from './pages/InvoicePage'
+import ShippingPage from './pages/ShippingPage'
+import ProductDetailPage from './pages/ProductDetailPage'
 import { CartProvider } from './context/CartContext'
+import { pingSupabaseKeepAlive } from './utils/supabase'
 
 // Admin Portal imports
 import { AdminDataProvider } from './admin/AdminDataContext'
@@ -35,6 +39,11 @@ function AppContent() {
 
   const [loaderMode, setLoaderMode] = useState('initial')
   const prevPath = useRef(null)
+
+  // Automatic Supabase keepalive ping on site visits to prevent 7-day inactivity pause
+  useEffect(() => {
+    pingSupabaseKeepAlive();
+  }, [])
 
   useEffect(() => {
     if (isAdminRoute) return // No public loader on admin
@@ -89,6 +98,7 @@ function AppContent() {
       <Navbar />
       <main>
         <Routes>
+          {/* Base routes */}
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/shop" element={<ShopPage />} />
@@ -97,6 +107,29 @@ function AppContent() {
           <Route path="/shop/:category" element={<ShopCategoryPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/shipping" element={<ShippingPage />} />
+          <Route path="/invoice" element={<InvoicePage />} />
+          <Route path="/product/:code" element={<ProductDetailPage />} />
+          <Route path="/p/:code" element={<ProductDetailPage />} />
+          <Route path="/design/:code" element={<ProductDetailPage />} />
+
+          {/* Regional / Country SEO routes: /us, /uk, /pk, /ae, /ca, /au, /en-us, /en-gb, /en-pk, etc. */}
+          <Route path="/:country" element={<HomePage />} />
+          <Route path="/:country/about" element={<AboutPage />} />
+          <Route path="/:country/shop" element={<ShopPage />} />
+          <Route path="/:country/shop/:category/:subcategory/:type" element={<ShopCategoryPage />} />
+          <Route path="/:country/shop/:category/:subcategory" element={<ShopCategoryPage />} />
+          <Route path="/:country/shop/:category" element={<ShopCategoryPage />} />
+          <Route path="/:country/contact" element={<ContactPage />} />
+          <Route path="/:country/cart" element={<CartPage />} />
+          <Route path="/:country/shipping" element={<ShippingPage />} />
+          <Route path="/:country/invoice" element={<InvoicePage />} />
+          <Route path="/:country/product/:code" element={<ProductDetailPage />} />
+          <Route path="/:country/p/:code" element={<ProductDetailPage />} />
+          <Route path="/:country/design/:code" element={<ProductDetailPage />} />
+
+          {/* Fallback catch-all to ensure no route ever renders a blank page */}
+          <Route path="*" element={<HomePage />} />
         </Routes>
       </main>
       <Footer />

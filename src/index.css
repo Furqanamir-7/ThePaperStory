@@ -520,47 +520,38 @@ h1, h2, h3, h4 {
   100% { transform: translateY(-50%); }
 }
 
-/* ── Instagram Marquee Showcase ── */
+/* ── Instagram Horizontal Marquee Showcase ── */
 .insta-marquee {
   overflow: hidden;
+  position: relative;
+  width: 100%;
 }
 
 .insta-marquee-track {
   display: flex;
   width: max-content;
-  gap: 0.75rem;
-  animation: review-marquee-x 52s linear infinite;
+  gap: 1rem;
   will-change: transform;
+}
+
+.insta-marquee-row-1 .insta-marquee-track {
+  animation: review-marquee-x 72s linear infinite;
+}
+
+.insta-marquee-row-2 .insta-marquee-track {
+  animation: review-marquee-x 84s linear infinite;
 }
 
 .insta-marquee:hover .insta-marquee-track {
   animation-play-state: paused;
 }
 
-.insta-slider-desktop .insta-marquee {
-  height: 32rem;
-  display: flex;
-  justify-content: center;
-}
-
-.insta-slider-desktop .insta-marquee-track {
-  flex-direction: column;
-  width: auto;
-  height: max-content;
-  animation-name: review-marquee-y;
-  animation-duration: 44s;
-}
-
-.insta-slider-desktop .insta-marquee--reverse .insta-marquee-track {
-  animation-direction: reverse;
-  animation-duration: 50s;
-}
-
 .insta-slide-card {
   margin: 0;
   flex-shrink: 0;
-  width: 13.5rem;
-  border-radius: 0.75rem;
+  width: 13rem;
+  height: 16rem;
+  border-radius: 0.85rem;
   background: #fff;
   border: 1px solid rgba(163, 30, 59, 0.12);
   box-shadow: 0 4px 14px rgba(139, 26, 50, 0.08);
@@ -569,9 +560,18 @@ h1, h2, h3, h4 {
   line-height: 0;
 }
 
-.insta-slider-desktop .insta-slide-card {
+@media (min-width: 640px) {
+  .insta-slide-card {
+    width: 15rem;
+    height: 18.5rem;
+  }
+}
+
+.insta-slide-card img {
   width: 100%;
-  max-width: 15rem;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /* ── Testimonial slider ── */
@@ -1840,4 +1840,14 @@ h1, h2, h3, h4 {
   .mobile-menu-drawer {
     width: 25rem;
   }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }

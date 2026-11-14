@@ -18,75 +18,207 @@ export const CATEGORY_INITIALS = {
   'greeting-cards': 'GC',
   'boxes': 'BX',
   'pamphlets': 'PM',
+  'accessories-add-ons': 'ACC',
+  'gifting-envelopes-tags': 'GET',
+  'ramadan-eid-gifts': 'REG',
 };
 
+export const BLUSH_BLOOM_TEMPLATE = `This invitation takes inspiration from Mughal art, featuring peacocks, floral details, and traditional patterns. The pink, green, and maroon colours create a rich and elegant look, while the illustrated borders and matching envelope bring the entire design together.
+
+Perfect for couples who want a wedding invitation with a touch of Mughal heritage.`
+
+export function stripAutoAddedDetails(text) {
+  if (!text) return ''
+  let clean = String(text)
+  if (/##\s*PRODUCT DETAILS/i.test(clean)) {
+    clean = clean.split(/##\s*PRODUCT DETAILS/i)[0]
+  }
+  clean = clean.replace(/^##\s*ABOUT THIS DESIGN\s*\n*/i, '')
+  clean = clean.replace(/Premium add-ons included in this design:\s*$/i, '')
+  return clean.trim()
+}
+
+export function formatWeddingTemplate(summary, specs = {}) {
+  return summary ? String(summary).trim() : ''
+}
+
 export const WEDDING_DESCRIPTIONS = {
-  1: 'Bespoke blush and bloom floral suite featuring delicate pastel watercolor roses, soft eucalyptus greenery, and deckled-edge textured cardstock with matching dusty rose envelopes.',
-  2: 'Understated luxury with modern gold foil typography, architectural arched silhouette, and warm off-white cotton rag stock finished with a signature wax seal stamp.',
-  3: 'Royal Mughal botanical heritage suite featuring illuminated border motifs, intricate vintage arabesques, gold calligraphy, and custom scan-to-locate venue QR code card.',
-  4: 'Dreamy pastel garden party invitation featuring lush botanical florals, sage greenery accents, bespoke monogrammed tags, and premium textured cardstock.',
-  5: 'Timeless classic cream invitation suite with embossed gold border, royal monogram crest, matching envelopes, and handcrafted metallic sealing wax.',
-  6: 'Regal floral crest suite on heavy textured ivory stock with bespoke monogrammed envelopes, silk ribbon accent, and handmade seal.',
-  7: 'Romantic vintage lace-inspired invitation suite with intricate laser-cut or embossed borders, pearlescent shimmer stock, and soft blush accents.',
-  8: 'Vibrant blush pink floral botanical suite with matching botanical envelope inner lining, personalized itinerary insert card, and rose gold seal.',
-  9: 'Regal navy blue and champagne gold luxury invitation featuring ornate oriental border illumination and crisp metallic foil typography.',
-  10: 'Earthy sage green botanical garden wedding suite printed on organic cotton textured paper with custom monogram and olive branch accents.',
-  11: 'Warm terracotta and burnt orange boho wedding suite featuring modern arch cutouts, vellum band wrap, and bronze sealing wax.',
-  12: 'Dramatic black tie luxury wedding suite with deep obsidian cardstock, reflective mirror gold foil stamping, and personalized Urdu calligraphy.',
-  13: 'Soft watercolor floral meadow invitation with hand-painted botanicals, translucent vellum jacket, and delicate wax seal stamp.',
-  14: 'Traditional Islamic wedding invitation suite adorned with ornate Quranic verse calligraphy (Bismillah / Wa Khalaqnakum Azwaja), royal damask pattern, and gold foil borders.',
-  15: 'Lush golden foil damask invitation card with rich velvet-touch envelope sleeve and engraved monogram emblem.',
-  16: 'Vintage garden floral botanical suite with rich mauve and blush blooms, gold foil header, and customized event card inserts.',
-  17: 'Understated modern botanical suite on warm almond cardstock featuring minimalist line art florals and clean serif typography.',
-  18: 'Opulent Arabic calligraphy royal celebration suite with gold illuminated borders, metallic emerald and gold paper, and ornate RSVP card.',
-  19: 'Burgundy and rose gold royal wedding suite featuring deep crimson cards, shimmering foil details, and floral envelope liners.',
-  20: 'Regal golden arch baroque suite with intricate filigree framing, deep rich backdrop, and dual-language Urdu and English typography.',
-  21: 'Celestial starry midnight navy blue wedding invitation suite with sprinkled gold foil dust, star chart accents, and deep navy shimmer envelopes.',
-  22: 'Rustic kraft and lace destination wedding invitation with botanical sprigs, twine tie wrap, and personalized tag.',
-  23: 'Elegant art deco geometric invitation suite featuring 1920s Great Gatsby inspired gold foil lines and sleek jet black framing.',
-  24: 'Traditional desi paisley and marigold wedding suite in radiant festive hues with golden zari borders and custom mehndi event card.',
-  25: 'Luxe mirror acrylic transparent invitation card engraved with custom typography, accompanied by a heavy textured velvet pouch envelope.',
-  26: 'Minimalist contemporary editorial monochrome wedding invitation with high-fashion typography, blind letterpress debossing, and modern asymmetric layout.',
-  27: 'Chic Parisian botanical rose suite with vintage French toile de Jouy patterns, dusty pink paper stock, and custom wax seal.',
-  28: 'Opulent baroque gold filigree wedding card set on ivory stock with intricate crest framing and shimmering metallic envelopes.',
-  29: 'Tropical destination wedding invitation featuring lush monstera and palm foliage, gold foil accents, and boarding pass itinerary.',
-  30: 'Enchanted forest woodland celebration suite with deep forest green tones, copper foil typography, and botanical fern motifs.',
-  31: 'Soft dusty blue romantic watercolor invitation suite with handmade torn edges, silk chiffon ribbon, and white wax seal.',
-  32: 'Grand emerald green and gold foil royal Pakistani wedding invitation suite featuring intricate Mughal jali patterns and ornate Urdu script.',
-  33: 'Pure minimalist ivory linen letterpress invitation with deep debossed typography and matching custom deckled-edge RSVP envelope.',
-  34: 'Regal velvet hardcover wedding invitation box with gold laser-engraved monogram crest and satin ribbon closure.',
-  35: 'Vintage renaissance floral garland invitation featuring antique gilded frame, calligraphy names, and matching reception card.',
-  36: 'Contemporary geometric marble and rose gold wedding invitation suite on heavy pearl shimmer cardstock.',
-  37: 'Traditional royal red and gold Nikahnama-inspired wedding invitation with ornate borders and Quranic calligraphy.',
-  38: 'Modern Scandinavian eucalyptus greenery invitation suite with clean typography, vellum wrap, and copper wax seal.',
-  39: 'Romantic lavender and lilac wildflower botanical wedding suite featuring watercolor blooms and custom venue map card.',
-  40: 'Opulent champagne shimmer wedding suite with laser-cut lace gatefold jacket and satin ribbon bow.',
-  41: 'Bohemian pampas grass and neutral dried florals wedding invitation on deckled cotton paper with terracotta envelope.',
-  42: 'Vintage Victorian floral cameo wedding invitation with delicate embossed borders and antique gold foil accents.',
-  43: 'Modern architectural arch multi-card wedding suite in warm taupe and ivory with custom monogrammed brass paperclip.',
-  44: 'Regal peacock teal and antique gold wedding invitation featuring ornate feather motifs and rich foiled border detailing.',
-  45: 'Whimsical fairytale garden wedding suite with pastel floral illustrations, gold foil stars, and ribbon tie.',
-  46: 'Sophisticated modern black and white typography invitation with blind debossed borders and luxury silk ribbon.',
-  47: 'Royal Rajasthani heritage wedding invitation with festive golden elephant and palace arch motifs on ivory card.',
-  48: 'Ethereal translucent frosted acrylic invitation card printed with white UV ink, enclosed in a luxury velvet envelope.',
-  49: 'Exquisite blush and gold gilded wedding invitation suite featuring intricate botanical filigree, handcrafted deckled cotton cardstock, and matching monogrammed stationery inserts.',
-  50: 'Enchanting pastel garden wedding card with delicate floral sprays, soft ivory tones, premium textured cardstock, and bespoke RSVP details.',
-  51: 'Majestic wedding suite adorned with a regal heraldic crest, deep warm tones, embossed metallic foil borders, and luxury envelope seal.',
-  52: 'Romantic rose damask foil-stamped invitation on heavy velvet-touch matte cardstock with matching insert cards and satin ribbon wrap.',
-  53: 'Deep midnight navy blue cardstock illuminated with fine celestial gold foil typography, constellation detailing, and bespoke wax-stamped envelope.',
-  54: 'Organic olive branch and botanical meadow motif printed on textured recycled cotton paper with minimalist typography and translucent vellum band.',
-  55: 'Grand royal wedding invitation suite inspired by classic Mughal architecture, illuminated arabesque borders, and intricate gold foil calligraphy.',
-  56: 'Nostalgic vintage rosebud florals on pearlized cardstock, finished with scalloped die-cut edges and romantic calligraphy script.',
-  57: 'Clean, modern luxury in alabaster off-white and warm metallic gold foil with architectural arch frame and custom seal.',
-  58: 'Soft twilight lilac and champagne shimmer invitation with delicate watercolor wash, gold edging, and personalized monogram.',
-  59: 'Intricate baroque gilded filigree framing a classic royal invitation layout on thick museum-grade cotton cardstock.',
-  60: 'Stunning deep ruby card with rich gold foil stamping, royal Urdu and English wedding typography, and matching lined envelopes.',
-  61: 'Regal sapphire blue invitation suite accented with silver foil blossom branches, matching event cards, and luxury pocketfold.',
-  62: 'Fragrant jasmine vines cascading around a golden arched frame on warm ivory textured paper with bespoke sealing wax.',
-  63: 'Heirloom-inspired damask pattern in burnished gold on heavy cream cardstock, accompanied by an RSVP insert card.',
-  64: 'Lush blush peony florals with reflective rose gold foil typography, soft vellum jacket, and wax seal closure.',
-  65: 'Minimalist eucalyptus greenery illustration on natural linen-textured cardstock with clean contemporary typography.',
-  66: 'Deep burgundy and cream invitation suite featuring delicate cherry blossom accents, gold foiled names, and customized matching stationery.'
+  1: BLUSH_BLOOM_TEMPLATE,
+  2: formatWeddingTemplate(
+    'Understated wedding invitation featuring clean modern gold foil typography, an architectural arched silhouette, and warm off-white cotton rag cardstock with coordinating envelope.',
+    { printing: 'Digital Printing & Gold Foil Stamping' }
+  ),
+  3: formatWeddingTemplate(
+    'Royal Mughal heritage invitation suite featuring illuminated border motifs, vintage arabesques, and gold calligraphy inspired by historic court architecture.',
+    { printing: 'Digital Printing & Screen Print Accents' }
+  ),
+  4: formatWeddingTemplate(
+    'Dreamy pastel garden wedding invitation featuring botanical florals, sage greenery accents, bespoke monogrammed tags, and premium textured cardstock.'
+  ),
+  5: formatWeddingTemplate(
+    'Timeless classic cream invitation suite with embossed gold border, royal monogram crest, matching envelopes, and handcrafted metallic sealing wax.',
+    { printing: 'Digital Printing with Foil Border' }
+  ),
+  6: formatWeddingTemplate(
+    'Regal floral crest suite on heavy textured ivory stock with bespoke monogrammed envelopes, silk ribbon accent, and handmade seal.'
+  ),
+  7: formatWeddingTemplate(
+    'Romantic vintage lace-inspired invitation suite with intricate embossed borders, shimmer stock, and soft blush accents.'
+  ),
+  8: formatWeddingTemplate(
+    'Vibrant blush pink floral botanical suite with matching botanical envelope inner lining and personalized itinerary insert card.'
+  ),
+  9: formatWeddingTemplate(
+    'Regal navy blue and champagne gold luxury invitation featuring ornate oriental border illumination and crisp metallic foil typography.',
+    { printing: 'Gold Foil Stamping & Digital Printing' }
+  ),
+  10: formatWeddingTemplate(
+    'Earthy sage green botanical garden wedding suite printed on organic cotton textured paper with custom monogram and olive branch accents.'
+  ),
+  11: formatWeddingTemplate('Warm terracotta and burnt orange boho wedding suite featuring modern arch cutouts, vellum band wrap, and bronze sealing wax.'),
+  12: formatWeddingTemplate('Dramatic black tie luxury wedding suite with deep obsidian cardstock, reflective mirror gold foil stamping, and personalized Urdu calligraphy.', { printing: 'Digital Printing & Gold Foil Stamping' }),
+  13: formatWeddingTemplate('Soft watercolor floral meadow invitation with hand-painted botanicals, translucent vellum jacket, and delicate wax seal stamp.'),
+  14: formatWeddingTemplate('Traditional Islamic wedding invitation suite adorned with ornate Quranic verse calligraphy (Bismillah / Wa Khalaqnakum Azwaja), royal damask pattern, and gold foil borders.', { printing: 'Digital Printing & Gold Foil Borders' }),
+  15: formatWeddingTemplate('Lush golden foil damask invitation card with rich velvet-touch envelope sleeve and engraved monogram emblem.', { printing: 'Gold Foil Stamping & Digital Printing' }),
+  16: formatWeddingTemplate('Vintage garden floral botanical suite with rich mauve and blush blooms, gold foil header, and customized event card inserts.'),
+  17: formatWeddingTemplate('Understated modern botanical suite on warm almond cardstock featuring minimalist line art florals and clean serif typography.'),
+  18: formatWeddingTemplate('Opulent Arabic calligraphy royal celebration suite with gold illuminated borders, metallic emerald and gold paper, and ornate RSVP card.', { printing: 'Gold Foil Stamping & Screen Print Accents' }),
+  19: formatWeddingTemplate('Burgundy and rose gold royal wedding suite featuring deep crimson cards, shimmering foil details, and floral envelope liners.'),
+  20: formatWeddingTemplate('Regal golden arch baroque suite with intricate filigree framing, deep rich backdrop, and dual-language Urdu and English typography.'),
+  21: formatWeddingTemplate('Celestial starry midnight navy blue wedding invitation suite with sprinkled gold foil dust, star chart accents, and deep navy shimmer envelopes.', { printing: 'Gold Foil Dust & Digital Printing' }),
+  22: formatWeddingTemplate('Rustic kraft and lace destination wedding invitation with botanical sprigs, twine tie wrap, and personalized tag.'),
+  23: formatWeddingTemplate('Elegant art deco geometric invitation suite featuring 1920s Great Gatsby inspired gold foil lines and sleek jet black framing.', { printing: 'Digital Printing & Gold Foil Stamping' }),
+  24: formatWeddingTemplate('Traditional desi paisley and marigold wedding suite in radiant festive hues with golden zari borders and custom mehndi event card.'),
+  25: formatWeddingTemplate('Luxe mirror acrylic transparent invitation card engraved with custom typography, accompanied by a heavy textured velvet pouch envelope.', { cardStock: '3mm Mirror Acrylic Card', envelope: 'Luxury Velvet Pouch Envelope' }),
+  26: formatWeddingTemplate('Minimalist contemporary editorial monochrome wedding invitation with high-fashion typography, blind letterpress debossing, and modern asymmetric layout.', { printing: 'Letterpress Debossing & Digital Printing' }),
+  27: formatWeddingTemplate('Chic Parisian botanical rose suite with vintage French toile de Jouy patterns, dusty pink paper stock, and custom wax seal.'),
+  28: formatWeddingTemplate('Opulent baroque gold filigree wedding card set on ivory stock with intricate crest framing and shimmering metallic envelopes.'),
+  29: formatWeddingTemplate('Tropical destination wedding invitation featuring lush monstera and palm foliage, gold foil accents, and boarding pass itinerary.'),
+  30: formatWeddingTemplate('Enchanted forest woodland celebration suite with deep forest green tones, copper foil typography, and botanical fern motifs.'),
+  31: formatWeddingTemplate('Soft dusty blue romantic watercolor invitation suite with handmade torn edges, silk chiffon ribbon, and white wax seal.'),
+  32: formatWeddingTemplate('Grand emerald green and gold foil royal Pakistani wedding invitation suite featuring intricate Mughal jali patterns and ornate Urdu script.', { printing: 'Gold Foil Stamping & Screen Print Accents' }),
+  33: formatWeddingTemplate('Pure minimalist ivory linen letterpress invitation with deep debossed typography and matching custom deckled-edge RSVP envelope.', { printing: 'Letterpress Debossing & Digital Printing' }),
+  34: formatWeddingTemplate('Regal velvet hardcover wedding invitation box with gold laser-engraved monogram crest and satin ribbon closure.', { cardStock: 'Hardcover Velvet Invitation Board', envelope: 'Box Envelope with Ribbon Closure' }),
+  35: formatWeddingTemplate('Vintage renaissance floral garland invitation featuring antique gilded frame, calligraphy names, and matching reception card.'),
+  36: formatWeddingTemplate('Contemporary geometric marble and rose gold wedding invitation suite on heavy pearl shimmer cardstock.'),
+  37: formatWeddingTemplate('Traditional royal red and gold Nikahnama-inspired wedding invitation with ornate borders and Quranic calligraphy.'),
+  38: formatWeddingTemplate('Modern Scandinavian eucalyptus greenery invitation suite with clean typography, vellum wrap, and copper wax seal.'),
+  39: formatWeddingTemplate('Romantic lavender and lilac wildflower botanical wedding suite featuring watercolor blooms and custom venue map card.'),
+  40: formatWeddingTemplate('Opulent champagne shimmer wedding suite with laser-cut lace gatefold jacket and satin ribbon bow.'),
+  41: formatWeddingTemplate('Bohemian pampas grass and neutral dried florals wedding invitation on deckled cotton paper with terracotta envelope.'),
+  42: formatWeddingTemplate('Vintage Victorian floral cameo wedding invitation with delicate embossed borders and antique gold foil accents.'),
+  43: formatWeddingTemplate('Modern architectural arch multi-card wedding suite in warm taupe and ivory with custom monogrammed brass paperclip.'),
+  44: formatWeddingTemplate('Regal peacock teal and antique gold wedding invitation featuring ornate feather motifs and rich foiled border detailing.'),
+  45: formatWeddingTemplate('Whimsical fairytale garden wedding suite with pastel floral illustrations, gold foil stars, and ribbon tie.'),
+  46: formatWeddingTemplate('Sophisticated modern black and white typography invitation with blind debossed borders and luxury silk ribbon.'),
+  47: formatWeddingTemplate('Royal Rajasthani heritage wedding invitation with festive golden elephant and palace arch motifs on ivory card.'),
+  48: formatWeddingTemplate('Ethereal translucent frosted acrylic invitation card printed with white UV ink, enclosed in a luxury velvet envelope.', { cardStock: '3mm Frosted Translucent Acrylic', envelope: 'Luxury Velvet Pouch Envelope', printing: 'UV Screen Printing' }),
+  49: formatWeddingTemplate('Exquisite blush and gold gilded wedding invitation suite featuring intricate botanical filigree, handcrafted deckled cotton cardstock, and matching monogrammed stationery inserts.'),
+  50: formatWeddingTemplate('Enchanting pastel garden wedding card with delicate floral sprays, soft ivory tones, premium textured cardstock, and bespoke RSVP details.'),
+  51: formatWeddingTemplate('Majestic wedding suite adorned with a regal heraldic crest, deep warm tones, embossed metallic foil borders, and luxury envelope seal.'),
+  52: formatWeddingTemplate('Romantic rose damask foil-stamped invitation on heavy velvet-touch matte cardstock with matching insert cards and satin ribbon wrap.'),
+  53: formatWeddingTemplate('Deep midnight navy blue cardstock illuminated with fine celestial gold foil typography, constellation detailing, and bespoke wax-stamped envelope.'),
+  54: formatWeddingTemplate('Organic olive branch and botanical meadow motif printed on textured recycled cotton paper with minimalist typography and translucent vellum band.'),
+  55: formatWeddingTemplate('Grand royal wedding invitation suite inspired by classic Mughal architecture, illuminated arabesque borders, and intricate gold foil calligraphy.'),
+  56: formatWeddingTemplate('Nostalgic vintage rosebud florals on pearlized cardstock, finished with scalloped die-cut edges and romantic calligraphy script.'),
+  57: formatWeddingTemplate('Clean, modern luxury in alabaster off-white and warm metallic gold foil with architectural arch frame and custom seal.'),
+  58: formatWeddingTemplate('Soft twilight lilac and champagne shimmer invitation with delicate watercolor wash, gold edging, and personalized monogram.'),
+  59: formatWeddingTemplate('Intricate baroque gilded filigree framing a classic royal invitation layout on thick museum-grade cotton cardstock.'),
+  60: formatWeddingTemplate('Stunning deep ruby card with rich gold foil stamping, royal Urdu and English wedding typography, and matching lined envelopes.'),
+  61: formatWeddingTemplate('Regal sapphire blue invitation suite accented with silver foil blossom branches, matching event cards, and luxury pocketfold.'),
+  62: formatWeddingTemplate('Fragrant jasmine vines cascading around a golden arched frame on warm ivory textured paper with bespoke sealing wax.'),
+  63: formatWeddingTemplate('Heirloom-inspired damask pattern in burnished gold on heavy cream cardstock, accompanied by an RSVP insert card.'),
+  64: formatWeddingTemplate('Lush blush peony florals with reflective rose gold foil typography, soft vellum jacket, and wax seal closure.'),
+  65: formatWeddingTemplate('Minimalist eucalyptus greenery illustration on natural linen-textured cardstock with clean contemporary typography.'),
+  66: formatWeddingTemplate('Deep burgundy and cream invitation suite featuring delicate cherry blossom accents, gold foiled names, and customized matching stationery.')
+};
+
+export function formatNikkahTemplate(summary, specs = {}) {
+  return summary ? String(summary).trim() : ''
+}
+
+export const NIKKAH_DESCRIPTIONS = {
+  1: formatNikkahTemplate(
+    'An exquisite heirloom Nikkah Certificate hand-painted by master artisans with delicate botanical watercolors and illuminated Arabic calligraphy. Features the sacred Quranic verse "And We created you in pairs" (Wa Khalaqnakum Azwaja), surrounded by intricately painted floral garlands, soft rose blush tones, and lush olive foliage. Each piece is an original work of art on heavy archival textured cardstock, presented in a luxury keepsake folder for ceremonial signing.',
+    {
+      cardSize: 'A3 (11.7 × 16.5 inches)',
+      cardStock: 'Archival Heavyweight Textured Cotton Card (360–400 GSM)',
+      folder: 'Signature Protective Velvet Keepsake Folder',
+      printing: 'Original Hand-Painted Watercolor & Traditional Arabic Calligraphy'
+    }
+  ),
+  2: formatNikkahTemplate(
+    'A timeless ceremonial Nikkah Certificate framed by delicate pastel watercolor flora, blooming peonies, and romantic blush botanicals. Designed with crisp ceremonial vows, bilingual Arabic and English calligraphy headings, and formal signature lines for the bride, groom, Wali, and witnesses. Printed on museum-grade textured stock that resists fading for generations.',
+    {
+      cardSize: 'A3 (11.7 × 16.5 inches)',
+      cardStock: '9K Archival Textured Card (350 GSM)',
+      folder: 'Protective Luxury Keepsake Folder',
+      printing: 'High-Definition Archival Pigment Printing'
+    }
+  ),
+  3: formatNikkahTemplate(
+    'Understated modern elegance designed for couples who appreciate clean aesthetics. Features minimalist fine-line botanical branch sketches, airy typography, and graceful Urdu and English calligraphy. The warm ivory cardstock gives a sophisticated, contemporary feel suited for framing in modern home interiors.',
+    {
+      cardSize: 'A3 (11.7 × 16.5 inches)',
+      cardStock: 'Warm Off-White Cotton Felt Card (320–350 GSM)',
+      folder: 'Sleek Signature Certificate Sleeve',
+      printing: 'Fine Line Digital Archival Print'
+    }
+  ),
+  4: formatNikkahTemplate(
+    'A sleek contemporary Nikkah Certificate designed with structured geometric borders and modern Islamic typography. Created specifically for intimate Nikkah ceremonies and signing moments, with crisp contrasts, tailored vow clauses, and gold foil accents.',
+    {
+      cardSize: 'A3 (11.7 × 16.5 inches)',
+      cardStock: 'Premium Textured Matte Card (350 GSM)',
+      folder: 'Keepsake Hardcover Folder',
+      printing: 'Precision Archival Print with Gold Accents'
+    }
+  ),
+  5: formatNikkahTemplate(
+    'An ornate traditional Nikkahnama design featuring an arched Islamic mihrab crest, arabesque filigree motifs, and flowing nastaliq Urdu calligraphy. Perfect for traditional South Asian wedding celebrations, capturing royal court grandeur and sacred marital commitment.',
+    {
+      cardSize: 'A3 (11.7 × 16.5 inches)',
+      cardStock: 'Premium Heavy Textured Card (350 GSM)',
+      folder: 'Deluxe Velvet Presentation Folder',
+      printing: 'High-Resolution Archival Digital Printing'
+    }
+  ),
+  6: formatNikkahTemplate(
+    'A majestic Nikkahnama featuring shimmering metallic gold ornamental borders, rich geometric Islamic tessellations, and prominent Bismillah calligraphy. The luminous border catches the light during the signing ceremony, creating stunning photographs and video memories.',
+    {
+      cardSize: 'A3 (11.7 × 16.5 inches)',
+      cardStock: 'Heavyweight Pearl Archival Stock (360 GSM)',
+      folder: 'Luxury Golden Ribbon Keepsake Folder',
+      printing: 'Archival Print with Gilded Gold Foil Border'
+    }
+  ),
+  7: formatNikkahTemplate(
+    'Fully personalized bespoke Nikkah Certificate crafted with custom hand-penned or digital calligraphy of the bride and groom\'s names. Features ornate decorative crests, floral embellishments, and customized clauses to preserve the sacred memory of your wedding day forever.',
+    {
+      cardSize: 'A3 (11.7 × 16.5 inches)',
+      cardStock: '9K Textured Archival Card (350 GSM)',
+      folder: 'Signature Hardcover Keepsake Folder',
+      printing: 'Custom Calligraphy & Archival Pigment Print'
+    }
+  ),
+  8: formatNikkahTemplate(
+    'Inspired by classical illuminated Islamic manuscripts, this regal Nikkahnama suite features gilded circular medallion rosettes, ornate Thuluth script, and symmetrical arabesque illuminated headers. An authentic heirloom piece designed to be treasured, framed, and displayed for generations.',
+    {
+      cardSize: 'A3 (11.7 × 16.5 inches)',
+      cardStock: 'Antique Ivory Deckled Cotton Card (360 GSM)',
+      folder: 'Regal Certificate Folder with Ribbon Tie',
+      printing: 'Illuminated Archival Print with Gold Accents'
+    }
+  ),
+  9: formatNikkahTemplate(
+    'A breathtaking showpiece Nikkahnama combining lush royal emerald and burgundy botanical wreaths with reflective raised gold foil stamping. The opulent floral crest and shimmering gold typography make this one of our most coveted bridal keepsakes, perfect for high-profile luxury weddings.',
+    {
+      cardSize: 'A3 (11.7 × 16.5 inches)',
+      cardStock: '9K Textured Archival Cotton Card (380 GSM)',
+      folder: 'Luxury Velvet Presentation Mount',
+      printing: 'Raised Metallic Gold Foil Stamping & Archival Print'
+    }
+  )
 };
 
 export const CATEGORY_DESCRIPTIONS = {
@@ -99,7 +231,8 @@ export const CATEGORY_DESCRIPTIONS = {
   'packaging': 'Premium custom business and wedding packaging solutions, including high-gloss stickers, branded labels, and bespoke event packaging.',
   'vinyl-stickers': 'Durable waterproof die-cut vinyl stickers featuring aesthetic botanical artwork with UV-resistant scratch-proof laminate finish.',
   'eidi-envelopes': 'Festive celebratory money and Eidi envelopes crafted on rich pearlescent paper with gold foil greetings and festive themes.',
-  'post-cards': 'Fine art collectible postcard printed on heavy textured linen paper featuring inspirational Islamic quotes and serene artwork.'
+  'post-cards': 'Fine art collectible postcard printed on heavy textured linen paper featuring inspirational Islamic quotes and serene artwork.',
+  'pamphlets': 'Bespoke printed event pamphlets, folded ceremony programs, brand brochures, and personalized celebration menus crafted on premium cardstock.'
 };
 
 export const CATEGORY_WHATS_INCLUDED = {
@@ -163,7 +296,20 @@ export const CATEGORY_WHATS_INCLUDED = {
     'Heavy 350 GSM Textured Linen Cardstock Art Postcard',
     'Fine Art Archival Ink Printing with Vibrant Colorfast Finish',
     'Lined Reverse Surface for Personalized Messages & Postage'
-  ]
+  ],
+  'pamphlets': [
+    'Custom Designed Folded / Flat Pamphlet (Premium 260-350 GSM Cardstock)',
+    'High-Resolution Digital Offset / Foil Stamped Print Quality',
+    'Custom Typography, Event Itinerary, Menu or Brand Content',
+    'Precision Scoring & Machine Folding Included',
+    'Digital Proof with 3 Rounds of Complimentary Revisions'
+  ],
+  'accessories-add-ons': [
+    'Handcrafted Artisanal Finish & Custom Detailing',
+    'Custom Color Palettes, Monograms & Wording Options',
+    'Premium Imported Paper, Foil, Wax & Fabric Materials',
+    'Custom Sized & Matched to Coordinate with Your Invitation Suite',
+  ],
 };
 
 export const CATEGORY_SEO_KEYWORDS = {
@@ -236,14 +382,50 @@ export const CATEGORY_SEO_KEYWORDS = {
     'Postcards Pakistan',
     'Islamic Art Prints Lahore',
     'Linen Postcard Set'
+  ],
+  'pamphlets': [
+    'Pamphlet Printing Pakistan',
+    'Event Pamphlets Lahore',
+    'Custom Wedding Program Karachi',
+    'Tri-Fold Pamphlets Islamabad',
+    'Luxury Menu Pamphlets'
+  ],
+  'accessories-add-ons': [
+    'Wedding Invitation Accessories Pakistan',
+    'Premium Add-ons The Paper Story',
+    'Gold Foiling Wedding Cards',
+    'Embossed Wedding Monograms',
+    'Custom Wax Seals Lahore',
+    'Vellum Paper Belly Bands',
+    'Envelope Liners Pakistan',
+    'Die Cut Arch Scalloped Inserts'
   ]
 };
 
 export function getProductCode(product = {}, designNum) {
-  if (product.code) return product.code;
+  if (product.code && typeof product.code === 'string' && product.code.trim()) {
+    return product.code.trim();
+  }
+  if (product.sku && typeof product.sku === 'string' && product.sku.trim()) {
+    return product.sku.trim();
+  }
   const slug = product.categorySlug || 'wedding-invitations';
   const initial = CATEGORY_INITIALS[slug] || 'WI';
-  const num = designNum || parseInt(product.designNumber || product.id, 10) || 1;
+
+  let num = designNum;
+  if (!num && product.designNumber) {
+    num = Number(product.designNumber);
+  }
+  if (!num && product.id) {
+    const digits = String(product.id).match(/\d+/);
+    if (digits) num = parseInt(digits[0], 10);
+  }
+  if (!num && product.slug) {
+    const digits = String(product.slug).match(/\d+/);
+    if (digits) num = parseInt(digits[0], 10);
+  }
+  if (!num || isNaN(num)) num = 1;
+
   return `TPS-${initial}-${String(num).padStart(2, '0')}`;
 }
 
@@ -252,6 +434,9 @@ export function getProductDescription(product = {}, designNum) {
   const num = designNum || parseInt(product.designNumber || product.id, 10);
   if (slug === 'wedding-invitations' && !isNaN(num) && WEDDING_DESCRIPTIONS[num]) {
     return WEDDING_DESCRIPTIONS[num];
+  }
+  if (slug === 'nikkahnama' && !isNaN(num) && NIKKAH_DESCRIPTIONS[num]) {
+    return NIKKAH_DESCRIPTIONS[num];
   }
   if (product.description && product.description.length > 20) {
     return product.description;

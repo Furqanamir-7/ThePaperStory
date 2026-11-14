@@ -1,9 +1,9 @@
 /** Catchy, SEO-friendly product display names keyed by category context. */
 
 export const SEO_WEDDING = {
-  1: 'Blush & Bloom Floral Wedding Invite',
-  2: 'Gold Minimal Wedding Invitation',
-  3: 'Royal Mughal Wedding Invite Card',
+  1: 'Mughal Floral - Burgundy & Mint',
+  2: 'Peacock Garden',
+  3: 'Mint Peacock Garden',
   4: 'Pastel Garden Party Wedding Card',
   5: 'Classic Cream Wedding Invite Suite',
   6: 'Regal Floral Crest Wedding Invite Suite',
@@ -105,11 +105,14 @@ export const SEO_NIKKAH_HAND_PAINTED = {
 
 export const SEO_NIKKAH_PRINTED = {
   1: 'Classic Floral Printed Nikkah Certificate',
-  2: 'Minimal Printed Nikkah Certificate',
-  3: 'Modern Printed Nikkah Certificate Card',
-  4: 'Elegant Printed Nikkah Certificate',
-  5: 'Gold Border Printed Nikkah Certificate',
-  6: 'Royal Gold Foil Floral Nikkah Certificate',
+  2: 'Classic Floral Printed Nikkah Certificate',
+  3: 'Minimal Printed Nikkah Certificate',
+  4: 'Modern Printed Nikkah Certificate Card',
+  5: 'Elegant Printed Nikkah Certificate',
+  6: 'Gold Border Printed Nikkah Certificate',
+  7: 'Custom Calligraphy Nikkah Certificate',
+  8: 'Islamic Calligraphy Nikkah Certificate Suite',
+  9: 'Royal Gold Foil Floral Nikkah Certificate',
 }
 
 export const SEO_PACKAGING_BUSINESS = {
@@ -125,15 +128,48 @@ export const SEO_VINYL = {
 }
 
 export const SEO_FAVOURS = {
-  'Bid Potli': 'Custom Wedding Bid Potli Favour Bag',
-  'Baby Announcement Box': 'Sweet Baby Announcement Gift Box Favour',
-  'Sweet Box with Gift Bags': 'Wedding Sweet Box with Gift Bags',
-  'Customised Bid Box': 'Personalised Wedding Bid Box Favour',
-  'Customised Chocolate Box': 'Custom Chocolate Box Wedding Favour',
-  'Customised Tin Bid Box': 'Personalised Tin Bid Box Wedding Favour',
-  'Personalised Golden Round Tin Favour': 'Golden Round Tin Wedding Favour',
-  'Golden Round Tin Favour — Rose Gold': 'Rose Gold Round Tin Wedding Favour',
-  'Custom Acrylic Wedding Cake Topper': 'Custom Acrylic Wedding Cake Topper',
+  // Potli Favours
+  'Bid Potli': 'Handcrafted Wedding Bid Potli Pouches',
+  'Bid Pouches & Potli': 'Handcrafted Wedding Bid Potli Pouches',
+  'Custom Wedding Bid Potli Favour Bag': 'Handcrafted Wedding Bid Potli Pouches',
+
+  // Box Favours
+  'Baby Announcement Box': 'Pastel Pink Teddy Baby Announcement Gift Box',
+  'Sweet Baby Announcement Gift Box Favour': 'Pastel Pink Teddy Baby Announcement Gift Box',
+  'Customised Baby Announcement Box': 'Luxury Keepsake Baby Announcement Gift Box',
+  'Customised Bid Box': 'Arabic Calligraphy Sabr & Salah Wedding Bid Box',
+  'Personalised Wedding Bid Box Favour': 'Arabic Calligraphy Sabr & Salah Wedding Bid Box',
+  'Customised Chocolate Box': 'Plum & Gold Foil Slider Chocolate Favour Box',
+  'Custom Chocolate Box Wedding Favour': 'Plum & Gold Foil Slider Chocolate Favour Box',
+  'Sweet Box with Gift Bags': 'Royal Heritage Wedding Mithai Box & Bag Set',
+  'Wedding Sweet Box with Gift Bags': 'Royal Heritage Wedding Mithai Box & Bag Set',
+  '3D Flower Favour Box (Pink & White)': '3D Peach Blossom Handcrafted Favour Box',
+  '3D Flower Favour Box (Floral & Gold)': 'Gilded Petal 3D Floral Luxury Favour Box',
+  'Flower Shaped Favour Box': 'Petal Bloom Origami Wedding Favour Box',
+  'Trifold Favour Gift Box': 'Bespoke Trifold Ribbon Wedding Gift Box',
+  'Luxury Handcrafted Box Favours': 'Luxury Rigid Monogram Wedding Favour Box',
+
+  // Tin Favours
+  'Customised Tin Bid Box': 'Personalised Monogram Tin Bid Box Wedding Favour',
+  'Personalised Tin Bid Box Wedding Favour': 'Personalised Monogram Tin Bid Box Wedding Favour',
+  'Personalised Golden Round Tin Favour': 'Vintage Cherry Blossom Golden Tin Wedding Favour',
+  'Golden Round Tin Wedding Favour': 'Vintage Cherry Blossom Golden Tin Wedding Favour',
+  'Golden Round Tin Favour — Rose Gold': 'Botanical Wreath Round Tin Wedding Bid Favour',
+  'Rose Gold Round Tin Wedding Favour': 'Botanical Wreath Round Tin Wedding Bid Favour',
+  'Mithai Favour Tin Box': 'Mughal Garden Rectangular Mithai Tin Box',
+  'Baby Announcement Mithai Tin Box': 'Sweet Arrival Baby Announcement Mithai Tin Box',
+  'Mithai Favour Tin Box - Style 2': 'Royal Red Floral Rectangular Mithai Tin Box',
+  'Round Metallic Mithai & Bid Tin': 'Mughal Peacock Round Metallic Mithai & Bid Tin',
+
+  // Saunf Cones
+  'Wedding Saunf Cones - Design 1': 'Festive Mehndi Coated Saunf Cone Favour',
+  'Wedding Saunf Cones - Design 2': 'Emerald Ribbon Dholki & Mehndi Saunf Cones',
+
+  // Favour Tags
+  'Traditional Jhumka Favour Tags': 'Traditional Jhumka Die-Cut Wedding Favour Tags',
+
+  // Cake Toppers
+  'Custom Acrylic Wedding Cake Topper': 'Bespoke Acrylic Wedding Cake Topper Keepsake',
 }
 
 export const SEO_EIDI = {
@@ -171,10 +207,22 @@ export const SEO_GREETING = {
 }
 
 export const SEO_PAMPHLET = {
-  1: 'Custom Event Pamphlet Print Design',
-  2: 'Business Promotional Pamphlet',
-  3: 'Wedding Event Pamphlet Design',
-  4: 'Folded Marketing Pamphlet Layout',
+  1: 'Bespoke Tri-Fold Event Pamphlet',
+  2: 'Luxury Gilded Brand & Menu Pamphlet',
+  3: 'Artisan Corporate Showcase Pamphlet',
+  4: 'Botanical Wedding Program Pamphlet',
+  5: 'Heritage Foil-Stamped Pamphlet',
+  6: 'Minimalist Editorial Folded Pamphlet',
+  7: 'Classic Ceremony Itinerary Pamphlet',
+  8: 'Royal Gold Illuminated Pamphlet',
+  9: 'Modern Architectural Brand Pamphlet',
+  10: 'Pastel Floral Celebration Pamphlet',
+  11: 'Vintage Textured Keepsake Pamphlet',
+  12: 'Executive Event Brief Pamphlet',
+  13: 'Bespoke Haute Couture Lookbook Pamphlet',
+  14: 'Signature Deckled-Edge Pamphlet',
+  15: 'Celebration Guide & Menu Pamphlet',
+  16: 'Artisan Handcrafted Folded Pamphlet',
 }
 
 export function weddingDesignNumber(images = []) {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAdminData } from '../AdminDataContext';
 import { useAdminToast } from '../AdminLayout';
 
@@ -6,7 +6,28 @@ export default function SettingsPage() {
   const { settings, updateSettings, verifyPassword, changeAdminPassword, exportAllData } = useAdminData();
   const showToast = useAdminToast();
 
-  const [storeForm, setStoreForm] = useState({ ...settings });
+  const [storeForm, setStoreForm] = useState({
+    heroDesktopVideo: '/hero-section.mp4',
+    heroMobileVideo: '/hero-showcase-mobile.mp4',
+    heroDesktopZoom: 100,
+    heroMobileZoom: 100,
+    heroOverlayDarkness: 20,
+    ...settings,
+  });
+
+  useEffect(() => {
+    if (settings) {
+      setStoreForm((prev) => ({
+        heroDesktopVideo: '/hero-section.mp4',
+        heroMobileVideo: '/hero-showcase-mobile.mp4',
+        heroDesktopZoom: 100,
+        heroMobileZoom: 100,
+        heroOverlayDarkness: 20,
+        ...prev,
+        ...settings,
+      }));
+    }
+  }, [settings]);
 
   // Password change state
   const [currentPass, setCurrentPass] = useState('');
@@ -20,6 +41,22 @@ export default function SettingsPage() {
 
   const webhookUrl = 'https://www.thepaperstory.store/api/whatsapp/webhook';
   const verifyToken = 'thepaperstory_whatsapp_webhook_2026';
+
+  const handleDesktopFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setStoreForm((prev) => ({ ...prev, heroDesktopVideo: url }));
+    showToast(`Loaded "${file.name}" for Desktop preview. Click 'Save' to apply.`);
+  };
+
+  const handleMobileFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setStoreForm((prev) => ({ ...prev, heroMobileVideo: url }));
+    showToast(`Loaded "${file.name}" for Mobile preview. Click 'Save' to apply.`);
+  };
 
   const handleSaveStore = (e) => {
     e.preventDefault();
@@ -91,7 +128,7 @@ export default function SettingsPage() {
         </button>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: '24px' }}>
+      <div className="admin-settings-layout" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: '24px' }}>
         {/* Left Column: General Store Profile + WhatsApp Webhook */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           {/* General Store Information */}
@@ -99,7 +136,7 @@ export default function SettingsPage() {
             <h3 style={{ margin: '0 0 16px', fontSize: '16px', fontWeight: '700' }}>Store Profile & Contact</h3>
 
             <form onSubmit={handleSaveStore}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+              <div className="admin-form-row-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                 <div className="admin-form-group">
                   <label className="admin-label">Store Brand Name</label>
                   <input
@@ -131,7 +168,7 @@ export default function SettingsPage() {
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+              <div className="admin-form-row-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
                 <div className="admin-form-group">
                   <label className="admin-label">WhatsApp Number</label>
                   <input
@@ -197,6 +234,269 @@ export default function SettingsPage() {
                 Save Store Profile
               </button>
             </form>
+          </div>
+
+          {/* Hero Section Video Showcase Card */}
+          <div className="admin-card" style={{ border: '1px solid #E2E8F0' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '14px', flexWrap: 'wrap', gap: '10px' }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ fontSize: '20px' }}>🎬</span>
+                  <h3 style={{ margin: 0, fontSize: '16px', fontWeight: '700', color: 'var(--admin-ink)' }}>
+                    Hero Section Video Showcase
+                  </h3>
+                  <span style={{ backgroundColor: '#EEF2FF', color: '#4F46E5', fontSize: '11px', fontWeight: '700', padding: '2px 8px', borderRadius: '12px' }}>
+                    DESKTOP & MOBILE
+                  </span>
+                </div>
+                <p style={{ margin: '4px 0 0', fontSize: '13px', color: 'var(--admin-muted)' }}>
+                  Set, switch, or upload the showcase video playing in the hero section frame on desktop and mobile.
+                </p>
+              </div>
+            </div>
+
+            {/* Desktop Video Section */}
+            <div style={{ padding: '16px', backgroundColor: '#F8FAFC', borderRadius: '10px', border: '1px solid #E2E8F0', marginBottom: '18px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                <label className="admin-label" style={{ margin: 0, fontWeight: '700', color: '#1E293B', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span>💻 Desktop Hero Video</span>
+                </label>
+                <span style={{ fontSize: '11px', color: '#64748B' }}>Plays on laptops & wide screens</span>
+              </div>
+
+              <div style={{ display: 'flex', gap: '10px', marginBottom: '10px', flexWrap: 'wrap' }}>
+                <input
+                  type="text"
+                  className="admin-input"
+                  style={{ flex: 1, minWidth: '220px', fontFamily: 'monospace', fontSize: '13px' }}
+                  placeholder="/hero-showcase.mp4 or video URL"
+                  value={storeForm.heroDesktopVideo || ''}
+                  onChange={(e) => setStoreForm({ ...storeForm, heroDesktopVideo: e.target.value })}
+                />
+                <label className="admin-btn admin-btn-secondary" style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '12px', margin: 0 }}>
+                  📁 Pick Video File
+                  <input
+                    type="file"
+                    accept="video/mp4,video/webm,video/quicktime"
+                    style={{ display: 'none' }}
+                    onChange={handleDesktopFileChange}
+                  />
+                </label>
+              </div>
+
+              {/* Desktop Zoom Control */}
+              <div style={{ marginTop: '12px', padding: '10px 14px', backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #E2E8F0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', flexWrap: 'wrap', gap: '6px' }}>
+                  <span style={{ fontSize: '12px', fontWeight: '700', color: '#1E293B' }}>
+                    🔍 Desktop Zoom / Scale: <strong>{storeForm.heroDesktopZoom ?? 100}%</strong>
+                  </span>
+                  <div style={{ display: 'flex', gap: '6px' }}>
+                    <button
+                      type="button"
+                      onClick={() => setStoreForm((prev) => ({ ...prev, heroDesktopZoom: Math.max(50, (prev.heroDesktopZoom ?? 100) - 5) }))}
+                      className="admin-btn admin-btn-secondary"
+                      style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '4px' }}
+                      title="Zoom Out a bit"
+                    >
+                      − Zoom Out
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setStoreForm((prev) => ({ ...prev, heroDesktopZoom: Math.min(160, (prev.heroDesktopZoom ?? 100) + 5) }))}
+                      className="admin-btn admin-btn-secondary"
+                      style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '4px' }}
+                      title="Zoom In"
+                    >
+                      + Zoom In
+                    </button>
+                  </div>
+                </div>
+                <input
+                  type="range"
+                  min="60"
+                  max="150"
+                  step="5"
+                  value={storeForm.heroDesktopZoom ?? 100}
+                  onChange={(e) => setStoreForm({ ...storeForm, heroDesktopZoom: parseInt(e.target.value, 10) })}
+                  style={{ width: '100%', accentColor: 'var(--admin-brand)', cursor: 'pointer' }}
+                />
+              </div>
+
+              {/* Desktop Live Preview */}
+              {storeForm.heroDesktopVideo && (
+                <div style={{ marginTop: '10px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #CBD5E1', backgroundColor: '#000', maxHeight: '180px', position: 'relative', display: 'flex', justifyContent: 'center' }}>
+                  <video
+                    key={storeForm.heroDesktopVideo}
+                    src={storeForm.heroDesktopVideo}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    controls
+                    style={{
+                      width: '100%',
+                      maxHeight: '180px',
+                      objectFit: 'cover',
+                      transform: `scale(${(storeForm.heroDesktopZoom ?? 100) / 100})`,
+                      transformOrigin: 'center center',
+                      transition: 'transform 0.2s ease',
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Mobile Video Section */}
+            <div style={{ padding: '16px', backgroundColor: '#F8FAFC', borderRadius: '10px', border: '1px solid #E2E8F0', marginBottom: '18px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                <label className="admin-label" style={{ margin: 0, fontWeight: '700', color: '#1E293B', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <span>📱 Mobile Hero Video</span>
+                </label>
+                <span style={{ fontSize: '11px', color: '#64748B' }}>Plays on smartphone screens</span>
+              </div>
+
+              <div style={{ display: 'flex', gap: '10px', marginBottom: '10px', flexWrap: 'wrap' }}>
+                <input
+                  type="text"
+                  className="admin-input"
+                  style={{ flex: 1, minWidth: '220px', fontFamily: 'monospace', fontSize: '13px' }}
+                  placeholder="/hero-showcase-mobile.mp4 or video URL"
+                  value={storeForm.heroMobileVideo || ''}
+                  onChange={(e) => setStoreForm({ ...storeForm, heroMobileVideo: e.target.value })}
+                />
+                <label className="admin-btn admin-btn-secondary" style={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '12px', margin: 0 }}>
+                  📁 Pick Video File
+                  <input
+                    type="file"
+                    accept="video/mp4,video/webm,video/quicktime"
+                    style={{ display: 'none' }}
+                    onChange={handleMobileFileChange}
+                  />
+                </label>
+              </div>
+
+              {/* Mobile Zoom Control */}
+              <div style={{ marginTop: '12px', padding: '10px 14px', backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #E2E8F0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', flexWrap: 'wrap', gap: '6px' }}>
+                  <span style={{ fontSize: '12px', fontWeight: '700', color: '#1E293B' }}>
+                    🔍 Mobile Zoom / Scale: <strong>{storeForm.heroMobileZoom ?? 100}%</strong>
+                  </span>
+                  <div style={{ display: 'flex', gap: '6px' }}>
+                    <button
+                      type="button"
+                      onClick={() => setStoreForm((prev) => ({ ...prev, heroMobileZoom: Math.max(50, (prev.heroMobileZoom ?? 100) - 5) }))}
+                      className="admin-btn admin-btn-secondary"
+                      style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '4px' }}
+                      title="Zoom Out a bit"
+                    >
+                      − Zoom Out
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setStoreForm((prev) => ({ ...prev, heroMobileZoom: Math.min(160, (prev.heroMobileZoom ?? 100) + 5) }))}
+                      className="admin-btn admin-btn-secondary"
+                      style={{ fontSize: '11px', padding: '2px 8px', borderRadius: '4px' }}
+                      title="Zoom In"
+                    >
+                      + Zoom In
+                    </button>
+                  </div>
+                </div>
+                <input
+                  type="range"
+                  min="60"
+                  max="150"
+                  step="5"
+                  value={storeForm.heroMobileZoom ?? 100}
+                  onChange={(e) => setStoreForm({ ...storeForm, heroMobileZoom: parseInt(e.target.value, 10) })}
+                  style={{ width: '100%', accentColor: 'var(--admin-brand)', cursor: 'pointer' }}
+                />
+              </div>
+
+              {/* Mobile Live Preview */}
+              {storeForm.heroMobileVideo && (
+                <div style={{ marginTop: '10px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #CBD5E1', backgroundColor: '#000', maxHeight: '200px', position: 'relative', display: 'flex', justifyContent: 'center' }}>
+                  <video
+                    key={storeForm.heroMobileVideo}
+                    src={storeForm.heroMobileVideo}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    controls
+                    style={{
+                      width: '130px',
+                      height: '200px',
+                      objectFit: 'cover',
+                      transform: `scale(${(storeForm.heroMobileZoom ?? 100) / 100})`,
+                      transformOrigin: 'center center',
+                      transition: 'transform 0.2s ease',
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Overlay Tint Darkness */}
+            <div style={{ padding: '14px 16px', backgroundColor: '#FAFAF9', borderRadius: '10px', border: '1px solid var(--admin-border)', marginBottom: '18px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                <label className="admin-label" style={{ margin: 0, fontWeight: '600' }}>
+                  Hero Video Dark Tint Overlay: <strong>{storeForm.heroOverlayDarkness ?? 20}%</strong>
+                </label>
+                <span style={{ fontSize: '12px', color: 'var(--admin-muted)' }}>Keeps white titles clearly readable</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="60"
+                step="5"
+                value={storeForm.heroOverlayDarkness ?? 20}
+                onChange={(e) => setStoreForm({ ...storeForm, heroOverlayDarkness: parseInt(e.target.value, 10) })}
+                style={{ width: '100%', accentColor: 'var(--admin-brand)', cursor: 'pointer' }}
+              />
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: '#94A3B8', marginTop: '4px' }}>
+                <span>0% (Clear)</span>
+                <span>20% (Recommended)</span>
+                <span>60% (Deep Dim)</span>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              <button
+                type="button"
+                onClick={() => {
+                  updateSettings({
+                    heroDesktopVideo: storeForm.heroDesktopVideo,
+                    heroMobileVideo: storeForm.heroMobileVideo,
+                    heroDesktopZoom: storeForm.heroDesktopZoom,
+                    heroMobileZoom: storeForm.heroMobileZoom,
+                    heroOverlayDarkness: storeForm.heroOverlayDarkness,
+                  });
+                  showToast('Hero Background Videos & Zoom Settings saved live!');
+                }}
+                className="admin-btn admin-btn-primary"
+              >
+                💾 Save Hero Videos
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const defaults = {
+                    heroDesktopVideo: '/hero-section.mp4',
+                    heroMobileVideo: '/hero-showcase-mobile.mp4',
+                    heroDesktopZoom: 100,
+                    heroMobileZoom: 100,
+                    heroOverlayDarkness: 20,
+                  };
+                  setStoreForm((prev) => ({ ...prev, ...defaults }));
+                  updateSettings(defaults);
+                  showToast('Hero videos and zoom reset to defaults.');
+                }}
+                className="admin-btn admin-btn-secondary"
+              >
+                ↺ Reset to Defaults
+              </button>
+            </div>
           </div>
 
           {/* WhatsApp API Webhook Card */}

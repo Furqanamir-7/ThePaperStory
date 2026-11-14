@@ -1,45 +1,70 @@
+import { useLocation } from 'react-router-dom'
 import Hero from '../components/Hero'
 import ProductGrid from '../components/ProductGrid'
 import InstagramShowcase from '../components/InstagramShowcase'
 import PaperStoryDifference from '../components/PaperStoryDifference'
 import OurStoryHome from '../components/OurStoryHome'
+import WorldwideHome from '../components/WorldwideHome'
 import RealWeddings from '../components/RealWeddings'
 import Testimonials from '../components/Testimonials'
 import Newsletter from '../components/Newsletter'
 import Seo from '../components/Seo'
-import { getBestSellers, getFeaturedProducts } from '../data/products'
-import { buildOrganizationSchema, PAGE_SEO } from '../utils/seo'
+import { getBestSellers } from '../data/products'
+import { buildOrganizationSchema, buildFaqSchema, getCountrySeo, PAGE_SEO } from '../utils/seo'
+import { getLocaleFromPath } from '../config/locales'
 
 export default function HomePage() {
+  const location = useLocation()
+  const activeLocale = getLocaleFromPath(location.pathname)
+  const countryInfo = activeLocale?.country ? getCountrySeo(activeLocale.country) : null
+
+  // Localized meta tags for /us, /uk, /ae, /ca, /au, etc. for Googlebot & search engines
+  const pageTitle = countryInfo ? countryInfo.title : PAGE_SEO.home.title
+  const pageDescription = countryInfo ? countryInfo.description : PAGE_SEO.home.description
+
+  const jsonLdSchemas = [
+    buildOrganizationSchema(),
+    buildFaqSchema(activeLocale?.country),
+  ]
+
   return (
     <>
       <Seo
-        title={PAGE_SEO.home.title}
-        description={PAGE_SEO.home.description}
-        path="/"
-        jsonLd={buildOrganizationSchema()}
+        title={pageTitle}
+        description={pageDescription}
+        path={location.pathname || '/'}
+        jsonLd={jsonLdSchemas}
       />
       <Hero />
-      <ProductGrid
-        title="Featured Collection"
-        subtitle="Our top picks and best-selling designs, hand-selected for life's most beautiful moments."
-        items={getFeaturedProducts()}
-        isFeaturedCollection={true}
-        showViewAll
-      />
-      <InstagramShowcase />
-      <PaperStoryDifference />
+
+      {/* 1. About the Paper Story */}
       <OurStoryHome />
+
+      {/* 2. Worldwide */}
+      <WorldwideHome />
+
+      {/* 3. Real Moments */}
+      <RealWeddings />
+
+      {/* 4. The Paper Story Difference */}
+      <PaperStoryDifference />
+
+      {/* 5. Best Sellers */}
       <ProductGrid
         id="best-sellers"
         title="Best Sellers"
-        subtitle="The designs our clients love most — from wedding invites to favours and packaging."
+        subtitle=""
         items={getBestSellers()}
         isFeaturedCollection={true}
         showViewAll
       />
-      <RealWeddings />
+
+      {/* 6. Follow Us on Instagram */}
+      <InstagramShowcase />
+
+      {/* 7. Reviews */}
       <Testimonials />
+
       <Newsletter />
     </>
   )

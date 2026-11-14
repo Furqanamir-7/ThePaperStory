@@ -1,0 +1,39 @@
+{
+  "oval-insert": [
+    "/add-ons/oval-insert/img-01.jpg",
+    "/add-ons/oval-insert/video-01.mp4"
+  ],
+  "envelope-liner": [
+    "/add-ons/envelope-liner/img-01.jpg",
+    "/add-ons/envelope-liner/img-02.jpg"
+  ],
+  "sticker-seal": [
+    "/add-ons/sticker-seal/img-01.jpg",
+    "/add-ons/sticker-seal/img-02.jpg",
+    "/add-ons/sticker-seal/img-03.jpg",
+    "/add-ons/sticker-seal/img-04.jpg",
+    "/add-ons/sticker-seal/img-05.jpg",
+    "/add-ons/sticker-seal/video-01.mp4"
+  ],
+  "arch-shape-insert": [
+    "/add-ons/arch-shape-insert/img-01.jpg",
+    "/add-ons/arch-shape-insert/img-02.jpg",
+    "/add-ons/arch-shape-insert/img-03.jpg",
+    "/add-ons/arch-shape-insert/img-04.jpg",
+    "/add-ons/arch-shape-insert/img-05.jpg"
+  ],
+  "embossing": [
+    "/add-ons/embossing/img-01.jpg",
+    "/add-ons/embossing/video-01.mp4"
+  ],
+  "name-belly-band": [
+    "/add-ons/name-belly-band/img-01.jpg",
+    "/add-ons/name-belly-band/img-02.jpg",
+    "/add-ons/name-belly-band/img-03.jpg",
+    "/add-ons/name-belly-band/img-04.jpg"
+  ],
+  "butter-vellum-belly-band": [
+    "/add-ons/butter-vellum-belly-band/img-01.jpg",
+    "/add-ons/butter-vellum-belly-band/img-02.jpg"
+  ]
+}

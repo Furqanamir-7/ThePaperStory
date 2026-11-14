@@ -16,6 +16,7 @@ import {
   formatOrderTotalPkr,
   formatPenPriceNote,
 } from '../utils/penPricing'
+import InvoiceModal, { BANK_DETAILS } from './InvoiceModal'
 
 const emptyForm = {
   name: '',
@@ -84,6 +85,7 @@ export default function OrderModal({ product, onClose }) {
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState('')
   const [orderNumber, setOrderNumber] = useState('')
+  const [showInvoice, setShowInvoice] = useState(false)
 
   const isPen = product?.subcategorySlug === 'pens'
 
@@ -177,17 +179,54 @@ export default function OrderModal({ product, onClose }) {
         </button>
 
         {status === 'success' ? (
-          <div className="order-modal-success">
-            <h2 id="order-modal-title" className="heading-brand mb-2 text-lg font-semibold">
-              Order confirmed
+          <div className="order-modal-success p-1 text-center">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 mb-2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+            <h2 id="order-modal-title" className="heading-brand mb-1 text-xl font-bold text-paperstory-ink">
+              Order Confirmed!
             </h2>
-            <p className="mb-2 text-sm leading-relaxed text-gray-600">
-              Hi {form.name}, your order <strong>#{orderNumber}</strong> is confirmed.
+            <p className="mb-1 text-xs leading-relaxed text-gray-600">
+              Hi <strong>{form.name}</strong>, your order is recorded. Confirmation sent to <strong>{form.email}</strong>.
             </p>
-            <p className="text-sm leading-relaxed text-gray-600">
-              Confirmation sent to <strong>{form.email}</strong>.
+            <p className="text-xs font-mono font-bold text-paperstory-maroon mb-3">
+              Order #{orderNumber}
             </p>
-            <button type="button" className="cute-btn-primary order-modal-submit mt-4 w-full" onClick={onClose}>
+
+            {/* Direct Option to View & Download Invoice */}
+            <div className="flex flex-col gap-2 my-3">
+              <button
+                type="button"
+                className="cute-btn-primary w-full text-xs py-2.5 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+                onClick={() => setShowInvoice(true)}
+              >
+                <span>🧾 View & Download Official Invoice</span>
+              </button>
+            </div>
+
+            {/* HBL Bank Transfer Box */}
+            <div className="rounded-xl border border-paperstory-maroon/20 bg-[#FAF6F0] p-3 text-left text-xs my-2">
+              <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-paperstory-maroon/15">
+                <span className="font-bold text-paperstory-maroon text-[11px] uppercase tracking-wider">
+                  HBL Bank Details (50% Advance)
+                </span>
+                <span className="text-[10px] text-neutral-500 font-medium">Online Payment</span>
+              </div>
+              <div className="space-y-1 text-neutral-800 text-[11px]">
+                <div><span className="text-neutral-500">Account Title:</span> <strong>{BANK_DETAILS.name}</strong></div>
+                <div><span className="text-neutral-500">Account #:</span> <strong className="font-mono text-neutral-900">{BANK_DETAILS.accountNumber}</strong></div>
+                <div><span className="text-neutral-500">IBAN:</span> <strong className="font-mono text-[10px] text-neutral-900">{BANK_DETAILS.iban}</strong></div>
+                <div><span className="text-neutral-500">Bank:</span> <strong>{BANK_DETAILS.bank}</strong></div>
+              </div>
+            </div>
+
+            <p className="text-[11px] text-neutral-500 italic mt-2 mb-3">
+              Kindly share your advance payment receipt on WhatsApp to begin production.
+            </p>
+
+            <button type="button" className="cute-btn-secondary text-xs w-full py-2" onClick={onClose}>
               Done
             </button>
           </div>
@@ -362,6 +401,34 @@ export default function OrderModal({ product, onClose }) {
           </>
         )}
       </div>
+
+      {showInvoice && (
+        <InvoiceModal
+          order={{
+            number: orderNumber,
+            customerName: form.name,
+            phone: `${form.phoneCode} ${form.phone}`.trim(),
+            email: form.email,
+            shippingAddress: `${form.address}${form.addressLine2 ? ', ' + form.addressLine2 : ''}`,
+            city: cityValue,
+            country: form.country,
+            items: [
+              {
+                productName: product.name,
+                quantity,
+                unitPrice: isPen ? product.price : totalLabel,
+                lineTotal: totalLabel,
+              },
+            ],
+            total: totalLabel,
+            paymentMethod: orderOnline ? 'Online Bank Transfer' : isCod ? 'Cash on Delivery' : 'Advance Payment',
+            paymentStatus: 'Advance Due (50%)',
+            notes: form.notes,
+            createdAt: new Date().toISOString(),
+          }}
+          onClose={() => setShowInvoice(false)}
+        />
+      )}
     </div>,
     document.body
   )

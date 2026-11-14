@@ -7,7 +7,7 @@ import ProductCard from './ProductCard'
 
 export default function ProductGrid({
   title = 'Featured Collection',
-  subtitle = "Curated stationery and gifting pieces, crafted with care for life's most beautiful moments.",
+  subtitle = '',
   subtitleItalic = false,
   items,
   limit,
@@ -36,16 +36,29 @@ export default function ProductGrid({
     if (!adminProducts || adminProducts.length === 0) return rawBaseProducts
     const adminMap = new Map()
     adminProducts.forEach((p) => {
-      if (p.id) adminMap.set(String(p.id), p)
-      if (p.sku) adminMap.set(String(p.sku), p)
-      if (p.slug) adminMap.set(String(p.slug), p)
+      if (p.id) {
+        adminMap.set(String(p.id), p)
+        if (typeof p.id === 'string' && p.id.startsWith('prod-')) {
+          adminMap.set(p.id.replace('prod-', ''), p)
+        }
+      }
     })
     return rawBaseProducts.map((p) => {
-      const match = adminMap.get(String(p.id)) || adminMap.get(String(p.sku)) || adminMap.get(String(p.slug))
-      if (match) {
+      const match =
+        adminMap.get(String(p.id)) ||
+        (p.id && adminMap.get(`prod-${p.id}`)) ||
+        (p.sku && adminProducts.find((ap) => ap.sku === p.sku && (!p.categorySlug || ap.categorySlug === p.categorySlug))) ||
+        (p.code && adminProducts.find((ap) => ap.code === p.code && (!p.categorySlug || ap.categorySlug === p.categorySlug))) ||
+        (p.slug && adminProducts.find((ap) => ap.slug === p.slug && (!p.categorySlug || ap.categorySlug === p.categorySlug)))
+
+      if (match && (!match.categorySlug || !p.categorySlug || match.categorySlug === p.categorySlug)) {
         return {
           ...p,
           ...match,
+          code: match.code || p.code,
+          sku: match.sku || p.sku,
+          categorySlug: p.categorySlug || match.categorySlug,
+          designNumber: p.designNumber || match.designNumber,
           image: match.images?.[0] || match.image || p.image,
           images: match.images && match.images.length > 0 ? match.images : p.images,
         }
