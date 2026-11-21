@@ -20,10 +20,12 @@ import {
 } from '../data/products'
 import {
   buildBreadcrumbSchema,
+  buildCategoryFaqSchema,
   buildItemListSchema,
   categorySeo,
   shopPath,
 } from '../utils/seo'
+import CategoryFaqSection from '../components/CategoryFaqSection'
 
 export default function ShopCategoryPage() {
   const { category, subcategory, type } = useParams()
@@ -184,6 +186,7 @@ export default function ShopCategoryPage() {
 
   const structuredData = [
     buildBreadcrumbSchema(breadcrumbItems),
+    buildCategoryFaqSchema(normalizedCategory, cat?.label || 'Wedding Stationery'),
     ...(categoryProducts.length
       ? [buildItemListSchema(categoryProducts, pagePath, title)]
       : []),
@@ -230,6 +233,11 @@ export default function ShopCategoryPage() {
             items={categoryProducts}
           />
         )}
+
+        <CategoryFaqSection
+          categorySlug={normalizedCategory}
+          categoryName={cat?.label || 'Wedding Stationery'}
+        />
 
         <div className={`text-center ${isWebsiteInvitation ? 'pt-3 pb-2' : 'pt-6'}`}>
           <Link to="/shop" className="text-sm font-medium text-paperstory-maroon hover:underline">

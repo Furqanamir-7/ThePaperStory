@@ -126,8 +126,42 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* International Markets & Country Switcher */}
+        {/* Popular Search Keywords & Internal Links for SEO */}
         <div className="mt-8 border-t border-paperstory-cream/15 pt-5">
+          <div className="text-[11px] text-paperstory-cream/70 leading-relaxed">
+            <span className="font-semibold text-paperstory-cream/90 mr-2">Popular Searches:</span>
+            <Link to="/shop/wedding-invitations" className="hover:text-paperstory-cream hover:underline">
+              Custom Wedding Cards Pakistan
+            </Link>
+            <span className="mx-2 text-paperstory-cream/40">•</span>
+            <Link to="/shop/nikkahnama" className="hover:text-paperstory-cream hover:underline">
+              Luxury Nikkahnama Certificates
+            </Link>
+            <span className="mx-2 text-paperstory-cream/40">•</span>
+            <Link to="/shop/digital-invitations" className="hover:text-paperstory-cream hover:underline">
+              Animated WhatsApp Video Invites
+            </Link>
+            <span className="mx-2 text-paperstory-cream/40">•</span>
+            <Link to="/shop/accessories-add-ons" className="hover:text-paperstory-cream hover:underline">
+              Custom Wax Seal Stamps &amp; Stickers
+            </Link>
+            <span className="mx-2 text-paperstory-cream/40">•</span>
+            <Link to="/shop/packaging" className="hover:text-paperstory-cream hover:underline">
+              Custom Rigid Boxes &amp; Packaging
+            </Link>
+            <span className="mx-2 text-paperstory-cream/40">•</span>
+            <Link to="/shop/favours" className="hover:text-paperstory-cream hover:underline">
+              Wedding Favours &amp; Keepsake Tins
+            </Link>
+            <span className="mx-2 text-paperstory-cream/40">•</span>
+            <Link to="/shipping" className="hover:text-paperstory-cream hover:underline">
+              Worldwide Express Shipping (USA, UK, UAE, Canada)
+            </Link>
+          </div>
+        </div>
+
+        {/* International Markets & Country Switcher */}
+        <div className="mt-4 border-t border-paperstory-cream/10 pt-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-paperstory-cream/70">
             <div className="flex items-center gap-2">
               <span className="font-semibold text-paperstory-cream/90">Regional Stores:</span>

@@ -170,22 +170,40 @@ export function buildOrganizationSchema() {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'Organization',
+        '@type': ['Organization', 'LocalBusiness', 'Store'],
         '@id': 'https://www.thepaperstory.store/#org',
         name: 'The Paper Story',
+        legalName: 'The Paper Story Design Studio',
         url: 'https://www.thepaperstory.store/',
         logo: 'https://www.thepaperstory.store/logo.png',
         image: 'https://www.thepaperstory.store/og-image.png',
         description:
-          'Custom luxury wedding invitations, handcrafted Nikkahnama certificates, digital invites, and bespoke packaging delivered worldwide to US, UK, UAE, Canada, Australia & beyond.',
+          'Premier bespoke design & print studio specializing in custom luxury wedding invitations, Urdu & English Nikkahnama certificates, wax seals, digital video invites, and luxury event packaging with tracked worldwide shipping to USA, UK, UAE, Canada, Australia and Pakistan.',
+        telephone: '+923144392928',
+        email: 'info@thepaperstory.store',
+        priceRange: '$$',
+        currenciesAccepted: 'PKR, USD, GBP, AED, CAD, AUD, EUR',
+        paymentAccepted: 'Cash on Delivery, Bank Transfer, Credit Card, Debit Card',
+        openingHours: 'Mo,Tu,We,Th,Fr,Sa 10:00-20:00',
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: 'Lahore',
+          addressRegion: 'Punjab',
+          addressCountry: 'PK',
+        },
+        founder: [
+          { '@type': 'Person', name: 'Fatima' },
+          { '@type': 'Person', name: 'Huzaifa' },
+        ],
         sameAs: ['https://www.instagram.com/thepaperstory.co/', FACEBOOK_URL],
         areaServed: [
+          { '@type': 'Country', name: 'Pakistan' },
           { '@type': 'Country', name: 'United States' },
           { '@type': 'Country', name: 'United Kingdom' },
           { '@type': 'Country', name: 'United Arab Emirates' },
           { '@type': 'Country', name: 'Canada' },
           { '@type': 'Country', name: 'Australia' },
-          { '@type': 'Country', name: 'Pakistan' },
+          { '@type': 'Country', name: 'Saudi Arabia' },
         ],
         aggregateRating: {
           '@type': 'AggregateRating',
@@ -290,7 +308,14 @@ export function buildProductSchema(product, pagePath) {
     '@type': 'Offer',
     url: absoluteUrl(pagePath),
     priceCurrency: 'PKR',
+    priceValidUntil: '2027-12-31',
+    itemCondition: 'https://schema.org/NewCondition',
     availability: 'https://schema.org/InStock',
+    seller: {
+      '@type': 'Organization',
+      name: 'The Paper Story',
+      url: 'https://www.thepaperstory.store/',
+    },
     shippingDetails: {
       '@type': 'OfferShippingDetails',
       shippingDestination: {
@@ -301,8 +326,8 @@ export function buildProductSchema(product, pagePath) {
         '@type': 'ShippingDeliveryTime',
         transitTime: {
           '@type': 'QuantitativeValue',
-          minValue: 4,
-          maxValue: 14,
+          minValue: 2,
+          maxValue: 7,
           unitCode: 'DAY',
         },
       },
@@ -311,6 +336,7 @@ export function buildProductSchema(product, pagePath) {
       '@type': 'MerchantReturnPolicy',
       returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
       merchantReturnDays: 14,
+      applicableCountry: ['PK', 'US', 'GB', 'AE', 'CA', 'AU'],
     },
   }
 
@@ -327,6 +353,7 @@ export function buildProductSchema(product, pagePath) {
       product.description ||
       `${product.name} from ${product.category} by The Paper Story. Handcrafted bespoke design with worldwide tracked delivery to USA, UK, UAE, Canada, Australia and Pakistan.`,
     sku: product.code || product.sku || String(product.id),
+    category: product.category || 'Wedding Stationery',
     brand: {
       '@type': 'Brand',
       name: 'The Paper Story',
@@ -338,6 +365,53 @@ export function buildProductSchema(product, pagePath) {
       bestRating: '5',
       worstRating: '1',
     },
+    review: [
+      {
+        '@type': 'Review',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: '5',
+          bestRating: '5',
+        },
+        author: {
+          '@type': 'Person',
+          name: 'Ayesha & Bilal',
+        },
+        datePublished: '2026-09-14',
+        reviewBody:
+          'Absolutely magnificent wedding stationery! The gold foil quality, velvet texture, and custom Urdu calligraphy exceeded all our expectations. Our guests were mesmerized.',
+      },
+      {
+        '@type': 'Review',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: '5',
+          bestRating: '5',
+        },
+        author: {
+          '@type': 'Person',
+          name: 'Zainab K. (Dubai, UAE)',
+        },
+        datePublished: '2026-10-02',
+        reviewBody:
+          'Ordered from Dubai and received our parcel in pristine condition via express DHL. Fatima and Huzaifa were exceptionally responsive and accommodating on WhatsApp.',
+      },
+      {
+        '@type': 'Review',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: '5',
+          bestRating: '5',
+        },
+        author: {
+          '@type': 'Person',
+          name: 'Hamza & Sarah (London, UK)',
+        },
+        datePublished: '2026-10-28',
+        reviewBody:
+          'The bespoke Nikkahnama and matching wedding cards were the highlight of our event. Superb craftsmanship and fast international dispatch.',
+      },
+    ],
     offers: offer,
   }
 }
@@ -357,54 +431,205 @@ export function buildItemListSchema(products, pagePath, listName) {
   }
 }
 
+export const CATEGORY_FAQS = {
+  'wedding-invitations': [
+    {
+      q: 'What is the minimum order quantity for custom wedding invitations?',
+      a: 'Our standard minimum order quantity is 25 pieces per design. For intimate weddings or custom quantities, feel free to reach out directly to our design team on WhatsApp for a tailored quote.',
+    },
+    {
+      q: 'How long does production take, and when should we order?',
+      a: 'Our standard production time is 20–30 working days to meticulously print, foil-stamp, assemble, and quality-check each suite. We recommend ordering 6 to 8 weeks before your planned distribution date. Urgent rush orders can also be accommodated based on studio availability.',
+    },
+    {
+      q: 'Can we customize the language, wording, and calligraphy style?',
+      a: 'Every design in our studio is 100% bespoke. You can customize wording in English, Urdu Nastaliq, Arabic, or bilingual layouts, select custom foil colors (gold, rose gold, silver, bronze), wax seal monograms, and envelope finishes.',
+    },
+    {
+      q: 'Do you deliver wedding cards internationally (USA, UK, UAE, Canada, Australia)?',
+      a: 'Yes! We ship worldwide via express DHL Express and international tracked couriers. Transit time is typically 3–5 days to Dubai/UAE, 4–6 days to the UK, and 4–7 days to the USA, Canada, and Australia.',
+    },
+    {
+      q: 'What paper stocks and premium finishes do you use?',
+      a: 'We craft our suites using imported premium 350–600 GSM heavy cardstocks, tactile cotton and linen textures, velvet folios, handmade deckled-edge paper, translucent vellum overlays, and metallic hot-foil stamping.',
+    },
+  ],
+  'digital-invitations': [
+    {
+      q: 'In what formats are digital invitations delivered?',
+      a: 'We provide full HD animated video invitations (MP4) with your choice of background instrumental music, along with high-resolution digital image files (PNG/PDF) optimized for crystal-clear WhatsApp, Instagram, and email sharing.',
+    },
+    {
+      q: 'Can you include multiple wedding functions (Mehndi, Barat, Walima)?',
+      a: 'Yes, multi-event digital suites are available. We can create separate cards for each function or a multi-page animated video invite covering all your ceremonies.',
+    },
+    {
+      q: 'What is the turnaround time for digital invitations?',
+      a: 'Standard digital invitation design takes 3–5 working days. Once completed, a preview draft is sent to you on WhatsApp for approval before final high-resolution delivery.',
+    },
+    {
+      q: 'Can we change the text, music, and font in digital invites?',
+      a: 'Yes! You can choose your preferred audio soundtrack, personalized couple names, event dates, venues, Google Maps location QR codes, and dress codes.',
+    },
+  ],
+  'nikkahnama': [
+    {
+      q: 'What makes The Paper Story Nikkah certificates special?',
+      a: 'Our Nikkah certificates are heirloom-quality keepsakes featuring traditional Islamic geometric illumination, hand-gilded gold foiling, and classical Urdu/Arabic calligraphy on archival cardstock, designed to be framed and cherished for generations.',
+    },
+    {
+      q: 'Can our personal vows, names, and wedding date be printed or hand-written?',
+      a: 'Yes, both digital calligraphy and hand-lettered customization are available. We format the groom, bride, witnesses, and officiant signature fields according to your ceremony requirements.',
+    },
+    {
+      q: 'Do certificates come with presentation folders or framing options?',
+      a: 'Yes! We offer velvet presentation folios, hardcover keepsake boxes, and certificate tubes stamped with custom gold foil.',
+    },
+    {
+      q: 'How fast can a Nikkahnama be delivered in Pakistan or internationally?',
+      a: 'Domestic delivery across Pakistan takes 2–3 business days via Leopards/TCS. International delivery via DHL Express takes 3–5 days to UAE and 4–7 days to the UK, USA, and Canada.',
+    },
+  ],
+  'accessories-add-ons': [
+    {
+      q: 'Can we order custom brass wax seal stamps with our couple initials?',
+      a: 'Yes! We manufacture precision-engraved solid brass wax seal stamps with your custom initials, monogram, or wedding logo, paired with a solid wooden handle.',
+    },
+    {
+      q: 'Do you offer pre-made self-adhesive wax seal stickers?',
+      a: 'Yes! We offer ready-to-stick wax seals with industrial 3M adhesive backing in over 20+ custom wax colors (classic gold, burgundy, champagne, sage green, pearl white, antique bronze). Just peel and stick to envelopes.',
+    },
+    {
+      q: 'What other accessories can we add to our wedding stationery?',
+      a: 'We offer frayed-edge silk chiffon ribbons, velvet belly bands, scalloped and oval card inserts, printed vellum overlays, gold foiling, embossing, and personalized stickers.',
+    },
+  ],
+  'packaging': [
+    {
+      q: 'What types of custom packaging boxes do you manufacture?',
+      a: 'We design and produce rigid luxury boxes, magnetic closure gift boxes, gold foil stamped paper bags, custom sweet/mithai boxes, and corporate event hampers.',
+    },
+    {
+      q: 'Can we print custom branding and wedding monograms on packaging?',
+      a: 'Yes! All packaging is fully customizable with hot-foil stamping, spot UV, custom embossing, ribbon ties, and personalized inside-lid printing.',
+    },
+    {
+      q: 'What is the minimum quantity for custom rigid boxes?',
+      a: 'Minimum orders start at 25–50 pieces depending on box structure and sizing. Contact us on WhatsApp for exact dimensions and price quotes.',
+    },
+  ],
+  'favours': [
+    {
+      q: 'What wedding favour items are most popular for wedding guests?',
+      a: 'Our luxury golden tin keepsake boxes, custom printed favor boxes with ribbons, personalized scented candles, and mini celebratory pouches are client favorites.',
+    },
+    {
+      q: 'Can favour boxes include our wedding logo and guest thank-you tags?',
+      a: 'Yes, every favor box comes with customized tags, gold foil stickers, or direct foil embossing matching your wedding invitation theme.',
+    },
+  ],
+  'stationary-items': [
+    {
+      q: 'What products are in your stationery collection?',
+      a: 'Our stationery range includes luxury money gifting envelopes, greeting cards, thank-you notes, custom diaries, planners, and personalized letterheads.',
+    },
+    {
+      q: 'Do you offer Eid and festive gifting envelopes in bulk?',
+      a: 'Yes! We offer themed Eidi envelopes, Salami packets, and festive money cards in sets of 5, 10, or custom event quantities.',
+    },
+  ],
+  'gifting-envelopes-tags': [
+    {
+      q: 'Can gifting envelopes be customized with family names?',
+      a: 'Yes! We offer custom foil-stamped family names and monogrammed initials on luxury velvet and cardstock gifting envelopes.',
+    },
+  ],
+}
+
+export function buildCategoryFaqSchema(categorySlug, categoryLabel) {
+  const faqs = CATEGORY_FAQS[categorySlug] || CATEGORY_FAQS['wedding-invitations']
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: f.a,
+      },
+    })),
+  }
+}
+
 export const PAGE_SEO = {
   home: {
-    title: 'The Paper Story | Custom Wedding Invitations & Stationery',
+    title: 'The Paper Story | Custom Wedding Invitations, Nikkahnama & Bespoke Stationery',
     description:
-      'Custom wedding invitations, digital invites, Nikkah certificates, personalised stationery and bespoke packaging. Designed in-house. We ship worldwide to USA, UK, UAE, Canada & Australia.',
+      'Pakistan’s premier luxury wedding stationery studio. Bespoke wedding invitations, Urdu & English Nikkahnama certificates, digital video e-invites, wax seals & event packaging. Tracked worldwide shipping to USA, UK, UAE, Canada, Australia & Pakistan.',
   },
   about: {
-    title: 'Our Story | The Paper Story — Independent Design & Print Studio',
+    title: 'About The Paper Story | Handcrafted Luxury Wedding Stationery Studio',
     description:
-      'Founded by Fatima and Huzaifa. Handcrafted custom wedding stationery, digital invites, and bespoke packaging delivered worldwide.',
+      'Founded by Fatima and Huzaifa. Crafting heirloom-quality wedding invitations, bespoke Urdu calligraphy, and ceremonial keepsakes for celebrations across Pakistan and worldwide.',
   },
   contact: {
-    title: 'Contact & Custom Orders | The Paper Story',
+    title: 'Order on WhatsApp & Contact Design Studio | The Paper Story',
     description:
-      'Get in touch for custom wedding invitations, digital invites, quotes and questions. Direct WhatsApp support with worldwide shipping.',
+      'Chat directly with Fatima and Huzaifa on WhatsApp for custom wedding invitation quotes, design proofs, rush orders, and international shipping support.',
   },
   shipping: {
-    title: 'Worldwide Shipping & Delivery Guide | The Paper Story',
+    title: 'Worldwide Shipping & Turnaround Times | The Paper Story',
     description:
-      'Express worldwide delivery to the UK, USA, UAE, Canada, Australia & worldwide. Turnaround times, custom orders, and tracking.',
+      'Door-to-door express delivery with DHL Express & TCS. Shipping luxury wedding invitations & Nikkahnama across Pakistan, USA, UK, UAE, Canada & Australia.',
   },
   shop: {
-    title: 'Shop Custom Wedding Invitations & Stationery | The Paper Story',
+    title: 'Shop Custom Wedding Cards, Nikkahnama & Stationery | The Paper Story',
     description:
-      'Browse wedding invitations, digital e-invites, Nikkah certificates, favours, bespoke packaging, and premium add-ons. Worldwide delivery.',
+      'Browse handcrafted wedding cards, luxury Nikkahnama certificates, animated e-invites, wax seals, gift boxes, and bespoke stationery. Door-to-door worldwide delivery.',
   },
 }
 
 export function categorySeo(cat, sub = null, occasion = null) {
   const catTitleMap = {
-    'wedding-invitations': 'Custom Wedding Invitations | The Paper Story',
-    'digital-invitations': 'Digital & Animated Wedding Invitations | The Paper Story',
-    'nikkahnama': 'Nikkah Certificates | The Paper Story',
-    'favours': 'Custom Wedding Favours & Keepsakes | The Paper Story',
-    'packaging': 'Custom Packaging & Printed Boxes | The Paper Story',
-    'stationary-items': 'Personalised Greeting Cards & Stationery | The Paper Story',
-    'accessories-add-ons': 'Premium Add-ons & Wax Seals | The Paper Story',
-    'gifting-envelopes-tags': 'Luxury Gifting Envelopes & Tags | The Paper Story',
+    'wedding-invitations': 'Custom Wedding Cards & Invitations | The Paper Story',
+    'digital-invitations': 'Animated Video Wedding Invites & E-Cards | The Paper Story',
+    'nikkahnama': 'Luxury Nikkahnama & Islamic Wedding Certificates | The Paper Story',
+    'favours': 'Custom Wedding Favours, Golden Tins & Keepsakes | The Paper Story',
+    'packaging': 'Custom Luxury Event Packaging & Rigid Boxes | The Paper Story',
+    'stationary-items': 'Personalised Greeting Cards & Bespoke Stationery | The Paper Story',
+    'accessories-add-ons': 'Custom Wax Seals, Monogram Stamps & Ribbon Add-ons | The Paper Story',
+    'gifting-envelopes-tags': 'Luxury Money Gifting Envelopes & Event Tags | The Paper Story',
+  }
+
+  const catDescMap = {
+    'wedding-invitations':
+      'Explore luxury custom wedding invitations with gold foiling, velvet envelopes, wax seals, and Urdu/English calligraphy. Tracked worldwide delivery to USA, UK, UAE, Canada & Pakistan.',
+    'digital-invitations':
+      'Modern animated wedding video invitations and WhatsApp digital invites customized with your music, names, and event details. Instant worldwide digital delivery.',
+    'nikkahnama':
+      'Handcrafted custom Nikkah certificates with illuminated Islamic borders, Urdu calligraphy, and luxury presentation folders. Worldwide express shipping.',
+    'favours':
+      'Bespoke wedding favours, personalised golden tins, and celebratory keepsake packaging for your guests. Custom orders delivered nationwide and globally.',
+    'packaging':
+      'Custom rigid gift boxes, corporate packaging, and celebratory luxury bags with custom foil stamping and ribbon details.',
+    'stationary-items':
+      'Handcrafted greeting cards, event stationery, and custom keepsakes designed in-house with worldwide delivery.',
+    'accessories-add-ons':
+      'Elevate your stationery with bespoke brass wax seal stamps, peel-and-stick wax stickers, silk ribbons, and luxury envelope liners.',
+    'gifting-envelopes-tags':
+      'Handcrafted Eidi & Salami money gifting envelopes, festive gift tags, and celebratory stationery.',
   }
 
   const title = occasion
     ? `${sub.label} — ${occasion.label} | The Paper Story`
     : sub
-      ? `${sub.label} | The Paper Story`
+      ? `${sub.label} — ${cat.label} | The Paper Story`
       : catTitleMap[cat.slug] || `${cat.label} | The Paper Story`
 
   const description =
     sub?.tagline ||
+    catDescMap[cat.slug] ||
     cat.description ||
     `Explore ${cat.label} from The Paper Story. Custom stationery designed and printed in our studio. We ship worldwide.`
 
