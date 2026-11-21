@@ -112,6 +112,8 @@ const DEFAULT_SETTINGS = {
   heroDesktopZoom: 100,
   heroMobileZoom: 100,
   heroOverlayDarkness: 20,
+  googleAnalyticsId: '',
+  metaPixelId: '',
 };
 
 function seedInitialProducts() {

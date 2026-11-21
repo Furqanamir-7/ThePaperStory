@@ -37,9 +37,12 @@ export default function DashboardPage() {
         </div>
 
         {/* Quick action buttons */}
-        <div style={{ display: 'flex', gap: '10px' }}>
+        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
           <Link to="/admin/products" className="admin-btn admin-btn-primary">
             + Add Product
+          </Link>
+          <Link to="/admin/seo" className="admin-btn admin-btn-secondary">
+            🔍 SEO &amp; Analytics
           </Link>
           <Link to="/admin/orders" className="admin-btn admin-btn-secondary">
             📦 Orders ({orders.length})

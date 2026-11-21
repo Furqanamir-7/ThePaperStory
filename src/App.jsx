@@ -32,6 +32,7 @@ import MarqueePage from './admin/pages/MarqueePage'
 import PaymentsPage from './admin/pages/PaymentsPage'
 import MediaPage from './admin/pages/MediaPage'
 import SettingsPage from './admin/pages/SettingsPage'
+import SeoAnalyticsPage from './admin/pages/SeoAnalyticsPage'
 
 function AppContent() {
   const location = useLocation()
@@ -73,6 +74,7 @@ function AppContent() {
           }
         >
           <Route index element={<DashboardPage />} />
+          <Route path="seo" element={<SeoAnalyticsPage />} />
           <Route path="products" element={<ProductsPage />} />
           <Route path="categories" element={<CategoriesPage />} />
           <Route path="orders" element={<OrdersPage />} />

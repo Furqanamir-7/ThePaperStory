@@ -6,6 +6,7 @@ import './admin.css';
 
 const NAV_ITEMS = [
   { path: '/admin', label: 'Dashboard', icon: '📊', end: true },
+  { path: '/admin/seo', label: 'SEO & Analytics', icon: '🔍' },
   { path: '/admin/products', label: 'Products', icon: '🏷️' },
   { path: '/admin/categories', label: 'Categories', icon: '📂' },
   { path: '/admin/orders', label: 'Orders', icon: '📦' },
