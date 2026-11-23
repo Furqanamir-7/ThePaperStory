@@ -11,17 +11,20 @@ export default function InvoicePage() {
   const [isDownloading, setIsDownloading] = useState(false)
 
   useEffect(() => {
-    // Attempt to load order from admin store
+    // Attempt to load order from admin store (checking current v3 first, then legacy keys)
     try {
-      const raw = localStorage.getItem('tps_admin_data_v1')
-      if (raw) {
-        const parsed = JSON.parse(raw)
-        const found = (parsed.orders || []).find(
-          (o) => o.number === orderId || o.id === orderId || (o.number && o.number.toLowerCase() === orderId.toLowerCase())
-        )
-        if (found) {
-          setOrder(found)
-          return
+      const keys = ['tps_admin_data_v3', 'tps_admin_data_v2', 'tps_admin_data_v1']
+      for (const k of keys) {
+        const raw = localStorage.getItem(k)
+        if (raw) {
+          const parsed = JSON.parse(raw)
+          const found = (parsed.orders || []).find(
+            (o) => o.number === orderId || o.id === orderId || (o.number && o.number.toLowerCase() === orderId.toLowerCase())
+          )
+          if (found) {
+            setOrder(found)
+            return
+          }
         }
       }
     } catch (e) {

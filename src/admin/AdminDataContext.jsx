@@ -172,16 +172,21 @@ export function AdminDataProvider({ children }) {
         const parsed = JSON.parse(saved);
         parsed.settings = { ...DEFAULT_SETTINGS, ...(parsed.settings || {}) };
 
-        // Ensure all DEFAULT_CATEGORIES (especially cat-5 Premium Add-ons) exist in categories
+        // Ensure all DEFAULT_CATEGORIES (especially cat-5 Premium Add-ons) exist in categories unless deleted
+        const deletedCatSet = new Set((parsed.deletedCategoryIds || []).map((x) => String(x).toLowerCase()));
         if (parsed.categories && Array.isArray(parsed.categories)) {
           const catSlugs = new Set(parsed.categories.map((c) => c.slug));
           DEFAULT_CATEGORIES.forEach((dc) => {
-            if (!catSlugs.has(dc.slug)) {
+            const dcId = String(dc.id).toLowerCase();
+            const dcSlug = String(dc.slug).toLowerCase();
+            if (!catSlugs.has(dc.slug) && !deletedCatSet.has(dcId) && !deletedCatSet.has(dcSlug)) {
               parsed.categories.push(dc);
             }
           });
         } else {
-          parsed.categories = DEFAULT_CATEGORIES;
+          parsed.categories = DEFAULT_CATEGORIES.filter(
+            (dc) => !deletedCatSet.has(String(dc.id).toLowerCase()) && !deletedCatSet.has(String(dc.slug).toLowerCase())
+          );
         }
 
         const seeded = seedInitialProducts();
@@ -193,13 +198,21 @@ export function AdminDataProvider({ children }) {
           if (p.sku) existingByCode.set(String(p.sku).toUpperCase(), p);
         });
 
-        // Always guarantee all 228 seeded products exist, while strictly preserving any edits made by the client or user
-        const mergedProducts = seeded.map((s) => {
+        // Strictly respect deleted products: deleted items must NEVER be resurrected
+        const deletedProductIds = new Set((parsed.deletedProductIds || []).map((x) => String(x).toUpperCase()));
+
+        // Guarantee seeded products exist unless deleted by admin, while strictly preserving any edits
+        const mergedProducts = [];
+        seeded.forEach((s) => {
+          const sId = String(s.id).toUpperCase();
           const sCode = (s.code || s.sku || '').toUpperCase();
+          if (deletedProductIds.has(sId) || (sCode && deletedProductIds.has(sCode))) {
+            return; // Stay deleted
+          }
           const existing = existingById.get(String(s.id)) || existingByCode.get(sCode);
           if (existing) {
             const isFavour = s.categorySlug === 'favours';
-            return {
+            mergedProducts.push({
               ...s,
               ...existing, // PRESERVES ALL CLIENT EDITS (description, price, images, custom options, etc.)
               id: s.id,
@@ -207,15 +220,16 @@ export function AdminDataProvider({ children }) {
               sku: s.sku || s.code,
               name: (isFavour && (!existing.updatedAt || existing.name?.includes('Design') || existing.name?.includes('Customised'))) ? s.name : (existing.name || s.name),
               categorySlug: s.categorySlug || existing.categorySlug,
-            };
+            });
+          } else {
+            mergedProducts.push(s);
           }
-          return s;
         });
 
         // Also preserve any manually added custom products from admin panel
         const seededIds = new Set(seeded.map((s) => String(s.id)));
         const userCreatedProducts = (parsed.products || []).filter(
-          (p) => p.id && !seededIds.has(String(p.id))
+          (p) => p.id && !seededIds.has(String(p.id)) && !deletedProductIds.has(String(p.id).toUpperCase())
         );
 
         parsed.products = [...mergedProducts, ...userCreatedProducts];
@@ -283,6 +297,8 @@ export function AdminDataProvider({ children }) {
     return {
       products: seedInitialProducts(),
       categories: DEFAULT_CATEGORIES,
+      deletedProductIds: [],
+      deletedCategoryIds: [],
       orders: [],
       reviews: DEFAULT_REVIEWS,
       deals: DEFAULT_DEALS,
@@ -311,26 +327,37 @@ export function AdminDataProvider({ children }) {
       setSyncStatus('syncing');
 
       // 1. Try Supabase live sync
-      const sbResult = await syncCatalogToSupabase(currentData);
+      let sbResult = await syncCatalogToSupabase(currentData);
+      if (!sbResult.success) {
+        // Brief pause and retry once
+        await new Promise((r) => setTimeout(r, 400));
+        sbResult = await syncCatalogToSupabase(currentData);
+      }
+
       if (sbResult.success) {
         setSyncStatus('supabase');
         setLastSyncedAt(new Date().toISOString());
         return;
       }
 
-      // 2. Fallback to /api/admin-data
-      const res = await fetch('/api/admin-data', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ data: currentData, updatedBy: 'admin' }),
-      });
-      if (res.ok) {
-        const json = await res.json();
-        if (json.success) {
-          setSyncStatus('synced');
-          setLastSyncedAt(json.updatedAt || new Date().toISOString());
-          return;
+      // 2. Safe fallback to /api/admin-data (only if server returns JSON)
+      try {
+        const res = await fetch('/api/admin-data', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ data: currentData, updatedBy: 'admin' }),
+        });
+        const contentType = res.headers.get('content-type') || '';
+        if (res.ok && contentType.includes('application/json')) {
+          const json = await res.json();
+          if (json.success) {
+            setSyncStatus('synced');
+            setLastSyncedAt(json.updatedAt || new Date().toISOString());
+            return;
+          }
         }
+      } catch (e) {
+        // Ignored on static hosts
       }
 
       setSyncStatus('offline');
@@ -340,9 +367,12 @@ export function AdminDataProvider({ children }) {
     }
   }, []);
 
-  // Background pull from Supabase with /api/admin-data fallback
+  // Background pull from Supabase with safe /api/admin-data fallback
   const pullFromCloud = useCallback(async () => {
     if (isSyncingRef.current) return;
+    // Never overwrite while the user is actively modifying form inputs
+    if (hasUserModifiedRef.current) return;
+
     isSyncingRef.current = true;
     try {
       let remote = null;
@@ -357,14 +387,17 @@ export function AdminDataProvider({ children }) {
         isFromSupabase = true;
       } else {
         // 2. Fallback to /api/admin-data
-        const res = await fetch('/api/admin-data', { cache: 'no-store' });
-        if (res.ok) {
-          const json = await res.json();
-          if (json.exists && json.data) {
-            remote = json.data;
-            remoteUpdatedAt = json.updatedAt;
+        try {
+          const res = await fetch('/api/admin-data', { cache: 'no-store' });
+          const contentType = res.headers.get('content-type') || '';
+          if (res.ok && contentType.includes('application/json')) {
+            const json = await res.json();
+            if (json.exists && json.data) {
+              remote = json.data;
+              remoteUpdatedAt = json.updatedAt;
+            }
           }
-        }
+        } catch (apiErr) {}
       }
 
       if (remote) {
@@ -375,9 +408,28 @@ export function AdminDataProvider({ children }) {
         lastRemoteUpdatedAtRef.current = remoteUpdatedAt;
 
         setData((prev) => {
+          // If the user modified while the fetch was in flight, protect their local state
+          if (hasUserModifiedRef.current) return prev;
+
           const seeded = seedInitialProducts();
           const existingById = new Map();
           const existingByCode = new Map();
+
+          // Merge deleted IDs so deletions are preserved cross-admin
+          const combinedDeletedProd = Array.from(
+            new Set([
+              ...(prev.deletedProductIds || []),
+              ...(remote.deletedProductIds || []),
+            ])
+          );
+          const combinedDeletedCat = Array.from(
+            new Set([
+              ...(prev.deletedCategoryIds || []),
+              ...(remote.deletedCategoryIds || []),
+            ])
+          );
+          const deletedProdSet = new Set(combinedDeletedProd.map((x) => String(x).toUpperCase()));
+          const deletedCatSet = new Set(combinedDeletedCat.map((x) => String(x).toLowerCase()));
 
           // Populate from remote products
           (remote.products || prev.products || []).forEach((p) => {
@@ -401,26 +453,33 @@ export function AdminDataProvider({ children }) {
             }
           });
 
-          const merged = seeded.map((s) => {
+          // Merge seeded: Never resurrect deleted products
+          const merged = [];
+          seeded.forEach((s) => {
+            const sId = String(s.id).toUpperCase();
             const sCode = (s.code || s.sku || '').toUpperCase();
+            if (deletedProdSet.has(sId) || (sCode && deletedProdSet.has(sCode))) {
+              return; // Product was deleted by an admin; keep it deleted
+            }
             const existing = existingById.get(String(s.id)) || existingByCode.get(sCode);
             if (existing) {
               const isFavour = s.categorySlug === 'favours';
-              return {
+              merged.push({
                 ...s,
                 ...existing,
                 id: s.id,
                 code: s.code, // Always enforce unique authoritative code
                 sku: s.sku || s.code,
                 name: (isFavour && (!existing.updatedAt || existing.name?.includes('Design') || existing.name?.includes('Customised'))) ? s.name : (existing.name || s.name),
-              };
+              });
+            } else {
+              merged.push(s);
             }
-            return s;
           });
 
           const seededIds = new Set(seeded.map((s) => String(s.id)));
           const customProducts = (remote.products || prev.products || []).filter(
-            (p) => p.id && !seededIds.has(String(p.id))
+            (p) => p.id && !seededIds.has(String(p.id)) && !deletedProdSet.has(String(p.id).toUpperCase())
           );
 
           const cleanedProducts = [...merged, ...customProducts].map((p) => ({
@@ -432,12 +491,20 @@ export function AdminDataProvider({ children }) {
             (o) => o.id !== 'ord-101' && o.id !== 'ord-102'
           );
 
+          // Handle categories respecting deleted list
+          const rawCats = remote.categories || prev.categories || DEFAULT_CATEGORIES;
+          const cleanedCats = rawCats.filter(
+            (c) => !deletedCatSet.has(String(c.id).toLowerCase()) && !deletedCatSet.has(String(c.slug).toLowerCase())
+          );
+
           const updated = {
             ...prev,
             ...remote,
+            deletedProductIds: combinedDeletedProd,
+            deletedCategoryIds: combinedDeletedCat,
             products: cleanedProducts,
             orders: cleanedOrders,
-            categories: remote.categories || prev.categories,
+            categories: cleanedCats,
             settings: { ...DEFAULT_SETTINGS, ...(remote.settings || prev.settings) },
           };
 
@@ -480,7 +547,7 @@ export function AdminDataProvider({ children }) {
     };
   }, [pullFromCloud]);
 
-  // Save to localStorage on change and debounced push to cloud when user modifies data
+  // Fast 200ms debounced push to cloud when user modifies data
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
@@ -488,19 +555,41 @@ export function AdminDataProvider({ children }) {
       console.warn('Failed saving admin data to localStorage:', e);
     }
 
-    // Only push to cloud when user actively makes a local modification
     if (!hasUserModifiedRef.current) return;
 
     if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
     syncTimerRef.current = setTimeout(() => {
       pushToCloud(data);
       hasUserModifiedRef.current = false;
-    }, 600);
+    }, 200);
 
     return () => {
       if (syncTimerRef.current) clearTimeout(syncTimerRef.current);
     };
   }, [data, pushToCloud]);
+
+  // Flush on tab close or navigation away to prevent data loss on quick exit
+  useEffect(() => {
+    const handleFlush = () => {
+      if (hasUserModifiedRef.current) {
+        hasUserModifiedRef.current = false;
+        syncCatalogToSupabase(data);
+      }
+    };
+
+    window.addEventListener('beforeunload', handleFlush);
+    window.addEventListener('pagehide', handleFlush);
+    const handleVis = () => {
+      if (document.visibilityState === 'hidden') handleFlush();
+    };
+    document.addEventListener('visibilitychange', handleVis);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleFlush);
+      window.removeEventListener('pagehide', handleFlush);
+      document.removeEventListener('visibilitychange', handleVis);
+    };
+  }, [data]);
 
   // Product CRUD
   const addProduct = (prod) => {
@@ -510,7 +599,17 @@ export function AdminDataProvider({ children }) {
       id: `prod-${Date.now()}`,
       createdAt: new Date().toISOString(),
     };
-    setData((prev) => ({ ...prev, products: [newProd, ...prev.products] }));
+    setData((prev) => {
+      const prodCode = (newProd.code || newProd.sku || '').toUpperCase();
+      const nextDeleted = (prev.deletedProductIds || []).filter(
+        (x) => String(x).toUpperCase() !== newProd.id.toUpperCase() && String(x).toUpperCase() !== prodCode
+      );
+      return {
+        ...prev,
+        deletedProductIds: nextDeleted,
+        products: [newProd, ...prev.products],
+      };
+    });
     return newProd;
   };
 
@@ -526,25 +625,54 @@ export function AdminDataProvider({ children }) {
 
   const deleteProduct = (id) => {
     hasUserModifiedRef.current = true;
-    setData((prev) => ({
-      ...prev,
-      products: prev.products.filter((p) => p.id !== id),
-    }));
+    setData((prev) => {
+      const prod = prev.products.find((p) => p.id === id);
+      const toDelete = [id];
+      if (prod?.code) toDelete.push(prod.code);
+      if (prod?.sku) toDelete.push(prod.sku);
+
+      const nextDeleted = Array.from(new Set([...(prev.deletedProductIds || []), ...toDelete]));
+      return {
+        ...prev,
+        deletedProductIds: nextDeleted,
+        products: prev.products.filter((p) => p.id !== id),
+      };
+    });
   };
 
   const bulkDeleteProducts = (ids) => {
     hasUserModifiedRef.current = true;
-    setData((prev) => ({
-      ...prev,
-      products: prev.products.filter((p) => !ids.includes(p.id)),
-    }));
+    setData((prev) => {
+      const toDelete = [...ids];
+      prev.products.forEach((p) => {
+        if (ids.includes(p.id)) {
+          if (p.code) toDelete.push(p.code);
+          if (p.sku) toDelete.push(p.sku);
+        }
+      });
+      const nextDeleted = Array.from(new Set([...(prev.deletedProductIds || []), ...toDelete]));
+      return {
+        ...prev,
+        deletedProductIds: nextDeleted,
+        products: prev.products.filter((p) => !ids.includes(p.id)),
+      };
+    });
   };
 
   // Category CRUD
   const addCategory = (cat) => {
     hasUserModifiedRef.current = true;
     const newCat = { ...cat, id: `cat-${Date.now()}` };
-    setData((prev) => ({ ...prev, categories: [...prev.categories, newCat] }));
+    setData((prev) => {
+      const nextDeleted = (prev.deletedCategoryIds || []).filter(
+        (x) => String(x).toLowerCase() !== newCat.id.toLowerCase() && String(x).toLowerCase() !== (newCat.slug || '').toLowerCase()
+      );
+      return {
+        ...prev,
+        deletedCategoryIds: nextDeleted,
+        categories: [...prev.categories, newCat],
+      };
+    });
   };
 
   const updateCategory = (id, updates) => {
@@ -557,10 +685,18 @@ export function AdminDataProvider({ children }) {
 
   const deleteCategory = (id) => {
     hasUserModifiedRef.current = true;
-    setData((prev) => ({
-      ...prev,
-      categories: prev.categories.filter((c) => c.id !== id),
-    }));
+    setData((prev) => {
+      const cat = prev.categories.find((c) => c.id === id);
+      const toDelete = [id];
+      if (cat?.slug) toDelete.push(cat.slug);
+
+      const nextDeleted = Array.from(new Set([...(prev.deletedCategoryIds || []), ...toDelete]));
+      return {
+        ...prev,
+        deletedCategoryIds: nextDeleted,
+        categories: prev.categories.filter((c) => c.id !== id),
+      };
+    });
   };
 
   // Orders CRUD
@@ -706,39 +842,55 @@ export function AdminDataProvider({ children }) {
   };
 
   const syncCatalogProducts = () => {
+    hasUserModifiedRef.current = true;
     const freshSeeded = seedInitialProducts();
 
     setData((prev) => {
       const existingById = new Map();
+      const existingByCode = new Map();
       (prev.products || []).forEach((p) => {
         if (p.id) existingById.set(String(p.id), p);
+        if (p.code) existingByCode.set(String(p.code).toUpperCase(), p);
+        if (p.sku) existingByCode.set(String(p.sku).toUpperCase(), p);
       });
 
-      const updatedProducts = freshSeeded.map((s) => {
-        const existing = existingById.get(String(s.id));
-        if (existing) {
-          return {
-            ...s,
-            price: existing.price ?? s.price,
-            numericPrice: existing.numericPrice ?? s.numericPrice,
-            salePrice: existing.salePrice ?? s.salePrice,
-            stock: existing.stock ?? s.stock,
-            status: existing.status ?? s.status,
-            featured: existing.featured ?? s.featured,
-          };
+      const deletedProdSet = new Set((prev.deletedProductIds || []).map((x) => String(x).toUpperCase()));
+      const deletedCatSet = new Set((prev.deletedCategoryIds || []).map((x) => String(x).toLowerCase()));
+
+      const updatedProducts = [];
+      freshSeeded.forEach((s) => {
+        const sId = String(s.id).toUpperCase();
+        const sCode = (s.code || s.sku || '').toUpperCase();
+        if (deletedProdSet.has(sId) || (sCode && deletedProdSet.has(sCode))) {
+          return; // respect admin deletions
         }
-        return s;
+        const existing = existingById.get(String(s.id)) || existingByCode.get(sCode);
+        if (existing) {
+          updatedProducts.push({
+            ...s,
+            ...existing,
+            id: s.id,
+            code: s.code,
+            sku: s.sku || s.code,
+          });
+        } else {
+          updatedProducts.push(s);
+        }
       });
 
       // Preserve custom created products from admin panel
       const seededIds = new Set(freshSeeded.map((s) => String(s.id)));
-      const customOnes = (prev.products || []).filter((p) => p.id && !seededIds.has(String(p.id)));
+      const customOnes = (prev.products || []).filter(
+        (p) => p.id && !seededIds.has(String(p.id)) && !deletedProdSet.has(String(p.id).toUpperCase())
+      );
 
-      // Also ensure all DEFAULT_CATEGORIES exist
+      // Also ensure all DEFAULT_CATEGORIES exist unless deleted
       const existingCatSlugs = new Set((prev.categories || []).map((c) => c.slug));
       const newCategories = [...(prev.categories || [])];
       DEFAULT_CATEGORIES.forEach((dc) => {
-        if (!existingCatSlugs.has(dc.slug)) {
+        const dcId = String(dc.id).toLowerCase();
+        const dcSlug = String(dc.slug).toLowerCase();
+        if (!existingCatSlugs.has(dc.slug) && !deletedCatSet.has(dcId) && !deletedCatSet.has(dcSlug)) {
           newCategories.push(dc);
         }
       });
