@@ -354,93 +354,167 @@ export default function OrdersPage() {
         </div>
       </div>
 
-      {/* Orders Table */}
-      <div className="admin-card" style={{ padding: 0, overflow: 'hidden' }}>
-        <div className="admin-table-container">
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th>Order #</th>
-                <th>Date</th>
-                <th>Customer</th>
-                <th>Items</th>
-                <th>Total</th>
-                <th>Payment</th>
-                <th>Status</th>
-                <th style={{ textAlign: 'right' }}>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredOrders.length === 0 ? (
+      {/* Mobile Orders Cards List (Mobile Only) */}
+      <div className="admin-show-mobile" style={{ display: 'none' }}>
+        {filteredOrders.length === 0 ? (
+          <div className="admin-card" style={{ textAlign: 'center', padding: '24px', color: 'var(--admin-muted)' }}>
+            No orders found matching your search.
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {filteredOrders.map((o) => (
+              <div key={o.id} className="admin-card" style={{ padding: '14px', borderRadius: '12px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                  <div>
+                    <div style={{ fontWeight: '700', color: 'var(--admin-brand)', fontSize: '15px' }}>{o.number}</div>
+                    <div style={{ fontSize: '11px', color: 'var(--admin-muted)' }}>{new Date(o.createdAt).toLocaleDateString()}</div>
+                  </div>
+                  <span
+                    className={`admin-badge ${
+                      o.status === 'Delivered'
+                        ? 'admin-badge-success'
+                        : o.status === 'Processing'
+                        ? 'admin-badge-warning'
+                        : o.status === 'Cancelled'
+                        ? 'admin-badge-danger'
+                        : 'admin-badge-brand'
+                    }`}
+                  >
+                    {o.status}
+                  </span>
+                </div>
+
+                <div style={{ borderTop: '1px solid var(--admin-border)', borderBottom: '1px solid var(--admin-border)', padding: '10px 0', margin: '8px 0' }}>
+                  <div style={{ fontWeight: '600', color: 'var(--admin-ink)', fontSize: '14px' }}>👤 {o.customerName}</div>
+                  {o.phone && (
+                    <div style={{ fontSize: '12px', color: 'var(--admin-muted)', marginTop: '2px' }}>
+                      📞 {o.phone}
+                    </div>
+                  )}
+                  <div style={{ marginTop: '6px', fontSize: '12px', color: 'var(--admin-ink)' }}>
+                    📦 {o.items?.map((it) => `${it.productName} (x${it.quantity})`).join(', ') || 'Bespoke Order'}
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
+                  <div style={{ fontWeight: '800', fontSize: '15px', color: 'var(--admin-ink)' }}>
+                    {o.total}
+                  </div>
+                  <div style={{ display: 'flex', gap: '6px' }}>
+                    <button
+                      onClick={() => {
+                        setSelectedOrder(o);
+                        setIsInvoiceOpen(true);
+                      }}
+                      className="admin-btn admin-btn-primary"
+                      style={{ padding: '6px 12px', fontSize: '12px' }}
+                    >
+                      🧾 Invoice
+                    </button>
+                    <button
+                      onClick={() => openOrderDetail(o)}
+                      className="admin-btn admin-btn-secondary"
+                      style={{ padding: '6px 12px', fontSize: '12px' }}
+                    >
+                      ✏️ Edit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Orders Table (Desktop Only) */}
+      <div className="admin-hide-mobile">
+        <div className="admin-card" style={{ padding: 0, overflow: 'hidden' }}>
+          <div className="admin-table-container">
+            <table className="admin-table">
+              <thead>
                 <tr>
-                  <td colSpan="8" style={{ textAlign: 'center', padding: '36px', color: 'var(--admin-muted)' }}>
-                    No orders found matching your search. Click <strong>Add Manual Order</strong> to record a new client order.
-                  </td>
+                  <th>Order #</th>
+                  <th>Date</th>
+                  <th>Customer</th>
+                  <th>Items</th>
+                  <th>Total</th>
+                  <th>Payment</th>
+                  <th>Status</th>
+                  <th style={{ textAlign: 'right' }}>Actions</th>
                 </tr>
-              ) : (
-                filteredOrders.map((o) => (
-                  <tr key={o.id}>
-                    <td style={{ fontWeight: '700', color: 'var(--admin-brand)' }}>{o.number}</td>
-                    <td style={{ color: 'var(--admin-muted)', fontSize: '13px' }}>
-                      {new Date(o.createdAt).toLocaleDateString()}
-                    </td>
-                    <td>
-                      <div style={{ fontWeight: '600', color: 'var(--admin-ink)' }}>{o.customerName}</div>
-                      <div style={{ fontSize: '12px', color: 'var(--admin-muted)' }}>{o.phone}</div>
-                    </td>
-                    <td>
-                      {o.items?.map((it, idx) => (
-                        <div key={idx} style={{ fontSize: '13px' }}>
-                          {it.productName} (x{it.quantity})
-                        </div>
-                      ))}
-                    </td>
-                    <td style={{ fontWeight: '700', color: 'var(--admin-ink)' }}>{o.total}</td>
-                    <td>
-                      <span className="admin-badge admin-badge-brand">{o.paymentMethod}</span>
-                    </td>
-                    <td>
-                      <span
-                        className={`admin-badge ${
-                          o.status === 'Delivered'
-                            ? 'admin-badge-success'
-                            : o.status === 'Processing'
-                            ? 'admin-badge-warning'
-                            : o.status === 'Cancelled'
-                            ? 'admin-badge-danger'
-                            : 'admin-badge-brand'
-                        }`}
-                      >
-                        {o.status}
-                      </span>
-                    </td>
-                    <td style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>
-                      <div style={{ display: 'inline-flex', gap: '6px' }}>
-                        <button
-                          onClick={() => {
-                            setSelectedOrder(o);
-                            setIsInvoiceOpen(true);
-                          }}
-                          className="admin-btn admin-btn-primary"
-                          style={{ padding: '6px 10px', fontSize: '12px' }}
-                          title="View & Download Invoice"
-                        >
-                          🧾 Invoice
-                        </button>
-                        <button
-                          onClick={() => openOrderDetail(o)}
-                          className="admin-btn admin-btn-secondary"
-                          style={{ padding: '6px 10px', fontSize: '12px' }}
-                        >
-                          View Details
-                        </button>
-                      </div>
+              </thead>
+              <tbody>
+                {filteredOrders.length === 0 ? (
+                  <tr>
+                    <td colSpan="8" style={{ textAlign: 'center', padding: '36px', color: 'var(--admin-muted)' }}>
+                      No orders found matching your search. Click <strong>Add Manual Order</strong> to record a new client order.
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ) : (
+                  filteredOrders.map((o) => (
+                    <tr key={o.id}>
+                      <td style={{ fontWeight: '700', color: 'var(--admin-brand)' }}>{o.number}</td>
+                      <td style={{ color: 'var(--admin-muted)', fontSize: '13px' }}>
+                        {new Date(o.createdAt).toLocaleDateString()}
+                      </td>
+                      <td>
+                        <div style={{ fontWeight: '600', color: 'var(--admin-ink)' }}>{o.customerName}</div>
+                        <div style={{ fontSize: '12px', color: 'var(--admin-muted)' }}>{o.phone}</div>
+                      </td>
+                      <td>
+                        {o.items?.map((it, idx) => (
+                          <div key={idx} style={{ fontSize: '13px' }}>
+                            {it.productName} (x{it.quantity})
+                          </div>
+                        ))}
+                      </td>
+                      <td style={{ fontWeight: '700', color: 'var(--admin-ink)' }}>{o.total}</td>
+                      <td>
+                        <span className="admin-badge admin-badge-brand">{o.paymentMethod}</span>
+                      </td>
+                      <td>
+                        <span
+                          className={`admin-badge ${
+                            o.status === 'Delivered'
+                              ? 'admin-badge-success'
+                              : o.status === 'Processing'
+                              ? 'admin-badge-warning'
+                              : o.status === 'Cancelled'
+                              ? 'admin-badge-danger'
+                              : 'admin-badge-brand'
+                          }`}
+                        >
+                          {o.status}
+                        </span>
+                      </td>
+                      <td style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>
+                        <div style={{ display: 'inline-flex', gap: '6px' }}>
+                          <button
+                            onClick={() => {
+                              setSelectedOrder(o);
+                              setIsInvoiceOpen(true);
+                            }}
+                            className="admin-btn admin-btn-primary"
+                            style={{ padding: '6px 10px', fontSize: '12px' }}
+                            title="View & Download Invoice"
+                          >
+                            🧾 Invoice
+                          </button>
+                          <button
+                            onClick={() => openOrderDetail(o)}
+                            className="admin-btn admin-btn-secondary"
+                            style={{ padding: '6px 10px', fontSize: '12px' }}
+                          >
+                            View Details
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 

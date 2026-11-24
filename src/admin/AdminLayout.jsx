@@ -61,6 +61,10 @@ export const ToastContext = React.createContext(null);
 export default function AdminLayout() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [toasts, setToasts] = useState([]);
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('tps_admin_theme') || 'light';
+  });
+
   const { logout, currentAdmin = 'TPS' } = useAdminAuth();
   const adminData = useAdminData();
   const syncStatus = adminData?.syncStatus || 'synced';
@@ -69,6 +73,29 @@ export default function AdminLayout() {
 
   const adminInitials = currentAdmin ? currentAdmin.slice(0, 2).toUpperCase() : 'TPS';
   const adminDisplayName = currentAdmin || 'TPS';
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.setAttribute('data-admin-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-admin-theme');
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+    try {
+      localStorage.setItem('tps_admin_theme', nextTheme);
+    } catch (e) {}
+    if (nextTheme === 'dark') {
+      document.documentElement.setAttribute('data-admin-theme', 'dark');
+      showToast('Dark mode enabled 🌙', 'info');
+    } else {
+      document.documentElement.removeAttribute('data-admin-theme');
+      showToast('Light mode enabled ☀️', 'info');
+    }
+  };
 
   const showToast = (message, type = 'info') => {
     const id = Date.now();
@@ -260,6 +287,18 @@ export default function AdminLayout() {
                     : 'Local'}
                 </span>
               </span>
+
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="admin-btn admin-btn-secondary admin-btn-theme"
+                title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+                aria-label="Toggle dark mode"
+                style={{ padding: '6px 10px', fontSize: '13px' }}
+              >
+                <span>{theme === 'dark' ? '☀️' : '🌙'}</span>
+                <span className="admin-hide-mobile">{theme === 'dark' ? 'Light' : 'Dark'}</span>
+              </button>
 
               <a
                 href="/"

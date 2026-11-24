@@ -77,6 +77,16 @@ export default function ProductsPage() {
   const [rotatingProductId, setRotatingProductId] = useState(null);
   const [copiedSku, setCopiedSku] = useState(null);
 
+  // Responsive mobile check: Always lock to Grid View on mobile screens
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  React.useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const effectiveViewMode = isMobile ? 'grid' : viewMode;
+
   const handleImportFile = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -521,8 +531,9 @@ export default function ProductsPage() {
               </button>
             )}
 
-            <div style={{ display: 'flex', border: '1px solid var(--admin-border)', borderRadius: '8px', overflow: 'hidden' }}>
+            <div className="admin-hide-mobile" style={{ display: 'flex', border: '1px solid var(--admin-border)', borderRadius: '8px', overflow: 'hidden' }}>
               <button
+                type="button"
                 onClick={() => setViewMode('table')}
                 style={{
                   padding: '6px 12px',
@@ -536,6 +547,7 @@ export default function ProductsPage() {
                 Table
               </button>
               <button
+                type="button"
                 onClick={() => setViewMode('grid')}
                 style={{
                   padding: '6px 12px',
@@ -553,8 +565,8 @@ export default function ProductsPage() {
         </div>
       </div>
 
-      {/* Table View */}
-      {viewMode === 'table' ? (
+      {/* Table View (Desktop only, Mobile always uses touch Grid View) */}
+      {effectiveViewMode === 'table' ? (
         <div className="admin-card" style={{ padding: 0, overflow: 'hidden' }}>
           <div className="admin-table-container">
             <table className="admin-table">
@@ -681,13 +693,18 @@ export default function ProductsPage() {
           </div>
         </div>
       ) : (
-        /* Grid View */
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '20px' }}>
+        /* Grid View (Standard for Desktop Grid, Exclusively used on Mobile) */
+        <div className="admin-products-grid">
           {filteredProducts.map((p) => {
             const cover = p.images?.[0] || '/wedding-invites/cover.jpg';
             return (
               <div key={p.id} className="admin-card" style={{ padding: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ position: 'relative', height: '260px' }}>
+                <div
+                  className="admin-product-card-imgwrap"
+                  onClick={() => openEditModal(p)}
+                  style={{ position: 'relative', height: '260px', cursor: 'pointer' }}
+                  title="Click to edit product"
+                >
                   <img src={cover} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   {p.sku && !String(p.sku).toUpperCase().startsWith('TPS-ACC') && (
                     <span className="admin-badge admin-badge-brand" style={{ position: 'absolute', top: '10px', left: '10px', whiteSpace: 'nowrap' }}>
@@ -698,18 +715,22 @@ export default function ProductsPage() {
                     {p.status}
                   </span>
                 </div>
-                <div style={{ padding: '14px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <div>
-                    <h4 style={{ margin: '0 0 4px', fontSize: '14px', fontWeight: '700', color: 'var(--admin-ink)' }}>{p.name}</h4>
+                <div className="admin-product-card-body" style={{ padding: '14px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <div onClick={() => openEditModal(p)} style={{ cursor: 'pointer' }}>
+                    <h4 className="admin-product-card-title" style={{ margin: '0 0 4px', fontSize: '14px', fontWeight: '700', color: 'var(--admin-ink)' }}>
+                      {p.name}
+                    </h4>
                     <div style={{ fontSize: '12px', color: 'var(--admin-muted)' }}>{p.images?.length || 0} suite images</div>
-                    <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--admin-brand)', marginTop: '8px' }}>{p.price}</div>
+                    <div style={{ fontSize: '14px', fontWeight: '700', color: 'var(--admin-brand)', marginTop: '6px' }}>{p.price}</div>
                   </div>
-                  <div style={{ display: 'flex', gap: '6px', marginTop: '12px', flexWrap: 'wrap' }}>
-                    <button onClick={() => openEditModal(p)} className="admin-btn admin-btn-secondary" style={{ flex: 1, padding: '6px' }}>Edit</button>
+                  <div style={{ display: 'flex', gap: '6px', marginTop: '10px', flexWrap: 'wrap' }}>
+                    <button onClick={() => openEditModal(p)} className="admin-btn admin-btn-secondary" style={{ flex: 1, padding: '7px 8px', fontSize: '12px', fontWeight: '600' }}>
+                      ✏️ Edit
+                    </button>
                     <button
                       onClick={() => copyProductDirectLink(p)}
                       className="admin-btn admin-btn-secondary"
-                      style={{ padding: '6px 10px', fontSize: '13px' }}
+                      style={{ padding: '7px 10px', fontSize: '12px' }}
                       title="Copy direct design link"
                     >
                       {copiedSku === p.id ? '✓' : '🔗'}
@@ -719,7 +740,7 @@ export default function ProductsPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="admin-btn admin-btn-secondary"
-                      style={{ padding: '6px 10px', fontSize: '13px', textDecoration: 'none' }}
+                      style={{ padding: '7px 10px', fontSize: '12px', textDecoration: 'none' }}
                       title="Open live design page"
                     >
                       👁️
@@ -728,12 +749,14 @@ export default function ProductsPage() {
                       onClick={() => rotateProductCover(p)}
                       disabled={rotatingProductId === p.id}
                       className="admin-btn admin-btn-secondary"
-                      style={{ padding: '6px 10px', fontSize: '13px' }}
+                      style={{ padding: '7px 10px', fontSize: '12px' }}
                       title="Rotate cover photo 90° clockwise"
                     >
                       {rotatingProductId === p.id ? '⏳' : '⟳'}
                     </button>
-                    <button onClick={() => handleDelete(p.id, p.name)} className="admin-btn admin-btn-danger" style={{ padding: '6px 10px' }}>🗑️</button>
+                    <button onClick={() => handleDelete(p.id, p.name)} className="admin-btn admin-btn-danger" style={{ padding: '7px 10px', fontSize: '12px' }} title="Delete product">
+                      🗑️
+                    </button>
                   </div>
                 </div>
               </div>
