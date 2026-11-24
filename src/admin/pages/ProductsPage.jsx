@@ -536,12 +536,14 @@ export default function ProductsPage() {
                 type="button"
                 onClick={() => setViewMode('table')}
                 style={{
-                  padding: '6px 12px',
-                  background: viewMode === 'table' ? 'var(--admin-brand-light)' : '#fff',
+                  padding: '6px 14px',
+                  background: viewMode === 'table' ? 'var(--admin-brand)' : 'transparent',
                   border: 'none',
                   cursor: 'pointer',
                   fontWeight: '600',
-                  color: viewMode === 'table' ? 'var(--admin-brand)' : 'var(--admin-muted)',
+                  fontSize: '13px',
+                  color: viewMode === 'table' ? '#FFFFFF' : 'var(--admin-ink)',
+                  transition: 'all 0.15s ease',
                 }}
               >
                 Table
@@ -550,12 +552,14 @@ export default function ProductsPage() {
                 type="button"
                 onClick={() => setViewMode('grid')}
                 style={{
-                  padding: '6px 12px',
-                  background: viewMode === 'grid' ? 'var(--admin-brand-light)' : '#fff',
+                  padding: '6px 14px',
+                  background: viewMode === 'grid' ? 'var(--admin-brand)' : 'transparent',
                   border: 'none',
                   cursor: 'pointer',
                   fontWeight: '600',
-                  color: viewMode === 'grid' ? 'var(--admin-brand)' : 'var(--admin-muted)',
+                  fontSize: '13px',
+                  color: viewMode === 'grid' ? '#FFFFFF' : 'var(--admin-ink)',
+                  transition: 'all 0.15s ease',
                 }}
               >
                 Grid
@@ -693,8 +697,16 @@ export default function ProductsPage() {
           </div>
         </div>
       ) : (
-        /* Grid View (Standard for Desktop Grid, Exclusively used on Mobile) */
-        <div className="admin-products-grid">
+        /* Grid View (Desktop Multi-Column Grid, Mobile 2-Column Touch Grid) */
+        <div
+          className="admin-products-grid"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+            gap: '20px',
+            width: '100%',
+          }}
+        >
           {filteredProducts.map((p) => {
             const cover = p.images?.[0] || '/wedding-invites/cover.jpg';
             return (
