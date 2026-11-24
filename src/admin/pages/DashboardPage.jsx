@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAdminAuth } from '../AdminAuthGuard';
 import { useAdminData } from '../AdminDataContext';
 import { useAdminToast } from '../AdminLayout';
 
 export default function DashboardPage() {
+  const { currentAdmin } = useAdminAuth();
   const { products, orders = [], reviews = [], deals = [], deleteReview } = useAdminData();
   const showToast = useAdminToast();
   const [chartRange, setChartRange] = useState('30d');
+
+  const adminDisplayName = currentAdmin ? (currentAdmin.charAt(0).toUpperCase() + currentAdmin.slice(1).toLowerCase()) : 'Admin';
 
   const pendingOrders = orders.filter((o) => o.status === 'Pending' || o.status === 'Processing');
   const activeDeals = deals.filter((d) => d.active);
@@ -29,7 +33,7 @@ export default function DashboardPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
         <div>
           <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '700', color: 'var(--admin-ink)', fontFamily: 'serif' }}>
-            Welcome back, Fatima Huzefa
+            Welcome back, {adminDisplayName}
           </h1>
           <p style={{ margin: '4px 0 0', fontSize: '14px', color: 'var(--admin-muted)' }}>
             Here is your store summary and order activity for today.

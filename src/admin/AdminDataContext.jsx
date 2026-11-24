@@ -13,8 +13,9 @@ const LEGACY_STORAGE_KEY = 'tps_admin_data_v1';
 const AUTH_KEY = 'tps_admin_session';
 const PASS_HASH_KEY = 'tps_admin_pass_hash';
 
-// Default initial seeded password is "TPS-786"
-const DEFAULT_PASSWORD = 'TPS-786';
+// Authorized admin users and authoritative password
+export const ALLOWED_ADMIN_USERS = ['TPS', 'FURQAN', 'MAHIN'];
+const DEFAULT_PASSWORD = 'TPS-123';
 
 const DEFAULT_CATEGORIES = (shopCategories || []).map((cat, idx) => ({
   id: cat.id || `cat-${idx + 1}`,
@@ -397,7 +398,7 @@ export function AdminDataProvider({ children }) {
               remoteUpdatedAt = json.updatedAt;
             }
           }
-        } catch (apiErr) {}
+        } catch (apiErr) { }
       }
 
       if (remote) {
@@ -510,7 +511,7 @@ export function AdminDataProvider({ children }) {
 
           try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-          } catch (e) {}
+          } catch (e) { }
 
           return updated;
         });
@@ -832,6 +833,18 @@ export function AdminDataProvider({ children }) {
   };
 
   // Auth helper
+  const verifyAdminCredentials = (username, password) => {
+    const normUser = String(username || '').trim().toUpperCase();
+    if (!ALLOWED_ADMIN_USERS.includes(normUser)) {
+      return { ok: false, error: 'Unrecognized admin profile. Valid profiles: TPS, FURQAN, MAHIN.' };
+    }
+    const stored = localStorage.getItem(PASS_HASH_KEY) || DEFAULT_PASSWORD;
+    if (password !== stored) {
+      return { ok: false, error: 'Incorrect admin password. Please try again.' };
+    }
+    return { ok: true, username: normUser };
+  };
+
   const verifyPassword = (password) => {
     const stored = localStorage.getItem(PASS_HASH_KEY) || DEFAULT_PASSWORD;
     return password === stored;
@@ -903,7 +916,7 @@ export function AdminDataProvider({ children }) {
 
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(nextData));
-      } catch (e) {}
+      } catch (e) { }
 
       return nextData;
     });
@@ -934,7 +947,7 @@ export function AdminDataProvider({ children }) {
     setData(nextData);
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(nextData));
-    } catch (e) {}
+    } catch (e) { }
     await pushToCloud(nextData);
     return true;
   };
@@ -970,6 +983,8 @@ export function AdminDataProvider({ children }) {
         deleteMedia,
         updateSettings,
         verifyPassword,
+        verifyAdminCredentials,
+        allowedAdmins: ALLOWED_ADMIN_USERS,
         changeAdminPassword,
         exportAllData,
         importAllData,

@@ -61,11 +61,14 @@ export const ToastContext = React.createContext(null);
 export default function AdminLayout() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [toasts, setToasts] = useState([]);
-  const { logout } = useAdminAuth();
+  const { logout, currentAdmin = 'TPS' } = useAdminAuth();
   const adminData = useAdminData();
   const syncStatus = adminData?.syncStatus || 'synced';
   const location = useLocation();
   const navigate = useNavigate();
+
+  const adminInitials = currentAdmin ? currentAdmin.slice(0, 2).toUpperCase() : 'TPS';
+  const adminDisplayName = currentAdmin || 'TPS';
 
   const showToast = (message, type = 'info') => {
     const id = Date.now();
@@ -285,12 +288,12 @@ export default function AdminLayout() {
                     border: '1px solid rgba(166, 35, 65, 0.25)',
                     flexShrink: 0,
                   }}
-                  title="Fatima Huzefa"
+                  title={`Logged in as ${adminDisplayName}`}
                 >
-                  FH
+                  {adminInitials}
                 </div>
                 <span className="admin-hide-mobile" style={{ fontSize: '13px', fontWeight: '600', color: 'var(--admin-ink)', whiteSpace: 'nowrap' }}>
-                  Fatima Huzefa
+                  {adminDisplayName}
                 </span>
               </div>
             </div>
@@ -303,6 +306,48 @@ export default function AdminLayout() {
             </AdminErrorBoundary>
           </main>
         </div>
+
+        {/* Mobile Sticky Bottom Navigation Bar */}
+        <nav className="admin-mobile-bottom-nav">
+          <NavLink
+            to="/admin"
+            end
+            className={({ isActive }) => `admin-mobile-nav-btn ${isActive ? 'active' : ''}`}
+          >
+            <span className="icon">📊</span>
+            <span>Dashboard</span>
+          </NavLink>
+          <NavLink
+            to="/admin/products"
+            className={({ isActive }) => `admin-mobile-nav-btn ${isActive ? 'active' : ''}`}
+          >
+            <span className="icon">🏷️</span>
+            <span>Products</span>
+          </NavLink>
+          <NavLink
+            to="/admin/orders"
+            className={({ isActive }) => `admin-mobile-nav-btn ${isActive ? 'active' : ''}`}
+          >
+            <span className="icon">📦</span>
+            <span>Orders</span>
+          </NavLink>
+          <NavLink
+            to="/admin/settings"
+            className={({ isActive }) => `admin-mobile-nav-btn ${isActive ? 'active' : ''}`}
+          >
+            <span className="icon">⚙️</span>
+            <span>Settings</span>
+          </NavLink>
+          <button
+            type="button"
+            onClick={() => setIsMobileNavOpen(true)}
+            className="admin-mobile-nav-btn"
+            aria-label="Open full admin menu"
+          >
+            <span className="icon">☰</span>
+            <span>More</span>
+          </button>
+        </nav>
 
         {/* Floating Toast Alerts */}
         <div className="admin-toast-container">

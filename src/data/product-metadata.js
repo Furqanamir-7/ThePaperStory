@@ -53,34 +53,45 @@ export const WEDDING_DESCRIPTIONS = {
     { printing: 'Digital Printing & Screen Print Accents' }
   ),
   4: formatWeddingTemplate(
-    'Dreamy pastel garden wedding invitation featuring botanical florals, sage greenery accents, bespoke monogrammed tags, and premium textured cardstock.'
+    'Ivory invitation with bright pink flowers and a peacock, layered under a translucent overlay and tied with a cream ribbon, with a patterned envelope sealed in crimson wax.'
   ),
   5: formatWeddingTemplate(
-    'Timeless classic cream invitation suite with embossed gold border, royal monogram crest, matching envelopes, and handcrafted metallic sealing wax.',
-    { printing: 'Digital Printing with Foil Border' }
+    'Red and navy floral invitations with an illustrated couple portrait, swans, mughal buildings, and peacocks, with a monogrammed envelope and crimson wax seals.'
   ),
   6: formatWeddingTemplate(
-    'Regal floral crest suite on heavy textured ivory stock with bespoke monogrammed envelopes, silk ribbon accent, and handmade seal.'
+    'Gold-bordered invitations available in mint, blush, or cream designed with digitally-drawn pink flowering branches and doves, with a translucent “Save the Date” overlay tied with a cream satin ribbon. Handmade wax seal also included.'
   ),
   7: formatWeddingTemplate(
-    'Romantic vintage lace-inspired invitation suite with intricate embossed borders, shimmer stock, and soft blush accents.'
+    'Cream invitation with burgundy and rust roses, ivory orchids, and blue wildflowers. Includes a burgundy pocket folder with a matching floral card.'
   ),
   8: formatWeddingTemplate(
-    'Vibrant blush pink floral botanical suite with matching botanical envelope inner lining and personalized itinerary insert card.'
+    'Pale blue envelopes with coral pink peonies on brown branches and a faint tonal vine pattern.'
   ),
   9: formatWeddingTemplate(
-    'Regal navy blue and champagne gold luxury invitation featuring ornate oriental border illumination and crisp metallic foil typography.',
-    { printing: 'Gold Foil Stamping & Digital Printing' }
+    'Square invitations with a trellis pattern border in orange, pink, or sage green and a lotus motif on a cream panel.'
   ),
   10: formatWeddingTemplate(
-    'Earthy sage green botanical garden wedding suite printed on organic cotton textured paper with custom monogram and olive branch accents.'
+    'Cream pocket-fold invitation with a rose gold foil arch, blush geometric border, blue and green peacocks, pastel florals, and a palace skyline.'
   ),
-  11: formatWeddingTemplate('Warm terracotta and burnt orange boho wedding suite featuring modern arch cutouts, vellum band wrap, and bronze sealing wax.'),
-  12: formatWeddingTemplate('Dramatic black tie luxury wedding suite with deep obsidian cardstock, reflective mirror gold foil stamping, and personalized Urdu calligraphy.', { printing: 'Digital Printing & Gold Foil Stamping' }),
-  13: formatWeddingTemplate('Soft watercolor floral meadow invitation with hand-painted botanicals, translucent vellum jacket, and delicate wax seal stamp.'),
-  14: formatWeddingTemplate('Traditional Islamic wedding invitation suite adorned with ornate Quranic verse calligraphy (Bismillah / Wa Khalaqnakum Azwaja), royal damask pattern, and gold foil borders.', { printing: 'Digital Printing & Gold Foil Borders' }),
-  15: formatWeddingTemplate('Lush golden foil damask invitation card with rich velvet-touch envelope sleeve and engraved monogram emblem.', { printing: 'Gold Foil Stamping & Digital Printing' }),
-  16: formatWeddingTemplate('Vintage garden floral botanical suite with rich mauve and blush blooms, gold foil header, and customized event card inserts.'),
+  11: formatWeddingTemplate(
+    'Invitations with a navy or burgundy floral border and gold foil edging, with peacocks, palm trees, and a palace scene on a cream panel. Seal wax included.'
+  ),
+  12: formatWeddingTemplate(
+    'Seafoam green and ivory invitations with a gold border, arched cream panel, pink roses on brown branches, doves, and a gold wax seal on a matching seafoam envelope.'
+  ),
+  13: formatWeddingTemplate(
+    '(Left) Pale mint green and ivory arched invitation with pink roses, a blue peacock on a white stone urn, doves, and green palm leaves. (Right) Purple, magenta, and teal invitation with a pink lotus and floral border, a cream arched panel, and a row of arches along the bottom.'
+  ),
+  14: formatWeddingTemplate(
+    'Ivory and pale sage invitation with a gold border, pink roses on brown branches, a dove on a white stone urn, and a green calligraphy cover, with a translucent envelope sealed with a gold sticker.'
+  ),
+  15: formatWeddingTemplate(
+    'Lush golden foil damask invitation card with rich velvet-touch envelope sleeve and engraved monogram emblem.',
+    { printing: 'Gold Foil Stamping & Digital Printing' }
+  ),
+  16: formatWeddingTemplate(
+    'Ivory arched invitation with a red, green, and navy Persian rug pattern border, with a matching patterned envelope liner and deep red envelopes with a gold foil monogram.'
+  ),
   17: formatWeddingTemplate('Understated modern botanical suite on warm almond cardstock featuring minimalist line art florals and clean serif typography.'),
   18: formatWeddingTemplate('Opulent Arabic calligraphy royal celebration suite with gold illuminated borders, metallic emerald and gold paper, and ornate RSVP card.', { printing: 'Gold Foil Stamping & Screen Print Accents' }),
   19: formatWeddingTemplate('Burgundy and rose gold royal wedding suite featuring deep crimson cards, shimmering foil details, and floral envelope liners.'),

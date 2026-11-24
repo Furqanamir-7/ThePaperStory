@@ -3,11 +3,16 @@ import { Navigate, useNavigate, useLocation } from 'react-router-dom';
 
 const AuthContext = createContext(null);
 const SESSION_KEY = 'tps_admin_auth_token';
+const ADMIN_USER_KEY = 'tps_admin_current_user';
 const LAST_ACTIVITY_KEY = 'tps_admin_last_activity';
 const RATE_LIMIT_KEY = 'tps_admin_login_attempts';
 const IDLE_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
 
 export function AdminAuthProvider({ children }) {
+  const [currentAdmin, setCurrentAdmin] = useState(() => {
+    return localStorage.getItem(ADMIN_USER_KEY) || sessionStorage.getItem(ADMIN_USER_KEY) || 'TPS';
+  });
+
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     const token = sessionStorage.getItem(SESSION_KEY) || localStorage.getItem(SESSION_KEY);
     const lastActive = parseInt(localStorage.getItem(LAST_ACTIVITY_KEY) || '0', 10);
@@ -15,6 +20,8 @@ export function AdminAuthProvider({ children }) {
     if (Date.now() - lastActive > IDLE_TIMEOUT_MS) {
       sessionStorage.removeItem(SESSION_KEY);
       localStorage.removeItem(SESSION_KEY);
+      sessionStorage.removeItem(ADMIN_USER_KEY);
+      localStorage.removeItem(ADMIN_USER_KEY);
       return false;
     }
     return true;
@@ -77,12 +84,16 @@ export function AdminAuthProvider({ children }) {
     localStorage.removeItem(RATE_LIMIT_KEY);
   };
 
-  const login = (remember = false) => {
+  const login = (username = 'TPS', remember = false) => {
     const token = 'tps_auth_' + Date.now();
+    const cleanUser = String(username).trim().toUpperCase();
+    setCurrentAdmin(cleanUser);
     if (remember) {
       localStorage.setItem(SESSION_KEY, token);
+      localStorage.setItem(ADMIN_USER_KEY, cleanUser);
     } else {
       sessionStorage.setItem(SESSION_KEY, token);
+      sessionStorage.setItem(ADMIN_USER_KEY, cleanUser);
     }
     localStorage.setItem(LAST_ACTIVITY_KEY, String(Date.now()));
     clearRateLimit();
@@ -92,12 +103,14 @@ export function AdminAuthProvider({ children }) {
   const logout = () => {
     sessionStorage.removeItem(SESSION_KEY);
     localStorage.removeItem(SESSION_KEY);
+    sessionStorage.removeItem(ADMIN_USER_KEY);
+    localStorage.removeItem(ADMIN_USER_KEY);
     localStorage.removeItem(LAST_ACTIVITY_KEY);
     setIsAuthenticated(false);
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, checkRateLimit, recordFailedAttempt }}>
+    <AuthContext.Provider value={{ isAuthenticated, currentAdmin, login, logout, checkRateLimit, recordFailedAttempt }}>
       {children}
     </AuthContext.Provider>
   );

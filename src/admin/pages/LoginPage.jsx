@@ -5,6 +5,7 @@ import { useAdminData } from '../AdminDataContext';
 import '../admin.css';
 
 export default function LoginPage() {
+  const [username, setUsername] = useState('FURQAN');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
   const [remember, setRemember] = useState(false);
@@ -12,7 +13,7 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const { login, checkRateLimit, recordFailedAttempt } = useAdminAuth();
-  const { verifyPassword } = useAdminData();
+  const { verifyAdminCredentials, verifyPassword, allowedAdmins = ['TPS', 'FURQAN', 'MAHIN'] } = useAdminData();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -26,23 +27,32 @@ export default function LoginPage() {
       return;
     }
 
+    if (!username) {
+      setError('Please choose an admin profile (TPS, FURQAN, or MAHIN).');
+      return;
+    }
+
     if (!password) {
-      setError('Please enter the admin password.');
+      setError('Please enter your admin password.');
       return;
     }
 
     setIsLoading(true);
 
     setTimeout(() => {
-      if (verifyPassword(password)) {
-        login(remember);
+      const check = verifyAdminCredentials
+        ? verifyAdminCredentials(username, password)
+        : (verifyPassword(password) ? { ok: true, username } : { ok: false, error: 'Incorrect admin password.' });
+
+      if (check.ok) {
+        login(check.username || username, remember);
         navigate('/admin');
       } else {
         recordFailedAttempt();
-        setError('Incorrect password. Please try again.');
+        setError(check.error || 'Incorrect admin password. Please try again.');
         setIsLoading(false);
       }
-    }, 400);
+    }, 350);
   };
 
   return (
@@ -105,6 +115,42 @@ export default function LoginPage() {
         )}
 
         <form onSubmit={handleSubmit}>
+          {/* Admin Profile Selector */}
+          <div style={{ marginBottom: '18px' }}>
+            <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: '#2B1B1F', marginBottom: '8px' }}>
+              Select Admin Account
+            </label>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+              {allowedAdmins.map((user) => {
+                const isSelected = username === user;
+                return (
+                  <button
+                    key={user}
+                    type="button"
+                    onClick={() => {
+                      setUsername(user);
+                      setError('');
+                    }}
+                    style={{
+                      padding: '10px 4px',
+                      borderRadius: '10px',
+                      border: isSelected ? '2px solid #A62341' : '1px solid #EADBDD',
+                      backgroundColor: isSelected ? '#FFF5F6' : '#FFFFFF',
+                      color: isSelected ? '#A62341' : '#4B3B3F',
+                      fontWeight: isSelected ? '700' : '600',
+                      fontSize: '13px',
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease',
+                      boxShadow: isSelected ? '0 2px 8px rgba(166, 35, 65, 0.12)' : 'none',
+                    }}
+                  >
+                    👤 {user}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           <div style={{ marginBottom: '20px' }}>
             <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: '#2B1B1F', marginBottom: '8px' }}>
               Admin Password
@@ -114,7 +160,7 @@ export default function LoginPage() {
                 type={showPass ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter password (e.g. TPS-786)"
+                placeholder="Enter admin password"
                 style={{
                   width: '100%',
                   padding: '12px 42px 12px 14px',
