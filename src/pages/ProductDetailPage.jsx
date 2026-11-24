@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { products, shopCategories } from '../data/products'
-import { useAdminData } from '../admin/AdminDataContext'
+import { useStoreCatalog } from '../admin/AdminDataContext'
 import { useCart } from '../context/CartContext'
 import { buildWhatsAppUrl, buildProductWhatsAppMessage } from '../utils/whatsapp'
 import ProductMediaGallery from '../components/ProductMediaGallery'
@@ -26,68 +26,74 @@ export default function ProductDetailPage() {
   const [addedFeedback, setAddedFeedback] = useState(false)
   const [copiedLink, setCopiedLink] = useState(false)
 
-  let adminProducts = null
-  try {
-    const admin = useAdminData()
-    if (admin && admin.products) {
-      adminProducts = admin.products
-    }
-  } catch (e) {
-    // Outside admin context
-  }
+  const { allProducts, deletedProductIds } = useStoreCatalog()
+  const deletedSet = useMemo(() => {
+    return new Set((deletedProductIds || []).map((x) => String(x).toUpperCase()))
+  }, [deletedProductIds])
 
   // Resolve matching product
   const product = useMemo(() => {
     if (!code) return null
     const clean = decodeURIComponent(code).trim().toLowerCase()
 
-    // 1. Look in static products catalog first
-    let match = products.find((p) => {
+    // 1. Search in live allProducts first, then fallback to static products
+    const catalogPool = [
+      ...(allProducts || []),
+      ...products,
+    ]
+
+    const match = catalogPool.find((p) => {
       const pCode = (p.code || '').toLowerCase()
       const pSku = (p.sku || '').toLowerCase()
       const pId = String(p.id || '').toLowerCase()
       const pSlug = (p.slug || '').toLowerCase()
       const pAltCode = (p.altCode || '').toLowerCase()
       const pNameSlug = (p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
-      return pCode === clean || pAltCode === clean || pSku === clean || pId === clean || pSlug === clean || pNameSlug === clean
+      return (
+        pCode === clean ||
+        pAltCode === clean ||
+        pSku === clean ||
+        pId === clean ||
+        pSlug === clean ||
+        pNameSlug === clean ||
+        pId === `prod-${clean}` ||
+        `prod-${pId}` === clean
+      )
     })
-
-    // 2. If not found in static, look in adminProducts
-    if (!match && adminProducts && adminProducts.length > 0) {
-      match = adminProducts.find((p) => {
-        const pCode = (p.code || '').toLowerCase()
-        const pSku = (p.sku || '').toLowerCase()
-        const pId = String(p.id || '').toLowerCase()
-        const pSlug = (p.slug || '').toLowerCase()
-        const pNameSlug = (p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
-        return pCode === clean || pSku === clean || pId === clean || pSlug === clean || pNameSlug === clean
-      })
-    }
 
     if (!match) return null
 
-    // 3. Merge any admin updates (title, price, description, images)
-    if (adminProducts && adminProducts.length > 0) {
-      const adminOverride = adminProducts.find(
+    // Strictly respect admin deletions: deleted products must not be visible
+    const matchId = String(match.id || '').toUpperCase()
+    const matchCode = String(match.code || match.sku || '').toUpperCase()
+    if (deletedSet.has(matchId) || (matchCode && deletedSet.has(matchCode))) {
+      return null
+    }
+
+    // Merge latest live admin updates (title, price, description, images)
+    if (allProducts && allProducts.length > 0) {
+      const adminOverride = allProducts.find(
         (ap) =>
+          String(ap.id) === String(match.id) ||
           (ap.code && ap.code.toLowerCase() === (match.code || '').toLowerCase()) ||
           (ap.sku && ap.sku.toLowerCase() === (match.code || match.sku || '').toLowerCase()) ||
-          (match.sku && ap.sku && ap.sku.toLowerCase() === match.sku.toLowerCase()) ||
-          String(ap.id) === String(match.id)
+          (match.sku && ap.sku && ap.sku.toLowerCase() === match.sku.toLowerCase())
       )
       if (adminOverride) {
         return {
           ...match,
           ...adminOverride,
-          code: match.code || adminOverride.code || adminOverride.sku,
-          sku: match.sku || adminOverride.sku || match.code,
-          categorySlug: match.categorySlug || adminOverride.categorySlug,
-          designNumber: match.designNumber || adminOverride.designNumber,
+          code: adminOverride.code || match.code || adminOverride.sku,
+          sku: adminOverride.sku || match.sku || match.code,
+          categorySlug: adminOverride.categorySlug || match.categorySlug,
+          designNumber: adminOverride.designNumber || match.designNumber,
+          images: (adminOverride.images && adminOverride.images.length > 0) ? adminOverride.images : match.images,
+          image: adminOverride.images?.[0] || adminOverride.image || match.image,
         }
       }
     }
     return match
-  }, [code, adminProducts])
+  }, [code, allProducts, deletedSet])
 
   // SEO document title
   useEffect(() => {

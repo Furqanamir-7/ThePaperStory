@@ -5,7 +5,8 @@ import CategoryFilterPills from '../components/CategoryFilterPills'
 import CategoryCard from '../components/CategoryCard'
 import ProductGrid from '../components/ProductGrid'
 import Seo from '../components/Seo'
-import { products, shopCategories } from '../data/products'
+import { shopCategories } from '../data/products'
+import { useStoreCatalog } from '../admin/AdminDataContext'
 import { useInView } from '../hooks/useInView'
 import { PAGE_SEO } from '../utils/seo'
 
@@ -13,17 +14,18 @@ export default function ShopPage() {
   const [ref, isVisible] = useInView()
   const [searchParams] = useSearchParams()
   const searchQuery = searchParams.get('search') || searchParams.get('q') || ''
+  const { products: activeProducts } = useStoreCatalog()
 
   const displayProducts = useMemo(() => {
-    if (!searchQuery.trim()) return products
+    if (!searchQuery.trim()) return activeProducts
     const q = searchQuery.trim().toLowerCase()
-    return products.filter((p) => {
+    return activeProducts.filter((p) => {
       const name = (p.name || '').toLowerCase()
       const code = (p.code || p.sku || '').toLowerCase()
-      const cat = (p.category || '').toLowerCase()
+      const cat = (p.category || p.categorySlug || '').toLowerCase()
       return name.includes(q) || code.includes(q) || cat.includes(q)
     })
-  }, [searchQuery])
+  }, [searchQuery, activeProducts])
 
   return (
     <>

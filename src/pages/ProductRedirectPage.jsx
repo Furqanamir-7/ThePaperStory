@@ -1,28 +1,23 @@
 import { useEffect, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { products } from '../data/products'
-import { useAdminData } from '../admin/AdminDataContext'
+import { useStoreCatalog } from '../admin/AdminDataContext'
 
 export default function ProductRedirectPage() {
   const { code } = useParams()
   const navigate = useNavigate()
+  const { products: activeProducts, allProducts, deletedProductIds } = useStoreCatalog()
 
-  let adminProducts = null
-  try {
-    const admin = useAdminData()
-    if (admin && admin.products) {
-      adminProducts = admin.products
-    }
-  } catch (e) {
-    // Outside admin data context
-  }
+  const deletedSet = useMemo(() => {
+    return new Set((deletedProductIds || []).map((x) => String(x).toUpperCase()))
+  }, [deletedProductIds])
 
-  const allProducts = useMemo(() => {
-    if (adminProducts && adminProducts.length > 0) {
-      return [...adminProducts, ...products]
+  const catalogPool = useMemo(() => {
+    if (activeProducts && activeProducts.length > 0) {
+      return [...activeProducts, ...products]
     }
     return products
-  }, [adminProducts])
+  }, [activeProducts])
 
   useEffect(() => {
     if (!code) {
@@ -31,15 +26,18 @@ export default function ProductRedirectPage() {
     }
 
     const clean = decodeURIComponent(code).trim().toLowerCase()
-    const match = allProducts.find((p) => {
+    const match = catalogPool.find((p) => {
       const pCode = (p.code || p.sku || '').toLowerCase()
       const pId = String(p.id || '').toLowerCase()
       const pSlug = (p.slug || '').toLowerCase()
       const pAltCode = (p.altCode || '').toLowerCase()
-      return pCode === clean || pAltCode === clean || pId === clean || pSlug === clean
+      return pCode === clean || pAltCode === clean || pId === clean || pSlug === clean || pId === `prod-${clean}`
     })
 
-    if (match) {
+    const matchId = String(match?.id || '').toUpperCase()
+    const matchCode = String(match?.code || match?.sku || '').toUpperCase()
+
+    if (match && !deletedSet.has(matchId) && (!matchCode || !deletedSet.has(matchCode))) {
       const cat = match.categorySlug || 'wedding-invitations'
       const sub = match.subcategorySlug ? `/${match.subcategorySlug}` : ''
       const type = match.typeSlug ? `/${match.typeSlug}` : ''
@@ -48,6 +46,7 @@ export default function ProductRedirectPage() {
     } else {
       navigate('/shop', { replace: true })
     }
+  }, [code, catalogPool, deletedSet, navigate])
   }, [code, allProducts, navigate])
 
   return (

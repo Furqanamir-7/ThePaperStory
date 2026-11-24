@@ -1897,29 +1897,30 @@ export function getFeaturedProducts() {
   return [weddingInvite, nikkahnama, seal, potli].filter(Boolean)
 }
 
-export function getBestSellers() {
+export function getBestSellers(catalog = products) {
+  const pool = (catalog && catalog.length > 0) ? catalog : products
   const selected = [
     // 1. Wedding Invitations (2 top distinct luxury suites)
-    products.find((p) => p.categorySlug === 'wedding-invitations' && p.designNumber === 1),
-    products.find((p) => p.categorySlug === 'wedding-invitations' && p.designNumber === 8),
+    pool.find((p) => p.categorySlug === 'wedding-invitations' && p.designNumber === 1),
+    pool.find((p) => p.categorySlug === 'wedding-invitations' && p.designNumber === 8),
     // 2. Digital E-Invites
-    products.find((p) => p.categorySlug === 'digital-invitations' && p.typeSlug === 'wedding' && p.designNumber === 1),
+    pool.find((p) => p.categorySlug === 'digital-invitations' && p.typeSlug === 'wedding' && p.designNumber === 1),
     // 3. Nikkah Certificates (2 completely distinct styles)
-    products.find((p) => p.categorySlug === 'nikkahnama' && p.name && p.name.includes('Islamic Calligraphy')) ||
-      products.find((p) => p.categorySlug === 'nikkahnama' && p.subcategorySlug === 'printed'),
-    products.find((p) => p.categorySlug === 'nikkahnama' && p.subcategorySlug === 'hand-painted'),
+    pool.find((p) => p.categorySlug === 'nikkahnama' && p.name && p.name.includes('Islamic Calligraphy')) ||
+      pool.find((p) => p.categorySlug === 'nikkahnama' && p.subcategorySlug === 'printed'),
+    pool.find((p) => p.categorySlug === 'nikkahnama' && p.subcategorySlug === 'hand-painted'),
     // 4. Favours (3 completely distinct styles: Baby Gift Box, Sweet Box with Bag, and Metallic Tin)
-    products.find((p) => p.categorySlug === 'favours' && p.name && (p.name.includes('Baby Announcement') || p.name.includes('Teddy'))),
-    products.find((p) => p.categorySlug === 'favours' && p.name && (p.name.includes('Royal Heritage') || p.name.includes('Sweet Box'))),
-    products.find((p) => p.categorySlug === 'favours' && p.name && (p.name.includes('Golden Tin') || p.name.includes('Round Tin'))),
+    pool.find((p) => p.categorySlug === 'favours' && p.name && (p.name.includes('Baby Announcement') || p.name.includes('Teddy'))),
+    pool.find((p) => p.categorySlug === 'favours' && p.name && (p.name.includes('Royal Heritage') || p.name.includes('Sweet Box'))),
+    pool.find((p) => p.categorySlug === 'favours' && p.name && (p.name.includes('Golden Tin') || p.name.includes('Round Tin'))),
     // 5. Packaging (Brand stickers & Custom cards)
-    products.find((p) => p.categorySlug === 'packaging' && p.subcategorySlug === 'business-stickers' && p.designNumber === 1),
-    products.find((p) => p.categorySlug === 'packaging' && p.subcategorySlug === 'business-stickers' && p.designNumber === 2),
+    pool.find((p) => p.categorySlug === 'packaging' && p.subcategorySlug === 'business-stickers' && p.designNumber === 1),
+    pool.find((p) => p.categorySlug === 'packaging' && p.subcategorySlug === 'business-stickers' && p.designNumber === 2),
     // 6. Vinyl Stickers
-    products.find((p) => p.categorySlug === 'vinyl-stickers' && p.designNumber === 1),
+    pool.find((p) => p.categorySlug === 'vinyl-stickers' && p.designNumber === 1),
     // 7. Premium Add-on / Wax Seals
-    products.find((p) => p.categorySlug === 'accessories-add-ons' && p.slug === 'gold-foiling') ||
-      products.find((p) => p.categorySlug === 'wax-seals' && p.designNumber === 1),
+    pool.find((p) => p.categorySlug === 'accessories-add-ons' && p.slug === 'gold-foiling') ||
+      pool.find((p) => p.categorySlug === 'wax-seals' && p.designNumber === 1),
   ].filter(Boolean)
 
   const seenIds = new Set()
@@ -1952,11 +1953,12 @@ export function getType(subcategory, typeSlug) {
   return subcategory.types?.find((t) => t.slug === typeSlug) ?? null
 }
 
-export function getProductsByCategory(categorySlug, subcategorySlug = null, typeSlug = null) {
+export function getProductsByCategory(categorySlug, subcategorySlug = null, typeSlug = null, catalog = products) {
+  const pool = (catalog && catalog.length > 0) ? catalog : products
   const normalizedCategory = normalizeCategorySlug(categorySlug)
   const normalizedSub = subcategorySlug ? normalizeSubcategorySlug(subcategorySlug) : null
 
-  const list = products.filter((p) => {
+  const list = pool.filter((p) => {
     if (p.categorySlug !== normalizedCategory) return false
     if (normalizedSub && p.subcategorySlug !== normalizedSub) return false
     if (typeSlug && p.typeSlug !== typeSlug) return false

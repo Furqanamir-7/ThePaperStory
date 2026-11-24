@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import BrandWordmark from './BrandWordmark'
 import { shopCategories, products } from '../data/products'
+import { useStoreCatalog } from '../admin/AdminDataContext'
 
 const mainLinks = [
   { label: 'Home', to: '/' },
@@ -14,6 +15,7 @@ const mainLinks = [
 
 export default function MobileMenu({ open, onClose, itemCount = 0 }) {
   const navigate = useNavigate()
+  const { products: activeProducts } = useStoreCatalog()
   const [active, setActive] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [activeCategory, setActiveCategory] = useState(null)
@@ -22,15 +24,16 @@ export default function MobileMenu({ open, onClose, itemCount = 0 }) {
   const searchResults = useMemo(() => {
     const q = searchQuery.trim().toLowerCase()
     if (!q) return []
-    return products
+    const pool = (activeProducts && activeProducts.length > 0) ? activeProducts : products
+    return pool
       .filter((p) => {
         const name = (p.name || '').toLowerCase()
         const code = (p.code || p.sku || '').toLowerCase()
-        const cat = (p.category || '').toLowerCase()
+        const cat = (p.category || p.categorySlug || '').toLowerCase()
         return name.includes(q) || code.includes(q) || cat.includes(q)
       })
       .slice(0, 12)
-  }, [searchQuery])
+  }, [searchQuery, activeProducts])
 
   useEffect(() => {
     if (open) {

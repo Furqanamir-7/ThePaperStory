@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Link, Navigate, useParams, useSearchParams } from 'react-router-dom'
 import PageHeader from '../components/PageHeader'
 import ProductGrid from '../components/ProductGrid'
@@ -8,7 +8,7 @@ import SubcategoryPills from '../components/SubcategoryPills'
 import TypePills from '../components/TypePills'
 import WebsiteInviteSlider from '../components/WebsiteInviteSlider'
 import Seo from '../components/Seo'
-import { useAdminData } from '../admin/AdminDataContext'
+import { useStoreCatalog } from '../admin/AdminDataContext'
 import {
   getCategoryBySlug,
   getProductsByCategory,
@@ -33,15 +33,7 @@ export default function ShopCategoryPage() {
   const codeParam = searchParams.get('code') || searchParams.get('item') || searchParams.get('design')
   const [autoProduct, setAutoProduct] = useState(null)
 
-  let adminProducts = null
-  try {
-    const admin = useAdminData()
-    if (admin && admin.products) {
-      adminProducts = admin.products
-    }
-  } catch (e) {
-    // Outside admin context
-  }
+  const { products: activeProducts } = useStoreCatalog()
   const normalizedCategory = normalizeCategorySlug(category)
   const normalizedSub = subcategory ? normalizeSubcategorySlug(subcategory) : null
 
@@ -58,11 +50,14 @@ export default function ShopCategoryPage() {
   const cat = getCategoryBySlug(category)
   const sub = getSubcategory(cat, subcategory)
   const occasion = getType(sub, type)
-  const categoryProducts = getProductsByCategory(
-    category,
-    subcategory || null,
-    type || null
-  )
+  const categoryProducts = useMemo(() => {
+    return getProductsByCategory(
+      category,
+      subcategory || null,
+      type || null,
+      activeProducts
+    )
+  }, [category, subcategory, type, activeProducts])
   const isWebsiteInvitation = sub?.slug === 'website-invitation'
 
   useEffect(() => {
@@ -74,7 +69,7 @@ export default function ShopCategoryPage() {
     const clean = codeParam.trim().toLowerCase()
     const pool = [
       ...(categoryProducts || []),
-      ...(adminProducts || []),
+      ...(activeProducts || []),
       ...(products || []),
     ]
 
@@ -82,33 +77,13 @@ export default function ShopCategoryPage() {
       const pCode = (p.code || p.sku || '').toLowerCase()
       const pId = String(p.id || '').toLowerCase()
       const pSlug = (p.slug || '').toLowerCase()
-      return pCode === clean || pId === clean || pSlug === clean
+      return pCode === clean || pId === clean || pSlug === clean || pId === `prod-${clean}`
     })
 
     if (match) {
-      // Merge with any admin updates
-      if (adminProducts && adminProducts.length > 0) {
-        const adminOverride = adminProducts.find(
-          (ap) =>
-            String(ap.id) === String(match.id) ||
-            (ap.code && ap.code.toLowerCase() === (match.code || '').toLowerCase()) ||
-            (ap.sku && ap.sku.toLowerCase() === (match.sku || '').toLowerCase())
-        )
-        if (adminOverride) {
-          setAutoProduct({
-            ...match,
-            ...adminOverride,
-            code: match.code || adminOverride.code || adminOverride.sku,
-            sku: match.sku || adminOverride.sku || adminOverride.code,
-            categorySlug: match.categorySlug || adminOverride.categorySlug,
-            designNumber: match.designNumber || adminOverride.designNumber,
-          })
-          return
-        }
-      }
       setAutoProduct(match)
     }
-  }, [codeParam, categoryProducts, adminProducts])
+  }, [codeParam, categoryProducts, activeProducts])
 
   if (!cat) {
     return (

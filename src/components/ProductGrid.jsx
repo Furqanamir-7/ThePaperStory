@@ -10,6 +10,7 @@ export default function ProductGrid({
   subtitle = '',
   subtitleItalic = false,
   items,
+  products: productsProp,
   limit,
   showViewAll = false,
   id = 'shop-products',
@@ -21,51 +22,82 @@ export default function ProductGrid({
   const [ref, isVisible] = useInView()
   const [sortBy, setSortBy] = useState('featured')
 
-  let adminProducts = null
+  let admin = null
   try {
-    const admin = useAdminData()
-    if (admin && admin.products) {
-      adminProducts = admin.products
-    }
+    admin = useAdminData()
   } catch (e) {
     // Outside admin context
   }
 
-  const rawBaseProducts = items ?? products
-  const baseProducts = useMemo(() => {
-    if (!adminProducts || adminProducts.length === 0) return rawBaseProducts
-    const adminMap = new Map()
-    adminProducts.forEach((p) => {
-      if (p.id) {
-        adminMap.set(String(p.id), p)
-        if (typeof p.id === 'string' && p.id.startsWith('prod-')) {
-          adminMap.set(p.id.replace('prod-', ''), p)
-        }
-      }
-    })
-    return rawBaseProducts.map((p) => {
-      const match =
-        adminMap.get(String(p.id)) ||
-        (p.id && adminMap.get(`prod-${p.id}`)) ||
-        (p.sku && adminProducts.find((ap) => ap.sku === p.sku && (!p.categorySlug || ap.categorySlug === p.categorySlug))) ||
-        (p.code && adminProducts.find((ap) => ap.code === p.code && (!p.categorySlug || ap.categorySlug === p.categorySlug))) ||
-        (p.slug && adminProducts.find((ap) => ap.slug === p.slug && (!p.categorySlug || ap.categorySlug === p.categorySlug)))
+  const adminProducts = admin?.products || null
+  const deletedSet = useMemo(() => {
+    return new Set((admin?.deletedProductIds || []).map((x) => String(x).toUpperCase()))
+  }, [admin?.deletedProductIds])
 
-      if (match && (!match.categorySlug || !p.categorySlug || match.categorySlug === p.categorySlug)) {
+  const rawBaseProducts = items ?? productsProp ?? null
+
+  const baseProducts = useMemo(() => {
+    const liveCatalog = (adminProducts && adminProducts.length > 0) ? adminProducts : products
+    const liveById = new Map()
+    const liveByCode = new Map()
+    const liveBySku = new Map()
+
+    liveCatalog.forEach((p) => {
+      const pId = String(p.id)
+      const pCode = (p.code || '').toUpperCase()
+      const pSku = (p.sku || '').toUpperCase()
+      liveById.set(pId, p)
+      if (pCode) liveByCode.set(pCode, p)
+      if (pSku) liveBySku.set(pSku, p)
+    })
+
+    // If specific items were passed
+    let sourceList = rawBaseProducts
+    if (!sourceList) {
+      sourceList = liveCatalog
+    }
+
+    const mergedList = sourceList.map((p) => {
+      const pId = String(p.id)
+      const pCode = (p.code || '').toUpperCase()
+      const pSku = (p.sku || '').toUpperCase()
+      const live = liveById.get(pId) || (pCode && liveByCode.get(pCode)) || (pSku && liveBySku.get(pSku))
+      if (live) {
         return {
           ...p,
-          ...match,
-          code: match.code || p.code,
-          sku: match.sku || p.sku,
-          categorySlug: p.categorySlug || match.categorySlug,
-          designNumber: p.designNumber || match.designNumber,
-          image: match.images?.[0] || match.image || p.image,
-          images: match.images && match.images.length > 0 ? match.images : p.images,
+          ...live,
+          name: live.name || p.name,
+          price: live.price || p.price,
+          description: live.description || p.description,
+          images: (live.images && live.images.length > 0) ? live.images : p.images,
+          image: live.images?.[0] || live.image || p.image,
+          code: live.code || p.code,
+          sku: live.sku || p.sku,
+          categorySlug: live.categorySlug || p.categorySlug,
+          designNumber: live.designNumber || p.designNumber,
+          status: live.status || p.status,
         }
       }
       return p
     })
-  }, [rawBaseProducts, adminProducts])
+
+    // If items were NOT passed (i.e. default full catalog), include newly created products from admin
+    let fullList = mergedList
+    if (!rawBaseProducts && adminProducts) {
+      const existingIds = new Set(mergedList.map((p) => String(p.id)))
+      const extraCustom = adminProducts.filter((ap) => !existingIds.has(String(ap.id)))
+      fullList = [...mergedList, ...extraCustom]
+    }
+
+    // Filter out deleted products and inactive products
+    return fullList.filter((p) => {
+      const pId = String(p.id || '').toUpperCase()
+      const pCode = String(p.code || p.sku || '').toUpperCase()
+      if (deletedSet.has(pId) || (pCode && deletedSet.has(pCode))) return false
+      if (p.status && p.status !== 'Active') return false
+      return true
+    })
+  }, [rawBaseProducts, adminProducts, deletedSet])
   const isVisibleNow = showOnLoad || isVisible
   const isFeatured = Boolean(isFeaturedCollection) || (Boolean(title) && (title.toLowerCase().includes("featured") || title.toLowerCase().includes("best seller"))) || id === "best-sellers"
 

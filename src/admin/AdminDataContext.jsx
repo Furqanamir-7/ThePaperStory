@@ -220,7 +220,7 @@ export function AdminDataProvider({ children }) {
               code: s.code, // Always enforce unique authoritative code
               sku: s.sku || s.code,
               name: (isFavour && (!existing.updatedAt || existing.name?.includes('Design') || existing.name?.includes('Customised'))) ? s.name : (existing.name || s.name),
-              categorySlug: s.categorySlug || existing.categorySlug,
+              categorySlug: existing.categorySlug || s.categorySlug,
             });
           } else {
             mergedProducts.push(s);
@@ -1001,4 +1001,47 @@ export function useAdminData() {
   if (!ctx) throw new Error('useAdminData must be used within AdminDataProvider');
   return ctx;
 }
+
+/**
+ * useStoreCatalog: Authoritative live catalog hook for storefront consumers.
+ * Reads live data from AdminDataContext (synced to Supabase), strictly filters
+ * out deleted products and inactive items, and guarantees that any admin changes
+ * (prices, titles, descriptions, images, categories, deletions) are instantly
+ * reflected on the customer-facing website.
+ */
+export function useStoreCatalog() {
+  const admin = useContext(AdminDataContext);
+  const rawProducts = admin?.products || [];
+  const deletedSet = useMemo(() => {
+    return new Set((admin?.deletedProductIds || []).map((x) => String(x).toUpperCase()));
+  }, [admin?.deletedProductIds]);
+
+  const activeProducts = useMemo(() => {
+    if (!rawProducts || rawProducts.length === 0) return codebaseProducts;
+    return rawProducts.filter((p) => {
+      const pId = String(p.id || '').toUpperCase();
+      const pCode = String(p.code || p.sku || '').toUpperCase();
+      if (deletedSet.has(pId) || (pCode && deletedSet.has(pCode))) return false;
+      if (p.status && p.status !== 'Active') return false;
+      return true;
+    });
+  }, [rawProducts, deletedSet]);
+
+  const categories = admin?.categories || DEFAULT_CATEGORIES;
+
+  return {
+    products: activeProducts,
+    allProducts: rawProducts,
+    categories,
+    deletedProductIds: admin?.deletedProductIds || [],
+    reviews: admin?.reviews || [],
+    deals: admin?.deals || [],
+    marquee: admin?.marquee || null,
+    payments: admin?.payments || [],
+    settings: admin?.settings || {},
+    syncStatus: admin?.syncStatus || 'synced',
+    refreshAdminData: admin?.refreshAdminData,
+  };
+}
+
 
