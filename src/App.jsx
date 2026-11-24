@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Loader from './components/Loader'
 import Navbar from './components/Navbar'
@@ -34,6 +34,90 @@ import MediaPage from './admin/pages/MediaPage'
 import SettingsPage from './admin/pages/SettingsPage'
 import SeoAnalyticsPage from './admin/pages/SeoAnalyticsPage'
 
+class AdminRootErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, info) {
+    console.error('[Admin Root Crash Caught]:', error, info);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#FFF9F5',
+          padding: '24px',
+          fontFamily: 'system-ui, -apple-system, sans-serif'
+        }}>
+          <div style={{
+            maxWidth: '460px',
+            width: '100%',
+            background: '#FFFFFF',
+            border: '1px solid #EADBDD',
+            borderRadius: '16px',
+            padding: '36px 28px',
+            textAlign: 'center',
+            boxShadow: '0 8px 30px rgba(166, 35, 65, 0.08)'
+          }}>
+            <div style={{ fontSize: '42px', marginBottom: '14px' }}>⚠️</div>
+            <h2 style={{ fontSize: '20px', fontWeight: '700', color: '#2B1B1F', margin: '0 0 8px' }}>
+              Admin Panel Render Error
+            </h2>
+            <p style={{ fontSize: '13px', color: '#7A6A6E', margin: '0 0 24px', lineHeight: '1.5' }}>
+              {this.state.error?.message || 'An unexpected rendering error occurred in the management portal.'}
+            </p>
+            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+              <button
+                type="button"
+                onClick={() => {
+                  this.setState({ hasError: false, error: null });
+                  window.location.reload();
+                }}
+                style={{
+                  backgroundColor: '#A62341',
+                  color: '#FFFFFF',
+                  border: 'none',
+                  borderRadius: '8px',
+                  padding: '10px 18px',
+                  fontWeight: '600',
+                  fontSize: '13px',
+                  cursor: 'pointer'
+                }}
+              >
+                ↻ Reload Admin
+              </button>
+              <a
+                href="/"
+                style={{
+                  display: 'inline-block',
+                  backgroundColor: '#F7EFF1',
+                  color: '#4B3B3F',
+                  borderRadius: '8px',
+                  padding: '10px 18px',
+                  fontWeight: '600',
+                  fontSize: '13px',
+                  textDecoration: 'none'
+                }}
+              >
+                Storefront
+              </a>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 function AppContent() {
   const location = useLocation()
   const isAdminRoute = location.pathname.startsWith('/admin')
@@ -63,29 +147,31 @@ function AppContent() {
 
   if (isAdminRoute) {
     return (
-      <Routes>
-        <Route path="/admin/login" element={<LoginPage />} />
-        <Route
-          path="/admin"
-          element={
-            <AdminAuthGuard>
-              <AdminLayout />
-            </AdminAuthGuard>
-          }
-        >
-          <Route index element={<DashboardPage />} />
-          <Route path="seo" element={<SeoAnalyticsPage />} />
-          <Route path="products" element={<ProductsPage />} />
-          <Route path="categories" element={<CategoriesPage />} />
-          <Route path="orders" element={<OrdersPage />} />
-          <Route path="reviews" element={<ReviewsPage />} />
-          <Route path="deals" element={<DealsPage />} />
-          <Route path="marquee" element={<MarqueePage />} />
-          <Route path="payments" element={<PaymentsPage />} />
-          <Route path="media" element={<MediaPage />} />
-          <Route path="settings" element={<SettingsPage />} />
-        </Route>
-      </Routes>
+      <AdminRootErrorBoundary>
+        <Routes>
+          <Route path="/admin/login" element={<LoginPage />} />
+          <Route
+            path="/admin"
+            element={
+              <AdminAuthGuard>
+                <AdminLayout />
+              </AdminAuthGuard>
+            }
+          >
+            <Route index element={<DashboardPage />} />
+            <Route path="seo" element={<SeoAnalyticsPage />} />
+            <Route path="products" element={<ProductsPage />} />
+            <Route path="categories" element={<CategoriesPage />} />
+            <Route path="orders" element={<OrdersPage />} />
+            <Route path="reviews" element={<ReviewsPage />} />
+            <Route path="deals" element={<DealsPage />} />
+            <Route path="marquee" element={<MarqueePage />} />
+            <Route path="payments" element={<PaymentsPage />} />
+            <Route path="media" element={<MediaPage />} />
+            <Route path="settings" element={<SettingsPage />} />
+          </Route>
+        </Routes>
+      </AdminRootErrorBoundary>
     )
   }
 
