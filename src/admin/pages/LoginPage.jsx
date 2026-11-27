@@ -5,16 +5,24 @@ import { useAdminData } from '../AdminDataContext';
 import '../admin.css';
 
 export default function LoginPage() {
-  const [username, setUsername] = useState('FURQAN');
+  const [username, setUsername] = useState(() => {
+    return localStorage.getItem('tps_admin_current_user') || 'FURQAN';
+  });
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
-  const [remember, setRemember] = useState(false);
+  const [remember, setRemember] = useState(true);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const { login, checkRateLimit, recordFailedAttempt } = useAdminAuth();
+  const { login, checkRateLimit, recordFailedAttempt, isAuthenticated } = useAdminAuth();
   const { verifyAdminCredentials, verifyPassword, allowedAdmins = ['TPS', 'FURQAN', 'MAHIN'] } = useAdminData();
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/admin', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
