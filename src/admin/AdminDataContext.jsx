@@ -531,9 +531,21 @@ export function AdminDataProvider({ children }) {
     }
   }, [data, pushToCloud]);
 
+  const hasHeldLoaderRef = useRef(false);
+
   // Initial pull and periodic auto-sync
   useEffect(() => {
-    pullFromCloud();
+    if (!hasHeldLoaderRef.current) {
+      hasHeldLoaderRef.current = true;
+      if (typeof window !== 'undefined' && window.PaperStoryLoader?.hold) {
+        window.PaperStoryLoader.hold();
+      }
+    }
+    pullFromCloud().finally(() => {
+      if (typeof window !== 'undefined' && window.PaperStoryLoader?.release) {
+        window.PaperStoryLoader.release();
+      }
+    });
 
     const handleFocus = () => pullFromCloud();
     window.addEventListener('focus', handleFocus);
