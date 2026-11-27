@@ -321,6 +321,11 @@ export function AdminDataProvider({ children }) {
   const isSyncingRef = useRef(false);
   const hasUserModifiedRef = useRef(false);
   const lastRemoteUpdatedAtRef = useRef(null);
+  const dataRef = useRef(data);
+
+  useEffect(() => {
+    dataRef.current = data;
+  }, [data]);
 
   // Push to Supabase with API fallback
   const pushToCloud = useCallback(async (currentData) => {
@@ -521,7 +526,7 @@ export function AdminDataProvider({ children }) {
       } else {
         // If first boot or both returned empty, push current state so others get it
         setSyncStatus('offline');
-        await pushToCloud(data);
+        await pushToCloud(dataRef.current);
       }
     } catch (e) {
       console.warn('Could not pull from admin cloud:', e);
@@ -529,7 +534,7 @@ export function AdminDataProvider({ children }) {
     } finally {
       isSyncingRef.current = false;
     }
-  }, [data, pushToCloud]);
+  }, [pushToCloud]);
 
   const hasHeldLoaderRef = useRef(false);
 

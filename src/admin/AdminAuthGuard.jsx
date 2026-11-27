@@ -58,12 +58,19 @@ export function AdminAuthProvider({ children }) {
     return true;
   });
 
-  // Track activity
+  // Track activity (throttled to avoid main-thread blocking on every mouse movement)
   useEffect(() => {
     if (!isAuthenticated) return;
 
+    let lastWrite = 0;
     const updateActivity = () => {
-      localStorage.setItem(LAST_ACTIVITY_KEY, String(Date.now()));
+      const now = Date.now();
+      if (now - lastWrite > 10000) {
+        lastWrite = now;
+        try {
+          localStorage.setItem(LAST_ACTIVITY_KEY, String(now));
+        } catch (e) {}
+      }
     };
 
     updateActivity();

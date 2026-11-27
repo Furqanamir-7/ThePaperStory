@@ -59,13 +59,13 @@
   var LIGHT = mix(BGRGB, [255, 255, 255], 0.12), DARK = mix(BGRGB, [0, 0, 0], 0.20), SHADOW = mix(BGRGB, [0, 0, 0], 0.62);
 
   var css = "#ps-loader{position:fixed;left:0;top:0;right:0;bottom:0;z-index:2147483647;overflow:hidden;touch-action:none;--ps-fg:" + OPT.fg + "}" +
-    "#ps-loader .ps-panel{position:absolute;top:0;bottom:0;overflow:hidden;-webkit-backface-visibility:hidden;backface-visibility:hidden}" +
-    "#ps-loader .ps-stage{position:absolute;top:0;overflow:hidden;" +
+    "#ps-loader .ps-panel{position:absolute;top:0;bottom:0;overflow:hidden;-webkit-backface-visibility:hidden;backface-visibility:hidden;will-change:transform;transform:translateZ(0)}" +
+    "#ps-loader .ps-stage{position:absolute;top:0;overflow:hidden;will-change:transform;transform:translateZ(0);" +
       "background:url(data:image/png;base64," + NOISE + "),radial-gradient(120% 90% at 50% 40%," + rgb(LIGHT) + " 0%," + rgb(BGRGB) + " 55%," + rgb(DARK) + " 100%)}" +
     "#ps-loader .ps-shade{position:absolute;left:0;top:0;right:0;bottom:0;background:" + rgb(SHADOW) + ";opacity:0;pointer-events:none}" +
-    "#ps-loader .ps-logo{position:absolute;left:50%;top:50%}" +
-    "#ps-loader .ps-tulip{position:absolute;left:0;top:0;right:0;bottom:0}" +
-    "#ps-loader .ps-wrap{position:absolute}" +
+    "#ps-loader .ps-logo{position:absolute;left:50%;top:50%;will-change:transform,filter;transform:translateZ(0)}" +
+    "#ps-loader .ps-tulip{position:absolute;left:0;top:0;right:0;bottom:0;will-change:transform;transform:translateZ(0)}" +
+    "#ps-loader .ps-wrap{position:absolute;transform:translateZ(0)}" +
     "#ps-loader .ps-img{position:absolute;left:0;top:0;right:0;bottom:0;background-color:var(--ps-fg);" +
       "-webkit-mask-image:var(--m);mask-image:var(--m);-webkit-mask-size:100% 100%;mask-size:100% 100%;" +
       "-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;will-change:transform,opacity}" +
@@ -143,15 +143,21 @@
   function renderCopy(c, t) {
     var P = c.parts;
     // 1. frame draws itself clockwise from the top gap
-    var ang = 360 * E.inOut(seg(t, 0.25, 1.6)), fw = P.frame.wrap.style;
-    if (ang <= 0.05) { fw.visibility = "hidden"; }
-    else {
-      fw.visibility = "visible";
-      var m = ang >= 359.9 ? "none" : "conic-gradient(from 0deg at 50% 50%, #000 0deg, #000 " + ang + "deg, transparent " + (ang + 2) + "deg, transparent 360deg)";
-      fw.webkitMaskImage = m; fw.maskImage = m;
+    var ang = Math.round(360 * E.inOut(seg(t, 0.25, 1.6)) * 2) / 2, fw = P.frame.wrap.style;
+    if (ang <= 0.05) {
+      if (fw.visibility !== "hidden") fw.visibility = "hidden";
+    } else {
+      if (fw.visibility !== "visible") fw.visibility = "visible";
+      if (P._lastAng !== ang) {
+        P._lastAng = ang;
+        var m = ang >= 359.5 ? "none" : "conic-gradient(from 0deg at 50% 50%, #000 0deg, #000 " + ang + "deg, transparent " + (ang + 2) + "deg, transparent 360deg)";
+        fw.webkitMaskImage = m; fw.maskImage = m;
+      }
     }
     // 2. tulip: stem grows, leaf unfurls, flowers bloom, then it sways
-    clip(P.stem.wrap, "inset(" + 100 * (1 - E.inOut(seg(t, 0.7, 1.5))) + "% 0 0 0)");
+    if (t <= 1.6) {
+      clip(P.stem.wrap, "inset(" + 100 * (1 - E.inOut(seg(t, 0.7, 1.5))) + "% 0 0 0)");
+    }
     var pl = seg(t, 1.0, 1.8), el = E.back(pl);
     P.leaf.img.style.opacity = clamp(pl * 3, 0, 1);
     P.leaf.img.style.transform = "rotate(" + (-14 * (1 - el)) + "deg) scale(" + (0.15 + 0.85 * el) + ")";
@@ -166,20 +172,44 @@
     LETTERS.forEach(function (n, i) {
       var w = WORD[n.replace(/\d+$/, "")];
       var a = 1.3 + 0.08 * i + 0.12 * w, p = seg(t, a, a + 0.65), e = E.out(p);
-      var im = P[n].img, bl = (1 - e) * 5 * Math.max(s, 0.6);
+      var im = P[n].img;
+      if (p <= 0) {
+        if (im.style.opacity !== "0") im.style.opacity = 0;
+        return;
+      }
+      if (p >= 1) {
+        if (!P[n]._done) {
+          P[n]._done = true;
+          im.style.opacity = 1;
+          im.style.transform = "none";
+          im.style.filter = "none";
+        }
+        return;
+      }
       im.style.opacity = clamp(p * 2.2, 0, 1);
-      im.style.transform = "translateY(" + (1 - e) * 26 * s + "px) scale(" + (0.94 + 0.06 * e) + ")";
-      im.style.filter = bl > 0.05 ? "blur(" + bl + "px)" : "none";
+      im.style.transform = "translate3d(0," + ((1 - e) * 26 * s) + "px,0) scale(" + (0.94 + 0.06 * e) + ")";
     });
     // 4. swash and closing flourish are drawn
-    clip(P.swash.wrap, "inset(0 " + 100 * (1 - E.inOut(seg(t, 1.9, 3.0))) + "% 0 0)");
-    clip(P.swirl.wrap, "inset(0 0 " + 100 * (1 - E.inOut(seg(t, 3.0, 3.7))) + "% 0)");
-    // 5. paper-cut lift: the logo rises off the page and casts a soft shadow
-    var L = E.inOut(seg(t, 3.6, 4.3)), f = "none";
-    if (L > 0.001) {
-      f = "drop-shadow(0 " + (1.5 * s * L) + "px 0 " + rgb(SHADOW, 0.35 * L) + ") drop-shadow(0 " + (7 * s * L) + "px " + (9 * s * L) + "px " + rgb(SHADOW, 0.30 * L) + ")";
+    if (t <= 3.1) {
+      clip(P.swash.wrap, "inset(0 " + 100 * (1 - E.inOut(seg(t, 1.9, 3.0))) + "% 0 0)");
     }
-    for (var k in P) { P[k].wrap.style.filter = f; P[k].wrap.style.webkitFilter = f; }
+    if (t <= 3.8) {
+      clip(P.swirl.wrap, "inset(0 0 " + 100 * (1 - E.inOut(seg(t, 3.0, 3.7))) + "% 0)");
+    }
+    // 5. paper-cut lift: the logo rises off the page and casts a soft shadow (applied to logo container for 60fps GPU compositing)
+    var L = E.inOut(seg(t, 3.6, 4.3));
+    if (L > 0.001) {
+      var f = "drop-shadow(0 " + (1.5 * s * L) + "px 0 " + rgb(SHADOW, 0.35 * L) + ") drop-shadow(0 " + (7 * s * L) + "px " + (9 * s * L) + "px " + rgb(SHADOW, 0.30 * L) + ")";
+      if (c._lastF !== f) {
+        c._lastF = f;
+        c.logo.style.filter = f;
+        c.logo.style.webkitFilter = f;
+      }
+    } else if (c._lastF) {
+      c._lastF = null;
+      c.logo.style.filter = "none";
+      c.logo.style.webkitFilter = "none";
+    }
   }
   function renderIntro(t) { for (var i = 0; i < copies.length; i++) renderCopy(copies[i], t); }
 
@@ -192,8 +222,8 @@
       return;
     }
     // doors: both halves swing away from the middle, like opening an invitation
-    panels[0].el.style.transform = "rotateY(" + (e * 100) + "deg)";
-    panels[1].el.style.transform = "rotateY(" + (-e * 100) + "deg)";
+    panels[0].el.style.transform = "rotateY(" + (e * 100) + "deg) translateZ(0)";
+    panels[1].el.style.transform = "rotateY(" + (-e * 100) + "deg) translateZ(0)";
     panels[0].shade.style.opacity = panels[1].shade.style.opacity = e * 0.55;
   }
   function resetExit() {
@@ -210,7 +240,7 @@
       if (ready(t)) { phase = "exit"; tExit = now; }
     } else if (phase === "exit") {
       var te = (now - tExit) / 1000;
-      if (!frozen) { renderIntro(t); renderExit(te); }
+      if (!frozen) { renderExit(te); }
       if (te >= 1.2) { done(); return; }
     }
     raf = requestAnimationFrame(loop);
