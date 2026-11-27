@@ -536,21 +536,9 @@ export function AdminDataProvider({ children }) {
     }
   }, [pushToCloud]);
 
-  const hasHeldLoaderRef = useRef(false);
-
   // Initial pull and periodic auto-sync
   useEffect(() => {
-    if (!hasHeldLoaderRef.current) {
-      hasHeldLoaderRef.current = true;
-      if (typeof window !== 'undefined' && window.PaperStoryLoader?.hold) {
-        window.PaperStoryLoader.hold();
-      }
-    }
-    pullFromCloud().finally(() => {
-      if (typeof window !== 'undefined' && window.PaperStoryLoader?.release) {
-        window.PaperStoryLoader.release();
-      }
-    });
+    pullFromCloud();
 
     const handleFocus = () => pullFromCloud();
     window.addEventListener('focus', handleFocus);

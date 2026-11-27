@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import Loader from './components/Loader'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import WhatsAppButton from './components/WhatsAppButton'
@@ -193,10 +194,28 @@ function AppContent() {
   const location = useLocation()
   const isAdminRoute = location.pathname.startsWith('/admin')
 
+  const [loaderMode, setLoaderMode] = useState('initial')
+  const prevPath = useRef(null)
+
   // Automatic Supabase keepalive ping on site visits to prevent 7-day inactivity pause
   useEffect(() => {
     pingSupabaseKeepAlive();
   }, [])
+
+  useEffect(() => {
+    if (isAdminRoute) return // No public loader on admin
+
+    if (prevPath.current === null) {
+      prevPath.current = location.pathname
+      return
+    }
+    if (prevPath.current !== location.pathname) {
+      prevPath.current = location.pathname
+      setLoaderMode('route')
+    }
+  }, [location.pathname, isAdminRoute])
+
+  const showLoader = !isAdminRoute && loaderMode !== null
 
   if (isAdminRoute) {
     return (
@@ -230,6 +249,12 @@ function AppContent() {
 
   return (
     <>
+      {showLoader && (
+        <Loader
+          quick={loaderMode === 'route'}
+          onComplete={() => setLoaderMode(null)}
+        />
+      )}
       <Navbar />
       <main>
         <Routes>
