@@ -34,6 +34,78 @@ import MediaPage from './admin/pages/MediaPage'
 import SettingsPage from './admin/pages/SettingsPage'
 import SeoAnalyticsPage from './admin/pages/SeoAnalyticsPage'
 
+class GlobalErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, info) {
+    console.error('[Global Storefront Error Caught]:', error, info);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#FFF9F5',
+          padding: '24px',
+          fontFamily: 'serif',
+          textAlign: 'center'
+        }}>
+          <div style={{
+            maxWidth: '500px',
+            width: '100%',
+            background: '#FFFFFF',
+            border: '1px solid #EADBDD',
+            borderRadius: '20px',
+            padding: '40px 28px',
+            boxShadow: '0 10px 40px rgba(166, 35, 65, 0.08)'
+          }}>
+            <img
+              src="/logo.png"
+              alt="The Paper Story"
+              style={{ width: '64px', height: '64px', margin: '0 auto 16px', display: 'block', borderRadius: '50%' }}
+            />
+            <h1 style={{ fontSize: '24px', color: '#2B1B1F', margin: '0 0 10px', fontWeight: '700' }}>
+              The Paper Story
+            </h1>
+            <p style={{ fontSize: '14px', color: '#7A6A6E', margin: '0 0 24px', lineHeight: '1.6', fontFamily: 'sans-serif' }}>
+              We are updating our luxury stationery collection. Please tap below to refresh the page.
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                this.setState({ hasError: false, error: null });
+                window.location.reload();
+              }}
+              style={{
+                backgroundColor: '#A62341',
+                color: '#FFFFFF',
+                border: 'none',
+                borderRadius: '9999px',
+                padding: '12px 28px',
+                fontWeight: '600',
+                fontSize: '14px',
+                cursor: 'pointer',
+                fontFamily: 'sans-serif'
+              }}
+            >
+              ↻ Refresh Page
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 class AdminRootErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
@@ -228,15 +300,17 @@ function AppContent() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AdminAuthProvider>
-        <AdminDataProvider>
-          <CartProvider>
-            <ScrollToTop />
-            <AppContent />
-          </CartProvider>
-        </AdminDataProvider>
-      </AdminAuthProvider>
-    </BrowserRouter>
+    <GlobalErrorBoundary>
+      <BrowserRouter>
+        <AdminAuthProvider>
+          <AdminDataProvider>
+            <CartProvider>
+              <ScrollToTop />
+              <AppContent />
+            </CartProvider>
+          </AdminDataProvider>
+        </AdminAuthProvider>
+      </BrowserRouter>
+    </GlobalErrorBoundary>
   )
 }

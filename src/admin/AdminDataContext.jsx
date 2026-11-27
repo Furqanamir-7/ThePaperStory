@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import importedGallery from '../data/imported-desktop-gallery.json';
 import { SEO_WEDDING } from '../data/seo-product-names';
 import { ACCESSORIES_ADDONS_GALLERY, products as codebaseProducts, shopCategories } from '../data/products';
